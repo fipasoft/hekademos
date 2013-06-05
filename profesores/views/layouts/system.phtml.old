@@ -1,0 +1,50 @@
+<?php
+Kumbia :: import('app.componentes.*');  
+$path = KUMBIA_PATH;
+$css_path = $path . 'css/';
+$year = date('Y');
+$m = new Menu(); 
+$menu = $m->menuSimple();
+$submenu = $m->menuSeccion($controlador);
+$submenu = array();
+?>
+  <link href="<?php echo $css_path ?>nav.css" type="text/css" rel="stylesheet">
+</head>
+<body class="l5 wide">
+<div id="header">
+    <div class="content">
+        <img src="<?php echo $path . 'img/sp5/header.png'?>" />
+        <div id="control">
+            <a href="<?php echo $path ?>sesion/cerrar">Cerrar sesi&oacute;n</a>
+        </div>
+        <div id="menu_container">
+        <?php if(is_array($menu)){?>
+            <ul id="menu" class="navlist">
+                <?php foreach ($menu as $item) {?>
+                    <li <?php echo ($controlador == $item ? 'id="active"' : '') ?>> 
+                        <a href="<?php echo $path . $item?>" alt="<?php echo $item ?>"> 
+                            <?php echo ucfirst($item) ?> 
+                        </a> 
+                    </li>
+                <?php }?>
+            </ul>
+        <?php } ?>
+        <?php if(is_array($submenu)){?>
+            <ul id="submenu" class="navlist">
+                <?php foreach ($submenu as $item) {?>
+                    <li <?php echo ($accion == $item ? 'id="active"' : '') ?>> 
+                        <a href="<?php echo $path . $controlador . '/' . $item?>" alt="<?php echo $item ?>"> 
+                            <?php echo ucfirst($item) ?> 
+                        </a> 
+                    </li>
+                <?php }?>
+            </ul>
+        <?php } ?>
+        </div>
+    </div>
+</div>
+<?php content() ?>
+<div id="footer">
+    <div class="content">Universidad de Guadalajara <?php echo $year ?></div>
+</div>
+</body>

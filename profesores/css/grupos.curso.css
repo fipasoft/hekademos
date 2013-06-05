@@ -1,0 +1,9 @@
+div.content td, div.content th{
+padding 0.5em;
+}
+div.content td.AST{
+background-color: #cf9;
+}
+div.content td.FTA{
+background-color: #fc9;
+}

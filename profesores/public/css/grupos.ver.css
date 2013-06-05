@@ -1,0 +1,15 @@
+div.content td, div.content th{
+padding:0.5em;
+}
+div.content td.TRUE, div.content div.TRUE{
+background-color: #cf9;
+}
+div.content td.FALSE, div.content div.FALSE{
+background-color: #fc9;
+}
+div.content th, div.content td.numero{
+font-size: 91%;
+}
+div.content th a{
+text-decoration: none;
+}

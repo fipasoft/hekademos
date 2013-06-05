@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<title>Docs For Class gacl_extra</title>
+	<link rel="stylesheet" type="text/css" id="layout" href="../media/layout.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="../media/style.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../media/print.css" media="print">
+</head>
+
+<body>
+<div id="header">
+	<div id="navLinks">
+        
+                                    
+                            	        [ <a href="../classtrees_phpGACL.html">Class Tree: phpGACL</a> ]
+            [ <a href="../elementindex_phpGACL.html">Index: phpGACL</a> ]
+        		[ <a href="../elementindex.html">All elements</a> ]		
+	</div>
+	<div id="packagePosition">
+		<div id="packageTitle2">phpGACL</div>
+		<div id="packageTitle">phpGACL</div>
+		<div id="elementPath"> &middot; </div>
+	</div>
+</div>
+
+<div id="nav" class="small">
+	<div id="packages">
+		Packages:
+					<p><a href="../li_phpGACL.html">phpGACL</a></p>
+			</div>
+
+				<div id="index">
+			<div id="files">
+								Files:<br>
+								<a href="../phpGACL/_gacl_extra.class.php.html">		gacl_extra.class.php
+		</a><br>
+				</div>
+			<div id="interfaces">
+							</div>
+			<div id="classes">
+				Classes:<br>
+								<a href="../phpGACL/gacl_extra.html">		gacl_extra
+		</a><br>
+				</div>
+		</div>
+	</div>
+
+<div id="body">
+	    		<h1>Class: gacl_extra</h1>
+	<p style="margin: 0px;">Source Location: /gacl_extra.class.php</p>
+	
+
+<div class="leftcol">
+	<h3><a href="#class_details">Class Overview</a> <span class="smalllinenumber">[line 12]</span></h3>
+	<div id="classTree"><pre></pre>
+</div>
+	<div class="small">
+	<p></p>
+		<h4>Author(s):</h4>
+	<ul>
+			</ul>
+	<h4>Version:</h4>
+	<ul>
+			</ul>
+
+	<h4>Copyright:</h4>
+	<ul>
+			</li>
+	</div>
+</div>
+
+<div class="middlecol">
+	<h3><a href="#class_vars">Variables</a></h3>
+	<ul class="small">
+			</ul>
+	<h3><a href="#class_consts">Constants</a></h3>
+	<ul class="small">
+			</ul>
+</div>
+<div class="rightcol">
+	<h3><a href="#class_methods">Methods</a></h3>
+	<ul class="small">
+				<li><a href="../phpGACL/gacl_extra.html#methodget_user_acos">get_user_acos</a></li>
+				<li><a href="../phpGACL/gacl_extra.html#methodget_user_sections">get_user_sections</a></li>
+			</ul>
+</div>
+
+<div id="content">
+<hr>
+	<div class="contents">
+	</div>
+
+	<div class="leftCol">
+    	<h2>Inherited Variables</h2>
+		<h2>Inherited Constants</h2>
+		</div>
+
+	<div class="rightCol">
+	<h2>Inherited Methods</h2>
+		</div>
+	<br clear="all">
+	<hr>
+
+	<a name="class_details"></a>
+	<h2>Class Details</h2>
+		<p class="small" style="color: #334B66;">[ <a href="#top">Top</a> ]</p>
+
+	<hr>
+	<a name="class_vars"></a>
+	<h2>Class Variables</h2>
+	
+	<hr>
+	<a name="class_methods"></a>
+	<h2>Class Methods</h2>
+	
+	<a name="methodget_user_acos"></a>
+	<p></p>
+	<h3>get_user_acos</h3>
+	<div class="indent">
+		<p>
+		<code>array get_user_acos(
+string
+$login, [array
+$exc_groups = array()])</code>
+		</p>
+	
+		<p class="linenumber">[line 20]</p>
+		<h4>Tags:</h4>
+<ul>
+	<li><b>return</b> - Un arreglo con los nombres de las secciones y objetos con la forma array[section][value] = section/value</li>
+	<li><b>access</b> - public</li>
+</ul>
+		
+	
+	<h4>Parameters:</h4>
+	<ul>
+			<li>
+		<span class="type">string</span>
+		<b>$login</b> 
+		- 
+		Login del usuario, e.g. root, admin, etc...</li>
+			<li>
+		<span class="type">array</span>
+		<b>$exc_groups</b> 
+		- 
+		(Opcional) Un arreglo que contiene los nombres de los grupos que no se incluiran en la búsqueda, es útil para no publicar en el menu algunos recursos.</li>
+		</ul>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+	<a name="methodget_user_sections"></a>
+	<p></p>
+	<h3>get_user_sections</h3>
+	<div class="indent">
+		<p>
+		<code>array get_user_sections(
+string
+$login, [array
+$exc_groups = array()])</code>
+		</p>
+	
+		<p class="linenumber">[line 86]</p>
+		<h4>Tags:</h4>
+<ul>
+	<li><b>return</b> - Un arreglo con los nombres de las secciones con la forma array[section] = section</li>
+	<li><b>access</b> - public</li>
+</ul>
+		
+	
+	<h4>Parameters:</h4>
+	<ul>
+			<li>
+		<span class="type">string</span>
+		<b>$login</b> 
+		- 
+		Login del usuario, e.g. root, admin, etc...</li>
+			<li>
+		<span class="type">array</span>
+		<b>$exc_groups</b> 
+		- 
+		(Opcional) Un arreglo que contiene los nombres de los grupos que no se incluiran en la búsqueda, es útil para no publicar en el menu algunos recursos.</li>
+		</ul>
+	</div>
+	<p class="top">[ <a href="#top">Top</a> ]</p>
+
+	<hr>
+	<a name="class_consts"></a>
+	<h2>Class Constants</h2>
+	</div>
+	<div id="credit">
+		<hr>
+		Documentation generated on Sat, 30 Aug 2008 17:56:39 -0500 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.0</a>
+	</div>
+</div>
+</body>
+</html>
