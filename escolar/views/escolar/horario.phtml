@@ -1,0 +1,138 @@
+<h1>Horario</h1>
+<?php
+if(count($horarios)>0){
+?>
+<div id="options-bar">
+    <div id="options">
+    <a title="Volver a inicio." class="submenu" href="<?php echo KUMBIA_PATH?>escolar/inicio">Volver <img src="<?php  echo KUMBIA_PATH?>img/sp5/volver.png" alt="Volver a inicio" /> </a>
+     /
+
+    <a href="<?php echo KUMBIA_PATH; ?>escolar/pdf/horario">Descargar <img src="<?php  echo KUMBIA_PATH?>img/sp5/pdf.gif" alt="Descargar pdf." /></a>
+     /
+      <?php echo $cicloActivo["numero"]; ?>
+    </div>
+</div>
+
+<div id="ficha">
+<table>
+<tr><th>Código</th><td><?php echo $alumno["codigo"];  ?></td><th>Nombre</th><td><?php echo $alumno["nombre"];  ?></td></tr>
+</table>
+</div>
+<br/>
+<div id="infoPrincipal">
+<?php $nm=1;
+    foreach($horarios as $llv=>$horarioDatos){
+?>
+<?php if($grupo["oferta_id"]==2){ ?>
+<h3>Horario <?php echo strToLower(value_num($nm)); ?></h3>
+<?php } ?>
+
+<h4>Profesores</h4>
+<table>
+<tr>
+<?php if($grupo["oferta_id"]==2){ ?>
+<th>Inicio</th>
+<?php } ?>
+<th>Materia</th><th>Profesor</th></tr>
+
+<?php
+    $cont=0;
+    $infor=$informacion[$llv];
+  foreach($infor as $curso){
+      $class="";
+      if($cont%2==0) $class=' class="odd" ';
+      ?>
+<tr <?php  echo $class; ?> >
+<?php if($grupo["oferta_id"]==2){ ?>
+<td>
+<span class="sub" style="color: rgb(119, 119, 119);" title="<?php echo $celda["profesor"]; ?>" >
+<?php echo fecha_espanol($curso["fecha_inicio"]); ?>
+</span>
+</td>
+<?php } ?>
+<td>
+<span class="sub">
+<?php echo $curso["nombre"]; ?></td>
+</span>
+<td>
+<span class="sub" style="color: rgb(119, 119, 119);" title="<?php echo $celda["profesor"]; ?>" >
+<?php echo $curso["profe"]; ?>
+</span>
+</td>
+
+</tr>
+<?php
+$cont++;
+ } ?>
+</table>
+<br/>
+<br/>
+<h4>Clases</h4>
+<table>
+<tr>
+<?php
+    $nm++;
+    $semana=array_keys(current($horarioDatos));
+    //print_r($semana);
+    foreach($semana as $dia){
+ ?>
+<th><?php echo dia_espanol($dia); ?></th>
+<?php
+    }
+ ?>
+</tr>
+<?php
+//echo print_r($horarioDatos);
+foreach($horarioDatos as $fila){
+?>
+<tr>
+<?php
+    $cont=0;
+    foreach($fila as $celda){
+    $clase="";
+    if($cont%2==0)$clase=' class="par" ';
+    ?>
+
+    <td <?php echo $clase; ?>>
+    <?php
+
+    if($celda["nombre"]!=""){
+    ?>
+    <span class="sub" title="<?php echo $celda["profesor"]; ?>" >
+    <?php    echo $celda["nombre"];?><br/>
+    </span>
+    <span class="sub" style="color: rgb(119, 119, 119);" title="<?php echo $celda["profesor"]; ?>" >
+    <?php if($grupo["oferta_id"]==2){ echo convierteFecha($celda["fecha_inicio"]);  ?><br/><?php } ?>
+    <?php echo substr($celda["inicio"],0,5);?> - <?php     echo substr($celda["fin"],0,5);?><br/>
+    <?php echo $celda["aula"]; ?>
+    </span>
+
+    <?php
+    }
+    ?>
+    </td>
+    <?php
+    $cont++;
+    }
+    ?>
+</tr>
+<?php
+}
+
+?>
+</table>
+
+<br/>
+<br/>
+<?php } ?>
+</div>
+
+<?php
+}else{
+?>
+<div class="espacio"></div>
+
+    <p class="infoBox"><br/>No existe horario del alumno para el ciclo actual.</p>
+<?php
+}
+?>

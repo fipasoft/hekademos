@@ -1,0 +1,139 @@
+<?php
+$css_path = KUMBIA_PATH . 'public/css/';
+$js_path = KUMBIA_PATH . 'javascript/';
+
+    $usr = Session :: get_data('usr');?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">
+ <head>
+  <meta name="ROBOTS" content="NOINDEX, NOFOLLOW" />
+  <meta http-equiv='Content-type' content='text/html; charset=utf-8' />
+  <title>HEKADEMOS Escolar</title>
+  <link href="<?php echo $css_path ?>tripoli.base.css" type="text/css" rel="stylesheet" />
+      <link href="<?php echo $css_path ?>tripoli.type.css" type="text/css" rel="stylesheet" />
+      <link href="<?php echo $css_path ?>tripoli.visual.css" type="text/css" rel="stylesheet" />
+      <link href="<?php echo $css_path ?>tripoli.layout.css" type="text/css" rel="stylesheet" />
+  <link rel="shortcut icon" href="<?php echo "http://" . $_SERVER["SERVER_NAME"].KUMBIA_PATH . 'favicon.ico'?>" />
+  <!--[if IE]><link rel="stylesheet" type="text/css" href="<?php echo $css_path ?>tripoli.base.ie.css" /><![endif]-->
+
+  <link href="<?php echo $css_path ?>nav.css" type="text/css" rel="stylesheet" />
+  <link href="<?php echo $css_path ?>calendar.css" type="text/css" rel="stylesheet" />
+  <link href="<?php echo $css_path ?>escolar.css" type="text/css" rel="stylesheet" />
+  <link rel="stylesheet" href="<?php echo $css_path ?>tooltips.css" type="text/css" media="screen" />
+  <link href="<?php echo $css_path ?>style.css" type="text/css" rel="stylesheet" />
+  <?php echo javascript_include_tag("protoaculous1.6.packed"); ?>
+   <script type="text/javascript" src="<?php echo $js_path ?>calendar/calendar.js" ></script>
+  <script type="text/javascript" src="<?php echo $js_path ?>calendar/calendar-setup.js" ></script>
+  <script type="text/javascript" src="<?php echo $js_path ?>calendar/calendar-es.js" ></script>
+  <?php
+      echo javascript_include_tag("escolar");
+      echo javascript_include_tag("tooltips");
+
+    if(file_exists("public/javascript/".$controlador_global."/".$accion_global.".js"))
+    echo javascript_include_tag($controlador_global."/".$accion_global);
+
+    if(file_exists("public/css/".$controlador_global.".".$accion_global.".css")){
+    //echo stylesheet_link_tag($controlador_global.".".$accion_global);
+         ?>
+              <link href="<?php echo $css_path.$controlador_global.".".$accion_global ?>.css" type="text/css" rel="stylesheet">
+            <?php
+    }
+
+   ?>
+    <link media="print" rel="stylesheet" type="text/css" href="<?php echo $css_path ?>print.css" />
+ </head>
+<body class="l10 wide"><div id="container">
+    <div id="header">
+        <div class="content">
+            <div style="clear: left;"></div>
+            <div>
+            <img src="<?php echo KUMBIA_PATH . 'img/sp5/ban.png'?>" alt="HEKADEMOS. Control escolar." id="img_header"/>
+            </div>
+            <div id="date"><?php echo generar_fecha_hora() ?></div>
+            <?php  if($accion_global!="auth" && $accion_global!="restringir"){ ?>
+            <div id="control">
+                <span title="<?php echo $users->nombre ?>." id="codigo"><?php echo $alumno["codigo"] ?></span> /
+                <a href="<?php echo KUMBIA_PATH ."escolar/password"; ?>" title="Cambie su password de acceso." id="cambia_password">Cambiar password</a> /
+                <a href="<?php echo KUMBIA_PATH ."public/man/Escolar.pdf"; ?>" title="Consulte el manual del sistema." id="ayuda">Ayuda</a> /
+                <a href="<?php echo KUMBIA_PATH ?>escolar/cerrar" title="Por seguridad siempre cierre la sesion." id="closeSesion">Cerrar sesi&oacute;n</a>
+
+            </div>
+            <?php } ?>
+            <div id="menu_container">
+            <?php  if($accion_global!="auth" && $accion_global!="restringir"){ ?>
+            <ul id="menu">
+                    <li>
+                        <a href="<?php echo KUMBIA_PATH; ?>escolar/inicio" title="Obtenga un resumen con la información mas reciente." id="menu_inicio">
+                        Inicio
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo KUMBIA_PATH; ?>escolar/ficha" title="Consulte los datos de la cuenta." id="menu_ficha">
+                        Ficha
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo KUMBIA_PATH; ?>escolar/asistencias" title="Consulte las asistencias del alumno." id="menu_asistencias">
+                        Asistencias
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo KUMBIA_PATH; ?>escolar/calificaciones" title="Consulte las calificaciones del alumno." id="menu_calificaciones">
+                        Calificaciones
+                        </a>
+                    </li>
+                    <li >
+                        <a href="<?php echo KUMBIA_PATH; ?>escolar/horario" title="Consulte el horario del alumno." id="menu_horario">
+                        Horario
+                        </a>
+                    </li>
+                    <li >
+                        <a href="<?php echo KUMBIA_PATH; ?>escolar/kardex" title="Consulte el kardex del alumno." id="menu_kardex">
+                        Kardex
+                        </a>
+                    </li>
+                    <?php if($usr['login']=='alumno' ){ ?>
+                    <li >
+                        <a href="<?php echo KUMBIA_PATH; ?>escolar/agenda" title="Consulte la agenda del alumno." id="menu_agenda">
+                        Agenda
+                        </a>
+                    </li>
+                    <?php } ?>
+                </ul>
+                <?php  }else{
+                ?>
+                <ul id="menu" style="height:18px;">
+                </ul>
+                <?php
+                }?>
+            </div>
+
+        </div>
+    </div>
+    <div id="primary">
+        <div class="content"><?php content() ?></div>
+    </div>
+    <div id="secondary">
+        <div class="content"><!-- secondary content --></div>
+    </div>
+    <div id="tertiary">
+        <div class="content"><!-- tertiary content --></div>
+    </div>
+        <div id="footer">
+        <div class="content" >
+        <div style="float:right;margin-right:5px; margin-top:5px; margin-bottom: 2px;">
+        <!--<a href="http://validator.w3.org/check?uri=referer"><img src="auth_files/valid-xhtml10-blue.png" alt="Valid XHTML 1.0 Strict" height="25" width="65"></a>-->
+        <img style="float:left;margin-top:12px;margin-right:5px" alt="Hekademos" src="<?php echo KUMBIA_PATH; ?>public/img/sp5/hkd.png"/>
+        <img style="height:32px;float:right;margin-top:2px" alt="Buho" src="<?php echo KUMBIA_PATH; ?>public/img/sp5/buho.png"/>
+    </div>
+
+    <div style="margin-right:80px;padding-top:15px;">
+        <a style="text-decoration:none; font-weight:bold; font-size:10px; color:#4f2c5c" href="http://fipasoft.mx">
+            http://hekademos.mx
+        </a>
+            
+    </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

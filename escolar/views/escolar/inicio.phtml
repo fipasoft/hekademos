@@ -1,0 +1,161 @@
+<h1>Inicio</h1>
+<?php
+$cursos=$datos["resumen"]["datos"];
+if(sizeof($cursos)>0){
+ ?>
+<br/>
+<div>
+<table>
+    <tr><th>Alumno</th><th>Situacion</th><th>Promedio General</th></tr>
+    <tr><td><span class="sub"><? echo $datos["alumno"]["nombre"]." ".$datos["alumno"]["ap"]." ".$datos["alumno"]["am"]; ?><br/><? echo $datos["alumno"]["codigo"]?></span><br/><span style="color: rgb(119, 119, 119);" class="sub"><? echo $datos["alumno"]["grado"].$datos["alumno"]["letra"];?> <?php echo $escolar->regresaTurno($datos["alumno"]["turno"]); ?></span></td><td><span style="color: rgb(119, 119, 119);" class="sub"><? echo $datos["alumno"]["situacion"]?></span></td><td><?php echo $datos["alumno"]["promedio"] ?></td></tr>
+</table>
+</div>
+<br/>
+
+<h3>Ciclo <?php echo $datos["cicloActivo"]["numero"];  ?></h3>
+<br/>
+<div>
+<table>
+<tr><th>Materia</th><th>Asistencias</th><th>Parciales</th><th>Final</th></tr>
+<?php
+$cont=0;
+foreach($cursos as $curso){
+    $estilo="no_odd";
+    if($cont%2==0)
+    $estilo="odd";
+
+    ?>
+
+    <tr class="<?php echo $estilo ?>" >
+        <td><span class="sub"><?php echo $curso["materia_nombre"]; ?></span></td>
+        <td><?php
+        if($curso["asistencias"]>79){
+                        $num=number_format($curso["asistencias"], 2, '.', '');
+            $cifra=explode('.',$num);
+
+            if($cifra[1]==0)
+            $num=$cifra[0];
+            echo $num."%";
+        }elseif($curso["asistencias"]>59){
+
+            $num=number_format($curso["asistencias"], 2, '.', '');
+            $cifra=explode('.',$num);
+
+            if($cifra[1]==0)
+            $num=$cifra[0];
+
+
+            echo '<span class="extraordinario">'.$num."%</span>";
+
+            }else{
+            if($curso["asistencias"]!=""){
+            $num=number_format($curso["asistencias"], 2, '.', '');
+            $cifra=explode('.',$num);
+
+            if($cifra[1]==0)
+            $num=$cifra[0];
+
+
+            echo '<span class="alerta">'.$num."%</span>";
+            }else{
+            echo "-";
+            }
+
+            }?></td>
+
+        <td><?php
+        if($curso["parciales"]>79){
+            $num=number_format($curso["parciales"], 2, '.', '');
+            $cifra=explode('.',$num);
+
+            if($cifra[1]==0)
+            $num=$cifra[0];
+             echo $num;
+         }elseif($curso["parciales"]>59){
+
+            $num=number_format($curso["parciales"], 2, '.', '');
+            $cifra=explode('.',$num);
+
+            if($cifra[1]==0)
+            $num=$cifra[0];
+            echo '<span class="extraordinario">'.$num."</span>";
+
+         }else{
+            if($curso["parciales"]!=""){
+            $num=number_format($curso["parciales"], 2, '.', '');
+            $cifra=explode('.',$num);
+
+            if($cifra[1]==0)
+            $num=$cifra[0];
+            echo '<span class="alerta">'.$num."</span>";
+            }else{
+            echo '-';
+            }
+         }?></td>
+
+        <td><?php
+        if(trim($curso["ordinario"])!=''){
+        if ($curso["ordinario"]=="A"){
+        echo $curso["ordinario"].' Ordinario';
+        }elseif ($curso["ordinario"]=="NA" || $curso["ordinario"]=="SD"){
+            echo '<span class="alerta">'.$curso["ordinario"]." Ordinario</span>";
+        }elseif($curso["ordinario"]<60){
+            $num=number_format($curso["ordinario"], 2, '.', '');
+            $cifra=explode('.',$num);
+
+            if($cifra[1]==0)
+            $num=$cifra[0];
+            echo '<span class="alerta">'.$num." Ordinario</span>";
+        }else{
+            if($curso["ordinario"]!=""){
+             $num=number_format($curso["ordinario"], 2, '.', '');
+            $cifra=explode('.',$num);
+
+            if($cifra[1]==0)
+            $num=$cifra[0];
+             echo $num.' Ordinario';
+            }else{
+            echo "-";
+            }
+        }
+         }else{
+             echo "-";
+         }
+
+         if(trim($curso["extra"])!=""){
+
+            if ($curso["extra"]=="A"){
+            echo $curso["extra"].' Extraordinario';
+            }elseif ($curso["extra"]=="NA" || $curso["extra"]=="SD"){
+                echo '<span class="alerta">'.$curso["extra"]." Extraordinario</span>";
+            }elseif($curso["extra"]<60){
+                 $num=number_format($curso["extra"], 2, '.', '');
+                $cifra=explode('.',$num);
+
+                if($cifra[1]==0)
+                $num=$cifra[0];
+                echo '<span class="alerta">/</span> <br/><span class="alerta">'.$num." Extraordinario</span>";
+            }else{
+                 $num=number_format($curso["extra"], 2, '.', '');
+                $cifra=explode('.',$num);
+
+                if($cifra[1]==0)
+                $num=$cifra[0];
+             echo '/ <br/>'.$num.' Extraordinario';
+             }
+         }else{
+             echo "-";
+         }
+
+         $cont++;
+         ?></td></tr>
+<?php
+}
+?>
+</table>
+</div>
+
+<?php  }else{ ?>
+    <br/>
+    <p class="infoBox"><br/>No existen datos del alumno del ciclo actual para mostrar en el resumen.</p>
+<?php  } ?>

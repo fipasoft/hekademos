@@ -1,0 +1,74 @@
+<h1>Accesos del dia <?php echo $accesos["fecha"]; ?></h1>
+<div id="options-bar">
+    <div id="options">
+    <a title="Volver a inicio." class="submenu" href="<?php echo KUMBIA_PATH?>escolar/inicio">Volver <img src="<?php  echo KUMBIA_PATH?>img/sp5/volver.png" alt="Volver a inicio"/></a>
+    <?php if($accesos["valido"]==true){?>
+    /
+    <a href="<?php echo KUMBIA_PATH; ?>escolar/pdf/accesos/<?php echo $accesos["date"]; ?>">Descargar <img src="<?php  echo KUMBIA_PATH?>img/sp5/pdf.gif" alt="Descargar pdf." /></a>
+    /
+    <a href="javascript:;" id="fecha" >Buscar <img src="<?php  echo KUMBIA_PATH?>img/sp5/calendario.png" alt="Buscar fecha." /></a>
+    <?php } ?>
+    </div>
+</div>
+
+<br/>
+<input type="hidden" name="kumbia_path" id="kumbia_path"  value="<?php echo KUMBIA_PATH ?>"/>
+<input type="hidden" name="dia" id="dia" value="<?php echo $accesos["date"]; ?>"/>
+<div id="ficha">
+<table>
+<tr><th>Código</th><td><?php echo $alumno["codigo"];  ?></td><th>Nombre</th><td><?php echo $alumno["nombre"]." ".$alumno["ap"]." ".$alumno["am"];  ?></td></tr>
+</table>
+</div>
+<br/>
+<?php //var_dump($accesos); ?>
+<?php if($accesos["valido"]==true){?>
+<?php
+        $eventos=$accesos["eventos"];
+        if(count($eventos)>0){ ?>
+            <h2>El alumno cuenta con <?php echo $accesos["entradas"]; ?> entrada<?php echo ($accesos["entradas"]==1? "" : "s"); ?> y <?php echo $accesos["salidas"]; ?> salida<?php echo ($accesos["salidas"]==1? "" : "s"); ?>.</h2>
+            <br/>
+            <table>
+            <tr><th>Evento</th><th>Hora</th><th>Puerta</th></tr>
+            <?php
+                $i = 0;
+                foreach($eventos as $evento){
+                        ?>
+                <tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+                <?php $tipo=utf8_encode(substr($evento->DoorNumberText,0,strlen($evento->DoorNumberText)-2)); ?>
+                <td style="text-align:center">
+                <span class="t<?php echo $evento->PodDoorIndex; ?>">
+                <?php echo $evento->tipo();?>
+                </span>
+                </td>
+                <td style="text-align:center">
+                <span class="t<?php echo $evento->PodDoorIndex; ?>" >
+                <?php echo $evento->fecha->format("H:i:s");?>
+                </span>
+                </td>
+                <td style="text-align:center">
+                <span class="t<?php echo $evento->PodDoorIndex; ?>">
+                <?php echo $evento->DoorNumberText;?>
+                </span>
+                <br/>
+                <span class="sub" style="color: rgb(119, 119, 119);">
+                <?php echo utf8_encode($evento->AreaNumberText);?>
+                </span>
+                </td>
+                </tr>
+            <?php
+            $i++;
+                }
+              ?>
+        </table>
+<?php }else{?>
+    <p class="infoBox">
+    <br/>
+    El alumno no cuenta con ningun acceso el <?php echo $accesos["fecha"]; ?>.
+    </p>
+<?php }?>
+<?php }else{?>
+    <p class="errorBox">
+    <br/>
+    <?php echo $accesos["error"]; ?>
+    </p>
+<?php }?>

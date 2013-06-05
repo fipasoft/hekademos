@@ -1,0 +1,184 @@
+/**
+ * Establece el estilo del menu principal
+ */
+#menu
+{
+padding-left:20px;
+border-top: 0px solid #333333;
+border-bottom: 1px solid #aaaaaa;
+background-color: #ECD5FF;
+height:18px;
+margin: 0;
+padding-top:1px;
+width:98%;
+height:18px;
+background-color: #C1D82F;
+border-bottom-left-radius: 10px;
+border-bottom-right-radius: 10px;
+}
+#menu a, #menu a:link, #menu a:visited
+{
+color: #533A54;
+border: 0px solid #ECD5FF;
+padding: 1px;
+padding-left: 0.5em;
+padding-right: 0.5em;
+font-weight: bold;
+text-decoration: none;
+}
+#menu a:hover, #menu a:active, #menu a:focus
+{   
+color: #533A54;
+border: 0px solid #aaaaaa;
+border-bottom-color:#EEC6FF;
+border-top-color:#EEC6FF;
+padding-left: 0.5em;
+padding-right: 0.5em;
+text-decoration: none;
+background-color: #566C11;
+}
+#menu a:hover{
+   color:#FFFFFF;
+ }
+#menu li
+{
+padding-right: 1px;
+display: inline;
+}
+#menu ul
+{
+margin: 0px;
+padding: 0px;
+}
+#menu #active a 
+{
+color:#FFFFFF;
+background-color: #566C11;
+border-color: #aaaaaa;
+border-top-color: #FFF982;
+border-bottom-color: #FFF982;
+border-radius: 5px;
+}
+#menu #active a:hover, #menu #active a:focus
+{
+background-color: #566C11;
+border-color: #aaaaaa;
+border-top-color: #FFDE6F;
+border-bottom-color: #FFDE6F;
+color:#FFFFFF;
+border-radius: 5px;
+}
+#menu a:hover{
+    border-radius: 5px;
+}
+/**
+ * Almacena el nombre del usuario y las opciones para manejar su sesion.
+ */
+#control {
+    background-color: #DCEBB9;
+    border: 1px solid #CCCCCC;
+    float: right;
+    font-size: 0.9em;
+    height: 20px;
+    margin-right: -110px;
+    margin-top: -75px;
+    padding-left: 3px;
+    padding-right: 3px;
+    position: relative;
+    text-align: right; 
+}
+ #control a:link {
+    color: #0A2152;
+    color: #533a54;
+    text-decoration:none;
+ }
+ #control a:visited {
+    color: #0A2152;
+    color: #533a54;
+    text-decoration:none;
+ }
+#control a:hover{
+color: #CC3333;
+}
+/*Barra de opciones*/
+#options-bar
+{
+background-color: white;
+font-size: 0.9em;
+margin-bottom: 15px;
+padding: 0 3px;
+text-align:right;
+}
+#options-bar fieldset{
+border: 0;
+margin:0;
+padding: 0;
+}
+#options-bar form{
+margin:0;
+padding: 0;
+}
+#options{
+margin: 0 0 7px 0;
+padding-right: 3px;
+}
+#options a, #options a:visited{
+text-decoration: none;
+color: #533a54;
+}
+#options a:hover{
+color: #826c88;
+}
+/*Paginador*/
+#pages{
+color: #777;
+margin-top: 15px;
+text-align: center;
+}
+#pages a, #pages a:hover, #pages a:visited, #pages a:active{
+border: 1px #999999 solid;
+color: #999999;
+margin: 0 1px 0 3px;
+padding: 0 1px 0 3px;
+text-align: right;
+text-decoration: none;
+}
+#pages a:hover{
+border-color: #996699;
+background-color: #EAD2FF;
+color: #996699;
+}
+#pages a.activo{
+border: 0;
+color: #999999;
+}
+#pages a.activo:hover{
+background: none;
+}
+/* etiqueta */
+div.filter-lab{
+color: #C4BE00;
+background-color: #FFFFCC;
+border: 0px #FFFF00 solid;
+display:inline;
+font-weight: bold;
+font-size: 0.5em;
+width:auto;
+}
+div.content td a{
+text-decoration: none;  
+}
+div.content td a:link{
+    text-decoration: none;
+    color:#533a54;
+}
+
+div.content td a:visited
+{
+    color:#533a54;
+}
+
+div.content td a:hover,code,pre
+{
+    color:#826c88;
+ }

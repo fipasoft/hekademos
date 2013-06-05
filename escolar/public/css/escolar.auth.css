@@ -1,0 +1,9 @@
+
+#btn{
+    width: 80px;
+    height: 27px;
+    color:#FFF;
+    font-weight: bolder;
+    background-image: url('img/b_entrar.png');
+    border-radius: 5px;
+ }
