@@ -1,10 +1,10 @@
 <?php 
 
 /** Kumbia - PHP Rapid Development Framework *****************************
-*	
-* Copyright (C) 2005-2007 Andrés Felipe Gutiérrez (andresfelipe at vagoogle.net)
+*    
+* Copyright (C) 2005-2007 Andrï¿½s Felipe Gutiï¿½rrez (andresfelipe at vagoogle.net)
 * Copyright (C) 2007-2007 Emilio Rafael Silveira Tovar (emilio.rst@gmail.com)
-* 	
+*     
 * This framework is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
 * License as published by the Free Software Foundation; either
@@ -20,16 +20,16 @@
 * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 * 
 * Este framework es software libre; puedes redistribuirlo y/o modificarlo
-* bajo los terminos de la licencia pública general GNU tal y como fue publicada
-* por la Fundación del Software Libre; desde la versión 2.1 o cualquier
-* versión superior.
+* bajo los terminos de la licencia pï¿½blica general GNU tal y como fue publicada
+* por la Fundaciï¿½n del Software Libre; desde la versiï¿½n 2.1 o cualquier
+* versiï¿½n superior.
 * 
 * Este framework es distribuido con la esperanza de ser util pero SIN NINGUN 
-* TIPO DE GARANTIA; dejando atrás su LADO MERCANTIL o PARA FAVORECER ALGUN
-* FIN EN PARTICULAR. Lee la licencia publica general para más detalles.
+* TIPO DE GARANTIA; dejando atrï¿½s su LADO MERCANTIL o PARA FAVORECER ALGUN
+* FIN EN PARTICULAR. Lee la licencia publica general para mï¿½s detalles.
 * 
-* Debes recibir una copia de la Licencia Pública General GNU junto con este
-* framework, si no es asi, escribe a Fundación del Software Libre Inc.,
+* Debes recibir una copia de la Licencia Pï¿½blica General GNU junto con este
+* framework, si no es asi, escribe a Fundaciï¿½n del Software Libre Inc.,
 * 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
 *****************************************************************************/
 //Load Session
@@ -52,27 +52,27 @@ $_POST['action'] = $_GET['action'] = $_REQUEST['action'];
 $_POST['controller'] = $_GET['controller'] = $_REQUEST['controller'];
 
 /**
- * Kumbia reinicia las variables de aplicación cuando cambiamos 
- * entre una aplicación y otra
+ * Kumbia reinicia las variables de aplicaciï¿½n cuando cambiamos 
+ * entre una aplicaciï¿½n y otra
  */
 chdir('..');
 $delete_session_cache = false;
 $path = join(array_slice(split( "/" ,dirname($_SERVER['PHP_SELF'])),1,-1),"/");
 if($path!=$_SESSION['KUMBIA_PATH']){
-	$delete_session_cache = true;
+    $delete_session_cache = true;
 }
 $_SESSION['KUMBIA_PATH'] = $path;
 if($_SESSION['KUMBIA_PATH']){
-	define('KUMBIA_PATH', "/".$_SESSION['KUMBIA_PATH']."/"); 
+    define('KUMBIA_PATH', "/".$_SESSION['KUMBIA_PATH']."/"); 
 } else {
-	define('KUMBIA_PATH', "/"); 
+    define('KUMBIA_PATH', "/"); 
 }
 
 
 require "forms.php";
 if($delete_session_cache){
-	Kumbia::$models = array();
-	Kumbia::$controller = null;
+    Kumbia::$models = array();
+    Kumbia::$controller = null;
 }
 Kumbia::main(); 
 
