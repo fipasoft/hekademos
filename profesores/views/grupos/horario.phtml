@@ -1,0 +1,106 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+        <h1>Horarios</h1>
+        <?php switch($option) {
+                case 'vista': ?>
+                    <h2>
+                        <?php echo $grupo->grado . '&deg;' . $grupo->letra . ' ' . $grupo->verTurno(); ?>
+                    </h2>
+                    <h2><?php echo  $grupo->verOferta(); ?></h2>
+                    <h2 class="info">
+                        <?php echo $nCursos ?>
+                        Curso<?php echo ($nCursos == 1 ? '' : 's') ?>
+                        registrado<?php echo ($nCursos == 1 ? '' : 's') ?>
+                    </h2>
+                    <div id="options-bar">
+                        <div id="options">
+                            <a href="<?php echo $path . 'grupos/ver/' . $grupo->id ?>"
+                               alt="Volver al resumen"
+                               title="Volver al resumen">Volver a grupo
+                            <img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+                        </div>
+                    </div>
+                    <table>
+                        <tr>
+                            <th rowspan="2">Materia</th>
+                            <th rowspan="2">Profesor</th>
+                            <th colspan="6">Horario</th>
+                        </tr>
+                        <tr>
+                            <th class="sub">Lunes</th>
+                            <th class="sub">Martes</th>
+                            <th class="sub">Mi&eacute;rcoles</th>
+                            <th class="sub">Jueves</th>
+                            <th class="sub">Viernes</th>
+                            <th class="sub">S&aacute;bado</th>
+                        </tr>
+                        <?php
+                            $i = 0;
+                            foreach($cursos as $curso){
+                                if($curso->aprobado() && ($curso->asignado() || $grupo->estutor())){
+                        ?>
+                        <tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+                            <td>
+                                <a href="<?php echo $path . 'grupos/curso/' . $curso->id ?>"
+                                   alt="Ver datos del curso" title="Ver datos del curso">
+                                    <?php echo $curso->materia ?>
+                                </a>
+                                <br />
+                                <span class="sub"><?php echo $curso->verMateriaTipo() ?></span>
+                            </td>
+                            <td><?php echo $curso->profesor ?></td>
+                            <?php for($d=1; $d<7; $d++){
+                            ?>
+                                <td>
+                                    <?php if($horario = $curso->horario($d)){?>
+                                        <span class="main"><?php echo substr($horario->inicio, 0, 5) . '-' .
+                                                   substr($horario->fin, 0, 5) ?>
+                                        </span>
+                                        <br />
+                                        <span class="sub"><?php echo $horario->aulaClave() ?></span>
+                                    <?php }else{ ?>
+                                        <span class="main">-</span>
+                                    <?php } ?>
+                                </td>
+                            <?php } ?>
+                        </tr>
+                        <?php
+                        $i++;
+                                }
+
+                        }
+                        ?>
+                    </table>
+                <?php break; ?>
+                <?php case 'alert': ?>
+                    <div id="options-bar">
+                        <div id="options">
+                            <a href="<?php echo $path . 'grupos/ver/' . $grupo->id ?>"
+                               alt="Volver al resumen"
+                               title="Volver al resumen">Volver a grupo
+                            <img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+                        </div>
+                    </div>
+                    <p class="info">
+                        <br />
+                        <?php echo $alert ?>
+                    </p>
+                <?php  break; ?>
+                <?php case 'error':
+                      default:
+                ?>
+                    <div id="options-bar">
+                        <div id="options">
+                            <a href="<?php echo $path . 'grupos' ?>">Volver a grupos
+                            <img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+                        </div>
+                    </div>
+                    <p class="error">
+                        <br />
+                        <?php echo $error ?>
+                    </p>
+                <?php  break; ?>
+        <?php } ?>
+    </div>
+</div>

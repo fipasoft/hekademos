@@ -1,0 +1,120 @@
+<?php
+// sp5, Creado el 2/11/2008
+/**
+ * selector
+ *
+ * @package    SP5 Vistas
+ * @author     mimeks <mimex@fipasoft.com.mx>
+ * @copyright  2008 FiPa Software (contacto at fipasoft.com.mx)
+ * @license    http://www.gnu.org/licenses/gpl.html  GNU General Public License (GPL)
+ *
+ */
+
+ $path = KUMBIA_PATH;
+?>
+<div id="primary">
+    <div class="content">
+        <h1><?php echo $accion_hdr ?> asistencias</h1>
+        <h2><?php echo $curso->verMateriaNombre()?>
+            <?php
+                if($grupo->estutor()){
+                ?>
+                <span class="sub">{Tutor}</span>
+            <?php
+                }
+             ?>
+                 <?php
+                if($curso->asignado()){
+                ?>
+                    <span class="sub"style=" color: rgb(119, 119, 119);">{Profesor}</span>
+                <?php
+                    }
+                 ?>
+        </h2>
+        <h2><?php echo 'Prof. ' . $curso->verProfesor() ?></h2>
+        <h2>
+            <?php echo $grupo->grado .'&deg;' .  $grupo->letra .  ' ' .
+                       $grupo->verTurno() . ', ' . $ciclo->numero?>
+        </h2>
+        <h2><?php echo  $grupo->verOferta(); ?></h2>
+        <?php switch($option) {
+                case 'selector': ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path . 'asistencias/ver/' . $curso->id ?>">Volver a asistencias
+                        <img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+                    </div>
+                </div>
+                <div id="asistencias">
+                    <form name="frm_selector" id="frm_selector" method="post" action="<?php echo $path . 'asistencias/' . $accion2?>">
+                        <fieldset>
+                        <legend>Seleccionar fechas</legend>
+
+                            <?php $i = 1 ?>
+                            <?php $j = 1 ?>
+                            <?php foreach($fechas as $mes => $dias){ ?>
+                                <h4>
+                                    <a  id="a_<?php echo $j ?>"
+                                        title="Seleccionar todos los d&iacute;as para <?php echo $mes?>"
+                                        class="select_all"
+                                        href="#">
+                                        <?php echo $mes ?>
+                                    </a>
+                                </h4>
+                                <table id="tbl_<?php echo $j ?>">
+                                <?php $j++ ?>
+                                <?php foreach($dias as $fecha){?>
+                                    <tr id="row_<?php echo $i ?>">
+                                        <td><?php echo $fecha->diaSemana() ?></td>
+                                        <td>
+                                            <input type="checkbox" name="fechas[]"
+                                                   class="chk_fechas"
+                                                   id="chk_<?php echo $i?>"
+                                                   value="<?php echo $fecha->dia ?>"
+                                            />
+                                        </td>
+                                        <?php $i ++;?>
+                                    </tr>
+                                <?php } ?>
+                                </table>
+                            <?php } ?>
+
+                        </fieldset>
+                        <input type="hidden" name="cursos_id" value="<?php echo $curso->id?>" />
+                        <div class="botones">
+                                <input type="submit" value="<?php echo $accion_hdr ?>" />
+                        </div>
+                    </form>
+                </div>
+                <?php  break; ?>
+                <?php case 'alert':
+                      default:
+                ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path . 'asistencias/ver/' . $curso->id ?>">Volver a asistencias
+                        <img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+                    </div>
+                </div>
+                <p class="info">
+                    <br />
+                    <?php echo $alert ?>
+                </p>
+                <?php  break; ?>
+                <?php case 'error':
+                      default:
+                ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path . 'grupos' ?>">Volver a grupos
+                        <img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+                    </div>
+                </div>
+                <p class="error">
+                    <br />
+                    <?php echo $error ?>
+                </p>
+                <?php  break; ?>
+        <?php } ?>
+    </div>
+</div>

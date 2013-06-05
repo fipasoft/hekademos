@@ -1,0 +1,20 @@
+.content tr.odd td.estado_1, .content td.odd td.estado_1 { background-color:#DDDDFF; }
+.content tr.odd td.estado_2, .content td.odd td.estado_2 {background-color:#ff9;}
+.content tr.odd td.estado_3, .content td.odd td.estado_3 {background-color:#CCFF99;}
+.content tr.odd td.estado_4, .content td.odd td.estado_4 {background-color:#FFCC99;}
+
+ td.estado_1 { background-color:#DDDDFF; }
+ td.estado_2 {background-color:#ff9;}
+ td.estado_3 {background-color:#CCFF99;}
+ td.estado_4{background-color:#FFCC99;}
+
+
+.no_estado_1 { background-color:#DDDDFF; }
+.no_estado_2 {background-color:#ff9;}
+.no_estado_3 {background-color:#CCFF99;}
+.no_estado_4{background-color:#FFCC99;}
+
+.content tr.odd td.no_estado_1, .content td.odd td.no_estado_1 { background-color:#DDDDFF; }
+.content tr.odd td.no_estado_2, .content td.odd td.no_estado_2 {background-color:#ff9;}
+.content tr.odd td.no_estado_3, .content td.odd td.no_estado_3 {background-color:#CCFF99;}
+.content tr.odd td.no_estado_4, .content td.odd td.no_estado_4 {background-color:#FFCC99;}

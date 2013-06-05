@@ -1,0 +1,8 @@
+div.content h2{
+color: #777;
+font-size: 0.9em;
+margin-top: 0;
+}
+div.content fieldset{width:200px;}
+#botones{width: 220px;}
+div.content div.check{margin-right:0px;}
