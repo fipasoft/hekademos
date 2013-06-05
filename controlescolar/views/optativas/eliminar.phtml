@@ -1,40 +1,40 @@
 <?php $path = KUMBIA_PATH; ?>
 <div id="primary">
-	<div class="content">
-		<h1>Eliminar <?php echo $tipo; ?> del periodo <?php echo $ciclo->numero; ?></h1>
-		<?php if($option!="error"){ ?>
-		<h2>Inicia el <?php echo Utils::fecha_espanol(substr($periodo->inicio,0,10)); ?> a las <?php echo substr($periodo->inicio,10,6); ?></h2>
-		<h2>Finaliza el <?php echo Utils::fecha_espanol(substr($periodo->fin,0,10)); ?> a las <?php echo substr($periodo->fin,10,6); ?></h2>
-		<h2><?php echo ($periodo->activo==1? "Activo" : "Inactivo"); ?></h2>
+    <div class="content">
+        <h1>Eliminar <?php echo $tipo; ?> del periodo <?php echo $ciclo->numero; ?></h1>
+        <?php if($option!="error"){ ?>
+        <h2>Inicia el <?php echo Utils::fecha_espanol(substr($periodo->inicio,0,10)); ?> a las <?php echo substr($periodo->inicio,10,6); ?></h2>
+        <h2>Finaliza el <?php echo Utils::fecha_espanol(substr($periodo->fin,0,10)); ?> a las <?php echo substr($periodo->fin,10,6); ?></h2>
+        <h2><?php echo ($periodo->activo==1? "Activo" : "Inactivo"); ?></h2>
 
-		<div id="options-bar">
-			<div id="options">
-			<?php if($option!="error"){ ?>
-				<a href="<?php echo $path ?>optativas/<?php echo $tipo; ?>/<?php echo $periodo->id; ?>">Volver a <?php echo $tipo; ?>
-				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
-				</a>
-			<?php } ?>
-			</div>
-		</div>
-		<?php } ?>
-		<?php switch($option) {
-				case 'vista': ?>
+        <div id="options-bar">
+            <div id="options">
+            <?php if($option!="error"){ ?>
+                <a href="<?php echo $path ?>optativas/<?php echo $tipo; ?>/<?php echo $periodo->id; ?>">Volver a <?php echo $tipo; ?>
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+            <?php } ?>
+            </div>
+        </div>
+        <?php } ?>
+        <?php switch($option) {
+                case 'vista': ?>
 
-			<?php  break; ?>
-			<?php case 'cursos': ?>
-				<p class="info"><br />Cursos removidos con exito.</p>
-			<?php  break; ?>
-			<?php case 'alumnos': ?>
-				<p class="info"><br />Alumnos removidos con exito.</p>
-			<?php  break; ?>
+            <?php  break; ?>
+            <?php case 'cursos': ?>
+                <p class="info"><br />Cursos removidos con exito.</p>
+            <?php  break; ?>
+            <?php case 'alumnos': ?>
+                <p class="info"><br />Alumnos removidos con exito.</p>
+            <?php  break; ?>
 
-			<?php case 'error':
-				  default:
-			?>
-				<p class="error"><br />Ha ocurrido un error en el modulo optativas.<br />
-				<?php echo $error ?>
-				</p>
-			<?php  break; ?>
-		<?php } ?>
-	</div>
+            <?php case 'error':
+                  default:
+            ?>
+                <p class="error"><br />Ha ocurrido un error en el modulo optativas.<br />
+                <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
 </div>

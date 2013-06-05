@@ -136,17 +136,17 @@ class Spreadsheet_Excel_Reader {
     *  set mb if you would like use 'mb_convert_encoding' for encode UTF-16LE to your encoding
     */
     function setUTFEncoder($encoder = 'iconv'){
-    	$this->_encoderFunction = '';
-    	if ($encoder == 'iconv'){
-        	$this->_encoderFunction = function_exists('iconv') ? 'iconv' : '';
+        $this->_encoderFunction = '';
+        if ($encoder == 'iconv'){
+            $this->_encoderFunction = function_exists('iconv') ? 'iconv' : '';
         }elseif ($encoder == 'mb') {
-        	$this->_encoderFunction = function_exists('mb_convert_encoding') ? 'mb_convert_encoding' : '';
-    	}
+            $this->_encoderFunction = function_exists('mb_convert_encoding') ? 'mb_convert_encoding' : '';
+        }
     }
 
     function setRowColOffset($iOffset){
         $this->_rowoffset = $iOffset;
-		$this->_coloffset = $iOffset;
+        $this->_coloffset = $iOffset;
     }
 
     function setDefaultFormat($sFormat){
@@ -159,18 +159,18 @@ class Spreadsheet_Excel_Reader {
 
 
     function read($sFileName) {
-    	$errlevel = error_reporting();
-    	error_reporting($errlevel ^ E_NOTICE);
+        $errlevel = error_reporting();
+        error_reporting($errlevel ^ E_NOTICE);
         $res = $this->_ole->read($sFileName);
         
         // oops, something goes wrong (Darko Miljanovic)
         if($res === false) {
-        	// check error code
-        	if($this->_ole->error == 1) {
-        	// bad file
-        		die('The filename ' . $sFileName . ' is not readable');	
-        	}
-        	// check other error codes here (eg bad fileformat, etc...)
+            // check error code
+            if($this->_ole->error == 1) {
+            // bad file
+                die('The filename ' . $sFileName . ' is not readable');    
+            }
+            // check other error codes here (eg bad fileformat, etc...)
         }
 
         $this->data = $this->_ole->getWorkBook();
@@ -180,7 +180,7 @@ class Spreadsheet_Excel_Reader {
         $res = $this->_ole->read($sFileName);
 
         if ($this->isError($res)) {
-//		var_dump($res);		
+//        var_dump($res);        
             return $this->raiseError($res);
         }
 
@@ -201,13 +201,13 @@ class Spreadsheet_Excel_Reader {
         }
         
         */
-		
-		//var_dump($this->data);
-	//echo "data =".$this->data;	
+        
+        //var_dump($this->data);
+    //echo "data =".$this->data;    
         $this->pos = 0;
         //$this->readRecords();
         $this->_parse();
-    	error_reporting($errlevel);
+        error_reporting($errlevel);
 
     }
 
@@ -402,8 +402,8 @@ class Spreadsheet_Excel_Reader {
                         }else{
                             $isdate = FALSE;
                             if ($indexCode > 0){
-                            	if (isset($this->formatRecords[$indexCode]))
-                                	$formatstr = $this->formatRecords[$indexCode];
+                                if (isset($this->formatRecords[$indexCode]))
+                                    $formatstr = $this->formatRecords[$indexCode];
                                 //echo '.other.';
                                 //echo "\ndate-time=$formatstr=\n";
                                 if ($formatstr)
@@ -494,7 +494,7 @@ class Spreadsheet_Excel_Reader {
         //echo "Start parse code=".base_convert($code,10,16)." version=".base_convert($version,10,16)." substreamType=".base_convert($substreamType,10,16).""."\n";
         $spos += $length + 4;
         //var_dump($this->formatRecords);
-	//echo "code $code $length";
+    //echo "code $code $length";
         while($cont) {
             //echo "mem= ".memory_get_usage()."\n";
 //            $r = &$this->file->nextRecord();
@@ -565,7 +565,7 @@ class Spreadsheet_Excel_Reader {
                         $column     = ord($this->data[$spos+2]) | ord($this->data[$spos+3])<<8;
                         $xfindex    = ord($this->data[$spos+4]) | ord($this->data[$spos+5])<<8;
                         $index  = $this->_GetInt4d($this->data, $spos + 6);
-			//var_dump($this->sst);
+            //var_dump($this->sst);
                         $this->addcell($row, $column, $this->sst[$index]);
                         //echo "LabelSST $row $column $string\n";
                     break;
@@ -620,35 +620,35 @@ class Spreadsheet_Excel_Reader {
                 case Spreadsheet_Excel_Reader_Type_FORMULA2:
                     $row    = ord($this->data[$spos]) | ord($this->data[$spos+1])<<8;
                     $column = ord($this->data[$spos+2]) | ord($this->data[$spos+3])<<8;
-					if ((ord($this->data[$spos+6])==0) && (ord($this->data[$spos+12])==255) && (ord($this->data[$spos+13])==255)) {
-						//String formula. Result follows in a STRING record
-					    //echo "FORMULA $row $column Formula with a string<br>\n";
-					} elseif ((ord($this->data[$spos+6])==1) && (ord($this->data[$spos+12])==255) && (ord($this->data[$spos+13])==255)) {
-						//Boolean formula. Result is in +2; 0=false,1=true
-					} elseif ((ord($this->data[$spos+6])==2) && (ord($this->data[$spos+12])==255) && (ord($this->data[$spos+13])==255)) {
-						//Error formula. Error code is in +2;
-					} elseif ((ord($this->data[$spos+6])==3) && (ord($this->data[$spos+12])==255) && (ord($this->data[$spos+13])==255)) {
-						//Formula result is a null string.
-					} else {
-						// result is a number, so first 14 bytes are just like a _NUMBER record
-	                    $tmp = unpack("ddouble", substr($this->data, $spos + 6, 8)); // It machine machine dependent
-	                    if ($this->isDate($spos)) {
-	                        list($string, $raw) = $this->createDate($tmp['double']);
-	                     //   $this->addcell(DateRecord($r, 1));
-	                    }else{
-	                        //$raw = $tmp[''];
-	                        if (isset($this->_columnsFormat[$column + 1])){
-	                                $this->curformat = $this->_columnsFormat[$column + 1];
-	                        }
-	                        $raw = $this->createNumber($spos);
-							$string = sprintf($this->curformat, $raw * $this->multiplier);
-	
-	                     //   $this->addcell(NumberRecord($r));
-	                    }
-	                    $this->addcell($row, $column, $string, $raw);
-	                    //echo "Number $row $column $string\n";
-					}
-					break;                    
+                    if ((ord($this->data[$spos+6])==0) && (ord($this->data[$spos+12])==255) && (ord($this->data[$spos+13])==255)) {
+                        //String formula. Result follows in a STRING record
+                        //echo "FORMULA $row $column Formula with a string<br>\n";
+                    } elseif ((ord($this->data[$spos+6])==1) && (ord($this->data[$spos+12])==255) && (ord($this->data[$spos+13])==255)) {
+                        //Boolean formula. Result is in +2; 0=false,1=true
+                    } elseif ((ord($this->data[$spos+6])==2) && (ord($this->data[$spos+12])==255) && (ord($this->data[$spos+13])==255)) {
+                        //Error formula. Error code is in +2;
+                    } elseif ((ord($this->data[$spos+6])==3) && (ord($this->data[$spos+12])==255) && (ord($this->data[$spos+13])==255)) {
+                        //Formula result is a null string.
+                    } else {
+                        // result is a number, so first 14 bytes are just like a _NUMBER record
+                        $tmp = unpack("ddouble", substr($this->data, $spos + 6, 8)); // It machine machine dependent
+                        if ($this->isDate($spos)) {
+                            list($string, $raw) = $this->createDate($tmp['double']);
+                         //   $this->addcell(DateRecord($r, 1));
+                        }else{
+                            //$raw = $tmp[''];
+                            if (isset($this->_columnsFormat[$column + 1])){
+                                    $this->curformat = $this->_columnsFormat[$column + 1];
+                            }
+                            $raw = $this->createNumber($spos);
+                            $string = sprintf($this->curformat, $raw * $this->multiplier);
+    
+                         //   $this->addcell(NumberRecord($r));
+                        }
+                        $this->addcell($row, $column, $string, $raw);
+                        //echo "Number $row $column $string\n";
+                    }
+                    break;                    
                 case Spreadsheet_Excel_Reader_Type_BOOLERR:
                     $row    = ord($this->data[$spos]) | ord($this->data[$spos+1])<<8;
                     $column = ord($this->data[$spos+2]) | ord($this->data[$spos+3])<<8;
@@ -680,9 +680,9 @@ class Spreadsheet_Excel_Reader {
         }
 
         if (!isset($this->sheets[$this->sn]['numRows']))
-        	 $this->sheets[$this->sn]['numRows'] = $this->sheets[$this->sn]['maxrow'];
+             $this->sheets[$this->sn]['numRows'] = $this->sheets[$this->sn]['maxrow'];
         if (!isset($this->sheets[$this->sn]['numCols']))
-        	 $this->sheets[$this->sn]['numCols'] = $this->sheets[$this->sn]['maxcol'];
+             $this->sheets[$this->sn]['numCols'] = $this->sheets[$this->sn]['maxcol'];
 
     }
 
@@ -727,20 +727,20 @@ class Spreadsheet_Excel_Reader {
     }
 
     function createNumber($spos){
-		$rknumhigh = $this->_GetInt4d($this->data, $spos + 10);
-		$rknumlow = $this->_GetInt4d($this->data, $spos + 6);
-		//for ($i=0; $i<8; $i++) { echo ord($this->data[$i+$spos+6]) . " "; } echo "<br>";
-		$sign = ($rknumhigh & 0x80000000) >> 31;
-		$exp =  ($rknumhigh & 0x7ff00000) >> 20;
-		$mantissa = (0x100000 | ($rknumhigh & 0x000fffff));
-		$mantissalow1 = ($rknumlow & 0x80000000) >> 31;
-		$mantissalow2 = ($rknumlow & 0x7fffffff);
-		$value = $mantissa / pow( 2 , (20- ($exp - 1023)));
-		if ($mantissalow1 != 0) $value += 1 / pow (2 , (21 - ($exp - 1023)));
-		$value += $mantissalow2 / pow (2 , (52 - ($exp - 1023)));
-		//echo "Sign = $sign, Exp = $exp, mantissahighx = $mantissa, mantissalow1 = $mantissalow1, mantissalow2 = $mantissalow2<br>\n";
-		if ($sign) {$value = -1 * $value;}
-		return  $value;
+        $rknumhigh = $this->_GetInt4d($this->data, $spos + 10);
+        $rknumlow = $this->_GetInt4d($this->data, $spos + 6);
+        //for ($i=0; $i<8; $i++) { echo ord($this->data[$i+$spos+6]) . " "; } echo "<br>";
+        $sign = ($rknumhigh & 0x80000000) >> 31;
+        $exp =  ($rknumhigh & 0x7ff00000) >> 20;
+        $mantissa = (0x100000 | ($rknumhigh & 0x000fffff));
+        $mantissalow1 = ($rknumlow & 0x80000000) >> 31;
+        $mantissalow2 = ($rknumlow & 0x7fffffff);
+        $value = $mantissa / pow( 2 , (20- ($exp - 1023)));
+        if ($mantissalow1 != 0) $value += 1 / pow (2 , (21 - ($exp - 1023)));
+        $value += $mantissalow2 / pow (2 , (52 - ($exp - 1023)));
+        //echo "Sign = $sign, Exp = $exp, mantissahighx = $mantissa, mantissalow1 = $mantissalow1, mantissalow2 = $mantissalow2<br>\n";
+        if ($sign) {$value = -1 * $value;}
+        return  $value;
     }
 
     function addcell($row, $col, $string, $raw = ''){
@@ -774,12 +774,12 @@ class Spreadsheet_Excel_Reader {
 // The RK format calls for using only the most significant 30 bits of the
 // 64 bit floating point value. The other 34 bits are assumed to be 0
 // So, we use the upper 30 bits of $rknum as follows...
- 		$sign = ($rknum & 0x80000000) >> 31;
-		$exp = ($rknum & 0x7ff00000) >> 20;
-		$mantissa = (0x100000 | ($rknum & 0x000ffffc));
-		$value = $mantissa / pow( 2 , (20- ($exp - 1023)));
-		if ($sign) {$value = -1 * $value;}
-//end of changes by mmp		
+         $sign = ($rknum & 0x80000000) >> 31;
+        $exp = ($rknum & 0x7ff00000) >> 20;
+        $mantissa = (0x100000 | ($rknum & 0x000ffffc));
+        $value = $mantissa / pow( 2 , (20- ($exp - 1023)));
+        if ($sign) {$value = -1 * $value;}
+//end of changes by mmp        
 
         }
 
@@ -790,14 +790,14 @@ class Spreadsheet_Excel_Reader {
     }
 
     function _encodeUTF16($string){
-    	$result = $string;
+        $result = $string;
         if ($this->_defaultEncoding){
-        	switch ($this->_encoderFunction){
-        		case 'iconv' : 	$result = iconv('UTF-16LE', $this->_defaultEncoding, $string);
-        						break;
-        		case 'mb_convert_encoding' : 	$result = mb_convert_encoding($string, $this->_defaultEncoding, 'UTF-16LE' );
-        						break;
-        	}
+            switch ($this->_encoderFunction){
+                case 'iconv' :     $result = iconv('UTF-16LE', $this->_defaultEncoding, $string);
+                                break;
+                case 'mb_convert_encoding' :     $result = mb_convert_encoding($string, $this->_defaultEncoding, 'UTF-16LE' );
+                                break;
+            }
         }
         return $result;
     }

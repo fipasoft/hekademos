@@ -1,302 +1,302 @@
 <?php $path = KUMBIA_PATH; ?>
 <div id="primary">
-	<div class="content">
-		<h1>
-		Accesos <?php if($busqueda->condicion() != '' || $busqueda->campo('inicio')!=''|| $busqueda->campo('fin')!='') {?><div class="filter-lab">Contenido filtrado</div><?php }?>
-		</h1>
+    <div class="content">
+        <h1>
+        Accesos <?php if($busqueda->condicion() != '' || $busqueda->campo('inicio')!=''|| $busqueda->campo('fin')!='') {?><div class="filter-lab">Contenido filtrado</div><?php }?>
+        </h1>
 
-		<div id="options-bar">
-			<div id="options">
-				<a href="" id="aSearch" title="Buscar" alt="Buscar">
-					Buscar
-					<img src="<?php echo $path?>public/img/sp5/buscar.png"/>
-				</a> /
-				<?php if($conectado){ ?>
-				<?php if($acl['es']['inconsistencias']){ ?>
-				  <a href="<?php echo $path."es/inconsistencias" ?>" id="inconsistencias" title="Inconsistencias" alt="Inconsistencias">
-					Inconsistencias
-					<img src="<?php echo $path?>public/img/sp5/articulo.png"/>
-				</a> /
-				<?php } ?>
-				<a href="<?php echo $path ?>es/exportar">Exportar
-				<img src="<?php echo $path?>public/img/sp5/excel.png"/>
-				</a> /
-				<?php } ?>
-				<a href="#" id="cicloBtn" title="Cambiar de ciclo escolar" alt="Cambiar de ciclo escolar">
-					Ciclo:
-				</a>
-				<div id="cicloActual"><?php echo $ciclo->numero?></div>
-				<div id="cicloSel" style="display:none">
-					<form id="frm_ciclo" method="post" action="<?php echo $path ?>sistema/seleccionar">
-					<fieldset>
-						<input type="hidden" name="controlador" value="<?php echo $controlador ?>" />
-						<input type="hidden" name="accion" value="<?php echo $accion ?>" />
-						<select name="ciclo" id="cicloSelect">
-							<?php foreach($ciclos as $ccl){?>
-							<option value="<?php echo $ccl->id?>"
-									<?php if($ccl->id == $ciclo->id){ ?>selected="selected"<?php } ?>>
-									<?php echo $ccl->numero?>
-							</option>
-							<?php } ?>
-						</select>
-					</fieldset>
-					</form>
-				</div>
+        <div id="options-bar">
+            <div id="options">
+                <a href="" id="aSearch" title="Buscar" alt="Buscar">
+                    Buscar
+                    <img src="<?php echo $path?>public/img/sp5/buscar.png"/>
+                </a> /
+                <?php if($conectado){ ?>
+                <?php if($acl['es']['inconsistencias']){ ?>
+                  <a href="<?php echo $path."es/inconsistencias" ?>" id="inconsistencias" title="Inconsistencias" alt="Inconsistencias">
+                    Inconsistencias
+                    <img src="<?php echo $path?>public/img/sp5/articulo.png"/>
+                </a> /
+                <?php } ?>
+                <a href="<?php echo $path ?>es/exportar">Exportar
+                <img src="<?php echo $path?>public/img/sp5/excel.png"/>
+                </a> /
+                <?php } ?>
+                <a href="#" id="cicloBtn" title="Cambiar de ciclo escolar" alt="Cambiar de ciclo escolar">
+                    Ciclo:
+                </a>
+                <div id="cicloActual"><?php echo $ciclo->numero?></div>
+                <div id="cicloSel" style="display:none">
+                    <form id="frm_ciclo" method="post" action="<?php echo $path ?>sistema/seleccionar">
+                    <fieldset>
+                        <input type="hidden" name="controlador" value="<?php echo $controlador ?>" />
+                        <input type="hidden" name="accion" value="<?php echo $accion ?>" />
+                        <select name="ciclo" id="cicloSelect">
+                            <?php foreach($ciclos as $ccl){?>
+                            <option value="<?php echo $ccl->id?>"
+                                    <?php if($ccl->id == $ciclo->id){ ?>selected="selected"<?php } ?>>
+                                    <?php echo $ccl->numero?>
+                            </option>
+                            <?php } ?>
+                        </select>
+                    </fieldset>
+                    </form>
+                </div>
 
-			</div>
+            </div>
 
-			<div id="search" >
-				<form action="<?php echo $path ?>es" method="post" id="frm_search">
-					<fieldset>
-						<label for="tipo">Tipo</label>
-						<select name="tipo" id="tipo">
-							<option value="A" <?php if($busqueda->campo('tipo') == "A"){ ?>selected="selected"<?php } ?>>Alumnos</option>
-							<option value="P" <?php if($busqueda->campo('tipo') == "P"){ ?>selected="selected"<?php } ?>>Profesores</option>
-							<?php foreach($tipos as $t){ ?>
-							<option value="<?php echo $t->id; ?>" <?php if($busqueda->campo('tipo') == $t->id){ ?>selected="selected"<?php } ?>><?php echo $t->nombre ?></option>
-							<?php } ?>
-						</select>
+            <div id="search" >
+                <form action="<?php echo $path ?>es" method="post" id="frm_search">
+                    <fieldset>
+                        <label for="tipo">Tipo</label>
+                        <select name="tipo" id="tipo">
+                            <option value="A" <?php if($busqueda->campo('tipo') == "A"){ ?>selected="selected"<?php } ?>>Alumnos</option>
+                            <option value="P" <?php if($busqueda->campo('tipo') == "P"){ ?>selected="selected"<?php } ?>>Profesores</option>
+                            <?php foreach($tipos as $t){ ?>
+                            <option value="<?php echo $t->id; ?>" <?php if($busqueda->campo('tipo') == $t->id){ ?>selected="selected"<?php } ?>><?php echo $t->nombre ?></option>
+                            <?php } ?>
+                        </select>
 
-						<label for="inicio">Inicio</label>
+                        <label for="inicio">Inicio</label>
 
-						<input type="text" name="inicio" id="inicio" value="<?php
-						 	echo $inicioV;
+                        <input type="text" name="inicio" id="inicio" value="<?php
+                             echo $inicioV;
 
-						  ?>" size="16" maxlength="16" />
+                          ?>" size="16" maxlength="16" />
 
-						<label for="fin">Fin</label>
-						<input type="text" name="fin" id="fin" value="<?php
-						 	echo $finV;
+                        <label for="fin">Fin</label>
+                        <input type="text" name="fin" id="fin" value="<?php
+                             echo $finV;
 
-							 ?>" size="16" maxlength="16" />
+                             ?>" size="16" maxlength="16" />
 
-						<label for="codigo">C&oacute;digo</label>
-						<input 
-							type="text" 
-							name="codigo" 
-							id="codigo" 
-							value="<?php echo $busqueda->campo('codigo') ?>" 
-							size="20"
-							maxlength="20" />
+                        <label for="codigo">C&oacute;digo</label>
+                        <input 
+                            type="text" 
+                            name="codigo" 
+                            id="codigo" 
+                            value="<?php echo $busqueda->campo('codigo') ?>" 
+                            size="20"
+                            maxlength="20" />
 
-						<label for="nombre">Nombre</label>
-						<input type="text" name="nombre" id="nombre" value="<?php echo $busqueda->campo('nombre') ?>" size="15" maxlength="70" />
-						<br/>
-						<br/>
-						<div id="opciones_alumno" style="display:none">
-						<label for="grado">Grado</label>
-						<select name="grado" id="grado">
-							<option></option>
-							<option value="1" <?php if($busqueda->campo('grado') == 1){ ?>selected="selected"<?php } ?>>1</option>
-							<option value="2" <?php if($busqueda->campo('grado') == 2){ ?>selected="selected"<?php } ?>>2</option>
-							<option value="3" <?php if($busqueda->campo('grado') == 3){ ?>selected="selected"<?php } ?>>3</option>
-							<option value="4" <?php if($busqueda->campo('grado') == 4){ ?>selected="selected"<?php } ?>>4</option>
-							<option value="5" <?php if($busqueda->campo('grado') == 5){ ?>selected="selected"<?php } ?>>5</option>
-							<option value="6" <?php if($busqueda->campo('grado') == 6){ ?>selected="selected"<?php } ?>>6</option>
-						</select>
-						<label for="letra">Letra</label>
-						<input type="text" name="letra" id="letra" value="<?php echo $busqueda->campo('letra') ?>" size="3" maxlength="1" />
-						<label for="turno">Turno</label>
-						<select name="turno" id="turno">
-							<option></option>
-							<option value="M" <?php if($busqueda->campo('turno') == 'M'){ ?>selected="selected"<?php } ?>>M</option>
-							<option value="V" <?php if($busqueda->campo('turno') == 'V'){ ?>selected="selected"<?php } ?>>V</option>
-							<option value="N" <?php if($busqueda->campo('turno') == 'N'){ ?>selected="selected"<?php } ?>>N</option>
-						</select>
-						<label for="oferta_id">Oferta</label>
-						<select name="oferta_id" id="oferta_id">
-							<option></option>
-							<?php foreach($ofertas as $oferta){ ?>
-							<option value="<?php echo $oferta->id; ?>" <?php if($busqueda->campo('oferta_id') == $oferta->id){ ?>selected="selected"<?php } ?>><?php echo $oferta->nombre; ?></option>
-							<?php } ?>
-						</select>
-						</div>
-						<br/>
-						<input type="submit" id="btn_submit" value="Filtrar" />
-						<input type="reset" id="reset" value="Quitar filtros" />
-					</fieldset>
-				</form>
-			</div>
+                        <label for="nombre">Nombre</label>
+                        <input type="text" name="nombre" id="nombre" value="<?php echo $busqueda->campo('nombre') ?>" size="15" maxlength="70" />
+                        <br/>
+                        <br/>
+                        <div id="opciones_alumno" style="display:none">
+                        <label for="grado">Grado</label>
+                        <select name="grado" id="grado">
+                            <option></option>
+                            <option value="1" <?php if($busqueda->campo('grado') == 1){ ?>selected="selected"<?php } ?>>1</option>
+                            <option value="2" <?php if($busqueda->campo('grado') == 2){ ?>selected="selected"<?php } ?>>2</option>
+                            <option value="3" <?php if($busqueda->campo('grado') == 3){ ?>selected="selected"<?php } ?>>3</option>
+                            <option value="4" <?php if($busqueda->campo('grado') == 4){ ?>selected="selected"<?php } ?>>4</option>
+                            <option value="5" <?php if($busqueda->campo('grado') == 5){ ?>selected="selected"<?php } ?>>5</option>
+                            <option value="6" <?php if($busqueda->campo('grado') == 6){ ?>selected="selected"<?php } ?>>6</option>
+                        </select>
+                        <label for="letra">Letra</label>
+                        <input type="text" name="letra" id="letra" value="<?php echo $busqueda->campo('letra') ?>" size="3" maxlength="1" />
+                        <label for="turno">Turno</label>
+                        <select name="turno" id="turno">
+                            <option></option>
+                            <option value="M" <?php if($busqueda->campo('turno') == 'M'){ ?>selected="selected"<?php } ?>>M</option>
+                            <option value="V" <?php if($busqueda->campo('turno') == 'V'){ ?>selected="selected"<?php } ?>>V</option>
+                            <option value="N" <?php if($busqueda->campo('turno') == 'N'){ ?>selected="selected"<?php } ?>>N</option>
+                        </select>
+                        <label for="oferta_id">Oferta</label>
+                        <select name="oferta_id" id="oferta_id">
+                            <option></option>
+                            <?php foreach($ofertas as $oferta){ ?>
+                            <option value="<?php echo $oferta->id; ?>" <?php if($busqueda->campo('oferta_id') == $oferta->id){ ?>selected="selected"<?php } ?>><?php echo $oferta->nombre; ?></option>
+                            <?php } ?>
+                        </select>
+                        </div>
+                        <br/>
+                        <input type="submit" id="btn_submit" value="Filtrar" />
+                        <input type="reset" id="reset" value="Quitar filtros" />
+                    </fieldset>
+                </form>
+            </div>
 
 
-		</div>
-		<?php switch($option) {
-	 	case "vista": ?>
-		<?php if($registros > 0){ ?>
-		<table>
-			<tr><th>Foto</th><th>Tarjeta</th><th>Codigo</th><th>Nombre</th><th>Hora</th><th>Puerta</th><th>Evento</th></tr>
-			<?php
-				$i = 0;
-				foreach($eventos as $evento){
-						?>
-				<tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
-				<td>
-				<?php $alumno=$alumnos[$evento->UserInfo3];
-						if($alumno==null){
-							?>
-							<a href="<?php echo KUMBIA_PATH . 'img/' . 'sp5/persona.png'. '?d=' . (time()+$i);  ?>"
-							   rel="lightbox[]"
-							   title="<?php echo utf8_encode($evento->UserNumberText);?> {<?php echo $evento->fecha->format("H:i:s");?> <?php echo $evento->fecha->format("d/m/Y");?>} <?php echo $tipo; ?>"
-							   alt="<?php echo utf8_encode($evento->UserNumberText);?> {<?php echo $evento->fecha->format("H:i:s");?> <?php echo $evento->fecha->format("d/m/Y");?>} <?php echo $tipo; ?>">
-								<img src="<?php echo KUMBIA_PATH . 'img/' . 'sp5/persona.png'. '?d=' . (time()+$i);  ?>" class="thumb"/>
-							</a>
-							<?php
+        </div>
+        <?php switch($option) {
+         case "vista": ?>
+        <?php if($registros > 0){ ?>
+        <table>
+            <tr><th>Foto</th><th>Tarjeta</th><th>Codigo</th><th>Nombre</th><th>Hora</th><th>Puerta</th><th>Evento</th></tr>
+            <?php
+                $i = 0;
+                foreach($eventos as $evento){
+                        ?>
+                <tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+                <td>
+                <?php $alumno=$alumnos[$evento->UserInfo3];
+                        if($alumno==null){
+                            ?>
+                            <a href="<?php echo KUMBIA_PATH . 'img/' . 'sp5/persona.png'. '?d=' . (time()+$i);  ?>"
+                               rel="lightbox[]"
+                               title="<?php echo utf8_encode($evento->UserNumberText);?> {<?php echo $evento->fecha->format("H:i:s");?> <?php echo $evento->fecha->format("d/m/Y");?>} <?php echo $tipo; ?>"
+                               alt="<?php echo utf8_encode($evento->UserNumberText);?> {<?php echo $evento->fecha->format("H:i:s");?> <?php echo $evento->fecha->format("d/m/Y");?>} <?php echo $tipo; ?>">
+                                <img src="<?php echo KUMBIA_PATH . 'img/' . 'sp5/persona.png'. '?d=' . (time()+$i);  ?>" class="thumb"/>
+                            </a>
+                            <?php
 
-						}else{
-				?>
-					<a href="<?php echo $alumno->foto  ?>"
-							   rel="lightbox[]"
-							   title="<?php echo $alumno->ap . ' ' . $alumno->am . ' ' . $alumno->nombre ?>"
-							   alt="<?php echo $alumno->ap . ' ' . $alumno->am . ' ' . $alumno->nombre ?>">
-								<img src="<?php echo $alumno->foto ?>" class="thumb"/>
-							</a>
-				<?php
-						}
-				?>
-				</td>
-				<td class="sub" style="color: rgb(119, 119, 119);"><?php echo utf8_encode($evento->CardNumber);?></td>
-				<td >
-				<?php if($acl[$alumno->tipo_entidad]['ver']){ ?>
-					<a href="<?php echo $path.$alumno->tipo_entidad; ?>/ver/<?php echo $alumno->id;?>" title="Ver <?php echo $alumno->tipo_entidad?>">
-					<?php echo $evento->UserInfo3;?>
-					</a>
-				<?php }else{ ?>
-					<?php echo $evento->UserInfo3;?>
-				<?php } ?>
-				</td>
-				<td class="sub" style="color: rgb(119, 119, 119);"><?php echo utf8_encode($evento->UserNumberText);?></td>
-				<td ><span class="sub" style="color: rgb(119, 119, 119);"><?php echo $evento->fecha->format("H:i:s");?></span><br/>
-				<span class="sub" >
-				<?php if($acl['es']['dia']){ ?>
-				<a href="<?php echo $path; ?>es/dia/<?php echo $evento->CardNumber;?>/<?php echo $evento->fecha->format("Y-m-d");?>" title="Ver accesos del dia <?php echo $evento->fecha->format("d/m/Y");?>">
-				<?php echo $evento->fecha->format("d/m/Y");?>
-				</a>
-				<?php
-				}else{
-					echo $evento->fecha->format("d/m/Y");
+                        }else{
+                ?>
+                    <a href="<?php echo $alumno->foto  ?>"
+                               rel="lightbox[]"
+                               title="<?php echo $alumno->ap . ' ' . $alumno->am . ' ' . $alumno->nombre ?>"
+                               alt="<?php echo $alumno->ap . ' ' . $alumno->am . ' ' . $alumno->nombre ?>">
+                                <img src="<?php echo $alumno->foto ?>" class="thumb"/>
+                            </a>
+                <?php
+                        }
+                ?>
+                </td>
+                <td class="sub" style="color: rgb(119, 119, 119);"><?php echo utf8_encode($evento->CardNumber);?></td>
+                <td >
+                <?php if($acl[$alumno->tipo_entidad]['ver']){ ?>
+                    <a href="<?php echo $path.$alumno->tipo_entidad; ?>/ver/<?php echo $alumno->id;?>" title="Ver <?php echo $alumno->tipo_entidad?>">
+                    <?php echo $evento->UserInfo3;?>
+                    </a>
+                <?php }else{ ?>
+                    <?php echo $evento->UserInfo3;?>
+                <?php } ?>
+                </td>
+                <td class="sub" style="color: rgb(119, 119, 119);"><?php echo utf8_encode($evento->UserNumberText);?></td>
+                <td ><span class="sub" style="color: rgb(119, 119, 119);"><?php echo $evento->fecha->format("H:i:s");?></span><br/>
+                <span class="sub" >
+                <?php if($acl['es']['dia']){ ?>
+                <a href="<?php echo $path; ?>es/dia/<?php echo $evento->CardNumber;?>/<?php echo $evento->fecha->format("Y-m-d");?>" title="Ver accesos del dia <?php echo $evento->fecha->format("d/m/Y");?>">
+                <?php echo $evento->fecha->format("d/m/Y");?>
+                </a>
+                <?php
+                }else{
+                    echo $evento->fecha->format("d/m/Y");
 
-				} ?>
-				</span></td>
-				<td style="text-align:center">
-				<span class="sub" style="color: rgb(119, 119, 119);" >
-				<?php echo utf8_encode($evento->DoorNumberText) ?>
-				</span>
-				<br/>
-				<span class="sub" style="color: rgb(119, 119, 119);">
-				<?php echo utf8_encode($evento->AreaNumberText);?>
-				</span>
-				</td>
-				<td style="text-align:center">
-				<span class="t<?php echo $evento->PodDoorIndex; ?>">
-				<?php echo $evento->tipo();?>
-				</span>
-				</td>
-				</tr>
-			<?php
-			$i++;
-				}
-			  ?>
-		</table>
-		<?php }else{ ?>
-			<p class="info">
-			<br/>
-			No existen registros para mostrar, con los parametros establecidos.
-			</p>
-		<?php }?>
+                } ?>
+                </span></td>
+                <td style="text-align:center">
+                <span class="sub" style="color: rgb(119, 119, 119);" >
+                <?php echo utf8_encode($evento->DoorNumberText) ?>
+                </span>
+                <br/>
+                <span class="sub" style="color: rgb(119, 119, 119);">
+                <?php echo utf8_encode($evento->AreaNumberText);?>
+                </span>
+                </td>
+                <td style="text-align:center">
+                <span class="t<?php echo $evento->PodDoorIndex; ?>">
+                <?php echo $evento->tipo();?>
+                </span>
+                </td>
+                </tr>
+            <?php
+            $i++;
+                }
+              ?>
+        </table>
+        <?php }else{ ?>
+            <p class="info">
+            <br/>
+            No existen registros para mostrar, con los parametros establecidos.
+            </p>
+        <?php }?>
 
-		<div id="pages">
-			<?php
-				if($registros > 0){
-				if($pagina>1){
-					$inicio=$pagina-1;
-					$fin=$pagina+1;
-				?>
-				<a  href="<?php echo $path."es"; ?>"
-					title="Ir a la p&aacute;gina 1"
-					class="boton">
-					Primera
-				</a>
-				 <a  href="<?php echo $path."es/index/".($pagina-1); ?>"
-					title="Ir a la p&aacute;gina <?php echo ($pagina-1) ?>"
-					class="boton">
-					Anterior
-				</a>
-			<?php
-				}
-				else
-				{
-					$fin=3;
-					$inicio=$pagina;
-				}
-				if($registros==20){
+        <div id="pages">
+            <?php
+                if($registros > 0){
+                if($pagina>1){
+                    $inicio=$pagina-1;
+                    $fin=$pagina+1;
+                ?>
+                <a  href="<?php echo $path."es"; ?>"
+                    title="Ir a la p&aacute;gina 1"
+                    class="boton">
+                    Primera
+                </a>
+                 <a  href="<?php echo $path."es/index/".($pagina-1); ?>"
+                    title="Ir a la p&aacute;gina <?php echo ($pagina-1) ?>"
+                    class="boton">
+                    Anterior
+                </a>
+            <?php
+                }
+                else
+                {
+                    $fin=3;
+                    $inicio=$pagina;
+                }
+                if($registros==20){
 
-				for($p=$inicio;$p<=$fin;$p++){
-					$clase="boton";
-					if($p==$pagina)
-						$clase="activo";
-			?>
-				 <a  href="<?php echo $path."es/index/".$p; ?>"
-					title="Ir a la p&aacute;gina <?php echo $p ?>"
-					class="<?php echo $clase ?>">
-					<?php echo $p; ?>
-				</a>
-			<?php }
-				?>
-				 <a  href="<?php echo $path."es/index/".($pagina+1); ?>"
-					title="Ir a la p&aacute;gina <?php echo ($pagina+1) ?>"
-					class="boton">
-					Siguiente
-				</a>
-			<?php
-				}else{
-					$fin=$inicio;
-					for($p=$inicio;$p<=$fin;$p++){
-					$clase="boton";
-					if($p==$pagina)
-						$clase="activo";
-			?>
-				 <a  href="<?php echo $path."es/index/".$p; ?>"
-					title="Ir a la p&aacute;gina <?php echo $p ?>"
-					class="<?php echo $clase ?>">
-					<?php echo $p; ?>
-				</a>
-			<?php }
-				}
+                for($p=$inicio;$p<=$fin;$p++){
+                    $clase="boton";
+                    if($p==$pagina)
+                        $clase="activo";
+            ?>
+                 <a  href="<?php echo $path."es/index/".$p; ?>"
+                    title="Ir a la p&aacute;gina <?php echo $p ?>"
+                    class="<?php echo $clase ?>">
+                    <?php echo $p; ?>
+                </a>
+            <?php }
+                ?>
+                 <a  href="<?php echo $path."es/index/".($pagina+1); ?>"
+                    title="Ir a la p&aacute;gina <?php echo ($pagina+1) ?>"
+                    class="boton">
+                    Siguiente
+                </a>
+            <?php
+                }else{
+                    $fin=$inicio;
+                    for($p=$inicio;$p<=$fin;$p++){
+                    $clase="boton";
+                    if($p==$pagina)
+                        $clase="activo";
+            ?>
+                 <a  href="<?php echo $path."es/index/".$p; ?>"
+                    title="Ir a la p&aacute;gina <?php echo $p ?>"
+                    class="<?php echo $clase ?>">
+                    <?php echo $p; ?>
+                </a>
+            <?php }
+                }
 
-				}else{
+                }else{
 
-			?>
-			<?php if($pagina>1){?>
-				<a  href="<?php echo $path."es"; ?>"
-					title="Ir a la p&aacute;gina 1"
-					class="boton">
-					Primera
-				</a>
-				 <a  href="<?php echo $path."es/index/".($pagina-1); ?>"
-					title="Ir a la p&aacute;gina <?php echo ($pagina-1) ?>"
-					class="boton">
-					Anterior
-				</a>
-					<a  href="<?php echo $path."es/".$pagina; ?>"
-					title="Ir a la p&aacute;gina ".<?php echo $pagina; ?>
-					class="activo">
-					<?php echo $pagina; ?>
-				</a>
-			<?php
-					}
-				}
-			 ?>
-		</div>
-		<?php break; ?>
-		<?php case "default": ?>
-		<?php case "error": ?>
-		<br/><br/>
-		<p class="error" >
-		<br/>
-		<?php echo $error;  ?>
-		</p>
-		<?php break; ?>
-		<?php } ?>
+            ?>
+            <?php if($pagina>1){?>
+                <a  href="<?php echo $path."es"; ?>"
+                    title="Ir a la p&aacute;gina 1"
+                    class="boton">
+                    Primera
+                </a>
+                 <a  href="<?php echo $path."es/index/".($pagina-1); ?>"
+                    title="Ir a la p&aacute;gina <?php echo ($pagina-1) ?>"
+                    class="boton">
+                    Anterior
+                </a>
+                    <a  href="<?php echo $path."es/".$pagina; ?>"
+                    title="Ir a la p&aacute;gina ".<?php echo $pagina; ?>
+                    class="activo">
+                    <?php echo $pagina; ?>
+                </a>
+            <?php
+                    }
+                }
+             ?>
+        </div>
+        <?php break; ?>
+        <?php case "default": ?>
+        <?php case "error": ?>
+        <br/><br/>
+        <p class="error" >
+        <br/>
+        <?php echo $error;  ?>
+        </p>
+        <?php break; ?>
+        <?php } ?>
 
-	</div>
+    </div>
 </div>

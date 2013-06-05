@@ -12,21 +12,21 @@
 
   class Bloquesalumnos extends ActiveRecord{
 
-		public function enBloque($periodo_id,$periodoalumno_id){
-			$periodo_id=intval($periodo_id,10);
-			$periodoalumno_id=intval($periodoalumno_id,10);
-			$alumnobloque=new Bloquesalumnos();
-			$alumnobloque=$alumnobloque->find_all_by_sql(
-					"SELECT * FROM
-					periodosalumnos
-					INNER JOIN bloquesalumnos ON periodosalumnos.id=bloquesalumnos.periodosalumnos_id
-					WHERE periodosalumnos.id='".$periodoalumno_id."'  AND periodosalumnos.periodo_id='".$periodo_id."'"
-			);
+        public function enBloque($periodo_id,$periodoalumno_id){
+            $periodo_id=intval($periodo_id,10);
+            $periodoalumno_id=intval($periodoalumno_id,10);
+            $alumnobloque=new Bloquesalumnos();
+            $alumnobloque=$alumnobloque->find_all_by_sql(
+                    "SELECT * FROM
+                    periodosalumnos
+                    INNER JOIN bloquesalumnos ON periodosalumnos.id=bloquesalumnos.periodosalumnos_id
+                    WHERE periodosalumnos.id='".$periodoalumno_id."'  AND periodosalumnos.periodo_id='".$periodo_id."'"
+            );
 
-			$registros=count($alumnobloque);
-			if($registros>0)return true;
-			else
-			return false;
-		}
+            $registros=count($alumnobloque);
+            if($registros>0)return true;
+            else
+            return false;
+        }
   }
 ?>

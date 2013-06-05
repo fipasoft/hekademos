@@ -10,6 +10,6 @@
  *
  */
  class Tutoria extends ActiveRecord{
- 	protected $codigo;
+     protected $codigo;
  }
 ?>

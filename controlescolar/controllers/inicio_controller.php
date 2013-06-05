@@ -5,11 +5,11 @@
  */
 
 class InicioController extends ApplicationController {
-	 public $template = "system";
-	 	 
-	 function index(){
+     public $template = "system";
+          
+     function index(){
 
-	 }
-	 
+     }
+     
 }
 ?>

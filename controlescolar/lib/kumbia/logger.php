@@ -64,102 +64,102 @@
  */
 class Logger {
 
-	private $fileLogger;
-	private $transaction = false;
-	private $quenue = array();
+    private $fileLogger;
+    private $transaction = false;
+    private $quenue = array();
 
-	const DEBUG = 1;
-	const ERROR = 2;
-	const WARNING = 3;
-	const CUSTOM = 4;
+    const DEBUG = 1;
+    const ERROR = 2;
+    const WARNING = 3;
+    const CUSTOM = 4;
 
-	/**
- 	 * Constructor del Logger
- 	 */
-	function Logger($name=''){
-		if($name===''||$name===true){
-			$name = 'log'.date('dmY').".txt";
-		}
-		$this->fileLogger = @fopen('logs/'.$name, "a");
-		if(!$this->fileLogger){
-			error('KumbiaLogger: Cannot Open Log '.$name);
-			return false;
-		}
-	}
-	/**
- 	 * Almacena un mensaje en el log
- 	 *
- 	 * @param string $msg
- 	 */
-	function log($msg, $type=self::DEBUG){
-		if(!$this->fileLogger){
-			error('KumbiaLogger: Cannot handle log on an invalid logger');
-		}
-		if(PHP_VERSION>=5.1) {
-			$date = date(DATE_RFC1036);
-		} else {
-			$date = date("r");
-		}
-		switch($type){
-			case self::DEBUG:
-				$type = 'DEBUG';
-				break;
-			case self::ERROR:
-				$type = 'ERROR';
-				break;
-			case self::WARNING:
-				$type = 'WARNING';
-				break;
-			case self::CUSTOM :
-				$type = 'CUSTOM';
-				break;
-			default:
-				$type = 'CUSTOM';
-		}
-		if($this->transaction){
-			$this->quenue[] = "[$date][$type] ".$msg."\n";
-		} else {
-			fputs($this->fileLogger, "[$date][$type] ".$msg."\n");
-		}
-	}
+    /**
+      * Constructor del Logger
+      */
+    function Logger($name=''){
+        if($name===''||$name===true){
+            $name = 'log'.date('dmY').".txt";
+        }
+        $this->fileLogger = @fopen('logs/'.$name, "a");
+        if(!$this->fileLogger){
+            error('KumbiaLogger: Cannot Open Log '.$name);
+            return false;
+        }
+    }
+    /**
+      * Almacena un mensaje en el log
+      *
+      * @param string $msg
+      */
+    function log($msg, $type=self::DEBUG){
+        if(!$this->fileLogger){
+            error('KumbiaLogger: Cannot handle log on an invalid logger');
+        }
+        if(PHP_VERSION>=5.1) {
+            $date = date(DATE_RFC1036);
+        } else {
+            $date = date("r");
+        }
+        switch($type){
+            case self::DEBUG:
+                $type = 'DEBUG';
+                break;
+            case self::ERROR:
+                $type = 'ERROR';
+                break;
+            case self::WARNING:
+                $type = 'WARNING';
+                break;
+            case self::CUSTOM :
+                $type = 'CUSTOM';
+                break;
+            default:
+                $type = 'CUSTOM';
+        }
+        if($this->transaction){
+            $this->quenue[] = "[$date][$type] ".$msg."\n";
+        } else {
+            fputs($this->fileLogger, "[$date][$type] ".$msg."\n");
+        }
+    }
 
-	/**
- 	 * Inicia una transacci�n
- 	 *
- 	 */
-	function begin(){
-		$this->transaction = true;
-	}
+    /**
+      * Inicia una transacci�n
+      *
+      */
+    function begin(){
+        $this->transaction = true;
+    }
 
-	/**
- 	 * Deshace una transacci�n
- 	 *
- 	 */
-	function rollback(){
-		$this->transaction = false;
-		$this->quenue = array();
-	}
+    /**
+      * Deshace una transacci�n
+      *
+      */
+    function rollback(){
+        $this->transaction = false;
+        $this->quenue = array();
+    }
 
-	/**
- 	 * Commit a una transacci�n
- 	 */
-	function commit(){
-		$this->transaction = false;
-		foreach($this->quenue as $msg){
-			$this->log($msg);
-		}
-	}
+    /**
+      * Commit a una transacci�n
+      */
+    function commit(){
+        $this->transaction = false;
+        foreach($this->quenue as $msg){
+            $this->log($msg);
+        }
+    }
 
-	/**
- 	 * Cierra el Logger
- 	 *
- 	 */
-	function close(){
-		if(!$this->fileLogger){
-			error('KumbiaLogger: Cannot handle log on an invalid logger');
-		}
-		return fclose($this->fileLogger);
-	}
+    /**
+      * Cierra el Logger
+      *
+      */
+    function close(){
+        if(!$this->fileLogger){
+            error('KumbiaLogger: Cannot handle log on an invalid logger');
+        }
+        return fclose($this->fileLogger);
+    }
 
 }
 

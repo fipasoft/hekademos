@@ -10,60 +10,60 @@
  *
  */
 class Eventos extends ActiveRecord{
-	public $categoria;
+    public $categoria;
 
-	public function eventoEspecial($eve){
-		$evento=$this->find_first("clave='".trim($eve->clave)."-ESP'");
+    public function eventoEspecial($eve){
+        $evento=$this->find_first("clave='".trim($eve->clave)."-ESP'");
 
-		if($evento->id!='')
-		return $evento->id;
-		else return -1;
-	}
+        if($evento->id!='')
+        return $evento->id;
+        else return -1;
+    }
 
-	public function todos(){
-		$categorias=new Categorias();
-		$categorias=$categorias->find();
+    public function todos(){
+        $categorias=new Categorias();
+        $categorias=$categorias->find();
 
-		$cats=array();
-		foreach($categorias as $categoria){
-			$cats[$categoria->id]=$categoria->nombre;
-		}
+        $cats=array();
+        foreach($categorias as $categoria){
+            $cats[$categoria->id]=$categoria->nombre;
+        }
 
-		$eventos=$this->find();
+        $eventos=$this->find();
 
-		for($i=0;$i<count($eventos);$i++){
-			$eventos[$i]->categoria=$cats[$eventos[$i]->categorias_id];
-		}
+        for($i=0;$i<count($eventos);$i++){
+            $eventos[$i]->categoria=$cats[$eventos[$i]->categorias_id];
+        }
 
-		return $eventos;
-	}
+        return $eventos;
+    }
 
-	public function todosPorCategoria(){
-		$categorias=new Categorias();
-		$categorias=$categorias->find();
+    public function todosPorCategoria(){
+        $categorias=new Categorias();
+        $categorias=$categorias->find();
 
-		$cats=array();
-		foreach($categorias as $categoria){
-			$cats[$categoria->id]=$categoria->nombre;
-		}
+        $cats=array();
+        foreach($categorias as $categoria){
+            $cats[$categoria->id]=$categoria->nombre;
+        }
 
-		$eventos=$this->find();
+        $eventos=$this->find();
 
-		$cateEvento=array();
+        $cateEvento=array();
 
-		for($i=0;$i<count($eventos);$i++){
-			$eventos[$i]->categoria=$cats[$eventos[$i]->categorias_id];
-			$cateEvento[$eventos[$i]->categoria][$eventos[$i]->id]=$eventos[$i];
-		}
+        for($i=0;$i<count($eventos);$i++){
+            $eventos[$i]->categoria=$cats[$eventos[$i]->categorias_id];
+            $cateEvento[$eventos[$i]->categoria][$eventos[$i]->id]=$eventos[$i];
+        }
 
-		return $cateEvento;
-	}
+        return $cateEvento;
+    }
 
-	public function porClave($clave){
-		$eventos=$this->find("clave LIKE '".$clave."%'");
+    public function porClave($clave){
+        $eventos=$this->find("clave LIKE '".$clave."%'");
 
-		return $eventos;
-	}
+        return $eventos;
+    }
 
 
 }

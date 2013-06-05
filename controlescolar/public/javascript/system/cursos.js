@@ -9,11 +9,11 @@ new Ajax.Updater('check' + n, $("KUMBIA_PATH").value + 'horarios/validar/', {
    onLoading: function() { $('spinner' + n).show(); $('check' + n).hide(); },
    onComplete: function() { $('spinner' + n).hide(); $('check' + n).show(); },
    parameters: {profesores_id: $F('profesores_id'), materias_id: $F('materias_id'),
-	   			grupos_id: $F('grupos_id'), dia: $F('dia' + n),
-	   			entrada: $F('entrada' + n), salida: $F('salida' + n),
-	   			aula: $F('aula' + n), n: n,
-	   			curso_id: $F('id'),
-	   			inicio: ini
+                   grupos_id: $F('grupos_id'), dia: $F('dia' + n),
+                   entrada: $F('entrada' + n), salida: $F('salida' + n),
+                   aula: $F('aula' + n), n: n,
+                   curso_id: $F('id'),
+                   inicio: ini
    }
 });
 }
@@ -30,37 +30,37 @@ return true;
 function validarHorario(campo){
 var n = $(campo).n;
 if($F('entrada'+ n) == '' && $F('salida'+ n) == '' && $F('aula'+ n) == ''){
-	$('valido'+ n).value = 0;
-	$('status' + n).update('-');
-	$('status' + n).className = '';
+    $('valido'+ n).value = 0;
+    $('status' + n).update('-');
+    $('status' + n).className = '';
 }else if($F('entrada'+ n) != '' && $F('salida'+ n) != '' && $F('aula'+ n) != ''){
-	if($F('profesores_id') != '' && $F('materias_id') != ''){
-		validarHorarioAjax(n);
-	}else{
-		if($F('materias_id') == ''){
-			$('status' + n).update('Seleccione una materia');
-		}else{
-			$('status' + n).update('Seleccione un profesor');
-		}
-		$('valido'+ n).value = -1;
-		$('status' + n).className = 'advert';
-	}
+    if($F('profesores_id') != '' && $F('materias_id') != ''){
+        validarHorarioAjax(n);
+    }else{
+        if($F('materias_id') == ''){
+            $('status' + n).update('Seleccione una materia');
+        }else{
+            $('status' + n).update('Seleccione un profesor');
+        }
+        $('valido'+ n).value = -1;
+        $('status' + n).className = 'advert';
+    }
 }else{
-	$('valido' + n).value = -1;
-	$('status' + n).update('Complete la informaci&oacute;n del horario');
-	$('status' + n).className = 'alert';}
+    $('valido' + n).value = -1;
+    $('status' + n).update('Complete la informaci&oacute;n del horario');
+    $('status' + n).className = 'alert';}
 }
 function validarHorarios(){
-	var valido = true;
-	$$('input.status').each(function(campo){
-		if($F(campo) < 0){
-			valido = false;
-			Effect.Shake($('check' + campo.id.charAt(campo.id.length-1)));
-			throw $break;
-		}
-	});
-	var v = valido;
-	return v;
+    var valido = true;
+    $$('input.status').each(function(campo){
+        if($F(campo) < 0){
+            valido = false;
+            Effect.Shake($('check' + campo.id.charAt(campo.id.length-1)));
+            throw $break;
+        }
+    });
+    var v = valido;
+    return v;
 }
 function validarTiempo(fld) {
 timeStr = fld.value;
@@ -115,8 +115,8 @@ new Ajax.Updater('div_fecha', $("KUMBIA_PATH").value + 'cursos/fecha/', {
    onComplete: function() {
     /*$('spinner' + n).hide(); $('check' + n).show();*/
     $$('select.aula').each(function(campo){
-				validarHorario(campo);
-			});
+                validarHorario(campo);
+            });
      },
    parameters: { materias_id: value, ciclos_id: $('ciclos_id').value }
 });

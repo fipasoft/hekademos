@@ -1,126 +1,126 @@
 <?php $path = KUMBIA_PATH; ?>
 <div id="primary">
-	<div class="content">
+    <div class="content">
 
 
 <?php switch($option){
-		case 'captura':
-	 ?>	<h1>Articulo al curso</h1>
-		<h2><?php echo $curso->verMateriaNombre(); ?></h2>
-		<h2>Prof. <?php echo $curso->verProfesor(); ?></h2>
-		<h2><?php echo $grupo->grado .'&deg;' .  $grupo->letra .  ' ' . $grupo->verTurno() . ', ' . $ciclo->numero?></h2>
-		<div id="options-bar">
-			<div id="options">
-				<a href="<?php echo $path ?>cursos/ver/<?php echo $curso->id; ?>">Volver al curso
-				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
-				</a>
-			</div>
-		</div>
-			<form action="<?php echo $path ?>inscripcion/articulo" id="frm_articulo" method="post" enctype="multipart/form-data">
-			<fieldset>
-			<legend>Articulos</legend>
-			<select name="articulo">
-    			<option value="-1">Regular</option>
-    			<?php
-    				foreach($articulos as $articulo){
-    				?>
-    				<option value="<?php echo $articulo->id; ?>" <?php if($articulo->id==$articulo_actual) echo ' selected="selected" '  ?>><?php echo $articulo->descripcion; ?> </option>
-    			<?php
-    				}
-    			?>
-  			</select>
-			<input name="alumnocurso_id" id="alumnocurso_id" type="hidden" value="<?php echo $alumnocurso->id; ?>" />
+        case 'captura':
+     ?>    <h1>Articulo al curso</h1>
+        <h2><?php echo $curso->verMateriaNombre(); ?></h2>
+        <h2>Prof. <?php echo $curso->verProfesor(); ?></h2>
+        <h2><?php echo $grupo->grado .'&deg;' .  $grupo->letra .  ' ' . $grupo->verTurno() . ', ' . $ciclo->numero?></h2>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path ?>cursos/ver/<?php echo $curso->id; ?>">Volver al curso
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+            </div>
+        </div>
+            <form action="<?php echo $path ?>inscripcion/articulo" id="frm_articulo" method="post" enctype="multipart/form-data">
+            <fieldset>
+            <legend>Articulos</legend>
+            <select name="articulo">
+                <option value="-1">Regular</option>
+                <?php
+                    foreach($articulos as $articulo){
+                    ?>
+                    <option value="<?php echo $articulo->id; ?>" <?php if($articulo->id==$articulo_actual) echo ' selected="selected" '  ?>><?php echo $articulo->descripcion; ?> </option>
+                <?php
+                    }
+                ?>
+              </select>
+            <input name="alumnocurso_id" id="alumnocurso_id" type="hidden" value="<?php echo $alumnocurso->id; ?>" />
 
-			</fieldset>
-				<div id="botones">
-				<input type="submit" id="editar" value="editar">
-				<input type="button" id="cancelar" value="Cancelar">
+            </fieldset>
+                <div id="botones">
+                <input type="submit" id="editar" value="editar">
+                <input type="button" id="cancelar" value="Cancelar">
 
-				</div>
+                </div>
 
-			</form>
+            </form>
 <?php break;
 
-	case 'exito':
+    case 'exito':
  ?>
- 		<h1>Cambio de articulo</h1>
-		<h2><?php echo $curso->verMateriaNombre(); ?></h2>
-		<h2>Prof. <?php echo $curso->verProfesor(); ?></h2>
-		<h2><?php echo $grupo->grado .'&deg;' .  $grupo->letra .  ' ' . $grupo->verTurno() . ', ' . $ciclo->numero?></h2>
-		<div id="options-bar">
-			<div id="options">
-				<a href="<?php echo $path ?>cursos/ver/<?php echo $curso->id; ?>">Volver al curso
-				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
-				</a>
-			</div>
-		</div>
- 				<?php if($exito!=''){ ?>
- 				<p class="info">
-					<br />
+         <h1>Cambio de articulo</h1>
+        <h2><?php echo $curso->verMateriaNombre(); ?></h2>
+        <h2>Prof. <?php echo $curso->verProfesor(); ?></h2>
+        <h2><?php echo $grupo->grado .'&deg;' .  $grupo->letra .  ' ' . $grupo->verTurno() . ', ' . $ciclo->numero?></h2>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path ?>cursos/ver/<?php echo $curso->id; ?>">Volver al curso
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+            </div>
+        </div>
+                 <?php if($exito!=''){ ?>
+                 <p class="info">
+                    <br />
 
-					<?php echo $exito ?>
-				</p>
-				<?php }  ?>
+                    <?php echo $exito ?>
+                </p>
+                <?php }  ?>
 
-				<?php if($error!=''){ ?>
-				<br/>
-				<p class="error"><br />
-					<?php echo $error ?>
-				</p>
+                <?php if($error!=''){ ?>
+                <br/>
+                <p class="error"><br />
+                    <?php echo $error ?>
+                </p>
 
-				<?php }  ?>
+                <?php }  ?>
 
 <?php
-	break;
+    break;
 
-	case 'confirmar':
+    case 'confirmar':
 ?>
 <h1>Articulo al curso</h1>
-		<h2><?php echo $curso->verMateriaNombre(); ?></h2>
-		<h2>Prof. <?php echo $curso->verProfesor(); ?></h2>
-		<h2><?php echo $grupo->grado .'&deg;' .  $grupo->letra .  ' ' . $grupo->verTurno() . ', ' . $ciclo->numero?></h2>
-		<div id="options-bar">
-			<div id="options">
-				<a href="<?php echo $path ?>cursos/ver/<?php echo $curso->id; ?>">Volver al curso
-				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
-				</a>
-			</div>
-		</div>
+        <h2><?php echo $curso->verMateriaNombre(); ?></h2>
+        <h2>Prof. <?php echo $curso->verProfesor(); ?></h2>
+        <h2><?php echo $grupo->grado .'&deg;' .  $grupo->letra .  ' ' . $grupo->verTurno() . ', ' . $ciclo->numero?></h2>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path ?>cursos/ver/<?php echo $curso->id; ?>">Volver al curso
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+            </div>
+        </div>
 
 <br/>
 <form action="<?php echo $path ?>inscripcion/articulo/" id="frm_ubicar" method="post">
-					<input type="hidden" name="id" id="id" value="<?php echo $alumno->id ?>" />
-					<p class="error" style="text-align:left;padding-left:100px">
+                    <input type="hidden" name="id" id="id" value="<?php echo $alumno->id ?>" />
+                    <p class="error" style="text-align:left;padding-left:100px">
 
-						Se dispone a colocar en  <br/>
-						<strong><?php echo $art; ?></strong>
-						al alumno<br/>
-						<strong>Codigo:</strong> <?php echo $alumno->codigo; ?><br/>
-						<strong>Nombre:</strong> <?php echo $alumno->nombre .' ' . $alumno->ap . ' ' . $alumno->am?>
-						<br />
+                        Se dispone a colocar en  <br/>
+                        <strong><?php echo $art; ?></strong>
+                        al alumno<br/>
+                        <strong>Codigo:</strong> <?php echo $alumno->codigo; ?><br/>
+                        <strong>Nombre:</strong> <?php echo $alumno->nombre .' ' . $alumno->ap . ' ' . $alumno->am?>
+                        <br />
 
-						<strong>&iquest;Desea continuar?</strong>
-					</p>
-					<input type="hidden" name="alumnoscursos_id" value="<?php echo $alumnosCursos->id; ?>" />
-  					<input type="hidden" name="articulo_id" value="<?php if($articulo->id=='')echo '-1'; else echo $articulo->id; ?>" />
-  					<div id="botones">
-						<input type="submit" id="aceptar_c" value="Aceptar">
-						<input type="button" id="cancelar_c" value="Cancelar">
-					</div>
-				</form>
+                        <strong>&iquest;Desea continuar?</strong>
+                    </p>
+                    <input type="hidden" name="alumnoscursos_id" value="<?php echo $alumnosCursos->id; ?>" />
+                      <input type="hidden" name="articulo_id" value="<?php if($articulo->id=='')echo '-1'; else echo $articulo->id; ?>" />
+                      <div id="botones">
+                        <input type="submit" id="aceptar_c" value="Aceptar">
+                        <input type="button" id="cancelar_c" value="Cancelar">
+                    </div>
+                </form>
 
 <?php
-	break;
+    break;
 
-	case 'error':
+    case 'error':
  ?>
- 			<br/>
-			<p class="error"><br />Ha ocurrido un error al intentar inscribir.
-					<?php echo $error ?>
-				</p>
+             <br/>
+            <p class="error"><br />Ha ocurrido un error al intentar inscribir.
+                    <?php echo $error ?>
+                </p>
 <?php
-	break;
+    break;
 
  }?>
-	</div>
+    </div>
 </div>

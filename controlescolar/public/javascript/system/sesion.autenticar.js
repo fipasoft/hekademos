@@ -14,12 +14,12 @@ return false;
 return true;
 }
 function init(){
-	$('frm_auth').onsubmit = function(){
-		if(frm_validar('frm_auth')){
-			$('frm_auth').submit();
-		}else{
-			return false;
-		}
-	}
+    $('frm_auth').onsubmit = function(){
+        if(frm_validar('frm_auth')){
+            $('frm_auth').submit();
+        }else{
+            return false;
+        }
+    }
 }
 addDOMLoadEvent(init);

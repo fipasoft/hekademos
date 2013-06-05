@@ -1,9 +1,9 @@
 <?php
 
 /** KumbiaForms - PHP Rapid Development Framework *****************************
-*	
-* Copyright (C) 2005-2007 Andrés Felipe Gutiérrez (andresfelipe at vagoogle.net)
-* 	
+*    
+* Copyright (C) 2005-2007 Andrï¿½s Felipe Gutiï¿½rrez (andresfelipe at vagoogle.net)
+*     
 * This framework is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
 * License as published by the Free Software Foundation; either
@@ -19,16 +19,16 @@
 * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 * 
 * Este framework es software libre; puedes redistribuirlo y/o modificarlo
-* bajo los terminos de la licencia pública general GNU tal y como fue publicada
-* por la Fundación del Software Libre; desde la versión 2.1 o cualquier
-* versión superior.
+* bajo los terminos de la licencia pï¿½blica general GNU tal y como fue publicada
+* por la Fundaciï¿½n del Software Libre; desde la versiï¿½n 2.1 o cualquier
+* versiï¿½n superior.
 * 
 * Este framework es distribuido con la esperanza de ser util pero SIN NINGUN 
-* TIPO DE GARANTIA; sin dejar atrás su LADO MERCANTIL o PARA FAVORECER ALGUN
-* FIN EN PARTICULAR. Lee la licencia publica general para más detalles.
+* TIPO DE GARANTIA; sin dejar atrï¿½s su LADO MERCANTIL o PARA FAVORECER ALGUN
+* FIN EN PARTICULAR. Lee la licencia publica general para mï¿½s detalles.
 * 
-* Debes recibir una copia de la Licencia Pública General GNU junto con este
-* framework, si no es asi, escribe a Fundación del Software Libre Inc.,
+* Debes recibir una copia de la Licencia Pï¿½blica General GNU junto con este
+* framework, si no es asi, escribe a Fundaciï¿½n del Software Libre Inc.,
 * 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
 *****************************************************************************/
 
@@ -49,30 +49,30 @@ $content = "
  ";
 $content.= "<tr bgcolor='#F2F2F2'>\n";
 for($i=0;$i<=count($headerArray)-1;$i++){
-	$content.= "<th style='font-family:Verdana;font-size:12px'>".$headerArray[$i]."</th>\n";
+    $content.= "<th style='font-family:Verdana;font-size:12px'>".$headerArray[$i]."</th>\n";
 }
 $content.= "</tr>\n";
 
 $l = 5;
 foreach($result as $row){
-	$content.= "<tr bgcolor='white'>\n";
-	for($i=0;$i<=count($row)-1;$i++){		
-		if(is_numeric($row[$i])){
-			$content.= "<td style='font-family:Verdana;font-size:12px' align='center'>{$row[$i]}</td>";
-		} else {
-			$content.= "<td style='font-family:Verdana;font-size:12px'>{$row[$i]}&nbsp;</td>";
-		}
-	}
-	$content.= "</tr>\n";
-	$l++;
+    $content.= "<tr bgcolor='white'>\n";
+    for($i=0;$i<=count($row)-1;$i++){        
+        if(is_numeric($row[$i])){
+            $content.= "<td style='font-family:Verdana;font-size:12px' align='center'>{$row[$i]}</td>";
+        } else {
+            $content.= "<td style='font-family:Verdana;font-size:12px'>{$row[$i]}&nbsp;</td>";
+        }
+    }
+    $content.= "</tr>\n";
+    $l++;
 }
 
 file_put_contents("public/temp/$file.html", $content);
 
 if(isset($raw_output)){
-	print "<script type='text/javascript'> window.open('".KUMBIA_PATH."temp/".$file.".html', null);  </script>";
+    print "<script type='text/javascript'> window.open('".KUMBIA_PATH."temp/".$file.".html', null);  </script>";
 } else {
-	Generator::forms_print("<script type='text/javascript'> window.open('".KUMBIA_PATH."temp/".$file.".html', null);  </script>");
+    Generator::forms_print("<script type='text/javascript'> window.open('".KUMBIA_PATH."temp/".$file.".html', null);  </script>");
 }
 
 

@@ -1,70 +1,70 @@
 <?php $path = KUMBIA_PATH; ?>
 <div id="primary">
-	<div class="content">
-		<h1>Trayectoria especializante</h1>
-		<?php if($option!="error"){ ?>
-		<h2><?php echo $registros; ?> Alumno<?php echo ($registros!=1 ? 's' : ''); ?> inscrito<?php echo ($registros!=1 ? 's' : ''); ?></h2>
-		<h2><?php echo $trayectoria->nombre; ?></h2>
-		<h2><?php echo ($periodotrayectoria->turno=='M' ? 'Matutino' : 'Vespertino'); ?></h2>
-		<div id="options-bar">
-			<div id="options">
-				<a href="<?php echo $path ?>optativas/taesinfo/<?php echo $periodo->id; ?>">Volver a trayectorias
-				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
-				/
-				<a href="<?php echo $path ?>optativas/trayectoriasexportar/<?php echo $periodotrayectoria->id; ?>">Exportar
-				<img src="<?php echo $path?>public/img/sp5/excel.png"/>
-				</a>
-			</div>
-		</div>
-		<?php } ?>
+    <div class="content">
+        <h1>Trayectoria especializante</h1>
+        <?php if($option!="error"){ ?>
+        <h2><?php echo $registros; ?> Alumno<?php echo ($registros!=1 ? 's' : ''); ?> inscrito<?php echo ($registros!=1 ? 's' : ''); ?></h2>
+        <h2><?php echo $trayectoria->nombre; ?></h2>
+        <h2><?php echo ($periodotrayectoria->turno=='M' ? 'Matutino' : 'Vespertino'); ?></h2>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path ?>optativas/taesinfo/<?php echo $periodo->id; ?>">Volver a trayectorias
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                /
+                <a href="<?php echo $path ?>optativas/trayectoriasexportar/<?php echo $periodotrayectoria->id; ?>">Exportar
+                <img src="<?php echo $path?>public/img/sp5/excel.png"/>
+                </a>
+            </div>
+        </div>
+        <?php } ?>
 
-		<?php switch($option) {
-				case 'vista': ?>
-				<?php if($registros>0){ ?>
-				<table>
-				<tr>
-					<th>#</th>
-					<th>Alumno</th>
-				</tr>
+        <?php switch($option) {
+                case 'vista': ?>
+                <?php if($registros>0){ ?>
+                <table>
+                <tr>
+                    <th>#</th>
+                    <th>Alumno</th>
+                </tr>
 
-				<?php $n = 1;
-					foreach($alumnos as $alumno){?>
-							<tr class="<?php echo ($n%2 != 0 ? '' : 'odd') ?>">
-								<td><?php echo $n ?></td>
-								<td>
-									<?php echo $alumno->nombre()  ?>
-									<br />
-									<span class="sub"><?php echo $alumno->codigo ?></span>
-									<span class="sub" style="color: #777">
-										<?php
-										$grupo=$alumno->obtenerGrupoPorCiclo($periodo->ciclos_id);
-										 echo $grupo->grado . '&deg;' . $grupo->letra . ' ' . $grupo->turno; ?>
-									</span>
-								</td>
-							</tr>
-				<?php
-					$n++;
-				 } ?>
-				<?php }else{ ?>
-				<p class="error">
-				<br/>
-				No se a inscrito ningún alumno.
-				</p>
-				<?php } ?>
-				</table>
-				<?php  break; ?>
-				<?php case 'exito':
-			?>
-				<p class="info"><br />Configuración guardada con exito.<br />
-				</p>
-			<?php  break; ?>
-			<?php case 'error':
-				  default:
-			?>
-				<p class="error"><br />Ha ocurrido un error en el modulo optativas.<br />
-				<?php echo $error ?>
-				</p>
-			<?php  break; ?>
-		<?php } ?>
-	</div>
+                <?php $n = 1;
+                    foreach($alumnos as $alumno){?>
+                            <tr class="<?php echo ($n%2 != 0 ? '' : 'odd') ?>">
+                                <td><?php echo $n ?></td>
+                                <td>
+                                    <?php echo $alumno->nombre()  ?>
+                                    <br />
+                                    <span class="sub"><?php echo $alumno->codigo ?></span>
+                                    <span class="sub" style="color: #777">
+                                        <?php
+                                        $grupo=$alumno->obtenerGrupoPorCiclo($periodo->ciclos_id);
+                                         echo $grupo->grado . '&deg;' . $grupo->letra . ' ' . $grupo->turno; ?>
+                                    </span>
+                                </td>
+                            </tr>
+                <?php
+                    $n++;
+                 } ?>
+                <?php }else{ ?>
+                <p class="error">
+                <br/>
+                No se a inscrito ningún alumno.
+                </p>
+                <?php } ?>
+                </table>
+                <?php  break; ?>
+                <?php case 'exito':
+            ?>
+                <p class="info"><br />Configuración guardada con exito.<br />
+                </p>
+            <?php  break; ?>
+            <?php case 'error':
+                  default:
+            ?>
+                <p class="error"><br />Ha ocurrido un error en el modulo optativas.<br />
+                <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
 </div>

@@ -1,53 +1,53 @@
 <?php $path = KUMBIA_PATH; ?>
 <div id="primary">
-	<div class="content">
-		<h1>Cambiar estado de los cursos filtrados</h1>
-		<div id="options-bar">
-			<div id="options">
-				<a href="<?php echo $path . 'cursos/index/' . $grp?>">Volver
-				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
-				</a>
-			</div>
-		</div>
-		<?php switch($option) {
-				case 'captura': ?>
-				<form action="<?php echo $path ?>cursos/estado/" id="frm_estado" method="post">
-				<fieldset>
-				<p>
-				<br/>
-				Se dispone a cambiar el estado de <?php echo $registros; ?> curso<?php echo ($registros != 1? 's' : '' ) ?>.
-				<br/>
-				Seleccione el estado al cual se cambiara.
-				<br/>
-				</p>
-				<label for="edo_id">Estado</label><br/>
-					<select id="edo_id" name="edo_id">
-						<option></option>
-						<?php
-						foreach($status as $statu){
-						?>
-						<option value="<?php echo $statu->id; ?>"><?php echo $statu->nombre; ?></option>
-						<?php
-						}
-						 ?>
-						</select>
-						</fieldset>
-					<div id="botones">
-						<input type="button" id="aceptar" value="Aceptar">
-						<input type="button" id="cancelar" value="Cancelar">
-					</div>
-				</form>
-			<?php  break; ?>
-			<?php case 'exito': ?>
-				<p class="info"><br />Se cambio el estado de los cursos de forma correcta.</p>
-			<?php  break; ?>
-			<?php case 'error':
-				  default:
-			?>
-				<p class="error">Ha ocurrido un error al intentar cambiar el estado de los cursos.<br />
-				<?php echo $error ?>
-				</p>
-			<?php  break; ?>
-		<?php } ?>
-	</div>
+    <div class="content">
+        <h1>Cambiar estado de los cursos filtrados</h1>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path . 'cursos/index/' . $grp?>">Volver
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+            </div>
+        </div>
+        <?php switch($option) {
+                case 'captura': ?>
+                <form action="<?php echo $path ?>cursos/estado/" id="frm_estado" method="post">
+                <fieldset>
+                <p>
+                <br/>
+                Se dispone a cambiar el estado de <?php echo $registros; ?> curso<?php echo ($registros != 1? 's' : '' ) ?>.
+                <br/>
+                Seleccione el estado al cual se cambiara.
+                <br/>
+                </p>
+                <label for="edo_id">Estado</label><br/>
+                    <select id="edo_id" name="edo_id">
+                        <option></option>
+                        <?php
+                        foreach($status as $statu){
+                        ?>
+                        <option value="<?php echo $statu->id; ?>"><?php echo $statu->nombre; ?></option>
+                        <?php
+                        }
+                         ?>
+                        </select>
+                        </fieldset>
+                    <div id="botones">
+                        <input type="button" id="aceptar" value="Aceptar">
+                        <input type="button" id="cancelar" value="Cancelar">
+                    </div>
+                </form>
+            <?php  break; ?>
+            <?php case 'exito': ?>
+                <p class="info"><br />Se cambio el estado de los cursos de forma correcta.</p>
+            <?php  break; ?>
+            <?php case 'error':
+                  default:
+            ?>
+                <p class="error">Ha ocurrido un error al intentar cambiar el estado de los cursos.<br />
+                <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
 </div>

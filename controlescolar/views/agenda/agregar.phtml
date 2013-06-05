@@ -3,161 +3,161 @@
  var path='<?php echo $path; ?>';
  </script>
 <div id="primary">
-	<div class="content">
-		<h1>Agregar agenda al ciclo <?php  echo $ciclo->numero; ?></h1>
-		<div id="options-bar">
-			<div id="options">
-				<a href="<?php echo $path ?>ciclos">Volver a ciclos
-				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
-				</a>
-			</div>
-		</div>
+    <div class="content">
+        <h1>Agregar agenda al ciclo <?php  echo $ciclo->numero; ?></h1>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path ?>ciclos">Volver a ciclos
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+            </div>
+        </div>
 <?php switch($option){
-		case 'exito': ?>
-		<form>
-				<input type="hidden" name="ciclo_id" id="ciclo_id" value="<?php echo $ciclo->id; ?>"/>
-				<input type="hidden" name="ciclo_inicio" id="ciclo_inicio" value="<?php echo $ciclo->inicio; ?>"/>
-				<input type="hidden" name="ciclo_fin" id="ciclo_fin" value="<?php echo $ciclo->fin; ?>"/>
-				</form>
+        case 'exito': ?>
+        <form>
+                <input type="hidden" name="ciclo_id" id="ciclo_id" value="<?php echo $ciclo->id; ?>"/>
+                <input type="hidden" name="ciclo_inicio" id="ciclo_inicio" value="<?php echo $ciclo->inicio; ?>"/>
+                <input type="hidden" name="ciclo_fin" id="ciclo_fin" value="<?php echo $ciclo->fin; ?>"/>
+                </form>
 
-		<?php
-				$llave=0;
-				$cat=0;
-				foreach($eventos as $key => $categoria){
-				$events=array();
-				$cat++;
-				?>
-				<div>
+        <?php
+                $llave=0;
+                $cat=0;
+                foreach($eventos as $key => $categoria){
+                $events=array();
+                $cat++;
+                ?>
+                <div>
 
-				<div id="categoria_<?php echo $cat; ?>" >
-				<h3> <?php echo $key; ?> </h3>
-				<?php
-				foreach($categoria as $evento){
-					if($evento->cardinalidad!="*"){
+                <div id="categoria_<?php echo $cat; ?>" >
+                <h3> <?php echo $key; ?> </h3>
+                <?php
+                foreach($categoria as $evento){
+                    if($evento->cardinalidad!="*"){
 
-					$miEvento=$miAgenda[$evento->id];
-					if($miEvento!=null){
-						if(is_array($miEvento)){
+                    $miEvento=$miAgenda[$evento->id];
+                    if($miEvento!=null){
+                        if(is_array($miEvento)){
 
-						foreach($miEvento as $e){
-						?>
-						<div id="p_<?php echo $llave; ?>_<?php echo $e->periodo; ?>">
-						<p>
-						<a id="editar_<?php echo $e->periodo; ?>_<?php echo $llave; ?>" class="btnEditar" style="color:#000000;text-decoration:none;font-size:16px;"><?php echo $evento->nombre; ?> </a>
-						</p>
-						</div>
-						<div style="display:none" id="spinner_<?php echo $llave; ?>_<?php echo $e->periodo; ?>">
-						<img id="spinner" src="<?php echo $path ?>public/img/sp5/spinner.gif" />
-						</div>
-						<div id="div_<?php echo $llave; ?>_<?php echo $e->periodo; ?>" style="display:none;" >
-						</div>
-						<?php
-						}
-						}
-					}else{
-					?>
-					<div id="p_<?php echo $llave; ?>" ><a id="nuevo_<?php echo $evento->id; ?>_<?php echo $llave; ?>" class="btnNuevo" style="color:#CC0000;text-decoration:none;font-size:16px;" ><?php echo $evento->nombre; ?></a></div>
-				<div style="display:none" id="spinner_<?php echo $llave; ?>">
-					<img id="spinner" src="<?php echo $path ?>public/img/sp5/spinner.gif" />
-				</div>
-					<div id="div_<?php echo $llave; ?>" style="display:none;" >
-					<form>
-					<fieldset>
-						<legend><?php echo $evento->nombre; ?></legend>
-						<label for="inicio">Inicio</label><br />
-						<input type="text" name="inicio" id="tcalendario_<?php echo $evento->id; ?>_<?php echo $llave; ?>" size="10" maxlength="10" class="txtFecha" />  <a class="calendar" id="calendario_<?php echo $evento->id; ?>_<?php echo $llave; ?>"><img  src="<?php echo $path ?>/public/img/sp5/calendario.png" /></a>
-						<br />
-						<label for="fin">Fin</label><br />
-						<input type="text" name="fin" id="tcalendario2_<?php echo $evento->id; ?>_<?php echo $llave; ?>" size="10" maxlength="10" class="txtFecha" /> <a class="calendar" id="calendario2_<?php echo $evento->id; ?>_<?php echo $llave; ?>" ><img src="<?php echo $path ?>/public/img/sp5/calendario.png" /></a>
-						<br />
-						<label for="activo">Activo</label><br />
-						<input class="btnActivo" type="checkbox" id="activo_<?php echo $evento->id; ?>_<?php echo $llave; ?>" name="activo_<?php echo $evento->id; ?>_<?php echo $llave; ?>" value="1" />
-						<input type="hidden"  id="evento_<?php echo $evento->id; ?>_<?php echo $llave; ?>" name="evento_<?php echo $evento->id; ?>_<?php echo $llave; ?>" value="<?php echo $evento->id; ?>"/>
-						<input type="hidden"  id="eventonombre_<?php echo $evento->id; ?>_<?php echo $llave; ?>" name="eventonombre<?php echo $llave; ?>" value="<?php echo $evento->nombre; ?>"/>
+                        foreach($miEvento as $e){
+                        ?>
+                        <div id="p_<?php echo $llave; ?>_<?php echo $e->periodo; ?>">
+                        <p>
+                        <a id="editar_<?php echo $e->periodo; ?>_<?php echo $llave; ?>" class="btnEditar" style="color:#000000;text-decoration:none;font-size:16px;"><?php echo $evento->nombre; ?> </a>
+                        </p>
+                        </div>
+                        <div style="display:none" id="spinner_<?php echo $llave; ?>_<?php echo $e->periodo; ?>">
+                        <img id="spinner" src="<?php echo $path ?>public/img/sp5/spinner.gif" />
+                        </div>
+                        <div id="div_<?php echo $llave; ?>_<?php echo $e->periodo; ?>" style="display:none;" >
+                        </div>
+                        <?php
+                        }
+                        }
+                    }else{
+                    ?>
+                    <div id="p_<?php echo $llave; ?>" ><a id="nuevo_<?php echo $evento->id; ?>_<?php echo $llave; ?>" class="btnNuevo" style="color:#CC0000;text-decoration:none;font-size:16px;" ><?php echo $evento->nombre; ?></a></div>
+                <div style="display:none" id="spinner_<?php echo $llave; ?>">
+                    <img id="spinner" src="<?php echo $path ?>public/img/sp5/spinner.gif" />
+                </div>
+                    <div id="div_<?php echo $llave; ?>" style="display:none;" >
+                    <form>
+                    <fieldset>
+                        <legend><?php echo $evento->nombre; ?></legend>
+                        <label for="inicio">Inicio</label><br />
+                        <input type="text" name="inicio" id="tcalendario_<?php echo $evento->id; ?>_<?php echo $llave; ?>" size="10" maxlength="10" class="txtFecha" />  <a class="calendar" id="calendario_<?php echo $evento->id; ?>_<?php echo $llave; ?>"><img  src="<?php echo $path ?>/public/img/sp5/calendario.png" /></a>
+                        <br />
+                        <label for="fin">Fin</label><br />
+                        <input type="text" name="fin" id="tcalendario2_<?php echo $evento->id; ?>_<?php echo $llave; ?>" size="10" maxlength="10" class="txtFecha" /> <a class="calendar" id="calendario2_<?php echo $evento->id; ?>_<?php echo $llave; ?>" ><img src="<?php echo $path ?>/public/img/sp5/calendario.png" /></a>
+                        <br />
+                        <label for="activo">Activo</label><br />
+                        <input class="btnActivo" type="checkbox" id="activo_<?php echo $evento->id; ?>_<?php echo $llave; ?>" name="activo_<?php echo $evento->id; ?>_<?php echo $llave; ?>" value="1" />
+                        <input type="hidden"  id="evento_<?php echo $evento->id; ?>_<?php echo $llave; ?>" name="evento_<?php echo $evento->id; ?>_<?php echo $llave; ?>" value="<?php echo $evento->id; ?>"/>
+                        <input type="hidden"  id="eventonombre_<?php echo $evento->id; ?>_<?php echo $llave; ?>" name="eventonombre<?php echo $llave; ?>" value="<?php echo $evento->nombre; ?>"/>
 
 
-					</fieldset>
+                    </fieldset>
 
-					<div id="botones">
-						<input type="button" name="aceptar_<?php echo $evento->id; ?>_<?php echo $llave; ?>_<?php echo $cat; ?>" id="aceptar_<?php echo $evento->id; ?>_<?php echo $llave; ?>" value="Agregar"  class="btnAceptar" style="display:none">
-						<input type="button" id="cancelar_<?php echo $evento->id; ?>_<?php echo $llave; ?>" value="Cancelar" class="btnCancelar" >
-					</div>
-				</form>
-				</div>
-					<?php
-					}
+                    <div id="botones">
+                        <input type="button" name="aceptar_<?php echo $evento->id; ?>_<?php echo $llave; ?>_<?php echo $cat; ?>" id="aceptar_<?php echo $evento->id; ?>_<?php echo $llave; ?>" value="Agregar"  class="btnAceptar" style="display:none">
+                        <input type="button" id="cancelar_<?php echo $evento->id; ?>_<?php echo $llave; ?>" value="Cancelar" class="btnCancelar" >
+                    </div>
+                </form>
+                </div>
+                    <?php
+                    }
 
-						if($evento->cardinalidad=="+"){
-							$events[]=$evento;
+                        if($evento->cardinalidad=="+"){
+                            $events[]=$evento;
 
-						}
-					}else{
-					$events[]=$evento;
-					$miEvento=$miAgenda[$evento->id];
-					if($miEvento!=null){
-						if(is_array($miEvento)){
+                        }
+                    }else{
+                    $events[]=$evento;
+                    $miEvento=$miAgenda[$evento->id];
+                    if($miEvento!=null){
+                        if(is_array($miEvento)){
 
-						foreach($miEvento as $e){
-						?>
-						<div id="p_<?php echo $llave; ?>_<?php echo $e->periodo; ?>">
-						<p>
-						<a id="editar_<?php echo $e->periodo; ?>_<?php echo $llave; ?>" class="btnEditar" style="color:#000000;text-decoration:none;font-size:16px;"><?php echo $evento->nombre; ?> </a>
-						</p>
-						</div>
-						<div style="display:none" id="spinner_<?php echo $llave; ?>_<?php echo $e->periodo; ?>">
-						<img id="spinner" src="<?php echo $path ?>public/img/sp5/spinner.gif" />
-						</div>
-						<div id="div_<?php echo $llave; ?>_<?php echo $e->periodo; ?>" style="display:none;" >
-						</div>
-						<?php
-						}
-						}
-					}
+                        foreach($miEvento as $e){
+                        ?>
+                        <div id="p_<?php echo $llave; ?>_<?php echo $e->periodo; ?>">
+                        <p>
+                        <a id="editar_<?php echo $e->periodo; ?>_<?php echo $llave; ?>" class="btnEditar" style="color:#000000;text-decoration:none;font-size:16px;"><?php echo $evento->nombre; ?> </a>
+                        </p>
+                        </div>
+                        <div style="display:none" id="spinner_<?php echo $llave; ?>_<?php echo $e->periodo; ?>">
+                        <img id="spinner" src="<?php echo $path ?>public/img/sp5/spinner.gif" />
+                        </div>
+                        <div id="div_<?php echo $llave; ?>_<?php echo $e->periodo; ?>" style="display:none;" >
+                        </div>
+                        <?php
+                        }
+                        }
+                    }
 
-					}
-					$llave++;
-				}
-				?>
-				</div>
-				<?php if(count($events)){ ?>
-				<div id="btnAgrega<?php echo $llave; ?>">
-					<a class="btnAgrega" id="agrega_<?php echo $evento->id; ?>_<?php echo $llave; ?>"><img src="<?php echo $path ?>public/img/sp5/agregar.png" /></a></div>
-				<div id="formAgrega<?php echo $llave; ?>" style="display:none;">
+                    }
+                    $llave++;
+                }
+                ?>
+                </div>
+                <?php if(count($events)){ ?>
+                <div id="btnAgrega<?php echo $llave; ?>">
+                    <a class="btnAgrega" id="agrega_<?php echo $evento->id; ?>_<?php echo $llave; ?>"><img src="<?php echo $path ?>public/img/sp5/agregar.png" /></a></div>
+                <div id="formAgrega<?php echo $llave; ?>" style="display:none;">
 
-  						<div id="area<?php echo $llave; ?>">
-  						<select id="select<?php echo $llave; ?>">
-    					<?php
-    						foreach($events as $eve){
-    							?>
-    							<option value="<?php echo $eve->id.'-'.$eve->tipo; ?>"><?php echo $eve->nombre; ?></option>
-    							<?php
-    						}
-    					?>
-    					</select>
+                          <div id="area<?php echo $llave; ?>">
+                          <select id="select<?php echo $llave; ?>">
+                        <?php
+                            foreach($events as $eve){
+                                ?>
+                                <option value="<?php echo $eve->id.'-'.$eve->tipo; ?>"><?php echo $eve->nombre; ?></option>
+                                <?php
+                            }
+                        ?>
+                        </select>
 
-  						<input type="button" name="btn<?php echo $llave; ?>" value="Agrega" class="btnAgrega" id="agre_<?php echo $evento->id; ?>_<?php echo $llave; ?>_<?php echo $cat; ?>" />
+                          <input type="button" name="btn<?php echo $llave; ?>" value="Agrega" class="btnAgrega" id="agre_<?php echo $evento->id; ?>_<?php echo $llave; ?>_<?php echo $cat; ?>" />
 
-    					</div>
-    					<div id="areaForma<?php echo $llave; ?>" style="display:none;">
-    					</div>
-				<div><p><a id="quitar_<?php echo $evento->id; ?>_<?php echo $llave; ?>" class="btnQuitar" ><img id="calendario" src="<?php echo $path ?>public/img/sp5/menos.png" /></a></p>
+                        </div>
+                        <div id="areaForma<?php echo $llave; ?>" style="display:none;">
+                        </div>
+                <div><p><a id="quitar_<?php echo $evento->id; ?>_<?php echo $llave; ?>" class="btnQuitar" ><img id="calendario" src="<?php echo $path ?>public/img/sp5/menos.png" /></a></p>
 
-				</div>
-			</div>
+                </div>
+            </div>
 </div>
-				<?php
-				}
-				}
-				 ?>
+                <?php
+                }
+                }
+                 ?>
 
 
 <?php break;
  case 'error': ?>
-				<p class="error"><br />Ha ocurrido un error no existe el ciclo.<br />
+                <p class="error"><br />Ha ocurrido un error no existe el ciclo.<br />
 
-				</p>
+                </p>
 <?php break;
  } ?>
 
-	</div>
+    </div>
 </div>

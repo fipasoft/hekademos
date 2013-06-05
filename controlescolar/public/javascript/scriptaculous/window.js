@@ -278,7 +278,7 @@ Window.prototype = {
       this.content.src = null;
       this.options.url = null;
       
-  	  var content ="<div id=\"" + this.getId() + "_content\" class=\"" + this.options.className + "_content\"> </div>";
+        var content ="<div id=\"" + this.getId() + "_content\" class=\"" + this.options.className + "_content\"> </div>";
       $(this.getId() +"_table_content").innerHTML = content;
       
       this.content = $(this.element.id + "_content");
@@ -325,12 +325,12 @@ Window.prototype = {
   },
 
   getURL: function() {
-  	return this.options.url ? this.options.url : null;
+      return this.options.url ? this.options.url : null;
   },
 
   refresh: function() {
     if (this.options.url)
-	    $(this.element.getAttribute('id') + '_content').src = this.options.url;
+        $(this.element.getAttribute('id') + '_content').src = this.options.url;
   },
   
   // Stores position/size in a cookie, by default named with window id

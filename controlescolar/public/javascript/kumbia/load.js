@@ -1,17 +1,17 @@
 
 /** KumbiaForms - PHP Rapid Development Framework *****************************
 *
-* Copyright (C) 2005-2007 Andrés Felipe Gutiérrez (andresfelipe at vagoogle.net)
+* Copyright (C) 2005-2007 Andrï¿½s Felipe Gutiï¿½rrez (andresfelipe at vagoogle.net)
 *
 * Este framework es software libre; puedes redistribuirlo y/o modificarlo
-* bajo los terminos de la licencia pública general GNU tal y como fue publicada
-* por la Fundación del Software Libre; desde la versión 2.1 o cualquier
-* versión superior.
+* bajo los terminos de la licencia pï¿½blica general GNU tal y como fue publicada
+* por la Fundaciï¿½n del Software Libre; desde la versiï¿½n 2.1 o cualquier
+* versiï¿½n superior.
 * Este framework es distribuido con la esperanza de ser util pero SIN NINGUN
-* TIPO DE GARANTIA; sin dejar atrás su LADO MERCANTIL o PARA FAVORECER ALGUN
-* FIN EN PARTICULAR. Lee la licencia publica general para más detalles.
-* Debes recibir una copia de la Licencia Pública General GNU junto con este
-* framework, si no es asi, escribe a Fundación del Software Libre Inc.,
+* TIPO DE GARANTIA; sin dejar atrï¿½s su LADO MERCANTIL o PARA FAVORECER ALGUN
+* FIN EN PARTICULAR. Lee la licencia publica general para mï¿½s detalles.
+* Debes recibir una copia de la Licencia Pï¿½blica General GNU junto con este
+* framework, si no es asi, escribe a Fundaciï¿½n del Software Libre Inc.,
 * 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 *****************************************************************************/
 
@@ -19,27 +19,27 @@ function entero(x){ return parseInt(x); }
 function integer(x){ return parseInt(x); }
 
 function enable_browse(obj, action){
-	var str = window.location.toString()
-	window.location = $Kumbia.path+action+"/browse/"
+    var str = window.location.toString()
+    window.location = $Kumbia.path+action+"/browse/"
 }
 
 //Handling Errors
 
 if(document.all){
-	onerror=handleErr
+    onerror=handleErr
 
 }
 var txt=""
 function handleErr(msg,url,l) {
-	if(document.all){
-		txt="KumbiaError: There was an error on this Application.\n\n"
-		txt+="Error: " + msg + "\n"
-		txt+="URL: " + url + "\n"
-		txt+="Line: " + l + "\n\n"
-		txt+="Please inform this error to your Software Provider.\n\n"
-		alert(txt)
-	}
-	return true
+    if(document.all){
+        txt="KumbiaError: There was an error on this Application.\n\n"
+        txt+="Error: " + msg + "\n"
+        txt+="URL: " + url + "\n"
+        txt+="Line: " + l + "\n\n"
+        txt+="Please inform this error to your Software Provider.\n\n"
+        alert(txt)
+    }
+    return true
 }
 
 

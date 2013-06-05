@@ -1,33 +1,33 @@
 <?php
 echo print_r(array_keys($script->alumnos));
 $retenidos=$script->alumnos[5];
-	 ?>
+     ?>
 <h1><?php echo count($retenidos); ?> Retenidos</h1>
 <?php
-	foreach($retenidos as $r){
-		echo $r->id."<br>";
-	}
+    foreach($retenidos as $r){
+        echo $r->id."<br>";
+    }
   ?>
 
 <?php
 $retenidos=$script->alumnos[4];
-	 ?>
+     ?>
 
 <h1><?php echo count($retenidos); ?> Irregulares</h1>
 <?php
-	foreach($retenidos as $r){
-		echo $r->id."<br>";
-	}
+    foreach($retenidos as $r){
+        echo $r->id."<br>";
+    }
   ?>
 
 
 <?php
 $retenidos=$script->alumnos[1];
-	 ?>
+     ?>
 
 <h1><?php echo count($retenidos); ?> Regulares</h1>
 <?php
-	foreach($retenidos as $r){
-		echo $r->id."<br>";
-	}
+    foreach($retenidos as $r){
+        echo $r->id."<br>";
+    }
   ?>

@@ -1,59 +1,59 @@
 
 function init(){
-	aceptar = $('aceptar');
-	if(aceptar){
-	aceptar.onclick = function(){
-		f = $('frm_editar');
-		if(	frm_validar('frm_editar') ){
-		if(ValidateDateTime('inicio') && ValidateDateTime('fin')){
-					if(!validaFecha($('inicio').value,$('fin').value)){
-						alert("La fecha de inicio tiene que ser menor a la fecha final.");
-						return false;
-					}
-					}else
-						return false;
+    aceptar = $('aceptar');
+    if(aceptar){
+    aceptar.onclick = function(){
+        f = $('frm_editar');
+        if(    frm_validar('frm_editar') ){
+        if(ValidateDateTime('inicio') && ValidateDateTime('fin')){
+                    if(!validaFecha($('inicio').value,$('fin').value)){
+                        alert("La fecha de inicio tiene que ser menor a la fecha final.");
+                        return false;
+                    }
+                    }else
+                        return false;
 
-			f.submit();
-		}
-	}
-	}
+            f.submit();
+        }
+    }
+    }
 
-	cancelar = $('cancelar');
-	if(cancelar){
-	cancelar.onclick = function(){
-		if(confirm('Al cancelar se perderan los cambios hechos en este formulario, desea continuar?')){
-			document.location.href = $('KUMBIA_PATH').value+'bloques/index/'+$('periodo_id').value;
-		}
-	}
-	}
+    cancelar = $('cancelar');
+    if(cancelar){
+    cancelar.onclick = function(){
+        if(confirm('Al cancelar se perderan los cambios hechos en este formulario, desea continuar?')){
+            document.location.href = $('KUMBIA_PATH').value+'bloques/index/'+$('periodo_id').value;
+        }
+    }
+    }
 
-	fecha = $('inicio');
-	if(fecha){
-		if($('calendario')){
-			Calendar.setup({
-				button: 'calendario',
-				electric : false,
-				inputField : 'inicio',
-				showsTime: true,
-				timeFormat: '24',
-				ifFormat : '%d/%m/%Y %H:%M'
-			});
-		}
-	}
+    fecha = $('inicio');
+    if(fecha){
+        if($('calendario')){
+            Calendar.setup({
+                button: 'calendario',
+                electric : false,
+                inputField : 'inicio',
+                showsTime: true,
+                timeFormat: '24',
+                ifFormat : '%d/%m/%Y %H:%M'
+            });
+        }
+    }
 
-	fecha = $('fin');
-	if(fecha){
-		if($('calendario2')){
-			Calendar.setup({
-				button: 'calendario2',
-				electric : false,
-				inputField : 'fin',
-				showsTime: true,
-				timeFormat: '24',
-				ifFormat : '%d/%m/%Y %H:%M'
-			});
-		}
-	}
+    fecha = $('fin');
+    if(fecha){
+        if($('calendario2')){
+            Calendar.setup({
+                button: 'calendario2',
+                electric : false,
+                inputField : 'fin',
+                showsTime: true,
+                timeFormat: '24',
+                ifFormat : '%d/%m/%Y %H:%M'
+            });
+        }
+    }
 }
 
 function validaFecha(fecha, fecha2){

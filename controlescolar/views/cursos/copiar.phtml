@@ -4,14 +4,14 @@
 <h1>Copiar cursos</h1>
 <div id="options-bar">
 <div id="options"><a href="<?php echo $path . 'cursos'?>">Volver <img
-	src="<?php echo $path?>public/img/sp5/volver.png" /> </a></div>
+    src="<?php echo $path?>public/img/sp5/volver.png" /> </a></div>
 </div>
 <?php switch($option) {
-	case 'captura': ?>
+    case 'captura': ?>
 <form action="<?php echo $path ?>cursos/copiar/" id="frm_eliminar"
-	method="post"><input type="hidden" name="ciclos_id" id="ciclos_id"
-	value="<?php echo $ciclo->id ?>" />
-<p class="error"><?php 	$ant = $ciclo->anterior(); 
+    method="post"><input type="hidden" name="ciclos_id" id="ciclos_id"
+    value="<?php echo $ciclo->id ?>" />
+<p class="error"><?php     $ant = $ciclo->anterior(); 
 $anterior = new Ciclos();
 $anterior = $anterior->find_first("numero='".$ant."'");
 
@@ -23,7 +23,7 @@ Se dispone a copiar los cursos del ciclo <strong><?php echo $anterior->numero; ?
 al ciclo <strong><?php echo $ciclo->numero; ?></strong> <br />
 <strong>&iquest;Desea continuar?</strong></p>
 <div id="botones"><input type="submit" id="aceptar" value="Aceptar"> <input
-	type="button" id="cancelar" value="Cancelar"></div>
+    type="button" id="cancelar" value="Cancelar"></div>
 </form>
 
 <?php  break; ?> <?php case 'exito': ?> 
@@ -37,166 +37,166 @@ $evento = new Eventos();//
 $rol = new Roles();
 
 $evento = $evento->find_first(
-			"conditions: clave = 'CRS-INT-INI'"
-			);
-			$rol = $rol->find_first(
-			"conditions: eventos_id = '" . $evento->id . "' "
-			);
-			$periodo = $agenda->find_first(
-			"conditions: " .
-			    "ciclos_id = '" . $ciclo->id . "' " .
-				"AND roles_id = '" . $rol->id . "' "
-				);
+            "conditions: clave = 'CRS-INT-INI'"
+            );
+            $rol = $rol->find_first(
+            "conditions: eventos_id = '" . $evento->id . "' "
+            );
+            $periodo = $agenda->find_first(
+            "conditions: " .
+                "ciclos_id = '" . $ciclo->id . "' " .
+                "AND roles_id = '" . $rol->id . "' "
+                );
 
-				$crs_ini=$periodo;
+                $crs_ini=$periodo;
 
-				$agenda=new Agenda();
-				$evento = new Eventos();
-				$rol = new Roles();
+                $agenda=new Agenda();
+                $evento = new Eventos();
+                $rol = new Roles();
 
-				$evento = $evento->find_first(
-			"conditions: clave = 'CRS-PER-INI'"
-			);
-			$rol = $rol->find_first(
-			"conditions: eventos_id = '" . $evento->id . "' "
-			);
-			$periodo = $agenda->find_first(
-			"conditions: " .
-			    "ciclos_id = '" . $ciclo->id . "' " .
-				"AND roles_id = '" . $rol->id . "' "
-				);
+                $evento = $evento->find_first(
+            "conditions: clave = 'CRS-PER-INI'"
+            );
+            $rol = $rol->find_first(
+            "conditions: eventos_id = '" . $evento->id . "' "
+            );
+            $periodo = $agenda->find_first(
+            "conditions: " .
+                "ciclos_id = '" . $ciclo->id . "' " .
+                "AND roles_id = '" . $rol->id . "' "
+                );
 
-				$crs_ini_2=$periodo;
+                $crs_ini_2=$periodo;
 
-				$agenda=new Agenda();
-				$evento = new Eventos();
-				$rol = new Roles();
+                $agenda=new Agenda();
+                $evento = new Eventos();
+                $rol = new Roles();
 
-				$evento = $evento->find_first(
-			"conditions: clave = 'CRS-PER'"
-			);
-			$rol = $rol->find_first(
-			"conditions: eventos_id = '" . $evento->id . "' "
-			);
-			$periodo = $agenda->find_first(
-			"conditions: " .
-			    "ciclos_id = '" . $ciclo->id . "' " .
-				"AND roles_id = '" . $rol->id . "' "
-				);
-				$crs=$periodo;
-					
-					
-				mysql_query("BEGIN") or die("Ocurrio un error en mysql");
-				//crear plantilla
-				$anterior = new Ciclos();
-				$anterior = $anterior->find_first("numero='".$ciclo->anterior()."'");
-				$grupos=new Grupos();
-				$grupos=$grupos->todosporCiclo($anterior->id);
-				$profesor=new Profesores();
-				$profesor=$profesor->staff();
-				$g = 0;
-				$c = 0;
-				$a31 = new Aulas();
-				$a31 = $a31->find_first("clave='A31'");
-				
-				foreach($grupos as $grupo){   //copea los grupos del ciclo anterior
-					if($grupo->grado!=4){
-					$nuevo=new Grupos();
-					if(!$nuevo->exists("ciclos_id=".$ciclo->id." " .
-				" AND grado=".$grupo->grado." " .
-				" AND letra='".$grupo->letra."' " .
-				" AND turno='".$grupo->turno."' " .
-				" AND oferta_id=".$grupo->oferta_id)){
+                $evento = $evento->find_first(
+            "conditions: clave = 'CRS-PER'"
+            );
+            $rol = $rol->find_first(
+            "conditions: eventos_id = '" . $evento->id . "' "
+            );
+            $periodo = $agenda->find_first(
+            "conditions: " .
+                "ciclos_id = '" . $ciclo->id . "' " .
+                "AND roles_id = '" . $rol->id . "' "
+                );
+                $crs=$periodo;
+                    
+                    
+                mysql_query("BEGIN") or die("Ocurrio un error en mysql");
+                //crear plantilla
+                $anterior = new Ciclos();
+                $anterior = $anterior->find_first("numero='".$ciclo->anterior()."'");
+                $grupos=new Grupos();
+                $grupos=$grupos->todosporCiclo($anterior->id);
+                $profesor=new Profesores();
+                $profesor=$profesor->staff();
+                $g = 0;
+                $c = 0;
+                $a31 = new Aulas();
+                $a31 = $a31->find_first("clave='A31'");
+                
+                foreach($grupos as $grupo){   //copea los grupos del ciclo anterior
+                    if($grupo->grado!=4){
+                    $nuevo=new Grupos();
+                    if(!$nuevo->exists("ciclos_id=".$ciclo->id." " .
+                " AND grado=".$grupo->grado." " .
+                " AND letra='".$grupo->letra."' " .
+                " AND turno='".$grupo->turno."' " .
+                " AND oferta_id=".$grupo->oferta_id)){
 
-					$nuevo->ciclos_id=$ciclo->id;
-					$nuevo->grado=$grupo->grado;
-					$nuevo->letra=$grupo->letra;
-					$nuevo->turno=$grupo->turno;
-					$nuevo->oferta_id=$grupo->oferta_id;
-					$nuevo->save();
+                    $nuevo->ciclos_id=$ciclo->id;
+                    $nuevo->grado=$grupo->grado;
+                    $nuevo->letra=$grupo->letra;
+                    $nuevo->turno=$grupo->turno;
+                    $nuevo->oferta_id=$grupo->oferta_id;
+                    $nuevo->save();
 
-					echo '<tr><th>Se creo el Grupo: '.$nuevo->verInfo().'</th></tr>';
-					$g++;
-				}else{
-					$nuevo=$nuevo->find_first("ciclos_id=".$ciclo->id." " .
-						" AND grado=".$grupo->grado." " .
-						" AND letra='".$grupo->letra."' " .
-						" AND turno='".$grupo->turno."' " .
-						" AND oferta_id=".$grupo->oferta_id);
-					//$myLog->log('Ya existe el grupo '.$nuevo->verInfo().', '.$nuevo->verOferta(), Logger::ERROR);
-					
-					echo '<tr><th>Ya existia el Grupo: '.$nuevo->verInfo().'</th></tr>';
-				}
-				if($nuevo->id!=""){
-					$cursos=$grupo->cursosInfo();
-					foreach($cursos as $curso){
-						$materiaTipo=$curso->materiaTipo();
-						$nv=new Cursos();
-						if(!$nv->exists("grupos_id='".$nuevo->id."' AND materias_id='".$curso->materias_id."' ")){
-							$nv->grupos_id=$nuevo->id;
-							$nv->materias_id=$curso->materias_id;
-							$nv->profesores_id=$curso->profesores_id;
-							$nv->estado_id=1;
+                    echo '<tr><th>Se creo el Grupo: '.$nuevo->verInfo().'</th></tr>';
+                    $g++;
+                }else{
+                    $nuevo=$nuevo->find_first("ciclos_id=".$ciclo->id." " .
+                        " AND grado=".$grupo->grado." " .
+                        " AND letra='".$grupo->letra."' " .
+                        " AND turno='".$grupo->turno."' " .
+                        " AND oferta_id=".$grupo->oferta_id);
+                    //$myLog->log('Ya existe el grupo '.$nuevo->verInfo().', '.$nuevo->verOferta(), Logger::ERROR);
+                    
+                    echo '<tr><th>Ya existia el Grupo: '.$nuevo->verInfo().'</th></tr>';
+                }
+                if($nuevo->id!=""){
+                    $cursos=$grupo->cursosInfo();
+                    foreach($cursos as $curso){
+                        $materiaTipo=$curso->materiaTipo();
+                        $nv=new Cursos();
+                        if(!$nv->exists("grupos_id='".$nuevo->id."' AND materias_id='".$curso->materias_id."' ")){
+                            $nv->grupos_id=$nuevo->id;
+                            $nv->materias_id=$curso->materias_id;
+                            $nv->profesores_id=$curso->profesores_id;
+                            $nv->estado_id=1;
 
-							$materia=$curso->materia();
-							$oferta=new Ofertasmaterias();
-							$oferta=$oferta->find_first("materias_id=".$materia->id);
-							if($oferta->oferta_id==2){
-								if($materia->duracion==7){
-									$nv->inicio=substr($crs_ini->inicio,0,10);
-								}elseif($materia->duracion==12){
-									$nv->inicio=substr($crs_ini_2->inicio,0,10);
-								}else{
-									$nv->inicio=substr($crs->inicio,0,10);
-								}
-							}else{
-								$nv->inicio=substr($crs->inicio,0,10);
-							}
-							$nv->save();
-							
-							$horarios = $curso->horarios();
-							foreach($horarios as $h){
-								$hn = new Horarios();
-								$hn->cursos_id = $nv->id;
-								$hn->dias_id = $h->dias_id;
-								$hn->inicio = $h->inicio;
-								$hn->fin = $h->fin;
-								$hn->aulas_id = $a31->id;
-								$hn->save();
-							}
-							$c++;
-							//$myLog->log('Se agrego el curso '.$nv->verGrupo()." ".$nv->verMateria()." ".$materiaTipo, Logger::ERROR);
-							
-							echo '<tr><td style="text-align:center;" >Se guardo el curso: '.$nv->verGrupo()." ".$nv->verMateria().'</td></tr>';
+                            $materia=$curso->materia();
+                            $oferta=new Ofertasmaterias();
+                            $oferta=$oferta->find_first("materias_id=".$materia->id);
+                            if($oferta->oferta_id==2){
+                                if($materia->duracion==7){
+                                    $nv->inicio=substr($crs_ini->inicio,0,10);
+                                }elseif($materia->duracion==12){
+                                    $nv->inicio=substr($crs_ini_2->inicio,0,10);
+                                }else{
+                                    $nv->inicio=substr($crs->inicio,0,10);
+                                }
+                            }else{
+                                $nv->inicio=substr($crs->inicio,0,10);
+                            }
+                            $nv->save();
+                            
+                            $horarios = $curso->horarios();
+                            foreach($horarios as $h){
+                                $hn = new Horarios();
+                                $hn->cursos_id = $nv->id;
+                                $hn->dias_id = $h->dias_id;
+                                $hn->inicio = $h->inicio;
+                                $hn->fin = $h->fin;
+                                $hn->aulas_id = $a31->id;
+                                $hn->save();
+                            }
+                            $c++;
+                            //$myLog->log('Se agrego el curso '.$nv->verGrupo()." ".$nv->verMateria()." ".$materiaTipo, Logger::ERROR);
+                            
+                            echo '<tr><td style="text-align:center;" >Se guardo el curso: '.$nv->verGrupo()." ".$nv->verMateria().'</td></tr>';
 
-						}
+                        }
 
-					}
-				}
-				}
-				}
+                    }
+                }
+                }
+                }
 
-				if($simular == '1'){					
-					mysql_query("ROLLBACK") or die("Ocurrio un error en mysql");
-				}else{
-					mysql_query("COMMIT") or die("Ocurrio un error en mysql");
-				}					
-				?>
+                if($simular == '1'){                    
+                    mysql_query("ROLLBACK") or die("Ocurrio un error en mysql");
+                }else{
+                    mysql_query("COMMIT") or die("Ocurrio un error en mysql");
+                }                    
+                ?>
 </table>
 <br/>
 <br/>
 <br/>
 <p class="info"><br />
-				<?php 
+                <?php 
 
-				?> Se copiaron con exito <?php echo $g; ?> grupos y <?php echo $c; ?> cursos del ciclo <strong><?php echo $anterior->numero; ?></strong>
+                ?> Se copiaron con exito <?php echo $g; ?> grupos y <?php echo $c; ?> cursos del ciclo <strong><?php echo $anterior->numero; ?></strong>
 al ciclo <strong><?php echo $ciclo->numero; ?></strong> <br />
 
 </p>
 <?php  break; ?> <?php case 'error':
 default:
-	?>
+    ?>
 <p class="error">Ha ocurrido un error al intentar eliminar el curso.<br />
-	<?php echo $error ?></p>
-	<?php  break; ?> <?php } ?></div>
+    <?php echo $error ?></p>
+    <?php  break; ?> <?php } ?></div>
 </div>

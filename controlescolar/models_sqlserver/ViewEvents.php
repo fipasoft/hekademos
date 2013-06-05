@@ -20,28 +20,28 @@
 
  class ViewEvents extends SqlserverRecord {
 
-	public function tipo(){
-		if($this->PodDoorIndex!=null){
-			if($this->PodDoorIndex=="1")return "Entrada";
-			elseif($this->PodDoorIndex=="2") return "Salida";
-			else return "";
-		}else return "";
-	}
+    public function tipo(){
+        if($this->PodDoorIndex!=null){
+            if($this->PodDoorIndex=="1")return "Entrada";
+            elseif($this->PodDoorIndex=="2") return "Salida";
+            else return "";
+        }else return "";
+    }
 
-		public function esEntrada(){
-		if($this->PodDoorIndex!=null){
-			if($this->PodDoorIndex=="1")return true;
-			else return false;
+        public function esEntrada(){
+        if($this->PodDoorIndex!=null){
+            if($this->PodDoorIndex=="1")return true;
+            else return false;
 
-		}else return false;
-	}
+        }else return false;
+    }
 
-		public function esSalida(){
-		if($this->PodDoorIndex!=null){
-			if($this->PodDoorIndex=="2")return true;
-			else return false;
+        public function esSalida(){
+        if($this->PodDoorIndex!=null){
+            if($this->PodDoorIndex=="2")return true;
+            else return false;
 
-		}else return false;
-	}
+        }else return false;
+    }
  }
 ?>

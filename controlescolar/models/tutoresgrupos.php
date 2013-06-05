@@ -7,11 +7,11 @@
  */
  class Tutoresgrupos extends ActiveRecord{
 
-	public function nombre(){
-		$profesores = new Profesores();
-		$profesores = $profesores->find($this->profesores_id);
-		return $profesores->nombre . ' ' . $profesores->ap.' '.$profesores->am;
-	}
+    public function nombre(){
+        $profesores = new Profesores();
+        $profesores = $profesores->find($this->profesores_id);
+        return $profesores->nombre . ' ' . $profesores->ap.' '.$profesores->am;
+    }
 
  }
 

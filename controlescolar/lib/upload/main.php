@@ -2390,7 +2390,7 @@ class upload {
      * @return resource Container image
      */
     function imagecreatenew($x, $y, $fill = true, $trsp = false) {
-    	$red = $green = $blue = null;
+        $red = $green = $blue = null;
         if ($this->gdversion() >= 2 && !$this->image_is_palette) {
             // create a true color image
             $dst_im = imagecreatetruecolor($x, $y);
@@ -2522,10 +2522,10 @@ class upload {
      * @return string Optional content of the image
      */
     function process($server_path = null) {
-		$red = $green = $blue = null;
-		$tint_red = $tint_green = $tint_blue = null;
-		$red1 = $green1 = $blue1 = null;
-		$red2 = $green2 = $blue2 = null;
+        $red = $green = $blue = null;
+        $tint_red = $tint_green = $tint_blue = null;
+        $red1 = $green1 = $blue1 = null;
+        $red2 = $green2 = $blue2 = null;
         $this->error        = '';
         $this->processed    = true;
         $return_mode        = false;
@@ -3972,7 +3972,7 @@ class upload {
                 $this->log .= '- no image processing wanted<br />';
 
                 if (!$return_mode) {
-		            // copy the file to its final destination. we don't use move_uploaded_file here
+                    // copy the file to its final destination. we don't use move_uploaded_file here
                     // if we happen to have open_basedir restrictions, it is a temp file that we copy, not the original uploaded file
                     if (!copy($this->file_src_pathname, $this->file_dst_pathname)) {
                         $this->processed = false;

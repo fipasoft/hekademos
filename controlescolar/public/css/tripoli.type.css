@@ -21,14 +21,14 @@ TYPE PLUG */
 
 .alt
 { 
-	font-family:"baskerville italic","Warnock Pro","Goudy Old Style","Palatino","palatino linotype","Book Antiqua",Georgia, serif; 
-	font-style:italic;
-	font-weight:normal;
+    font-family:"baskerville italic","Warnock Pro","Goudy Old Style","Palatino","palatino linotype","Book Antiqua",Georgia, serif; 
+    font-style:italic;
+    font-weight:normal;
 }
    
 .dquo
 {
-	margin-left:-.55em;
+    margin-left:-.55em;
 }
 
 /*

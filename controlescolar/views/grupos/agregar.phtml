@@ -1,81 +1,81 @@
 <?php $path = KUMBIA_PATH; ?>
 <div id="primary">
-	<div class="content">
-		<h1>Agregar grupo al ciclo <?php echo $ciclo->numero ?></h1>
-		<div id="options-bar">
-			<div id="options">
-				<a href="<?php echo $path ?>grupos">Volver
-				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
-				</a>
-			</div>
-		</div>
-		<?php switch($option) {
-				case 'captura': ?>
-				<form action="<?php echo $path ?>grupos/agregar" id="frm_agregar" method="post">
-					<fieldset>
-						<legend>Datos</legend>
-						<input type="hidden" name="ciclos_id" id="ciclos_id" value="<?php echo $ciclo->id ?>"/>
-						<label for="grado">Grado</label><br />
-						<select name="grado" id="grado">
-							<option></option>
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
-							<option value="6">6</option>
-						</select>
-						<img id="spinner" src="<?php echo $path ?>/public/img/sp5/spinner.gif" style="display:none"/>
-						<div id="check" class="check"></div>
-						<br />
-						<label for="letra">Letra</label><br />
-						<select name="letra" id="letra">
-							<option></option>
-							<option value="A">A</option>
-							<option value="B">B</option>
-							<option value="C">C</option>
-							<option value="D">D</option>
-							<option value="E">E</option>
-							<option value="F">F</option>
-							<option value="G">G</option>
-						</select>
-						<br />
-						<label for="turno">Turno</label><br />
-						<select name="turno" id="turno">
-							<option></option>
-							<option value="M">Matutino</option>
-							<option value="V">Vespertino</option>
-							<option value="N">Nocturno</option>
-						</select>
-						<br />
-						<label for="oferta">Oferta</label><br />
-						<select name="oferta" id="oferta">
-							<option></option>
-							<?php foreach($ofertas as $oferta){ ?>
-							<option value="<?php echo $oferta->id; ?>"><?php echo $oferta->nombre; ?></option>
-							<?php } ?>
-						</select>
-						<br />
-					</fieldset>
-					<div></div>
-					<div id="botones">
+    <div class="content">
+        <h1>Agregar grupo al ciclo <?php echo $ciclo->numero ?></h1>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path ?>grupos">Volver
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+            </div>
+        </div>
+        <?php switch($option) {
+                case 'captura': ?>
+                <form action="<?php echo $path ?>grupos/agregar" id="frm_agregar" method="post">
+                    <fieldset>
+                        <legend>Datos</legend>
+                        <input type="hidden" name="ciclos_id" id="ciclos_id" value="<?php echo $ciclo->id ?>"/>
+                        <label for="grado">Grado</label><br />
+                        <select name="grado" id="grado">
+                            <option></option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        </select>
+                        <img id="spinner" src="<?php echo $path ?>/public/img/sp5/spinner.gif" style="display:none"/>
+                        <div id="check" class="check"></div>
+                        <br />
+                        <label for="letra">Letra</label><br />
+                        <select name="letra" id="letra">
+                            <option></option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                            <option value="F">F</option>
+                            <option value="G">G</option>
+                        </select>
+                        <br />
+                        <label for="turno">Turno</label><br />
+                        <select name="turno" id="turno">
+                            <option></option>
+                            <option value="M">Matutino</option>
+                            <option value="V">Vespertino</option>
+                            <option value="N">Nocturno</option>
+                        </select>
+                        <br />
+                        <label for="oferta">Oferta</label><br />
+                        <select name="oferta" id="oferta">
+                            <option></option>
+                            <?php foreach($ofertas as $oferta){ ?>
+                            <option value="<?php echo $oferta->id; ?>"><?php echo $oferta->nombre; ?></option>
+                            <?php } ?>
+                        </select>
+                        <br />
+                    </fieldset>
+                    <div></div>
+                    <div id="botones">
 
-						<input type="button" id="aceptar" value="Agregar">
-						<input type="button" id="cancelar" value="Cancelar">
+                        <input type="button" id="aceptar" value="Agregar">
+                        <input type="button" id="cancelar" value="Cancelar">
 
-					</div>
-				</form>
-			<?php  break; ?>
-			<?php case 'exito': ?>
-				<p class="info"><br />La informaci&oacute;n del grupo se agreg&oacute; correctamente</p>
-			<?php  break; ?>
-			<?php case 'error':
-				  default:
-			?>
-				<p class="error"><br />Ha ocurrido un error al intentar agregar el grupo
-					<?php echo $error ?>
-				</p>
-			<?php  break; ?>
-		<?php } ?>
-	</div>
+                    </div>
+                </form>
+            <?php  break; ?>
+            <?php case 'exito': ?>
+                <p class="info"><br />La informaci&oacute;n del grupo se agreg&oacute; correctamente</p>
+            <?php  break; ?>
+            <?php case 'error':
+                  default:
+            ?>
+                <p class="error"><br />Ha ocurrido un error al intentar agregar el grupo
+                    <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
 </div>

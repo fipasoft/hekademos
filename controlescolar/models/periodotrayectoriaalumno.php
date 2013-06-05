@@ -11,5 +11,5 @@
  */
 
   class Periodotrayectoriaalumno extends ActiveRecord{
-			  }
+              }
 ?>

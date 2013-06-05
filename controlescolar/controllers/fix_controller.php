@@ -5,14 +5,14 @@
  */
 
 class FixController extends ApplicationController {
-	public $template = "system";
+    public $template = "system";
 
-	public function codigos($t){
-	    try{
+    public function codigos($t){
+        try{
             if($t == 'a'){
                 mysql_query("BEGIN") or die("Error al iniciar la transaccion");
-        	    $alumnos = new Alumnos();
-        		$alumnos = $alumnos->find();
+                $alumnos = new Alumnos();
+                $alumnos = $alumnos->find();
                 foreach ($alumnos as $alumno) {
                     do{
                         
@@ -61,7 +61,7 @@ class FixController extends ApplicationController {
             var_dump("ERROR: " . $e->getMessage());
             exit;
         }
-	}
+    }
 
     public function nombres($t){
         try{

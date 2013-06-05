@@ -1,115 +1,115 @@
 <?php $path = KUMBIA_PATH; ?>
 <div id="primary">
-	<div class="content">
-		<?php if($option!="error"){ ?>
-		<h1><?php echo $registros;?>
-			Bloque<?php echo ($registros == 1 ? '' : 's') ?> para el periodo del ciclo <?php echo $ciclo->numero; ?> </h1>
-		<h2>Periodo inicia el <?php echo Utils::fecha_espanol(substr($periodo->inicio,0,10)); ?> a las <?php echo substr($periodo->inicio,10,6); ?></h2>
-		<h2>Periodo finaliza el <?php echo Utils::fecha_espanol(substr($periodo->fin,0,10)); ?> a las <?php echo substr($periodo->fin,10,6); ?></h2>
-		<h2><?php echo ($periodo->activo==1? "Activo" : "Inactivo"); ?></h2>
+    <div class="content">
+        <?php if($option!="error"){ ?>
+        <h1><?php echo $registros;?>
+            Bloque<?php echo ($registros == 1 ? '' : 's') ?> para el periodo del ciclo <?php echo $ciclo->numero; ?> </h1>
+        <h2>Periodo inicia el <?php echo Utils::fecha_espanol(substr($periodo->inicio,0,10)); ?> a las <?php echo substr($periodo->inicio,10,6); ?></h2>
+        <h2>Periodo finaliza el <?php echo Utils::fecha_espanol(substr($periodo->fin,0,10)); ?> a las <?php echo substr($periodo->fin,10,6); ?></h2>
+        <h2><?php echo ($periodo->activo==1? "Activo" : "Inactivo"); ?></h2>
 
-		<?php }else{ ?>
-		<h1>Bloques</h1>
+        <?php }else{ ?>
+        <h1>Bloques</h1>
 
-		<?php } ?>
-		<?php switch($option) {
-				case 'vista': ?>
-		<div id="options-bar">
-			<div id="options">
-				<a href="<?php echo $path ?>optativas/index/<?php echo $periodo->id; ?>">Volver a optativas
-				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
-				</a>
-				<?php if($acl['bloques']['agregar']){ ?>
-				/
-				<a href="<?php echo $path ?>bloques/agregar/<?php echo $periodo->id; ?>" title="Agregar bloque" alt="Agregar bloque">
-					Agregar bloque
-					<img src="<?php echo $path?>public/img/sp5/nuevo.png"/>
-				</a>
-				<?php } ?>
-				<?php if($acl['bloques']['eliminartodos']){ ?>
-				/
-				<a href="<?php echo $path ?>bloques/eliminartodos/<?php echo $periodo->id; ?>" title="Eliminar todos los bloques" alt="Eliminar todos los bloques" >Eliminar todos
-				<img src="<?php echo $path?>public/img/sp5/vaciar.png"/>
-				</a>
-				<?php } ?>
-			</div>
-		</div>
+        <?php } ?>
+        <?php switch($option) {
+                case 'vista': ?>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path ?>optativas/index/<?php echo $periodo->id; ?>">Volver a optativas
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+                <?php if($acl['bloques']['agregar']){ ?>
+                /
+                <a href="<?php echo $path ?>bloques/agregar/<?php echo $periodo->id; ?>" title="Agregar bloque" alt="Agregar bloque">
+                    Agregar bloque
+                    <img src="<?php echo $path?>public/img/sp5/nuevo.png"/>
+                </a>
+                <?php } ?>
+                <?php if($acl['bloques']['eliminartodos']){ ?>
+                /
+                <a href="<?php echo $path ?>bloques/eliminartodos/<?php echo $periodo->id; ?>" title="Eliminar todos los bloques" alt="Eliminar todos los bloques" >Eliminar todos
+                <img src="<?php echo $path?>public/img/sp5/vaciar.png"/>
+                </a>
+                <?php } ?>
+            </div>
+        </div>
 
-				<?php if($registros>0){ ?>
-					<table>
-					<tr>
-						<th>Bloque</th>
-						<th>Inicio</th>
-						<th>Fin</th>
-						<?php if($acl['bloques']['eliminar'] || $acl['bloquesalumnos']['index'] || $acl['bloques']['editar']){ ?>
-						<th>Opciones</th>
-						<?php } ?>
-						</tr>
-					<?php
-						$i = 0;
-						foreach($bloques as $b){
-						?>
-					<tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
-					<td><span class="sub">bloque<?php echo $b->id; ?></span></td>
-					<td style="text-align:center;">
-					<span class="sub">
-					<?php echo Utils::fecha_espanol(substr($b->inicio,0,10))."<br/>".substr($b->inicio,10,strlen($b->inicio)-13); ?>
-					</span>
-					</td>
-					<td style="text-align:center;">
-					<span class="sub">
-					<?php  echo Utils::fecha_espanol(substr($b->fin,0,10))."<br/>".substr($b->fin,10,strlen($b->fin)-13); ?>
-					</span>
-					</td>
-					<?php if($acl['bloques']['eliminar'] || $acl['bloquesalumnos']['index'] || $acl['bloques']['editar']){ ?>
-					<td>
-					<?php if($acl['bloquesalumnos']['index']){ ?>
-						<a href="<?php echo $path . 'bloquesalumnos/index/' . $b->id?>"
-													   alt="Editar alumnos del bloque" title="Editar alumnos del bloque">
-													   <img style="width:23px;" src="<?php echo $path?>public/img/sp5/persona.png" />
-						</a>
-					<?php } ?>
-					<?php if($acl['bloques']['editar']){ ?>
-						<a href="<?php echo $path . 'bloques/editar/' . $b->id?>"
-													   alt="Editar datos del bloque" title="Editar datos del bloque">
-													   <img src="<?php echo $path?>public/img/sp5/editar.png" />
-						</a>
-					<?php } ?>
-					<?php if($acl['bloques']['eliminar']){ ?>
-						<a href="<?php echo $path . 'bloques/eliminar/' . $b->id?>"
-													   alt="Eliminar toda la informacion del bloque" title="Eliminar toda la informacion del bloque">
-													   <img src="<?php echo $path?>public/img/sp5/eliminar.png" />
-						</a>
-					<?php } ?>
-					</td>
-					<?php } ?>
-					</tr>
-					<?php
-						$i++;
-					 }?>
-					</table>
-					<div id="pages">
-						<?php foreach($paginador->botones() as $boton){ ?>
-							 <a  href="<?php echo $path . $boton->url() ?>"
-								title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
-								class="<?php echo $boton->estilo() ?>">
-								<?php echo $boton->etiqueta() ?>
-							</a>
-						<?php }?>
-					</div>
-					<?php }else{ ?>
-						<p class="error"><br />No existe ningun bloque para el periodo.
-						</p>
-					<?php } ?>
-			<?php  break; ?>
+                <?php if($registros>0){ ?>
+                    <table>
+                    <tr>
+                        <th>Bloque</th>
+                        <th>Inicio</th>
+                        <th>Fin</th>
+                        <?php if($acl['bloques']['eliminar'] || $acl['bloquesalumnos']['index'] || $acl['bloques']['editar']){ ?>
+                        <th>Opciones</th>
+                        <?php } ?>
+                        </tr>
+                    <?php
+                        $i = 0;
+                        foreach($bloques as $b){
+                        ?>
+                    <tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+                    <td><span class="sub">bloque<?php echo $b->id; ?></span></td>
+                    <td style="text-align:center;">
+                    <span class="sub">
+                    <?php echo Utils::fecha_espanol(substr($b->inicio,0,10))."<br/>".substr($b->inicio,10,strlen($b->inicio)-13); ?>
+                    </span>
+                    </td>
+                    <td style="text-align:center;">
+                    <span class="sub">
+                    <?php  echo Utils::fecha_espanol(substr($b->fin,0,10))."<br/>".substr($b->fin,10,strlen($b->fin)-13); ?>
+                    </span>
+                    </td>
+                    <?php if($acl['bloques']['eliminar'] || $acl['bloquesalumnos']['index'] || $acl['bloques']['editar']){ ?>
+                    <td>
+                    <?php if($acl['bloquesalumnos']['index']){ ?>
+                        <a href="<?php echo $path . 'bloquesalumnos/index/' . $b->id?>"
+                                                       alt="Editar alumnos del bloque" title="Editar alumnos del bloque">
+                                                       <img style="width:23px;" src="<?php echo $path?>public/img/sp5/persona.png" />
+                        </a>
+                    <?php } ?>
+                    <?php if($acl['bloques']['editar']){ ?>
+                        <a href="<?php echo $path . 'bloques/editar/' . $b->id?>"
+                                                       alt="Editar datos del bloque" title="Editar datos del bloque">
+                                                       <img src="<?php echo $path?>public/img/sp5/editar.png" />
+                        </a>
+                    <?php } ?>
+                    <?php if($acl['bloques']['eliminar']){ ?>
+                        <a href="<?php echo $path . 'bloques/eliminar/' . $b->id?>"
+                                                       alt="Eliminar toda la informacion del bloque" title="Eliminar toda la informacion del bloque">
+                                                       <img src="<?php echo $path?>public/img/sp5/eliminar.png" />
+                        </a>
+                    <?php } ?>
+                    </td>
+                    <?php } ?>
+                    </tr>
+                    <?php
+                        $i++;
+                     }?>
+                    </table>
+                    <div id="pages">
+                        <?php foreach($paginador->botones() as $boton){ ?>
+                             <a  href="<?php echo $path . $boton->url() ?>"
+                                title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
+                                class="<?php echo $boton->estilo() ?>">
+                                <?php echo $boton->etiqueta() ?>
+                            </a>
+                        <?php }?>
+                    </div>
+                    <?php }else{ ?>
+                        <p class="error"><br />No existe ningun bloque para el periodo.
+                        </p>
+                    <?php } ?>
+            <?php  break; ?>
 
-			<?php case 'error':
-				  default:
-			?>
-				<p class="error"><br />No se han podido mostrar los bloques.<br/>
-				<?php echo $error ?>
-				</p>
-			<?php  break; ?>
-		<?php } ?>
-	</div>
+            <?php case 'error':
+                  default:
+            ?>
+                <p class="error"><br />No se han podido mostrar los bloques.<br/>
+                <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
 </div>

@@ -9,12 +9,12 @@ V4.92a 29 Aug 2006  (c) 2000-2006 John Lim (jlim#natsoft.com.my). All rights res
   The main differences are
 
    1. When selecting (joining) multiple tables, in assoc mode the table
-   	  names are included in the assoc keys in the "sqlite" driver.
-	  
-	  In "sqlitepo" driver, the table names are stripped from the returned column names. 
-	  When this results in a conflict,  the first field get preference.
+         names are included in the assoc keys in the "sqlite" driver.
+      
+      In "sqlitepo" driver, the table names are stripped from the returned column names. 
+      When this results in a conflict,  the first field get preference.
 
-	Contributed by Herman Kuiper  herman#ozuzo.net  
+    Contributed by Herman Kuiper  herman#ozuzo.net  
 */
 
 if (!defined('ADODB_DIR')) die();

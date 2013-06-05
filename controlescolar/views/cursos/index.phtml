@@ -94,34 +94,34 @@
                         <br/>
                         <br/>
                         <label for="oferta_id">Oferta</label>
-						<select name="oferta_id" id="oferta_id">
-							<option></option>
-							<?php foreach($ofertas as $oferta){ ?>
-							<option value="<?php echo $oferta->id; ?>" <?php if($busqueda->campo('oferta_id') == $oferta->id){ ?>selected="selected"<?php } ?>><?php echo $oferta->nombre; ?></option>
-							<?php } ?>
-						</select>
+                        <select name="oferta_id" id="oferta_id">
+                            <option></option>
+                            <?php foreach($ofertas as $oferta){ ?>
+                            <option value="<?php echo $oferta->id; ?>" <?php if($busqueda->campo('oferta_id') == $oferta->id){ ?>selected="selected"<?php } ?>><?php echo $oferta->nombre; ?></option>
+                            <?php } ?>
+                        </select>
                          <?php   if( in_array('director',  $usr_grupos) || in_array('secretario',  $usr_grupos) || in_array('plantilla',  $usr_grupos)){ ?>
                         <label for="estado_id">Estado</label>
                          <select name="estado_id" id="estado_id">
                          <option></option>
-                        	<?php
-                        	 if( in_array('director',  $usr_grupos) || in_array('secretario',  $usr_grupos) AND  $login!='root'){
-							?>
-							<option value="2" <?php if($busqueda->campo('estado_id') == '2'){ ?>selected="selected"<?php } ?>>En Revision</option>
-							<option value="3" <?php if($busqueda->campo('estado_id') == '3'){ ?>selected="selected"<?php } ?>>Aprobado</option>
-							<?php
-                        	 }else{
-                        		foreach($estados as $e){
-                        		?>
-                        		<option value="<?php echo $e->id ?>" <?php if($busqueda->campo('estado_id') == $e->id){ ?>selected="selected"<?php } ?>><?php echo $e->nombre; ?></option>
-                        		<?php
-                        		}
-                        	 }
-                        		?>
+                            <?php
+                             if( in_array('director',  $usr_grupos) || in_array('secretario',  $usr_grupos) AND  $login!='root'){
+                            ?>
+                            <option value="2" <?php if($busqueda->campo('estado_id') == '2'){ ?>selected="selected"<?php } ?>>En Revision</option>
+                            <option value="3" <?php if($busqueda->campo('estado_id') == '3'){ ?>selected="selected"<?php } ?>>Aprobado</option>
+                            <?php
+                             }else{
+                                foreach($estados as $e){
+                                ?>
+                                <option value="<?php echo $e->id ?>" <?php if($busqueda->campo('estado_id') == $e->id){ ?>selected="selected"<?php } ?>><?php echo $e->nombre; ?></option>
+                                <?php
+                                }
+                             }
+                                ?>
                         </select>
                         <?php }else{ ?>
 
-  						<input type="hidden" name="estado_id" value="3"/>
+                          <input type="hidden" name="estado_id" value="3"/>
 
 
                         <?php } ?>
@@ -160,7 +160,7 @@
                     <?php
                         $i = 0;
                         foreach($cursos as $curso){
-                        	$grupo = $curso->grupo();
+                            $grupo = $curso->grupo();
                     ?>
                     <tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
 
@@ -180,19 +180,19 @@
                                 <?php echo $curso->materia ?>
                             </a>
                         <?php }else{ ?>
-								<?php echo $curso->materia ?>
+                                <?php echo $curso->materia ?>
                         <?php } ?>
                             <br />
                             <span class="sub"><?php echo $curso->verMateriaTipo() ?></span><br/>
-                        	<?php $m=$curso->materia(); if($m->oferta('id')==2){ ?> <span class="sub" style="color:#777777"><?php echo Utils::convierteFecha($curso->inicio); ?></span><?php } ?>
+                            <?php $m=$curso->materia(); if($m->oferta('id')==2){ ?> <span class="sub" style="color:#777777"><?php echo Utils::convierteFecha($curso->inicio); ?></span><?php } ?>
                         </td>
                         <td><?php echo $curso->verProfesor() ?><br/>
-                        	<?php $hcategoria = $curso->hcategoria();
-							if($hcategoria->id != ''){ ?>
-								<span class="main"><?php echo $hcategoria->nombre; ?></span><br/>
-								<span class="main"><?php echo $hcategoria->clave; ?></span>
-							<?php }
-                        	?>
+                            <?php $hcategoria = $curso->hcategoria();
+                            if($hcategoria->id != ''){ ?>
+                                <span class="main"><?php echo $hcategoria->nombre; ?></span><br/>
+                                <span class="main"><?php echo $hcategoria->clave; ?></span>
+                            <?php }
+                            ?>
                         </td>
                         <?php for($d=1; $d<7; $d++){
                         ?>
@@ -211,25 +211,25 @@
                         <?php } ?>
                          <?php if($acl['editar'] || $acl['eliminar']){?>
                         <td style="text-align:center">
-							 <?php if(
-							 in_array('root',  $usr_grupos)
-                             			||
-							 $acl['editar'] &&  in_array('plantilla',  $usr_grupos) &&  ($curso->enProceso() || $curso->rechazado())//editar si esta en proceso o rechazado
-							 ||
+                             <?php if(
+                             in_array('root',  $usr_grupos)
+                                         ||
+                             $acl['editar'] &&  in_array('plantilla',  $usr_grupos) &&  ($curso->enProceso() || $curso->rechazado())//editar si esta en proceso o rechazado
+                             ||
                              ($acl['editar'] && $curso->aprobado() &&  (in_array('director',  $usr_grupos) || in_array('secretario',  $usr_grupos))) //eliminar si esta aprobado solo direccion
-                         	 ){?>
+                              ){?>
                             <a href="<?php echo $path . 'cursos/editar/' . $curso->id ?>"
                                alt="Editar datos del curso" title="Editar datos del curso">
                                <img src="<?php echo $path?>public/img/sp5/editar.png" />
                             </a>
                             <?php } ?>
                              <?php if(
-                             			in_array('root',  $usr_grupos)
-                             			||
-                             			($acl['eliminar'] &&  in_array('plantilla',  $usr_grupos) && ($curso->enProceso() || $curso->rechazado()))//eliminar si esta en proceso o rechazado
-                             			||
-                             			($acl['eliminar'] && $curso->aprobado() &&  (in_array('director',  $usr_grupos) || in_array('secretario',  $usr_grupos))) //eliminar si esta aprobado solo direccion
-                         				){?>
+                                         in_array('root',  $usr_grupos)
+                                         ||
+                                         ($acl['eliminar'] &&  in_array('plantilla',  $usr_grupos) && ($curso->enProceso() || $curso->rechazado()))//eliminar si esta en proceso o rechazado
+                                         ||
+                                         ($acl['eliminar'] && $curso->aprobado() &&  (in_array('director',  $usr_grupos) || in_array('secretario',  $usr_grupos))) //eliminar si esta aprobado solo direccion
+                                         ){?>
                             <a href="<?php echo $path . 'cursos/eliminar/' . $curso->id ?>"
                                alt="Eliminar toda la informacion del curso" title="Eliminar toda la informacion del curso">
                                <img src="<?php echo $path?>public/img/sp5/eliminar.png" />
@@ -241,70 +241,70 @@
                             <?php if($acl_inscripcion['agregar'] || $acl_inscripcion['eliminar']){ ?>
                             <td style="text-align:center">
                             <?php if(in_array('root',  $usr_grupos)
-                             			||
-                             		$acl_inscripcion['agregar'] && $curso->aprobado()){ ?>
+                                         ||
+                                     $acl_inscripcion['agregar'] && $curso->aprobado()){ ?>
                              <a href="<?php echo $path . 'inscripcion/agregar/' . $curso->id ?>"  alt="Inscripcion de alumnos al curso"
-							 title="Inscripcion de alumnos al curso">
-							 <img src="<?php echo $path?>public/img/sp5/mas.png"/>
-							 </a>
-							 <?php }  ?>
-							 <?php if(in_array('root',  $usr_grupos)
-                             			||
-                             			$acl_inscripcion['eliminar'] && $curso->aprobado()){ ?>
-							  <a href="<?php echo $path . 'inscripcion/eliminar/' . $curso->id ?>" alt="Baja de alumnos al curso"
-							 title="Baja de alumnos al curso">
-							 <img src="<?php echo $path?>public/img/sp5/menos.png"/>
-							 </a>
-							 <?php } ?>
-                        	</td>
-                        	<?php } ?>
+                             title="Inscripcion de alumnos al curso">
+                             <img src="<?php echo $path?>public/img/sp5/mas.png"/>
+                             </a>
+                             <?php }  ?>
+                             <?php if(in_array('root',  $usr_grupos)
+                                         ||
+                                         $acl_inscripcion['eliminar'] && $curso->aprobado()){ ?>
+                              <a href="<?php echo $path . 'inscripcion/eliminar/' . $curso->id ?>" alt="Baja de alumnos al curso"
+                             title="Baja de alumnos al curso">
+                             <img src="<?php echo $path?>public/img/sp5/menos.png"/>
+                             </a>
+                             <?php } ?>
+                            </td>
+                            <?php } ?>
                       <?php   if( in_array('director',  $usr_grupos) || in_array('secretario',  $usr_grupos) || in_array('plantilla',  $usr_grupos)){ ?>
                         <td style="text-align:center" class="<?php echo $obs ?>estado_<?php echo $curso->estado_id; ?>"
 
                         <?php
-                        	if(trim($curso->observaciones)!='')
-                         	echo 'title="<h1>Observaciones</h1><br/>'.str_replace('\n','<br />',$curso->observaciones).'"';
-                        	else
-                        	echo 'title="<h1>No hay observaciones</h1><br/>"';
+                            if(trim($curso->observaciones)!='')
+                             echo 'title="<h1>Observaciones</h1><br/>'.str_replace('\n','<br />',$curso->observaciones).'"';
+                            else
+                            echo 'title="<h1>No hay observaciones</h1><br/>"';
                           ?> >
                         <?php
                         switch($curso->estado_id){
-                        	case 1 :
-                        	case 4:
-									if( in_array('plantilla',  $usr_grupos)){
-									?>
-									 <a href="<?php echo $path . 'cursos/status/' . $curso->id; ?>" alt="Cambiar el estatus del curso"
-							 		title="Cambiar el estatus del curso">
-							 		<img src="<?php echo $path?>public/img/sp5/si.png"/>
-									</a>
-									<?php
-									}
-                        		break;
+                            case 1 :
+                            case 4:
+                                    if( in_array('plantilla',  $usr_grupos)){
+                                    ?>
+                                     <a href="<?php echo $path . 'cursos/status/' . $curso->id; ?>" alt="Cambiar el estatus del curso"
+                                     title="Cambiar el estatus del curso">
+                                     <img src="<?php echo $path?>public/img/sp5/si.png"/>
+                                    </a>
+                                    <?php
+                                    }
+                                break;
 
-                        	case 2 :
-                        			if( in_array('director',  $usr_grupos) || in_array('secretario',  $usr_grupos)){
-									?>
-									 <a href="<?php echo $path . 'cursos/status/' . $curso->id; ?>" alt="Cambiar el estatus del curso"
-							 		title="Cambiar el estatus del curso">
-							 		<img src="<?php echo $path?>public/img/sp5/si.png"/>
-									</a>
-									<?php
-									}
-                        		break;
+                            case 2 :
+                                    if( in_array('director',  $usr_grupos) || in_array('secretario',  $usr_grupos)){
+                                    ?>
+                                     <a href="<?php echo $path . 'cursos/status/' . $curso->id; ?>" alt="Cambiar el estatus del curso"
+                                     title="Cambiar el estatus del curso">
+                                     <img src="<?php echo $path?>public/img/sp5/si.png"/>
+                                    </a>
+                                    <?php
+                                    }
+                                break;
 
-                        	case 3 :
-                        			if(in_array('root',  $usr_grupos)){
-                        			?>
-									 <a href="<?php echo $path . 'cursos/status/' . $curso->id; ?>" alt="Cambiar el estatus del curso"
-							 		title="Cambiar el estatus del curso">
-							 		<img src="<?php echo $path?>public/img/sp5/si.png"/>
-									</a>
-									<?php
-                        			}
+                            case 3 :
+                                    if(in_array('root',  $usr_grupos)){
+                                    ?>
+                                     <a href="<?php echo $path . 'cursos/status/' . $curso->id; ?>" alt="Cambiar el estatus del curso"
+                                     title="Cambiar el estatus del curso">
+                                     <img src="<?php echo $path?>public/img/sp5/si.png"/>
+                                    </a>
+                                    <?php
+                                    }
 
-                        		break;
-                        		default:
-                        			break;
+                                break;
+                                default:
+                                    break;
 
                         }
                          ?>
@@ -322,7 +322,7 @@
                     <?php if($busqueda->condicion() != ''){?>
                         No hay registros que concidan con la b&uacute;squeda
                     <?php }else{?>
-                    	No existen cursos para el ciclo.
+                        No existen cursos para el ciclo.
                     <?php  }  ?>
                 </p>
         <?php } ?>

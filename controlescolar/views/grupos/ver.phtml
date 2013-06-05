@@ -1,174 +1,174 @@
 <?php $path = KUMBIA_PATH; ?>
 <div id="primary">
-	<div class="content">
-		<h1>
-			Resumen por grupo
-		</h1>
-		<?php switch($option) {
-				case 'vista': ?>
-				<h2><?php echo $grupo->grado .'&deg;' .  $grupo->letra .  ' ' . $grupo->verTurno() ;  ?></h2>
-				<h2><?php echo  $grupo->verOferta(); ?></h2>
-				<h2><?php echo $ciclo->numero?></h2>
-				<div id="options-bar">
-					<div id="options">
-						<a href="<?php echo $path ?>grupos"
-						   alt="Volver a grupos"
-						   title="Volver a grupos">Volver a grupos
-						<img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
-						<?php if($acl_grupos['imprimir']){ ?>
-						/ <a href="<?php echo $path . 'grupos/imprimir/' . $grupo->id ?>"
-							 alt="Exportar el resumen"
-						     title="Exportar el resumen">Exportar
-						<img src="<?php echo $path?>public/img/sp5/excel.png"/></a>
-						<?php } ?>
-						<?php if($acl_grupos['horario']){ ?>
-						/ <a href="<?php echo $path . 'grupos/horario/' . $grupo->id ?>"
-							 alt="Ver horario del grupo"
-						     title="Ver horario del grupo">Horario
-						<img src="<?php echo $path?>public/img/sp5/reloj.png"/></a>
-						<?php  } ?>
-					</div>
-				</div>
-				<div id="calificaciones" class="contenedor">
-					<div>
-					<table>
-						<?php $n = 1; foreach($alumnos as $alumno){?>
-							<?php if(($n - 1) % 10 == 0){ ?>
-								<tr>
-									<th rowspan="2">#</th>
-									<th rowspan="2">Alumno</th>
-									<?php foreach($cursos as $curso){
-										if($curso->aprobado()){
-										 ?>
+    <div class="content">
+        <h1>
+            Resumen por grupo
+        </h1>
+        <?php switch($option) {
+                case 'vista': ?>
+                <h2><?php echo $grupo->grado .'&deg;' .  $grupo->letra .  ' ' . $grupo->verTurno() ;  ?></h2>
+                <h2><?php echo  $grupo->verOferta(); ?></h2>
+                <h2><?php echo $ciclo->numero?></h2>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path ?>grupos"
+                           alt="Volver a grupos"
+                           title="Volver a grupos">Volver a grupos
+                        <img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+                        <?php if($acl_grupos['imprimir']){ ?>
+                        / <a href="<?php echo $path . 'grupos/imprimir/' . $grupo->id ?>"
+                             alt="Exportar el resumen"
+                             title="Exportar el resumen">Exportar
+                        <img src="<?php echo $path?>public/img/sp5/excel.png"/></a>
+                        <?php } ?>
+                        <?php if($acl_grupos['horario']){ ?>
+                        / <a href="<?php echo $path . 'grupos/horario/' . $grupo->id ?>"
+                             alt="Ver horario del grupo"
+                             title="Ver horario del grupo">Horario
+                        <img src="<?php echo $path?>public/img/sp5/reloj.png"/></a>
+                        <?php  } ?>
+                    </div>
+                </div>
+                <div id="calificaciones" class="contenedor">
+                    <div>
+                    <table>
+                        <?php $n = 1; foreach($alumnos as $alumno){?>
+                            <?php if(($n - 1) % 10 == 0){ ?>
+                                <tr>
+                                    <th rowspan="2">#</th>
+                                    <th rowspan="2">Alumno</th>
+                                    <?php foreach($cursos as $curso){
+                                        if($curso->aprobado()){
+                                         ?>
 
-										<th colspan="3">
-											<?php if($acl_grupos['curso']){ ?>
-											<a href="<?php echo $path . 'grupos/curso/' . $curso->id?>">
-											<?php echo $curso->materia ?>
-											</a>
-											<?php }else{ ?>
-												<?php echo $curso->materia ?>
-											<?php } ?>
-										</th>
+                                        <th colspan="3">
+                                            <?php if($acl_grupos['curso']){ ?>
+                                            <a href="<?php echo $path . 'grupos/curso/' . $curso->id?>">
+                                            <?php echo $curso->materia ?>
+                                            </a>
+                                            <?php }else{ ?>
+                                                <?php echo $curso->materia ?>
+                                            <?php } ?>
+                                        </th>
 
-									<?php 	}
-											}
-											 ?>
-								</tr>
-								<tr>
-									<?php foreach($cursos as $curso){
-										if($curso->aprobado()){
-										 ?>
-										<th class="sub">AST</th>
-										<th class="sub">ORD</th>
-										<th class="sub">EXT</th>
-									<?php
-										}
-										} ?>
-								</tr>
-							<?php } ?>
-							<tr class="<?php echo ($n%2 != 0 ? '' : 'odd') ?>">
-								<td><?php echo $n ?></td>
-								<td>
-									<a href="<?php echo $path . 'alumnos/ver/' . $alumno->id . '/' . $curso->id ?>"
-									   alt="Ver datos del alumno" title="Ver datos del alumno">
-									<?php echo $alumno->nombre()  ?>
-									</a>
-									<br />
-									<span class="sub"><?php echo $alumno->codigo ?><span>
-									<span class="sub" style="color: #777">
-										<?php echo $alumno->grado . '&deg;' . $alumno->letra . ' ' . $alumno->turno?>
-									</span>
-								</td>
-								<?php foreach($cursos as $curso){
-										if($curso->aprobado()){
-									 ?>
-										<?php
-											$ast = $asistencias[$curso->id][$alumno->id];
-											if($ast['porcentaje'] == ''){
-												$ast['porcentaje'] = '-';
-											}
-											$ord = $calificaciones[$alumno->id][$curso->id]['ORD'];
-											if($ord == ''){
-												$ord = '-';
-											}
-											$ext = $calificaciones[$alumno->id][$curso->id]['EXT'];
-											if($ext == ''){
-												$ext = '-';
-											}
-										?>
-										<td class="numero <?php echo $ast['oportunidad']?>">
-											<span alt="<?php echo $alumno->ap . ' ' . $alumno->am .
-																  '  - Porcentaje de asistencias de ' .
-																  $curso->materia ?>"
-											      title="<?php echo $alumno->ap . ' ' . $alumno->am .
-																  '  - Porcentaje de asistencias de ' .
-																  $curso->materia ?>">
-												<?php echo $ast['porcentaje'] . ($ast['porcentaje'] != '-' ? '%' : '') ?>
-											</span>
-										</td>
-										<td class="numero">
-											<span class="bold <?php echo $ord['status'] ?>"
-												  alt="<?php echo $alumno->ap . ' ' . $alumno->am .
-																  '  - Ordinario de ' .
-																  $curso->materia ?>"
-											      title="<?php echo $alumno->ap . ' ' . $alumno->am .
-																  '  - Ordinario de ' .
-																  $curso->materia ?>">
-												<?php echo $ord['valor'] ?>
-											</span>
-										</td>
-										<td class="numero">
-											<span class="bold <?php echo $ext['status'] ?>"
-												  alt="<?php echo $alumno->ap . ' ' . $alumno->am .
-																  '  - Extraordinario de ' .
-																  $curso->materia ?>"
-											      title="<?php echo $alumno->ap . ' ' . $alumno->am .
-																  '  - Extraordinario de ' .
-																  $curso->materia ?>">
-												<?php echo $ext['valor'] ?>
-											</span>
-										</td>
-								<?php
-										}
-									 } ?>
-							</tr>
-						<?php $n++; ?>
-						<?php } ?>
-					</table>
-					</div>
-				</div>
-			<?php  break; ?>
-			<?php case 'alert': ?>
-				<div id="options-bar">
-					<div id="options">
-						<a href="<?php echo $path ?>grupos"
-						   alt="Volver a grupos"
-						   title="Volver a grupos">Volver a grupos
-						<img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
-					</div>
-				</div>
-				<p class="info">
-					<br />
-					<?php echo $alert ?>
-				</p>
-			<?php  break; ?>
-			<?php case 'error':
-				  default:
-			?>
-				<div id="options-bar">
-					<div id="options">
-						<a href="<?php echo $path ?>grupos"
-						   alt="Volver a grupos"
-						   title="Volver a grupos">Volver a grupos
-						<img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
-					</div>
-				</div>
-				<p class="error">
-					<br />
-					<?php echo $error ?>
-				</p>
-			<?php  break; ?>
-		<?php } ?>
-	</div>
+                                    <?php     }
+                                            }
+                                             ?>
+                                </tr>
+                                <tr>
+                                    <?php foreach($cursos as $curso){
+                                        if($curso->aprobado()){
+                                         ?>
+                                        <th class="sub">AST</th>
+                                        <th class="sub">ORD</th>
+                                        <th class="sub">EXT</th>
+                                    <?php
+                                        }
+                                        } ?>
+                                </tr>
+                            <?php } ?>
+                            <tr class="<?php echo ($n%2 != 0 ? '' : 'odd') ?>">
+                                <td><?php echo $n ?></td>
+                                <td>
+                                    <a href="<?php echo $path . 'alumnos/ver/' . $alumno->id . '/' . $curso->id ?>"
+                                       alt="Ver datos del alumno" title="Ver datos del alumno">
+                                    <?php echo $alumno->nombre()  ?>
+                                    </a>
+                                    <br />
+                                    <span class="sub"><?php echo $alumno->codigo ?><span>
+                                    <span class="sub" style="color: #777">
+                                        <?php echo $alumno->grado . '&deg;' . $alumno->letra . ' ' . $alumno->turno?>
+                                    </span>
+                                </td>
+                                <?php foreach($cursos as $curso){
+                                        if($curso->aprobado()){
+                                     ?>
+                                        <?php
+                                            $ast = $asistencias[$curso->id][$alumno->id];
+                                            if($ast['porcentaje'] == ''){
+                                                $ast['porcentaje'] = '-';
+                                            }
+                                            $ord = $calificaciones[$alumno->id][$curso->id]['ORD'];
+                                            if($ord == ''){
+                                                $ord = '-';
+                                            }
+                                            $ext = $calificaciones[$alumno->id][$curso->id]['EXT'];
+                                            if($ext == ''){
+                                                $ext = '-';
+                                            }
+                                        ?>
+                                        <td class="numero <?php echo $ast['oportunidad']?>">
+                                            <span alt="<?php echo $alumno->ap . ' ' . $alumno->am .
+                                                                  '  - Porcentaje de asistencias de ' .
+                                                                  $curso->materia ?>"
+                                                  title="<?php echo $alumno->ap . ' ' . $alumno->am .
+                                                                  '  - Porcentaje de asistencias de ' .
+                                                                  $curso->materia ?>">
+                                                <?php echo $ast['porcentaje'] . ($ast['porcentaje'] != '-' ? '%' : '') ?>
+                                            </span>
+                                        </td>
+                                        <td class="numero">
+                                            <span class="bold <?php echo $ord['status'] ?>"
+                                                  alt="<?php echo $alumno->ap . ' ' . $alumno->am .
+                                                                  '  - Ordinario de ' .
+                                                                  $curso->materia ?>"
+                                                  title="<?php echo $alumno->ap . ' ' . $alumno->am .
+                                                                  '  - Ordinario de ' .
+                                                                  $curso->materia ?>">
+                                                <?php echo $ord['valor'] ?>
+                                            </span>
+                                        </td>
+                                        <td class="numero">
+                                            <span class="bold <?php echo $ext['status'] ?>"
+                                                  alt="<?php echo $alumno->ap . ' ' . $alumno->am .
+                                                                  '  - Extraordinario de ' .
+                                                                  $curso->materia ?>"
+                                                  title="<?php echo $alumno->ap . ' ' . $alumno->am .
+                                                                  '  - Extraordinario de ' .
+                                                                  $curso->materia ?>">
+                                                <?php echo $ext['valor'] ?>
+                                            </span>
+                                        </td>
+                                <?php
+                                        }
+                                     } ?>
+                            </tr>
+                        <?php $n++; ?>
+                        <?php } ?>
+                    </table>
+                    </div>
+                </div>
+            <?php  break; ?>
+            <?php case 'alert': ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path ?>grupos"
+                           alt="Volver a grupos"
+                           title="Volver a grupos">Volver a grupos
+                        <img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+                    </div>
+                </div>
+                <p class="info">
+                    <br />
+                    <?php echo $alert ?>
+                </p>
+            <?php  break; ?>
+            <?php case 'error':
+                  default:
+            ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path ?>grupos"
+                           alt="Volver a grupos"
+                           title="Volver a grupos">Volver a grupos
+                        <img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+                    </div>
+                </div>
+                <p class="error">
+                    <br />
+                    <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
 </div>

@@ -269,77 +269,77 @@ var WindowUtilities = {
 }
 
 $W = function(objectName) {
-	return document.frames('openWindow').document.getElementById(objectName)
+    return document.frames('openWindow').document.getElementById(objectName)
 }
 
 
 var WINDOW = new Object();
 
-WINDOW.open = function(properties){	
-	
-	var windowScroll = WindowUtilities.getWindowScroll(document.body);    
+WINDOW.open = function(properties){    
+    
+    var windowScroll = WindowUtilities.getWindowScroll(document.body);    
     var pageSize = WindowUtilities.getPageSize(document.body);    
     
-	obj = document.createElement("DIV");
-	obj.style.position = "absolute";				
-	if(!properties.title) properties.title = ""
-	if(!properties.titleBackground) properties.titleBackground = "url("+$Kumbia.path+"img/localnav.gif)";
-	if(!properties.background) properties.background = "#FFFFFF";	
-	if(!properties.border) properties.border = "1px solid #969696"
-	if(!properties.zIndex) properties.zIndex = "10000"
-	if(!properties.url) properties.url = properties.action
-	if(properties.onbeforeclose==undefined) properties.onbeforeclose = function(){ }
-	if(properties.onclose==undefined) properties.onclose = function(){ }
-	
-	top = parseInt((pageSize.windowHeight - (parseInt(properties.height)))/2);	
+    obj = document.createElement("DIV");
+    obj.style.position = "absolute";                
+    if(!properties.title) properties.title = ""
+    if(!properties.titleBackground) properties.titleBackground = "url("+$Kumbia.path+"img/localnav.gif)";
+    if(!properties.background) properties.background = "#FFFFFF";    
+    if(!properties.border) properties.border = "1px solid #969696"
+    if(!properties.zIndex) properties.zIndex = "10000"
+    if(!properties.url) properties.url = properties.action
+    if(properties.onbeforeclose==undefined) properties.onbeforeclose = function(){ }
+    if(properties.onclose==undefined) properties.onclose = function(){ }
+    
+    top = parseInt((pageSize.windowHeight - (parseInt(properties.height)))/2);    
     top += parseInt(windowScroll.top)
     left = parseInt((pageSize.windowWidth - (parseInt(properties.width)))/2);
     left += parseInt(windowScroll.left)
     
     properties.top = top
     properties.left = left    
-		
-	for(x in properties){
-		if(x!="background"&&x!="border"){			
-	  		eval("obj.style."+x+" = properties."+x)
-		}
-	}	
-	obj.style.display = "none"
-	html = "<table cellspacing=0 cellpadding=0><td><table cellspacing='0' style='background:"+properties.background+";width:"+
-	properties.width+"px'><tr><td style='cursor:move;color:#FFFFFF;background:"+properties.titleBackground+"'>"+
-	properties.title+"</td></tr>"+
-	"<tr><td id='windowData' style='padding:2px;border:1px solid #969696'></td></tr></table></td><td style='background: url("+$Kumbia.path+"img/right.png);width:25px'></td></tr>"+
-	"<tr><td style='background: url("+$Kumbia.path+"img/down.png);height:5px'></td></tr></table>";		
-	obj.innerHTML = html;
-	obj.id = "myWindow"
-	document.body.appendChild(obj);	
-	new Draggable(obj.id);
-	if(properties.onclose) WINDOW.onclose = properties.onclose
-	if(properties.onbeforeclose){ WINDOW.onbeforeclose = properties.onbeforeclose }			
-	obj.close = function(action){
-		if(properties.onbeforeclose){
-			if(properties.onbeforeclose.call(this, action)==false){
-				return 
-			}
-		}
-		new Effect.BlindUp("myWindow", { 
-			duration: 0.8,
-			afterFinish: function (){
-				document.body.removeChild($("myWindow"))	
-				if(properties.onclose){
-					properties.onclose.call(this, action)
-				}
-			}
-		})		
-	}	
-	new AJAX.viewRequest({
-		action: properties.url,
-		container: "windowData",		
-		callbacks: {
-			oncomplete : function(){
-				new Effect.Appear("myWindow", { duration: 0.7 });
-				new Effect.Move("myWindow", { x: 1 })				
-			}
-		}
-	});
+        
+    for(x in properties){
+        if(x!="background"&&x!="border"){            
+              eval("obj.style."+x+" = properties."+x)
+        }
+    }    
+    obj.style.display = "none"
+    html = "<table cellspacing=0 cellpadding=0><td><table cellspacing='0' style='background:"+properties.background+";width:"+
+    properties.width+"px'><tr><td style='cursor:move;color:#FFFFFF;background:"+properties.titleBackground+"'>"+
+    properties.title+"</td></tr>"+
+    "<tr><td id='windowData' style='padding:2px;border:1px solid #969696'></td></tr></table></td><td style='background: url("+$Kumbia.path+"img/right.png);width:25px'></td></tr>"+
+    "<tr><td style='background: url("+$Kumbia.path+"img/down.png);height:5px'></td></tr></table>";        
+    obj.innerHTML = html;
+    obj.id = "myWindow"
+    document.body.appendChild(obj);    
+    new Draggable(obj.id);
+    if(properties.onclose) WINDOW.onclose = properties.onclose
+    if(properties.onbeforeclose){ WINDOW.onbeforeclose = properties.onbeforeclose }            
+    obj.close = function(action){
+        if(properties.onbeforeclose){
+            if(properties.onbeforeclose.call(this, action)==false){
+                return 
+            }
+        }
+        new Effect.BlindUp("myWindow", { 
+            duration: 0.8,
+            afterFinish: function (){
+                document.body.removeChild($("myWindow"))    
+                if(properties.onclose){
+                    properties.onclose.call(this, action)
+                }
+            }
+        })        
+    }    
+    new AJAX.viewRequest({
+        action: properties.url,
+        container: "windowData",        
+        callbacks: {
+            oncomplete : function(){
+                new Effect.Appear("myWindow", { duration: 0.7 });
+                new Effect.Move("myWindow", { x: 1 })                
+            }
+        }
+    });
 };

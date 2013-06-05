@@ -1,8 +1,8 @@
 <?php
 /** KumbiaForms - PHP Rapid Development Framework *****************************
-*	
-* Copyright (C) 2005-2007 Andrés Felipe Gutiérrez (andresfelipe at vagoogle.net)
-* 	
+*    
+* Copyright (C) 2005-2007 Andrï¿½s Felipe Gutiï¿½rrez (andresfelipe at vagoogle.net)
+*     
 * This framework is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
 * License as published by the Free Software Foundation; either
@@ -18,32 +18,32 @@
 * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 * 
 * Este framework es software libre; puedes redistribuirlo y/o modificarlo
-* bajo los terminos de la licencia pública general GNU tal y como fue publicada
-* por la Fundación del Software Libre; desde la versión 2.1 o cualquier
-* versión superior.
+* bajo los terminos de la licencia pï¿½blica general GNU tal y como fue publicada
+* por la Fundaciï¿½n del Software Libre; desde la versiï¿½n 2.1 o cualquier
+* versiï¿½n superior.
 * 
 * Este framework es distribuido con la esperanza de ser util pero SIN NINGUN 
-* TIPO DE GARANTIA; sin dejar atrás su LADO MERCANTIL o PARA FAVORECER ALGUN
-* FIN EN PARTICULAR. Lee la licencia publica general para más detalles.
+* TIPO DE GARANTIA; sin dejar atrï¿½s su LADO MERCANTIL o PARA FAVORECER ALGUN
+* FIN EN PARTICULAR. Lee la licencia publica general para mï¿½s detalles.
 * 
-* Debes recibir una copia de la Licencia Pública General GNU junto con este
-* framework, si no es asi, escribe a Fundación del Software Libre Inc.,
+* Debes recibir una copia de la Licencia Pï¿½blica General GNU junto con este
+* framework, si no es asi, escribe a Fundaciï¿½n del Software Libre Inc.,
 * 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
 *****************************************************************************/
 
 session_register("rsa_key");
-	
-function generateRSAKey($kumbia){	;
-  	$h = date("G")>12 ? 1 : 0;
- 	$time = uniqid().mktime($h, 0, 0, date("m"), date("d"), date("Y"));
-  	$key = sha1($time);
-  	$_SESSION['rsa_key'] = $key;  
-  	$xCode = "<input type='hidden' id='rsa32_key' value='$key' />\r\n";
-  	if($kumbia)
-  		formsPrint($xCode);
-  	else
-  		return $xCode;
-  	return "";
+    
+function generateRSAKey($kumbia){    ;
+      $h = date("G")>12 ? 1 : 0;
+     $time = uniqid().mktime($h, 0, 0, date("m"), date("d"), date("Y"));
+      $key = sha1($time);
+      $_SESSION['rsa_key'] = $key;  
+      $xCode = "<input type='hidden' id='rsa32_key' value='$key' />\r\n";
+      if($kumbia)
+          formsPrint($xCode);
+      else
+          return $xCode;
+      return "";
 }
 
 function createSecureRSAKey($kumbia=true){  
@@ -53,10 +53,10 @@ function createSecureRSAKey($kumbia=true){
    if((time()%8)==0){    
      return generateRSAKey($kumbia);
    } else {
-   	if($kumbia)  	
-   		formsPrint("<input type='hidden' id='rsa32_key' value=\"{$_SESSION['rsa_key']}\"/> \r\n");
-   	else
- 		print "<input type='hidden' id='rsa32_key' value=\"{$_SESSION['rsa_key']}\"/> \r\n";  		
+       if($kumbia)      
+           formsPrint("<input type='hidden' id='rsa32_key' value=\"{$_SESSION['rsa_key']}\"/> \r\n");
+       else
+         print "<input type='hidden' id='rsa32_key' value=\"{$_SESSION['rsa_key']}\"/> \r\n";          
    }
   } else {
     return generateRSAKey($kumbia);
