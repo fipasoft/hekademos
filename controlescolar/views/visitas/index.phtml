@@ -1,0 +1,101 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+        <h1>
+            Historial de visitas <?php if($busqueda->condicion() != '') {?><div class="filter-lab">Contenido filtrado</div><?php }?>
+
+        </h1>
+        <h2>
+            <?php echo $registros;?>
+            Registro<?php echo ($registros == 1 ? '' : 's') ?>
+        </h2>
+        <div id="options-bar">
+            <div id="options">
+                <a href="" id="aSearch" title="Buscar" alt="Buscar">
+                    Buscar
+                    <img src="<?php echo $path?>public/img/sp5/buscar.png"/>
+                </a> /
+                <a href="<?php echo $path ?>visitas/informacion"  title="Informacion" alt="Informacion">
+                    Información
+                    <img src="<?php echo $path?>public/img/sp5/mundo.png"/>
+                </a>
+            </div>
+            <div id="search" <?php if($busqueda->condicion() == ''){?> style="display:none" <?php } ?>>
+                <form action="<?php echo $path ?>visitas" method="post" id="frm_search">
+                    <fieldset>
+                    <label for="usuarios_id">Usuario</label>
+                    <select name="usuarios_id" id="usuario_id">
+                    <option></option>
+                    <?php foreach($usuarios as $usuario){ ?>
+                        <option value="<?php echo $usuario->id; ?>"  <?php echo ($busqueda->campo("usuarios_id")==$usuario->id? ' selected="selected" ' : ''); ?> ><?php echo $usuario->login; ?></option>
+                    <?php } ?>
+                    </select>
+                    <label for="tipo">Tipo</label>
+                    <select name="tipo" id="tipo">
+                    <option></option>
+                    <option value="e" <?php echo ($busqueda->campo("tipo")=="e"? ' selected="selected" ' : ''); ?> >Entrada</option>
+                    <option value="s" <?php echo ($busqueda->campo("tipo")=="s"? ' selected="selected" ' : ''); ?> >Salida</option>
+                    </select>
+                    <label for="fecha">Fecha</label>
+                        <input type="text" name="fecha" id="fecha" value="<?php echo $busqueda->campo('fecha') ?>" size="10" maxlength="10" />
+                        <br/><br/>
+                        <input type="submit" id="btn_submit" value="Filtrar" />
+                        <input type="reset" id="reset" value="Quitar filtros" />
+                    </fieldset>
+                </form>
+            </div>
+
+        </div>
+        <?php if($registros > 0){ ?>
+            <table>
+            <tr><th>Fecha</th><th>Usuario</th><th>Tipo</th><tr>
+            <?php
+             $i=0;
+             foreach($visitas as $v){ ?>
+            <tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+            <td style="text-align:center;"><span class="sub"><?php
+
+             echo Utils::convierteFecha(substr($v->fecha,0,10)); ?>
+             </span><br/>
+             <span style="color: rgb(119, 119, 119);" class="sub">
+             <?php echo substr($v->fecha,10); ?>
+             </span>
+             </td>
+            <td style="text-align:left;">
+             <span class="sub">
+            <?php echo $v->login; ?>
+            </span>
+            <br/>
+            <span >
+            <?php echo $v->nombre; ?>
+            </span>
+            </td>
+            <td>
+                <?php 
+                if($v->tipo=="e"){
+                    echo "Entrada"; 
+                }else{
+                    echo "Salida";
+                }
+                ?>
+            </td>
+
+            </tr>
+            <?php
+                $i++;
+             } ?>
+            <table>
+        <?php } else { ?>
+                <p class="info"><br />No hay registros que mostrar...</p>
+        <?php } ?>
+        <div id="pages">
+        <?php foreach($paginador->botones() as $boton){ ?>
+                 <a  href="<?php echo $path . $boton->url() ?>"
+                    title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
+                    class="<?php echo $boton->estilo() ?>">
+                    <?php echo $boton->etiqueta() ?>
+                </a>
+            <?php }?>
+        </div>
+    </div>
+</div>

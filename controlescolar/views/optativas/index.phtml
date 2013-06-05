@@ -1,0 +1,99 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+        <h1>Configurar periodo de optativas</h1>
+        <?php if($option!="error"){ ?>
+        <h2>Inicia el <?php echo Utils::fecha_espanol(substr($periodo->inicio,0,10)); ?> a las <?php echo substr($periodo->inicio,10,6); ?></h2>
+        <h2>Finaliza el <?php echo Utils::fecha_espanol(substr($periodo->fin,0,10)); ?> a las <?php echo substr($periodo->fin,10,6); ?></h2>
+        <h2><?php echo ($periodo->activo==1? "Activo" : "Inactivo"); ?></h2>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path ?>periodos">Volver a periodos
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+                <?php if($acl['optativas']['inscribir']){ ?>
+                /
+                <a href="<?php echo $path ?>optativas/inscripciones/<?php echo $periodo->id;  ?>">Realizar inscripciones
+                <img src="<?php echo $path?>public/img/sp5/ligar.png"/>
+                </a>
+                <?php } ?>
+            </div>
+        </div>
+        <?php } ?>
+
+        <?php switch($option) {
+                case 'vista': ?>
+            <table>
+            <tr><th>Actividades</th><th>Opciones</th><th>Status</th></tr>
+            <?php
+            $i=0;
+            foreach($etapas as $e){
+            ?>
+            <tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+            <td><span class="sub"><?php echo $e['descripcion']; ?></span></td>
+            <td style="text-align:center;">
+            <?php if($acl['optativas'][$e['nombre']]){ ?>
+            <a href="<?php echo $path . 'optativas/'.$e['nombre'].'/' . $periodo->id?>"
+                                           alt="Configurar el periodo de optativas" title="Configurar el periodo de optativas">
+                                           <img src="<?php echo $path?>public/img/sp5/config.png" />
+            </a>
+            <?php } ?>
+            <?php if($e['nombre']=="bloques" && $bloques){ ?>
+                <?php if($acl['bloques']['index']){ ?>
+                <a href="<?php echo $path . 'bloques/index/' . $periodo->id?>"
+                                               alt="Editar la informacion de los bloques" title="Editar la informacion de los bloques">
+                                               <img src="<?php echo $path?>public/img/sp5/editar.png" />
+                </a>
+                <?php } ?>
+            <?php }elseif($e['nombre']=="cursos"){ ?>
+                <?php if($acl['optativas']['configuracion']){ ?>
+                <a href="<?php echo $path . 'optativas/configuracion/' . $periodo->id?>"
+                                               alt="Configurar selección de cursos" title="Configurar selección de cursos">
+                                               <img src="<?php echo $path?>public/img/sp5/configuracion.png" />
+                </a>
+                <?php } ?>
+            <?php }elseif($e['nombre']=="taes"){ ?>
+                <?php if($acl['optativas']['taesinfo']){ ?>
+                <a href="<?php echo $path . 'optativas/taesinfo/' . $periodo->id?>"
+                                               alt="Informacion de las trayectorias" title="Informacion de las trayectorias">
+                                               <img src="<?php echo $path?>public/img/sp5/trayectoria.png" />
+                </a>
+                <?php } ?>
+                <?php } ?>
+            </td>
+            <td class="<?php echo $e['clase']; ?>">
+            </td>
+            </tr>
+            <?php
+                $i++;
+             } ?>
+            </table>
+            <?php if($fases==3){ ?>
+            <br/>
+            <?php if(count($alertas)==0){ ?>
+            <p class="tip">
+            <br/>
+            El periodo de optativas se ha configurado correctamente. Los alumnos podran inscribirse en el horario que marque su agenda.
+            </p>
+            <?php }else{ ?>
+            <p class="error" >
+            Se presentan las siguientes inconsistencias:<br/>
+            <br/>
+            <?php foreach($alertas as $a){ ?>
+            -<?php echo $a; ?><br/>
+            <?php } ?>
+
+            </p>
+            <?php } ?>
+            <?php } ?>
+            <?php  break; ?>
+            <?php case 'error':
+                  default:
+            ?>
+                <p class="error"><br />Ha ocurrido un error en el modulo optativas.<br />
+                <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
+</div>

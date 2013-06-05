@@ -1,0 +1,172 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+        <h1>Resumen del curso</h1>
+        <h2><?php echo $curso->verMateriaNombre()?></h2>
+        <h2><?php echo 'Prof. ' . $curso->verProfesor() ?></h2>
+        <h2>
+            <?php echo $grupo->grado .'&deg;' .  $grupo->letra .  ' ' . $grupo->verTurno() . ', ' . $ciclo->numero?>
+        </h2>
+        <h2><?php echo  $grupo->verOferta(); ?></h2>
+        <?php switch($option) {
+                case 'vista': ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <?php if($acl_grupos['index']){ ?>
+                        <a href="<?php echo $path . 'grupos/ver/' . $grupo->id ?>">Volver a grupo
+                        <img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+
+                        <?php } ?>
+                        <?php if($acl_asistencias['ver']){ ?>
+                        /
+                        <a href="<?php echo $path . 'asistencias/ver/' . $curso->id ?>" id="btn-asistencias" alt="Mostar control de asistencias"
+                             title="Mostar control de asistencias"> Asistencias
+                             <img src="<?php echo $path?>public/img/sp5/calendario.png"/></a>
+
+                        <?php } ?>
+                        <?php if($acl_asistencias['faltas']){ ?>
+                        /
+                        <a href="<?php echo $path . 'asistencias/faltas/' . $curso->id ?>" id="btn-faltas" alt="Capturar faltas"
+                             title="Capturar faltas"> Faltas
+                             <img src="<?php echo $path?>public/img/sp5/faltas.png"/></a>
+                        <?php } ?>
+                        <?php if($acl_calificaciones['ver']){ ?>
+                        /
+                        <a href="<?php echo $path . 'calificaciones/ver/' . $curso->id ?>" id="btn-calificaciones" alt="Ver el control de calificaciones"
+                             title="Ver el control de calificaciones">Calificaciones
+                             <img src="<?php echo $path?>public/img/sp5/marcador.png"/></a>
+                        <?php } ?>
+                         <?php if($acl_inscripcion['agregar']){ ?>
+                            /
+                             <a href="<?php echo $path . 'inscripcion/agregar/' . $curso->id ?>"  alt="Inscripcion de alumnos al curso"
+                             title="Inscripcion de alumnos al curso">
+                             <img src="<?php echo $path?>public/img/sp5/mas.png"/>
+                             </a>
+
+                             <?php }  ?>
+                             <?php if($acl_inscripcion['eliminar']){ ?>
+                             /
+                              <a href="<?php echo $path . 'inscripcion/eliminar/' . $curso->id ?>" alt="Baja de alumnos al curso"
+                             title="Baja de alumnos al curso">
+                             <img src="<?php echo $path?>public/img/sp5/menos.png"/>
+                             </a>
+                             <?php } ?>
+                        <span class="op-calificaciones" style="display:none">
+                            / <a href="#" id="btn-calificaciones-agr" class="selector">Capturar
+                            <img src="<?php echo $path?>public/img/sp5/nuevo.png"/></a>
+                            / <a href="#" id="btn-calificaciones-edi" class="selector">Editar
+                            <img src="<?php echo $path?>public/img/sp5/editar.png"/></a>
+                            / <a href="#" id="btn-calificaciones-eli" class="selector">Eliminar
+                            <img src="<?php echo $path?>public/img/sp5/eliminar.png"/></a>
+                        </span>
+                    </div>
+                </div>
+                <div id="resumen" class="contenedor">
+                    <div>
+                    <table>
+                        <?php $n = 1; foreach($alumnos as $alumno){?>
+                            <?php if(($n - 1) % 10 == 0){ ?>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Alumno</th>
+                                    <th>Situaci&oacute;n</th>
+                                    <th>Asistencias</th>
+                                    <th>Parciales</th>
+                                    <th>Ordinario</th>
+                                    <th>Extraordinario</th>
+                                    <?php if($acl_inscripcion['articulo']){ ?>
+                                    <th>Opciones</th>
+                                    <?php } ?>
+                                </tr>
+                            <?php } ?>
+                            <?php $asts = $asistencias[$alumno->id]?>
+                            <tr class="<?php echo ($n%2 != 0 ? '' : 'odd') ?>">
+                                <td><?php echo $n ?></td>
+                                <td>
+                                    <a href="<?php echo $path . 'alumnos/ver/' . $alumno->id . '/' . $curso->id ?>"
+                                       alt="Ver datos del alumno" title="Ver datos del alumno">
+                                    <?php echo $alumno->nombre()  ?>
+                                    </a>
+                                    <br />
+                                    <span class="sub"><?php echo $alumno->codigo ?><span>
+                                    <span class="sub" style="color: #777">
+                                        <?php echo $alumno->grado . '&deg;' . $alumno->letra . ' ' . $alumno->turno?>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="sub bold" style="color:#777777">
+                                        <?php echo $alumno->situacion ?>
+                                    </span>
+                                    <?php if($alumno->curso_articulo!=''){ ?> <span style="color:#CC0000;"class="sub">{<?php echo $alumno->curso_articulo; ?>}</span><?php } ?>
+
+                                </td>
+                                <td class="centrar">
+                                    <?php if($asts['porcentaje'] != '-'){ ?>
+                                        <span class="<?php echo $asts['oportunidad']?>">
+                                            <?php echo $asts['porcentaje']?> %
+                                        </span>
+                                    <?php }else{ ?>
+                                        -
+                                    <?php } ?>
+                                </td>
+                                <td class="numero">
+                                    <?php if($parciales[$alumno->id]['status'] != ''){ ?>
+                                        <span class="<?php echo $parciales[$alumno->id]['status']?>">
+                                            <?php echo $parciales[$alumno->id]['promedio'] ?>
+                                        </span>
+                                    <?php }else{ ?>
+                                        -
+                                    <?php } ?>
+                                </td>
+                                <td class="numero">
+                                    <span class="<?php echo $calificaciones[$alumno->id]['ORD']['status']?>">
+                                        <?php echo $calificaciones[$alumno->id]['ORD']['valor'] != '' ? $calificaciones[$alumno->id]['ORD']['valor'] : '-' ?>
+                                    </span>
+                                </td>
+                                <td class="numero">
+                                    <span class="<?php echo $calificaciones[$alumno->id]['EXT']['status']?>">
+                                        <?php echo $calificaciones[$alumno->id]['EXT']['valor'] != '' ? $calificaciones[$alumno->id]['EXT']['valor'] : '-' ?>
+                                    </span>
+                                </td>
+                                <?php if($acl_inscripcion['articulo']){ ?>
+                                <td>
+                                <a href="<?php echo $path ?>inscripcion/articulo/<?php echo $inscripciones[$alumno->id]  ?>"
+                                alt="Colocar articulo" title="Colocar articulo" ><img  src="<?php echo $path?>public/img/sp5/articulo.png"/></a>
+
+                                </td>
+                                <?php } ?>
+                            </tr>
+                        <?php $n++; } ?>
+                    </table>
+                    </div>
+                </div>
+            <?php  break; ?>
+            <?php case 'alert': ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path . 'grupos/ver/' . $grupo->id ?>">Volver a grupo
+                        <img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+                    </div>
+                </div>
+                <p class="info">
+                    <br />
+                    <?php echo $alert ?>
+                </p>
+            <?php  break; ?>
+            <?php case 'error':
+                  default:
+            ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path . 'grupos/ver/' . $grupo->id ?>">Volver a grupo
+                        <img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+                    </div>
+                </div>
+                <p class="error">
+                    <br />
+                    <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
+</div>

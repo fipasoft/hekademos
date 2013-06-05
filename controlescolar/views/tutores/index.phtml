@@ -1,0 +1,194 @@
+<div id="primary">
+    <div class="content">
+        <h1>
+            <?php echo $registros;?>
+            Tutor<?php echo ($registros == 1 ? '' : 'es'); ?>
+            <?php if($busqueda->condicion() != '') {?><div class="filter-lab">Contenido filtrado</div><?php }?>
+        </h1>
+        <div id="options-bar">
+            <div id="options">
+            <?php if($acl['buscar']){ ?>
+                <a href="" id="aSearch" title="Buscar" alt="Buscar">
+                    Buscar
+                    <img src="<?php echo $path?>public/img/sp5/buscar.png"/>
+                </a>
+                /
+            <?php } ?>
+             <?php if($acl['exportar']){ ?>
+                  <a href="<?php echo $path . 'tutores/exportar/' ?>" title="Exportar tutores" alt="Exportar tutores">
+                    Exportar
+                    <img src="<?php echo $path?>public/img/sp5/excel.png"/>
+                </a>
+                /
+             <?php  } ?>
+            <?php if($acl['agregar']){ ?>
+                <a href="<?php echo $path ?>tutores/agregar" title="Agregar tutor" alt="Agregar tutor">
+                    Agregar tutor
+                    <img src="<?php echo $path?>public/img/sp5/nuevo.png"/>
+                </a>
+            <?php } ?>
+            </div>
+            <?php if($acl['buscar']){ ?>
+            <div id="search" <?php if($busqueda->condicion() == ''){?> style="display:none" <?php } ?>>
+                <form action="<?php echo $path ?>tutores" method="post" id="frm_search">
+                    <fieldset>
+                        <label for="nombre">Tutor</label>
+                        <input type="text" name="nombre" id="nombre" value="<?php echo $busqueda->campo('nombre') ?>" size="20" maxlength="70" />
+                        <label for="sexo">Sexo</label>
+                        <select name="sexo" id="sexo">
+                            <option></option>
+                            <option value="H" <?php if($busqueda->campo('sexo') == 'H'){ ?>selected="selected"<?php } ?>>H</option>
+                            <option value="M" <?php if($busqueda->campo('sexo') == 'M'){ ?>selected="selected"<?php } ?>>M</option>
+                        </select>
+                        <label for="grado">Grado</label>
+                        <select name="grado" id="grado">
+                            <option></option>
+                            <option value="1" <?php if($busqueda->campo('grado') == 1){ ?>selected="selected"<?php } ?>>1</option>
+                            <option value="2" <?php if($busqueda->campo('grado') == 2){ ?>selected="selected"<?php } ?>>2</option>
+                            <option value="3" <?php if($busqueda->campo('grado') == 3){ ?>selected="selected"<?php } ?>>3</option>
+                            <option value="4" <?php if($busqueda->campo('grado') == 4){ ?>selected="selected"<?php } ?>>4</option>
+                            <option value="5" <?php if($busqueda->campo('grado') == 5){ ?>selected="selected"<?php } ?>>5</option>
+                            <option value="6" <?php if($busqueda->campo('grado') == 6){ ?>selected="selected"<?php } ?>>6</option>
+                        </select>
+                        <label for="letra">Letra</label>
+                        <input type="text" name="letra" id="letra" value="<?php echo $busqueda->campo('letra') ?>" size="3" maxlength="1" />
+                        <label for="turno">Turno</label>
+                        <select name="turno" id="turno">
+                            <option></option>
+                            <option value="M" <?php if($busqueda->campo('turno') == 'M'){ ?>selected="selected"<?php } ?>>M</option>
+                            <option value="V" <?php if($busqueda->campo('turno') == 'V'){ ?>selected="selected"<?php } ?>>V</option>
+                            <option value="N" <?php if($busqueda->campo('turno') == 'N'){ ?>selected="selected"<?php } ?>>N</option>
+                        </select>
+                        <br/>
+                        <br/>
+                        <label for="oferta_id">Oferta</label>
+                        <select name="oferta_id" id="oferta_id">
+                            <option></option>
+                            <?php foreach($ofertas as $oferta){ ?>
+                            <option value="<?php echo $oferta->id; ?>" <?php if($busqueda->campo('oferta_id') == $oferta->id){ ?>selected="selected"<?php } ?>><?php echo $oferta->nombre; ?></option>
+                            <?php } ?>
+                        </select>
+                        <br/>
+                        <br/>
+                        <label for="codigo">C&oacute;digo</label>
+                        <input type="text" name="codigo" id="codigo" value="<?php echo $busqueda->campo('codigo') ?>" size="20" maxlength="20" />
+                        <br/>
+                        <br/>
+                        <input type="submit" id="btn_submit" value="Filtrar" />
+                        <input type="reset" id="reset" value="Quitar filtros" />
+                    </fieldset>
+                </form>
+            </div>
+            <?php } ?>
+        </div>
+        <?php if($registros > 0){ ?>
+                <table>
+                    <tr>
+                        <th>Foto</th>
+                        <th>Tutor</th>
+                        <th>Alumnos</th>
+                        <?php if($acl['editar'] || $acl['password'] || $acl['eliminar']){ ?>
+                        <th>Opciones</th>
+                        <?php } ?>
+                    </tr>
+                    <?php
+                        $i = 0;
+                        foreach($tutores as $tutor){
+                    ?>
+                    <tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+                        <td>
+                            <a href="<?php echo $tutor->foto  ?>"
+                               rel="lightbox[]"
+                               title="<?php echo $tutor->ap . ' ' . $tutor->am . ' ' . $tutor->nombre ?>"
+                               alt="<?php echo $tutor->ap . ' ' . $tutor->am . ' ' . $tutor->nombre ?>">
+                                <img src="<?php echo $tutor->foto ?>" class="thumb"/>
+                            </a>
+                        </td>
+                        <td>
+                         <?php if($acl['ver']){ ?>
+                            <a href="<?php echo $path . 'tutores/ver/' . $tutor->id?>"
+                               alt="Ver datos del tutor" title="Ver datos del tutor">
+                                <span class="uc">
+                                    <?php echo $tutor->ap . ' '  . $tutor->am . ', '?>
+                                </span>
+                                <?php echo $tutor->nombre    ?>
+                            </a>
+                            <?php }else{ ?>
+                            <span class="uc">
+                                    <?php echo $tutor->ap . ' '  . $tutor->am . ', '?>
+                                </span>
+                                <?php echo $tutor->nombre    ?>
+                                        <?php } ?>
+
+                        </td>
+                        <td>
+                            <?php $alumnos = $tutor->tutorados() ?>
+                            <?php if( count($alumnos) > 0){ ?>
+                                <ul>
+                                <?php foreach($alumnos as $alumno){ ?>
+                                    <li>
+                                     <?php if($acl_alumnos['ver']){ ?>
+                                        <a href="<?php echo $path . 'alumnos/ver/' . $alumno->id?>"
+                                           alt="Ver datos del alumno" title="Ver datos del alumno">
+                                            <?php echo $alumno->nombre() ?>
+                                        </a>
+                                        <?php }else{ ?>
+                                            <?php echo $alumno->nombre(); ?>
+
+                                         <?php } ?>
+                                        <br />
+                                        <span class="sub">
+                                            <?php echo $alumno->codigo ?>
+                                        </span>
+                                        <span class="sub" style="color: #777">
+                                            <?php echo $alumno->verGrupo() ?>
+                                        </span>
+                                    </li>
+                                <?php }?>
+                                <ul>
+                            <?php }else{ ?>
+                                -
+                            <?php } ?>
+                        </td>
+                        <?php if($acl['editar'] || $acl['password'] || $acl['eliminar']){ ?>
+                        <td>
+                        <?php if($acl['editar']){ ?>
+                            <a href="<?php echo $path . 'tutores/editar/' . $tutor->id?>"
+                               alt="Editar datos del tutor" title="Editar datos del tutor">
+                               <img src="<?php echo $path?>public/img/sp5/editar.png" />
+                            </a>
+                            <?php } ?>
+                            <?php if($acl['password']){ ?>
+                            <a href="<?php echo $path . 'tutores/password/' . $tutor->id?>"
+                                alt="Cambiar el password del tutor" title="Cambiar password del tutor">
+                                   <img src="<?php echo $path?>public/img/sp5/pass.png" />
+                            </a>
+                            <?php } ?>
+                            <?php if($acl['eliminar']){ ?>
+                            <a href="<?php echo $path . 'tutores/eliminar/' . $tutor->id?>"
+                               alt="Eliminar toda la informacion del tutor" title="Eliminar toda la informacion del tutor">
+                               <img src="<?php echo $path?>public/img/sp5/eliminar.png" />
+                            </a>
+                            <?php } ?>
+                        </td>
+                        <?php } ?>
+                    </tr>
+                    <?php
+                        $i++;
+                    }
+                    ?>
+                </table>
+        <?php } else { ?>
+                <p class="info"><br />No hay registros que mostrar...</p>
+        <?php } ?>
+        <div id="pages">
+            <?php foreach($paginador->botones() as $boton){ ?>
+                 <a  href="<?php echo $path . $boton->url() ?>"
+                    title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
+                    class="<?php echo $boton->estilo() ?>">
+                    <?php echo $boton->etiqueta() ?>
+                </a>
+            <?php }?>
+        </div>
+    </div>
+</div>

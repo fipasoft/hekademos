@@ -1,0 +1,51 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+        <h1>Importadores</h1>
+        <div id="options-bar">
+        <div id="options">
+                </div>
+        </div>
+        <p class = "tip">
+        <br/>
+        Introduzca informacion al sistema.
+        <br/>
+        </p>
+        <br/>
+        <br/>
+        <h3>Seleccione la informacion a importar</h3>
+        <br/>
+        <ul class="opciones">
+            
+            <?php if($acl['alumnos']['importar']){ ?>
+            <li>
+                <a alt="Importar alumnos" title="Importar alumnos" href="<?php echo $path . 'alumnos/importar' ?>">
+                    Importar alumnos
+                </a>
+            </li>
+            <?php } ?>
+            <?php if($acl['importar']['index']){ ?>
+            <li>
+                <a alt="Importar imagenes" title="Importar imagenes" href="<?php echo $path . 'importar/index' ?>">
+                    Importar imagenes
+                </a>
+            </li>
+            <?php } ?>
+            <?php if($acl['importador']['taes']){ ?>
+            <li>
+                <a alt="Importar alumnos a las TAES" title="Importar alumnos a las TAES" href="<?php echo $path . 'importador/taes' ?>">
+                    Importar alumnos a las TAES
+                </a>
+            </li>
+            <?php } ?>
+            <?php if($acl['importador']['curso']){ ?>
+            <li>
+                <a alt="Importar alumnos al curso" title="Importar alumnos al curso" href="<?php echo $path . 'importador/curso' ?>">
+                    Importar alumnos al curso
+                </a>
+            </li>
+            <?php } ?>
+        </ul>
+        
+    </div>
+</div>

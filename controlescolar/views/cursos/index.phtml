@@ -1,0 +1,339 @@
+<div id="primary">
+    <div class="content">
+        <h1>
+            <?php echo 'Ciclo escolar ';?>
+            <?php echo $ciclo->numero?>
+            <?php if($busqueda->condicion() != '') {?><div class="filter-lab">Contenido filtrado</div><?php }?>
+        </h1>
+        <h2 class="info">
+            <?php echo $registros;?>
+            Curso<?php echo ($registros == 1 ? '' : 's') ?>
+            registrado<?php echo ($registros == 1 ? '' : 's') ?>
+        </h2>
+        <div id="options-bar">
+            <div id="options">
+            <?php if($acl['buscar']){ ?>
+                <a href="" id="aSearch" title="Buscar" alt="Buscar">
+                    Buscar
+                    <img src="<?php echo $path?>public/img/sp5/buscar.png"/>
+                </a>
+           <?php } ?>
+                <?php if($acl['exportar']){?>
+                /
+                  <a href="<?php echo $path . 'cursos/exportar/' ?>" title="Agregar curso" alt="Agregar curso">
+                    Exportar
+                    <img src="<?php echo $path?>public/img/sp5/excel.png"/>
+                </a>
+                <?php } ?>
+                <?php if($acl['agregar']){?>
+                 / <a href="<?php echo $path . 'cursos/agregar/'?>" title="Agregar curso" alt="Agregar curso">
+                    Agregar curso
+                    <img src="<?php echo $path?>public/img/sp5/nuevo.png"/>
+                </a>
+                <?php } ?>
+                <?php if($acl['copiar']){?>
+                 / <a href="<?php echo $path . 'cursos/copiar/'?>" title="Copiar del ciclo anterior" alt="Copiar del ciclo anterior">
+                    Copiar del ciclo anterior
+                    <img src="<?php echo $path?>public/img/sp5/ubicar.png"/>
+                </a>
+                <?php } ?>
+                <?php if($acl['estado']){?>
+                 / <a href="<?php echo $path . 'cursos/estado/'?>" title="Cambiar el estado de los cursos filtrados" alt="Cambiar el estado de los cursos filtrados">
+                    Cambiar el estado
+                    <img src="<?php echo $path?>public/img/sp5/switch.png"/>
+                </a>
+                <?php } ?>
+                 / <a href="#" id="cicloBtn" title="Cambiar de ciclo escolar" alt="Cambiar de ciclo escolar">
+                    Ciclo:
+                </a>
+                <div id="cicloActual"><?php echo $ciclo->numero?></div>
+                <div id="cicloSel" style="display:none">
+                    <form id="frm_ciclo" method="post" action="<?php echo $path ?>sistema/seleccionar">
+                    <fieldset>
+                        <input type="hidden" name="controlador" value="<?php echo $controlador ?>" />
+                        <input type="hidden" name="accion" value="<?php echo $accion ?>" />
+                        <select name="ciclo" id="cicloSelect">
+                            <?php foreach($ciclos as $ccl){?>
+                            <option value="<?php echo $ccl->id?>"
+                                    <?php if($ccl->id == $ciclo->id){ ?>selected="selected"<?php } ?>>
+                                    <?php echo $ccl->numero?>
+                            </option>
+                            <?php } ?>
+                        </select>
+                    </fieldset>
+                    </form>
+                </div>
+            </div>
+            <?php if($acl['buscar']){ ?>
+            <div id="search" <?php if($busqueda->condicion() == ''){?> style="display:none" <?php } ?>>
+                <form action="<?php echo $path ?>cursos" method="post" id="frm_search">
+                    <fieldset>
+                        <label for="materias_nombre">Materia</label>
+                        <input type="text" name="materias_nombre" id="materias_nombre" value="<?php echo $busqueda->campo('materias_nombre') ?>" size="15" maxlength="50" />
+                        <label for="profesor">Prof.</label>
+                        <input type="text" name="profesor" id="profesor" value="<?php echo $busqueda->campo('profesor') ?>" size="15" maxlength="50" />
+                        <label for="grado">Grado</label>
+                        <select name="grado" id="grado">
+                            <option></option>
+                            <option value="1" <?php if($busqueda->campo('grado') == 1){ ?>selected="selected"<?php } ?>>1</option>
+                            <option value="2" <?php if($busqueda->campo('grado') == 2){ ?>selected="selected"<?php } ?>>2</option>
+                            <option value="3" <?php if($busqueda->campo('grado') == 3){ ?>selected="selected"<?php } ?>>3</option>
+                            <option value="4" <?php if($busqueda->campo('grado') == 4){ ?>selected="selected"<?php } ?>>4</option>
+                            <option value="5" <?php if($busqueda->campo('grado') == 5){ ?>selected="selected"<?php } ?>>5</option>
+                            <option value="6" <?php if($busqueda->campo('grado') == 6){ ?>selected="selected"<?php } ?>>6</option>
+                        </select>
+                        <label for="letra">Letra</label>
+                        <input type="text" name="letra" id="letra" value="<?php echo $busqueda->campo('letra') ?>" size="3" maxlength="1" />
+                        <label for="turno">Turno</label>
+                        <select name="turno" id="turno">
+                            <option></option>
+                            <option value="M" <?php if($busqueda->campo('turno') == 'M'){ ?>selected="selected"<?php } ?>>Matutino</option>
+                            <option value="V" <?php if($busqueda->campo('turno') == 'V'){ ?>selected="selected"<?php } ?>>Vespertino</option>
+                            <option value="N" <?php if($busqueda->campo('turno') == 'N'){ ?>selected="selected"<?php } ?>>Nocturno</option>
+                        </select>
+                        <br/>
+                        <br/>
+                        <label for="oferta_id">Oferta</label>
+                        <select name="oferta_id" id="oferta_id">
+                            <option></option>
+                            <?php foreach($ofertas as $oferta){ ?>
+                            <option value="<?php echo $oferta->id; ?>" <?php if($busqueda->campo('oferta_id') == $oferta->id){ ?>selected="selected"<?php } ?>><?php echo $oferta->nombre; ?></option>
+                            <?php } ?>
+                        </select>
+                         <?php   if( in_array('director',  $usr_grupos) || in_array('secretario',  $usr_grupos) || in_array('plantilla',  $usr_grupos)){ ?>
+                        <label for="estado_id">Estado</label>
+                         <select name="estado_id" id="estado_id">
+                         <option></option>
+                            <?php
+                             if( in_array('director',  $usr_grupos) || in_array('secretario',  $usr_grupos) AND  $login!='root'){
+                            ?>
+                            <option value="2" <?php if($busqueda->campo('estado_id') == '2'){ ?>selected="selected"<?php } ?>>En Revision</option>
+                            <option value="3" <?php if($busqueda->campo('estado_id') == '3'){ ?>selected="selected"<?php } ?>>Aprobado</option>
+                            <?php
+                             }else{
+                                foreach($estados as $e){
+                                ?>
+                                <option value="<?php echo $e->id ?>" <?php if($busqueda->campo('estado_id') == $e->id){ ?>selected="selected"<?php } ?>><?php echo $e->nombre; ?></option>
+                                <?php
+                                }
+                             }
+                                ?>
+                        </select>
+                        <?php }else{ ?>
+
+                          <input type="hidden" name="estado_id" value="3"/>
+
+
+                        <?php } ?>
+                        <input type="submit" id="btn_submit" value="Filtrar" />
+                        <input type="reset" id="reset" value="Quitar filtros" />
+                    </fieldset>
+                </form>
+            </div>
+            <?php } ?>
+        </div>
+        <?php if($registros > 0){ ?>
+                <table>
+                    <tr>
+                        <th rowspan="2">Grupo</th>
+                        <th rowspan="2">Materia</th>
+                        <th rowspan="2">Profesor</th>
+                        <th colspan="6">Horario</th>
+                         <?php if($acl['editar'] || $acl['eliminar']){?>
+                        <th rowspan="2">Opciones</th>
+                        <?php } ?>
+                         <?php if($acl_inscripcion['agregar'] || $acl_inscripcion['eliminar']){ ?>
+                        <th rowspan="2">Inscripcion</th>
+                        <?php } ?>
+                        <?php   if( in_array('director',  $usr_grupos) || in_array('secretario',  $usr_grupos) || in_array('plantilla',  $usr_grupos)){ ?>
+                        <th rowspan="2">Status</th>
+                        <?php } ?>
+                    </tr>
+                    <tr>
+                        <th>Lunes</th>
+                        <th>Martes</th>
+                        <th>Mi&eacute;rcoles</th>
+                        <th>Jueves</th>
+                        <th>Viernes</th>
+                        <th>S&aacute;bado</th>
+                    </tr>
+                    <?php
+                        $i = 0;
+                        foreach($cursos as $curso){
+                            $grupo = $curso->grupo();
+                    ?>
+                    <tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+
+                        <td>
+                        <?php if($acl['grupo']){ ?>
+                        <a href="<?php echo $path . 'cursos/grupo/'.$curso->grupos_id; ?>"><?php echo $curso->verGrupo()?></a>
+                        <?php }else{ ?>
+                        <?php echo $curso->verGrupo()?>
+                        <?php } ?>
+                        <br/>
+                        <?php echo $grupo->verOferta(); ?>
+                        </td>
+                        <td>
+                        <?php if($acl['ver']){ ?>
+                            <a href="<?php echo $path . 'cursos/ver/' . $curso->id ?>"
+                               alt="Ver datos del curso" title="Ver datos del curso">
+                                <?php echo $curso->materia ?>
+                            </a>
+                        <?php }else{ ?>
+                                <?php echo $curso->materia ?>
+                        <?php } ?>
+                            <br />
+                            <span class="sub"><?php echo $curso->verMateriaTipo() ?></span><br/>
+                            <?php $m=$curso->materia(); if($m->oferta('id')==2){ ?> <span class="sub" style="color:#777777"><?php echo Utils::convierteFecha($curso->inicio); ?></span><?php } ?>
+                        </td>
+                        <td><?php echo $curso->verProfesor() ?><br/>
+                            <?php $hcategoria = $curso->hcategoria();
+                            if($hcategoria->id != ''){ ?>
+                                <span class="main"><?php echo $hcategoria->nombre; ?></span><br/>
+                                <span class="main"><?php echo $hcategoria->clave; ?></span>
+                            <?php }
+                            ?>
+                        </td>
+                        <?php for($d=1; $d<7; $d++){
+                        ?>
+                            <td>
+                                <?php if($horario = $curso->horario($d)){?>
+
+                                    <span class="main"><?php echo substr($horario->inicio, 0, 5) . '-' .
+                                               substr($horario->fin, 0, 5) ?>
+                                    </span>
+                                    <br />
+                                    <span class="sub"><?php echo $horario->aulaClave() ?></span>
+                                <?php } else{?>
+                                    <span class="main">-</span>
+                                <?php } ?>
+                            </td>
+                        <?php } ?>
+                         <?php if($acl['editar'] || $acl['eliminar']){?>
+                        <td style="text-align:center">
+                             <?php if(
+                             in_array('root',  $usr_grupos)
+                                         ||
+                             $acl['editar'] &&  in_array('plantilla',  $usr_grupos) &&  ($curso->enProceso() || $curso->rechazado())//editar si esta en proceso o rechazado
+                             ||
+                             ($acl['editar'] && $curso->aprobado() &&  (in_array('director',  $usr_grupos) || in_array('secretario',  $usr_grupos))) //eliminar si esta aprobado solo direccion
+                              ){?>
+                            <a href="<?php echo $path . 'cursos/editar/' . $curso->id ?>"
+                               alt="Editar datos del curso" title="Editar datos del curso">
+                               <img src="<?php echo $path?>public/img/sp5/editar.png" />
+                            </a>
+                            <?php } ?>
+                             <?php if(
+                                         in_array('root',  $usr_grupos)
+                                         ||
+                                         ($acl['eliminar'] &&  in_array('plantilla',  $usr_grupos) && ($curso->enProceso() || $curso->rechazado()))//eliminar si esta en proceso o rechazado
+                                         ||
+                                         ($acl['eliminar'] && $curso->aprobado() &&  (in_array('director',  $usr_grupos) || in_array('secretario',  $usr_grupos))) //eliminar si esta aprobado solo direccion
+                                         ){?>
+                            <a href="<?php echo $path . 'cursos/eliminar/' . $curso->id ?>"
+                               alt="Eliminar toda la informacion del curso" title="Eliminar toda la informacion del curso">
+                               <img src="<?php echo $path?>public/img/sp5/eliminar.png" />
+                            </a>
+                            <?php } ?>
+                            </td>
+                            <?php } ?>
+
+                            <?php if($acl_inscripcion['agregar'] || $acl_inscripcion['eliminar']){ ?>
+                            <td style="text-align:center">
+                            <?php if(in_array('root',  $usr_grupos)
+                                         ||
+                                     $acl_inscripcion['agregar'] && $curso->aprobado()){ ?>
+                             <a href="<?php echo $path . 'inscripcion/agregar/' . $curso->id ?>"  alt="Inscripcion de alumnos al curso"
+                             title="Inscripcion de alumnos al curso">
+                             <img src="<?php echo $path?>public/img/sp5/mas.png"/>
+                             </a>
+                             <?php }  ?>
+                             <?php if(in_array('root',  $usr_grupos)
+                                         ||
+                                         $acl_inscripcion['eliminar'] && $curso->aprobado()){ ?>
+                              <a href="<?php echo $path . 'inscripcion/eliminar/' . $curso->id ?>" alt="Baja de alumnos al curso"
+                             title="Baja de alumnos al curso">
+                             <img src="<?php echo $path?>public/img/sp5/menos.png"/>
+                             </a>
+                             <?php } ?>
+                            </td>
+                            <?php } ?>
+                      <?php   if( in_array('director',  $usr_grupos) || in_array('secretario',  $usr_grupos) || in_array('plantilla',  $usr_grupos)){ ?>
+                        <td style="text-align:center" class="<?php echo $obs ?>estado_<?php echo $curso->estado_id; ?>"
+
+                        <?php
+                            if(trim($curso->observaciones)!='')
+                             echo 'title="<h1>Observaciones</h1><br/>'.str_replace('\n','<br />',$curso->observaciones).'"';
+                            else
+                            echo 'title="<h1>No hay observaciones</h1><br/>"';
+                          ?> >
+                        <?php
+                        switch($curso->estado_id){
+                            case 1 :
+                            case 4:
+                                    if( in_array('plantilla',  $usr_grupos)){
+                                    ?>
+                                     <a href="<?php echo $path . 'cursos/status/' . $curso->id; ?>" alt="Cambiar el estatus del curso"
+                                     title="Cambiar el estatus del curso">
+                                     <img src="<?php echo $path?>public/img/sp5/si.png"/>
+                                    </a>
+                                    <?php
+                                    }
+                                break;
+
+                            case 2 :
+                                    if( in_array('director',  $usr_grupos) || in_array('secretario',  $usr_grupos)){
+                                    ?>
+                                     <a href="<?php echo $path . 'cursos/status/' . $curso->id; ?>" alt="Cambiar el estatus del curso"
+                                     title="Cambiar el estatus del curso">
+                                     <img src="<?php echo $path?>public/img/sp5/si.png"/>
+                                    </a>
+                                    <?php
+                                    }
+                                break;
+
+                            case 3 :
+                                    if(in_array('root',  $usr_grupos)){
+                                    ?>
+                                     <a href="<?php echo $path . 'cursos/status/' . $curso->id; ?>" alt="Cambiar el estatus del curso"
+                                     title="Cambiar el estatus del curso">
+                                     <img src="<?php echo $path?>public/img/sp5/si.png"/>
+                                    </a>
+                                    <?php
+                                    }
+
+                                break;
+                                default:
+                                    break;
+
+                        }
+                         ?>
+                        </td>
+                        <?php } ?>
+                    </tr>
+                    <?php
+                        $i++;
+                    }
+                    ?>
+                </table>
+        <?php } else { ?>
+                <p class="info">
+                    <br />
+                    <?php if($busqueda->condicion() != ''){?>
+                        No hay registros que concidan con la b&uacute;squeda
+                    <?php }else{?>
+                        No existen cursos para el ciclo.
+                    <?php  }  ?>
+                </p>
+        <?php } ?>
+        <div id="pages">
+            <?php foreach($paginador->botones() as $boton){ ?>
+                 <a  href="<?php echo $path . $boton->url() ?>"
+                    title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
+                    class="<?php echo $boton->estilo() ?>">
+                    <?php echo $boton->etiqueta() ?>
+                </a>
+            <?php }?>
+        </div>
+    </div>
+</div>

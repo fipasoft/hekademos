@@ -1,0 +1,141 @@
+<div id="primary">
+    <div class="content">
+        <h1>
+            <?php echo $registros;?>
+            Profesor<?php echo ($registros == 1 ? '' : 'es') ?>
+            <?php if($busqueda->condicion() != '') {?><div class="filter-lab">Contenido filtrado</div><?php }?>
+        </h1>
+        <h2 class="info">
+            Plantilla / Prerregistro de cursos por profesor
+        </h2>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path ?>plantilla">
+                    Volver
+                    <img src="<?php echo $path?>public/img/sp5/volver.png" alt="volver"/>
+                </a>
+                /
+                <a href="" id="aSearch" title="Buscar">
+                    Buscar
+                    <img src="<?php echo $path?>public/img/sp5/buscar.png" alt="buscar" />
+                </a>
+                /
+                <a href="<?php echo $path . 'plantilla/exportar/' ?>" title="Exportar prerregistro de profesores">
+                    Exportar
+                    <img src="<?php echo $path?>public/img/sp5/excel.png" alt="exportar"/>
+                </a>
+            </div>
+            <div id="search" <?php if($busqueda->condicion() == ''){?> style="display:none" <?php } ?>>
+                <form action="<?php echo $path ?>plantilla/profesores" method="post" id="frm_search">
+                    <fieldset>
+                        <div>
+                            <label for="codigo">C&oacute;digo</label>
+                            <input type="text" name="codigo" id="codigo" value="<?php echo $busqueda->campo('codigo') ?>" size="15" maxlength="12" />
+                            <label for="nombre">Nombre</label>
+                            <input type="text" name="nombre" id="nombre" value="<?php echo $busqueda->campo('nombre') ?>" size="20" maxlength="70" />
+                            <label for="sexo">Sexo</label>
+                            <select name="sexo" id="sexo">
+                                <option></option>
+                                <option value="H" <?php if($busqueda->campo('sexo') == 'H'){ ?>selected="selected"<?php } ?>>H</option>
+                                <option value="M" <?php if($busqueda->campo('sexo') == 'M'){ ?>selected="selected"<?php } ?>>M</option>
+                            </select>
+                        </div>
+                        <div>
+                            <input type="submit" id="btn_submit" value="Filtrar" />
+                            <input type="reset" id="reset" value="Quitar filtros" />
+                        </div>
+
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <?php if($registros > 0){ ?>
+                <table>
+                    <tr>
+                        <th rowspan="2">Foto</th>
+                        <th rowspan="2">Nombre</th>
+                        <th rowspan="2">Cursos</th>
+                        <th colspan="3">Horas</th>
+                        <!-- <th rowspan="2">Opciones</th>-->
+                    </tr>
+                    <tr>
+                        <th style="width:65px">
+                            <span class="sub" style="color:#777">
+                                Asignadas
+                            </span>
+                        </th>
+                        <th>
+                            <span class="sub" style="color:#777">
+                                Frente a grupo
+                            </span>
+                        </th>
+                        <th style="width:65px">
+                            <span class="sub" style="color:#777">
+                                Descarga
+                            </span>
+                        </th>
+                    </tr>
+                    <?php
+                        $i = 0;
+                        foreach($profesores as $profesor){
+                    ?>
+                    <tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+                        <td>
+                            <a href="<?php echo $profesor->foto  ?>"
+                               rel="lightbox[]"
+                               title="<?php echo $profesor->ap . ' ' . $profesor->am . ' ' . $profesor->nombre ?>">
+                                <img src="<?php echo $profesor->foto ?>" class="thumb"/>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="<?php echo $path . 'plantilla/prerregistro/' . $profesor->id?>"
+                                title="Asignar horas al profesor" >
+                                <span class="uc">
+                                    <?php echo $profesor->ap . ' '  . $profesor->am . ', '?>
+                                </span>
+                                <?php echo $profesor->nombre    ?>
+                                <br />
+                                <span class="sub"><?php echo $profesor->codigo; ?></span>
+                            </a>
+                        </td>
+                        <td style="text-align:center">
+                            <?php echo ( $profesor->nCursos ? $profesor->nCursos : '-' )?>
+                        </td>
+                        <td>
+                            <?php echo ( $profesor->hAsign ? number_format( $profesor->hAsign, 2, '.', '') : '-' ) ?>
+                        </td>
+                        <td>
+                            <?php echo ( $profesor->hPre ? number_format( $profesor->hPre, 2, '.', '' ) : '-' ) ?>
+                        </td>
+                        <td>
+                            <?php $diff = $profesor->hAsign - $profesor->hPre ?>
+                            <span <?php if( $diff < 0 ){ ?>class="false"<?php } ?>>
+                                <?php echo ( $diff == 0 ? '-' : number_format( $diff, 2, '.', '' ) ) ?>
+                            </span>
+                        </td>
+                        <!-- <td style="text-align:center">
+                            <a href="<?php echo $path . 'plantilla/prerregistro/' . $profesor->id?>"
+                               title="Asignar horas al profesor">
+                               <img src="<?php echo $path?>public/img/sp5/editar.png" alt="asignar"/>
+                            </a>
+                        </td> -->
+                    </tr>
+                    <?php
+                        $i++;
+                    }
+                    ?>
+                </table>
+        <?php } else { ?>
+                <p class="info"><br />No hay registros que mostrar...</p>
+        <?php } ?>
+        <div id="pages">
+            <?php foreach($paginador->botones() as $boton){ ?>
+                 <a  href="<?php echo $path . $boton->url() ?>"
+                    title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
+                    class="<?php echo $boton->estilo() ?>">
+                    <?php echo $boton->etiqueta() ?>
+                </a>
+            <?php }?>
+        </div>
+    </div>
+</div>

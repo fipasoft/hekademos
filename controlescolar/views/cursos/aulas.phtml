@@ -1,0 +1,90 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+<div class="content">
+<h1>Aulas de los cursos del ciclo <?php echo $ciclo->numero ?></h1>
+<div id="options-bar">
+<div id="options"><a href="<?php echo $path . 'cursos'?>">Volver <img
+    src="<?php echo $path?>public/img/sp5/volver.png" /> </a></div>
+</div>
+<?php switch($option) {
+    case 'captura': ?>
+<form action="<?php echo $path ?>cursos/aulas/" id="frm_eliminar"
+    method="post"><input type="hidden" name="ciclos_id" id="ciclos_id"
+    value="<?php echo $ciclo->id ?>" />
+<p class="error">Se dispone a cambiar el aula de los cursos del ciclo <strong><?php echo $ciclo->numero; ?></strong><br />
+<strong>&iquest;Desea continuar?</strong></p>
+<div id="botones"><input type="submit" id="aceptar" value="Aceptar"> <input
+    type="button" id="cancelar" value="Cancelar"></div>
+</form>
+
+<?php  break; ?> 
+<?php case 'exito': ?> 
+
+<br/>
+<br/>
+<p class="info"><br />
+Tarea llevada a cabo con exito.
+<br/><br />
+
+</p>
+<br/>
+<br/>
+<table>
+<tr><th>#</th><th>Aula</th><th>Grupo</th></tr>
+<?php
+    mysql_query("BEGIN") or die("Ocurrio un error en mysql");
+    $distribucion = new Distribucion();
+    $distribucion = $distribucion->find();
+    $i = 1;
+    foreach($distribucion as $d){
+        $aula = $d->aula();
+        $grupos = new Grupos();
+        $grupos = $grupos->find("grado='".$d->grado."' AND letra='".$d->letra."' AND ciclos_id='".$ciclo->id."'");
+        foreach($grupos as $grupo){
+        ?>
+        <tr>
+        <th><?php echo $i; ?></th>
+        <th><?php echo $aula->clave; ?></th>
+        <th><?php echo $grupo->ver(); ?></th>
+        </tr>
+        <?php
+        $i++;
+            $cursos = new Cursos();
+            $cursos = $cursos->find("grupos_id='".$grupo->id."'");
+            foreach($cursos as $curso){
+                $materia = $curso->materia();
+                $horarios = new Horarios();
+                $horarios = $horarios->find("cursos_id='".$curso->id."'");
+                foreach($horarios as $horario){
+                    $horario->aulas_id= $aula->id;
+                    if(!$horario->save()){
+                    mysql_query("ROLLBACK") or die("Ocurrio un error en mysql");
+                    var_dump("Ocurrio un error.");exit;
+                    }
+                }
+        ?>
+        <tr>
+        <td><?php echo $i; ?></td>
+        <td colspan="2"><?php echo $materia->nombre; ?></td>
+        </tr>
+        <?php 
+        $i++;
+            }
+        }
+    }
+
+    //mysql_query("ROLLBACK") or die("Ocurrio un error en mysql");
+        
+    mysql_query("COMMIT") or die("Ocurrio un error en mysql");
+            
+                ?>
+</table>
+<br/>
+
+<?php  break; ?> <?php case 'error':
+default:
+    ?>
+<p class="error">Ha ocurrido un error al intentar eliminar el curso.<br />
+    <?php echo $error ?></p>
+    <?php  break; ?> <?php } ?></div>
+</div>

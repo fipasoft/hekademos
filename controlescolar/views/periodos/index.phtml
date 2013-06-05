@@ -1,0 +1,129 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+        <h1><?php echo $registros;?>
+            Periodo<?php echo ($registros == 1 ? '' : 's') ?> para registros de optativas</h1>
+        <div id="options-bar">
+            <div id="options">
+                <a href="" id="aSearch" title="Buscar" alt="Buscar">
+                    Buscar
+                    <img src="<?php echo $path?>public/img/sp5/buscar.png"/>
+                </a>
+                <?php if($acl["periodos"]["agregar"]){ ?>
+                /
+                 <a href="<?php echo $path ?>periodos/agregar" title="Agregar periodo" alt="Agregar periodo">
+                    Agregar Periodo
+                    <img src="<?php echo $path?>public/img/sp5/nuevo.png"/>
+                </a>
+                <?php } ?>
+            </div>
+        <div id="search" <?php if($busqueda->condicion() == ''){?> style="display:none" <?php } ?>>
+            <form action="<?php echo $path ?>periodos" method="post" id="frm_search">
+                    <fieldset>
+                    <label for="ciclos_id">Ciclo</label>
+                    <select name="ciclos_id" id="ciclos_id">
+                            <option></option>
+                            <?php foreach($ciclos as $ccl){?>
+                            <option value="<?php echo $ccl->id?>"
+                                    <?php if($ccl->id == $busqueda->campo("ciclos_id")){ ?>selected="selected"<?php } ?>>
+                                    <?php echo $ccl->numero?>
+                            </option>
+                            <?php } ?>
+                        </select>
+                        <input type="submit" id="btn_submit" value="Filtrar" />
+                        <input type="reset" id="reset" value="Quitar filtros" />
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <?php switch($option) {
+                case 'vista': ?>
+                <?php if($registros>0){ ?>
+                    <table>
+                    <tr>
+                    <th>Periodo</th>
+                    <th>Inicio</th>
+                    <th>Fin</th>
+                    <?php if($acl["optativas"]["index"] || $acl["periodos"]["editar"] || $acl["periodos"]["eliminar"]){ ?>
+                    <th>Opciones</th>
+                    <?php } ?>
+                    </tr>
+                    <?php
+                     $i=0;
+                     foreach($periodos as $p){  ?>
+                    <tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+                    <td>
+                    <span style="color: rgb(119, 119, 119);" class="sub"><?php echo $p->numero; ?></span><br/>
+                    <span <?php if($p->activo!="1"){ ?>style="color:#FFCC99;" <?php } ?> class="sub" >
+                    <?php echo $p->estado(); ?>
+                    </span><br/>
+                    </td>
+                    <td style="text-align:center;">
+                    <span class="sub"><?php echo Utils::fecha_espanol(substr($p->inicio,0,10))."<br/>".substr($p->inicio,10,strlen($p->inicio)-13); ?></span>
+                    </td>
+                    <td style="text-align:center;">
+                    <span class="sub">
+                                      <?php  echo Utils::fecha_espanol(substr($p->fin,0,10))."<br/>".substr($p->fin,10,strlen($p->fin)-13); ?></span>
+                    </td>
+                    <?php if($acl["optativas"]["index"] || $acl["periodos"]["editar"] || $acl["periodos"]["eliminar"]){ ?>
+                    <td style="text-align: center;">
+                    <?php if($acl["optativas"]["index"]){ ?>
+                    <a href="<?php echo $path . 'optativas/index/' . $p->id?>"
+                                           alt="Configurar el periodo de optativas" title="Configurar el periodo de optativas">
+                                           <img src="<?php echo $path?>public/img/sp5/config.png" />
+                    </a>
+                    <?php } ?>
+                    <?php if($acl["periodos"]["editar"]){ ?>
+
+                    <a href="<?php echo $path . 'periodos/editar/' . $p->id?>"
+                                           alt="Editar datos del periodo" title="Editar datos del periodo">
+                                           <img src="<?php echo $path?>public/img/sp5/editar.png" />
+                    </a>
+                    <?php } ?>
+                    <?php if($acl["periodos"]["eliminar"]){ ?>
+
+                    <a href="<?php echo $path . 'periodos/eliminar/' . $p->id?>"
+                                           alt="Eliminar toda la informacion del periodo" title="Eliminar toda la informacion del periodo">
+                                           <img src="<?php echo $path?>public/img/sp5/eliminar.png" />
+                    </a>
+                    <?php } ?>
+                    <?php if($acl["periodos"]["estadistica"]){ ?>
+
+                    <a href="<?php echo $path . 'periodos/estadistica/' . $p->id?>"
+                                           alt="Estadisticas del periodo" title="Estadisticas del periodo">
+                                           <img src="<?php echo $path?>public/img/sp5/estadistica.png" />
+                    </a>
+                    <?php } ?>
+                    </td>
+                    <?php } ?>
+                    </tr>
+                    <?php
+                        $i++;
+                    } ?>
+                    </table>
+
+                    <div id="pages">
+                    <?php foreach($paginador->botones() as $boton){ ?>
+                         <a  href="<?php echo $path . $boton->url() ?>"
+                            title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
+                            class="<?php echo $boton->estilo() ?>">
+                            <?php echo $boton->etiqueta() ?>
+                        </a>
+                    <?php }?>
+                    </div>
+
+                <?php }else{ ?>
+                    <p class="info"><br />No hay registros que mostrar...</p>
+                <?php } ?>
+
+            <?php  break; ?>
+            <?php case 'error':
+                  default:
+            ?>
+                <p class="error"><br />Ha ocurrido un error en el modulo optativas.<br />
+                <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
+</div>

@@ -1,0 +1,90 @@
+<div id="primary">
+    <div class="content">
+        <h1>
+            <?php echo $registros;?>
+            Tipo<?php echo ($registros == 1 ? '' : 's') ?> de personal
+            <?php if($busqueda->condicion() != '') {?><div class="filter-lab">Contenido filtrado</div><?php }?>
+        </h1>
+        <div id="options-bar">
+            <div id="options">
+            <?php if($acl['buscar']){ ?>
+                <a href="" id="aSearch" title="Buscar" alt="Buscar">
+                    Buscar
+                    <img src="<?php echo $path?>public/img/sp5/buscar.png"/>
+                </a>
+                <?php } ?>
+                <?php if($acl['agregar']){ ?>
+                /
+                <a href="<?php echo $path ?>tipopersonal/agregar" title="Agregar tipo" alt="Agregar tipo">
+                    Agregar tipo
+                    <img src="<?php echo $path?>public/img/sp5/nuevo.png"/>
+                </a>
+                <?php } ?>
+                / <a href="<?php echo $path ?>personal">Volver a personal
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+            </div>
+            <?php if($acl['buscar']){ ?>
+            <div id="search" <?php if($busqueda->condicion() == ''){?> style="display:none" <?php } ?>>
+                <form action="<?php echo $path ?>tipopersonal" method="post" id="frm_search">
+                    <fieldset>
+                    <label for="nombre">Nombre</label>
+                        <input type="text" name="nombre" id="nombre" value="<?php echo $busqueda->campo('nombre') ?>" size="20" maxlength="70" />
+
+                        <input type="submit" id="btn_submit" value="Filtrar" />
+                        <input type="reset" id="reset" value="Quitar filtros" />
+                    </fieldset>
+                </form>
+            </div>
+            <?php } ?>
+        </div>
+        <?php if($registros > 0){ ?>
+                <table>
+                    <tr>
+                        <th>Nombre</th>
+                        <?php if($acl['editar'] || $acl['eliminar']){ ?>
+                        <th>Opciones</th>
+                        <?php } ?>
+                    </tr>
+                    <?php
+                        $i = 0;
+                        foreach($tipos as $tipo){
+                    ?>
+                    <tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+                    <td><?php echo $tipo->nombre; ?></td>
+                    <?php if($acl['editar'] || $acl['eliminar']){ ?>
+                        <td>
+                            <?php if($acl['editar']){ ?>
+                            <a href="<?php echo $path . 'tipopersonal/editar/' . $tipo->id?>"
+                               alt="Editar datos del personal" title="Editar datos del personal">
+                               <img src="<?php echo $path?>public/img/sp5/editar.png" />
+                            </a>
+                            <?php } ?>
+                            <?php if($acl['eliminar']){ ?>
+                            <a href="<?php echo $path . 'tipopersonal/eliminar/' . $tipo->id?>"
+                               alt="Eliminar toda la informacion del personal" title="Eliminar toda la informacion del personal">
+                               <img src="<?php echo $path?>public/img/sp5/eliminar.png" />
+                            </a>
+                            <?php  } ?>
+                        </td>
+                        <?php } ?>
+                    </tr>
+                    <?php
+                        $i++;
+                    }
+                    ?>
+                </table>
+        <?php } else { ?>
+                <p class="info"><br />No hay registros que mostrar...</p>
+        <?php } ?>
+        <div id="pages">
+            <?php foreach($paginador->botones() as $boton){ ?>
+                 <a  href="<?php echo $path . $boton->url() ?>"
+                    title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
+                    class="<?php echo $boton->estilo() ?>">
+                    <?php echo $boton->etiqueta() ?>
+                </a>
+            <?php }?>
+        </div>
+    </div>
+</div>

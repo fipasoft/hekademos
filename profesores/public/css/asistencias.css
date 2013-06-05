@@ -1,0 +1,34 @@
+div.content h2{
+color: #777;
+font-size: 0.9em;
+margin-top: 0;
+}
+div.content h2 a{
+color: #777;
+text-decoration: none;
+}
+div.content h2 a:hover{
+color: #760;
+}
+div.content h2 a.activo{
+color: #9a0;
+}
+div.content h4 a{
+text-decoration: none;    
+}
+div.content div.AST, div.content div.FTA{
+border: 2px #c33 solid;
+margin: auto;
+height: 5px;
+width: 5px;
+}
+div.content td, div.content th{
+font-size:0.95em;
+padding:0.5em;
+}
+div.content td.AST, div.content div.AST{
+background-color: #cf9;
+}
+div.content td.FTA, div.content div.FTA{
+background-color: #fc9;
+}

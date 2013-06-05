@@ -1,0 +1,51 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+        <h1>Eliminar bloque.</h1>
+        <?php if($option!="error"){ ?>
+        <h2>Periodo inicia el <?php echo Utils::fecha_espanol(substr($periodo->inicio,0,10)); ?> a las <?php echo substr($periodo->inicio,10,6); ?></h2>
+        <h2>Periodo finaliza el <?php echo Utils::fecha_espanol(substr($periodo->fin,0,10)); ?> a las <?php echo substr($periodo->fin,10,6); ?></h2>
+        <h2><?php echo ($periodo->activo==1? "Activo" : "Inactivo"); ?></h2>
+
+        <div id="options-bar">
+            <div id="options">
+            <?php if($option!="error"){ ?>
+                <a href="<?php echo $path ?>bloques/index/<?php echo $periodo->id; ?>">Volver a bloques
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+            <?php } ?>
+            </div>
+        </div>
+        <?php } ?>
+        <?php switch($option) {
+                case 'captura': ?>
+            <form action="<?php echo $path ?>bloques/eliminar" id="frm_eliminar" method="post">
+                    <input type="hidden" name="id" id="id" value="<?php echo $bloque->id ?>" />
+                    <input type="hidden" name="periodo_id" id="periodo_id" value="<?php echo $periodo->id ?>" />
+                    <input type="hidden" name="KUMBIA_PATH" id="KUMBIA_PATH" value="<?php echo $path ?>" />
+                    <p class="error">
+                        Se dispone a eliminar toda la informaci&oacute;n del bloque<?php echo $bloque->id; ?>.<br/> Asi como a los alumnos asociados al mismo.
+                        <br />
+                        <strong>&iquest;Desea continuar?</strong>
+                    </p>
+                    <div id="botones">
+                        <input type="button" id="aceptar" value="Aceptar">
+                        <input type="button" id="cancelar" value="Cancelar">
+                    </div>
+                </form>
+
+            <?php  break; ?>
+            <?php case 'exito': ?>
+                <p class="info"><br />Bloque removido con exito.</p>
+            <?php  break; ?>
+
+            <?php case 'error':
+                  default:
+            ?>
+                <p class="error"><br />Ha ocurrido un error.<br />
+                <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
+</div>

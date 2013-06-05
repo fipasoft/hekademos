@@ -1,0 +1,81 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+        <h1>Editar materia <?php echo $materia->clave?></h1>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path ?>materias">Volver
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+            </div>
+        </div>
+        <?php switch($option) {
+                case 'captura': ?>
+                <form action="<?php echo $path ?>materias/editar" id="frm_editar" method="post" enctype="multipart/form-data">
+                    <fieldset>
+                        <legend>Datos</legend>
+                        <input type="hidden" name="id" id="id" value="<?php echo $materia->id ?>" />
+                        <label for="nombre">Nombre</label><br />
+                        <input type="text" name="nombre" id="nombre" size="30" maxlength="60" value="<?php echo $materia->nombre ?>" /><br />
+                        <label for="descripcion">Descripcion</label><br />
+                        <input type="text" name="descripcion" id="descripcion" size="30" maxlength="255" value="<?php echo $materia->descripcion ?>"/>
+                        <br />
+                        <label for="semestre">Semestre</label><br />
+                        <select name="semestre" id="semestre">
+                            <option></option>
+                            <option value="1" <?php if($materia->semestre == 1){ ?>selected="selected"<?php } ?>>1</option>
+                            <option value="2" <?php if($materia->semestre == 2){ ?>selected="selected"<?php } ?>>2</option>
+                            <option value="3" <?php if($materia->semestre == 3){ ?>selected="selected"<?php } ?>>3</option>
+                            <option value="4" <?php if($materia->semestre == 4){ ?>selected="selected"<?php } ?>>4</option>
+                            <option value="5" <?php if($materia->semestre == 5){ ?>selected="selected"<?php } ?>>5</option>
+                            <option value="6" <?php if($materia->semestre == 6){ ?>selected="selected"<?php } ?>>6</option>
+                        </select>
+                        <br />
+                        <label for="tipo">Tipo</label><br />
+                        <select name="tipo" id="tipo">
+                            <option></option>
+                            <option value="OBL" <?php if($materia->tipo == 'OBL'){ ?>selected="selected"<?php } ?>>Obligatoria</option>
+                            <option value="OPT" <?php if($materia->tipo == 'OPT'){ ?>selected="selected"<?php } ?>>Optativa</option>
+                            <option value="TLR" <?php if($materia->tipo == 'TLR'){ ?>selected="selected"<?php } ?>>Taller</option>
+                            <option value="PRO" <?php if($materia->tipo == 'PRO'){ ?>selected="selected"<?php } ?>>Programa de Extensi&oacute;n y difusi&oacute;n</option>
+                        </select>
+                        <br /><br />
+                        <label>Oferta</label><br />
+                        <div class="campo"  style="width:70%;"><?php echo $materia->oferta('nombre');  ?></div>
+                        <?php if($materia->oferta('id')==2){ ?>
+                        <div>
+                        <label>Creditos</label><br />
+                        <div class="campo" style="width:10%;" ><?php echo $materia->creditos; ?></div>
+                        <label>Duración semanas</label><br />
+                        <div class="campo" style="width:10%;"><?php echo $materia->duracion;  ?></div>
+                        <label>Horas por semana</label><br />
+                        <div class="campo" style="width:10%;"><?php echo $materia->horassemana;  ?></div>
+                        <label>Tipo competencia</label><br />
+                        <div class="campo" style="width:70%;"><?php if($materia->competencia=='esp'){ echo 'Trayectoria especializante'; }elseif($materia->competencia=='gen'){ echo 'Competencia genérica'; } ?></div>
+                        </div>
+                        <label><?php if($materia->competencia=='esp'){ echo 'Trayectoria'; }elseif($materia->competencia=='gen'){ echo 'Competencia'; } ?></label><br />
+                        <div class="campo"  style="width:70%;height:auto;"><?php echo $tp_competencia;  ?></div>
+
+                        <?php } ?>
+                    </fieldset>
+                    <div></div>
+                    <div id="botones">
+                        <input type="button" id="aceptar" value="Editar">
+                        <input type="button" id="cancelar" value="Cancelar">
+
+                    </div>
+                </form>
+            <?php  break; ?>
+            <?php case 'exito': ?>
+                <p class="info"><br />La materia se edit&oacute; correctamente</p>
+            <?php  break; ?>
+            <?php case 'error':
+                  default:
+            ?>
+                <p class="error"><br />Ha ocurrido un error al intentar editar la materia
+                    <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
+</div>

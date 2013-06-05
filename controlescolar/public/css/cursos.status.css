@@ -1,0 +1,17 @@
+#observaciones{
+background:#FFF;
+border:solid 1px #000;
+width:83%;
+height:100px;
+overflow: auto;
+}
+
+#status{
+margin-left:20px;
+ font-weight: bold;
+}
+
+.estado_1 {color:#DDDDFF; }
+.estado_2 {color:#ff9;}
+.estado_3 {color:#CCFF99;}
+.estado_4 {color:#FFCC99;}

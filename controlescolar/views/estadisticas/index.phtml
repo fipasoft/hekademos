@@ -1,0 +1,61 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+        <h1>Estadística</h1>
+        <div id="options-bar">
+        <div id="options">
+        <a href="#" id="cicloBtn" title="Cambiar de ciclo escolar" alt="Cambiar de ciclo escolar">
+                    Ciclo:
+                </a>
+                <div id="cicloActual"><?php echo $ciclo->numero?></div>
+                <div id="cicloSel" style="display:none">
+                    <form id="frm_ciclo" method="post" action="<?php echo $path ?>sistema/seleccionar">
+                    <fieldset>
+                        <input type="hidden" name="controlador" value="<?php echo $controlador ?>" />
+                        <input type="hidden" name="accion" value="<?php echo $accion ?>" />
+                        <select name="ciclo" id="cicloSelect">
+                            <?php foreach($ciclos as $ccl){?>
+                            <option value="<?php echo $ccl->id?>"
+                                    <?php if($ccl->id == $ciclo->id){ ?>selected="selected"<?php } ?>>
+                                    <?php echo $ccl->numero?>
+                            </option>
+                            <?php } ?>
+                        </select>
+                    </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <p class="msj">
+            <br />
+        Acceso a estadisticas del sistema.
+        </p>
+
+        <ul class="opciones">
+            <li>
+                <a alt="Estadisticas de asistencias." title="Estadisticas de asistencias." href="<?php echo $path . 'estadisticas/asistencias' ?>">
+                    Asistencias
+                </a>
+            <li>
+                <a alt="Estadisticas de calificaciones." title="Estadisticas de calificaciones." href="<?php echo $path . 'estadisticas/calificaciones' ?>">
+                    Calificaciones
+                </a>
+            </li>
+            <li>
+                <a alt="Estadisticas de promedios capturados." title="Estadisticas de promedios capturados." href="<?php echo $path . 'estadisticas/promedios' ?>">
+                    Promedios
+                </a>
+            </li>
+            <li>
+                <a alt="Estadisticas de aprobadas." title="Estadisticas de aprobadas." href="<?php echo $path . 'estadisticas/aprobadas' ?>">
+                    Materias aprobadas
+                </a>
+            </li>
+            <li>
+                <a alt="Estadisticas de aprobación." title="Estadisticas de aprobación." href="<?php echo $path . 'estadisticas/aprobacion' ?>">
+                    Porcentaje de aprobación
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

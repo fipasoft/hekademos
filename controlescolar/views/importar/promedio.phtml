@@ -1,0 +1,82 @@
+<?php
+/*
+ * Created on 22/03/2009
+ *
+ * To change the template for this generated file go to
+ * Window - Preferences - PHPeclipse - PHP - Code Templates
+ */
+    $path = "/var/www/sp5/public/concentrados/";
+
+        //abrimos el directorio
+        $dir = opendir($path);
+
+        //Mostramos las informaciones
+        while ($elemento=readdir($dir))
+        {
+
+        if(($elemento!='.')&&($elemento!='..'))
+        {
+
+        Kumbia :: import('lib.excel.reader');
+        $filename="/var/www/sp5/public/concentrados/".$elemento;
+        $reader=new Spreadsheet_Excel_Reader();
+        $reader->setUTFEncoder('iconv');
+        $reader->setOutputEncoding('UTF-8');
+        $reader->read($filename);
+        echo '<br/><h2> Archivo '.$elemento.'</h2><br/>';
+        echo '<table>';
+        echo '<tr><th>id</th><th>aprobadas</th><th>promedio</th><th>Status</th></tr>';
+
+        foreach($reader->sheets as $k=>$data)
+         {
+            //echo "\n\n ".$reader->boundsheets[$k]."\n\n";
+
+            foreach($data['cells'] as $r => $row)
+            {
+                if($r>10){
+                $id='';
+                $promedio='';
+                $aprobadas='';
+                foreach($row as $c=>$cell)
+                {
+
+                    if($c==1)
+                    $id=$cell;
+                    elseif($c==5)
+                    $aprobadas=$cell;
+                    elseif($c==6)
+                    $promedio=$cell;
+                }
+
+                echo '<tr><td>'.$id.'</td><td>'.$aprobadas.'</td><td>'.$promedio.'</td>';
+                $alumno=new Alumnos();
+                $alumno=$alumno->find($id);
+                if($alumno->id!=''){
+                    if($aprobadas=='' || $promedio=='' ){
+                    echo '<td>alerta 1</td>';
+                     }else{
+                    $alumno->aprobadas=$aprobadas;
+                    $alumno->promedio=$promedio;
+                    if($alumno->save())
+                    echo '<td>Ok</td>';
+                    else
+                    echo '<td>Error 2</td>';
+                    }
+
+                }else{
+                    echo '<td>Error 1</td>';
+                }
+                echo '</tr>';
+
+            }
+            }
+            }
+            echo '</table>';
+
+        }
+        }
+
+        //Cerramos el directorio
+        closedir($dir);
+
+?>

@@ -1,0 +1,27 @@
+
+div.content fieldset{
+-moz-border-radius:14px;
+background-color: #F5F5F5;
+line-height:165%;
+margin:0.3em auto;
+text-align:left;
+width:250px;
+}
+table{width:75%;border-top:1px solid #e5eff8;border-right:1px solid #e5eff8;border-collapse:collapse;margin:0 auto;}td{color:#475187;border-bottom:1px solid #e5eff8;border-left:1px solid #e5eff8;text-align:center;padding:.3em 1em;}tr.odd td{background:#f7fbff;}tr.odd .column1{background:#f4f9fe;}.column1{background:#f9fcfe;}h1{pading:5px;margin:10px;}div.espacio{width:auto;height:30px;}#login_form{background-color:#EEE;border:1px solid #999;text-align:right;width:220px;margin:60px auto 0;padding:3px 20px 0 3px;}p.errorBox,p.tipBox,p.infoBox,p.msj{text-align:center;vertical-align:middle;line-height:200%;min-height:50px;height:auto!important;}p.errorBox,p.tipBox,p.infoBox{border:1px #F60 solid;width:533px;background-repeat:no-repeat;background-position:0 2px;background-image:url("../img/prepa5/dlg_tip.jpg");background-color:#ffa;vertical-align:middle;margin:0 auto 10px;padding:4px 4px 10px 55px;}p.errorBox{background-image:url("../img/prepa5/dlg_error.jpg");background-color:#fff;border-color:#888;}p.infoBox{background-image:url("../img/prepa5/dlg_info.jpg");background-color:#fff;border-color:#336;}.alerta{color:#CC0000;font-weight: bold;font-size:12px;}.extraordinario{color:#EECC00;font-weight: bold;font-size:12px;}td{text-align:center;}div.content span.sub {color:#99AA00;font-size:90%;font-weight:bold;}#date{font-weight:700;color:#EEEEEE;float:right;font-size:10px;margin-right:1px;margin-top:2px;text-align:right;}div.content span.print {
+display:none;
+}
+
+#informacion_usuarios{
+    float: left;
+    border: 1px solid #CCCCCC;
+    height: 220px;
+    margin-left: 5%;
+    background-color: #F5F5F5;
+    border-radius: 14px 14px 14px 14px;
+    line-height: 165%;
+    margin-top: 2em;
+    margin-bottom:40px;
+    text-align: left;
+    width: 200px;
+    padding: 1.6em;
+}

@@ -1,0 +1,21 @@
+<?php if($materia->id!=''){ ?>
+    <?php if($oferta->oferta_id==2){ ?>
+        <?php if($materia->duracion==7){ ?>
+                <br/>
+                Inicio<br/>
+                <span class="sub"><?php echo  Utils::fecha_espanol($crs_ini->inicio); ?> </span>
+                <input type="hidden" name="inicio" id="inicio" size="10" maxlength="10" value="<?php echo Utils::convierteFecha(substr($crs_ini->inicio,0,10)); ?>" />
+        <?php }elseif($materia->duracion==12){ ?>
+                <br/>
+                Inicio<br/>
+                <span class="sub"><?php echo  Utils::fecha_espanol($crs_ini_2->inicio); ?></span>
+                <input type="hidden" name="inicio" id="inicio" size="10" maxlength="10" value="<?php echo Utils::convierteFecha(substr($crs_ini_2->inicio,0,10)); ?>" />
+        <?php }else{ ?>
+                <br/>
+                Inicio<br/>
+                <span class="sub"><?php echo  Utils::fecha_espanol($crs->inicio); ?></span>
+                <input type="hidden" name="inicio" id="inicio" size="10" maxlength="10" value="<?php echo Utils::convierteFecha(substr($crs->inicio,0,10)); ?>"/>
+        <?php } ?>
+
+    <?php } ?>
+<?php }?>

@@ -1,0 +1,165 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+        <h1>Calificaciones</h1>
+        <h2><?php echo $materia->nombre ?></h2>
+        <h2>
+            <?php echo 'Prof. ' . $curso->verProfesor() ?></h2>
+        <h2>
+            <?php echo $grupo->grado .'&deg;' .  $grupo->letra .  ' ' . $grupo->verTurno() . ', ' . $ciclo->numero?>
+        </h2>
+        <h2><?php echo  $grupo->verOferta(); ?></h2>
+        <?php switch($option) {
+                case 'vista': ?>
+
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path . 'grupos/curso/' . $curso->id ?>"
+                           alt="Volver al resumen"
+                           title="Volver al resumen">Volver al resumen
+                        <img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+                        <?php if($acl_calificaciones['agregar']){ ?>
+                        / <a href="<?php echo $path . 'calificaciones/selector/agregar/' . $curso->id ?>"
+                             id="btn-calificaciones-agr" class="selector"
+                             alt="Agregar calificaciones"
+                             title="Agregar calificaciones">Agregar
+                        <img src="<?php echo $path?>public/img/sp5/nuevo.png"/></a>
+                        <?php } ?>
+                        <?php if($acl_calificaciones['editar']){ ?>
+                        / <a href="<?php echo $path . 'calificaciones/selector/editar/' . $curso->id ?>"
+                             id="btn-calificaciones-edi" class="selector"
+                              alt="Editar calificaciones"
+                             title="Editar calificaciones">Editar
+                        <img src="<?php echo $path?>public/img/sp5/editar.png"/></a>
+                        <?php } ?>
+                        <?php if($acl_calificaciones['eliminar']){ ?>
+                        / <a href="<?php echo $path . 'calificaciones/selector/eliminar/' . $curso->id ?>"
+                             id="btn-calificaciones-eli" class="selector"
+                                alt="Eliminar calificaciones"
+                             title="Eliminar calificaciones">Eliminar
+                        <img src="<?php echo $path?>public/img/sp5/eliminar.png"/></a>
+                        <?php } ?>
+                    </div>
+                </div>
+                <div id="calificaciones" class="contenedor">
+                    <div>
+                    <table>
+                        <?php $n = 1; foreach($alumnos as $alumno){?>
+                            <?php if(($n - 1) % 10 == 0){ ?>
+                                <tr>
+                                    <th rowspan="2">#</th>
+                                    <th rowspan="2">Alumno</th>
+                                    <?php if($nParciales > 0){ ?>
+                                        <th colspan="<?php echo $nParciales + 1 ?>">Parciales</th>
+                                    <?php } ?>
+                                    <th colspan="2">Finales</th>
+                                </tr>
+                                <tr>
+                                    <?php if($nParciales > 0){ ?>
+                                        <?php foreach($hdrParciales as $hdr){?>
+                                            <th class="sub"><?php echo $hdr->periodo ?></th>
+                                        <?php }?>
+                                        <th class="sub">Total</th>
+                                    <?php } ?>
+                                    <th class="sub">ORD</th>
+                                    <th class="sub">EXT</th>
+                                </tr>
+                            <?php } ?>
+                            <tr class="<?php echo ($n%2 != 0 ? '' : 'odd') ?>">
+                                <td><?php echo $n ?></td>
+                                <td>
+                                    <a href="<?php echo $path . 'alumnos/ver/' . $alumno->id . '/' . $curso->id ?>"
+                                       alt="Ver datos del alumno" title="Ver datos del alumno">
+                                    <?php echo $alumno->nombre()  ?>
+                                    </a>
+                                    <br />
+                                    <span class="sub"><?php echo $alumno->codigo ?></span>
+                                    <span class="sub" style="color: #777">
+                                        <?php echo $alumno->grado . '&deg;' . $alumno->letra . ' ' . $alumno->turno?>
+                                    </span>
+                                    <?php if($alumno->curso_articulo!=''){ ?> <span style="color:#CC0000;"class="sub">{<?php echo $alumno->curso_articulo; ?>}</span><?php } ?></td>
+
+                                </td>
+                                <?php if($nParciales > 0){ ?>
+                                    <?php foreach($hdrParciales as $hdr){?>
+                                        <td class="numero">
+                                            <?php
+                                                $valor = $parciales[$alumno->id][$hdr->periodo];
+                                                if($valor != '' && $valor < 60){
+                                                    $st = 'false normal';
+                                                }else{
+                                                    $st = '';
+                                                }
+                                            ?>
+                                            <span class="<?php echo $st ?>" style="font-weight:normal; font-size: 95%">
+                                                <?php echo  $valor != '' ? $valor : '-' ?>
+                                            </span>
+                                        </td>
+                                    <?php }?>
+                                    <td class="numero">
+                                        <?php
+                                            $total = $parciales[$alumno->id]['total'];
+                                            $promedio = $parciales[$alumno->id]['promedio'] =  number_format($total / $nParciales, 1, '.', ',');
+
+                                            if($promedio != '' && $promedio < 60){
+                                                $st = 'false normal';
+                                            }else{
+                                                $st = 'bold';
+                                            }
+                                            $parciales[$alumno->id]['estilo'] = $st;
+                                        ?>
+                                        <span class="<?php echo $st ?>">
+                                            <?php echo $promedio ?>
+                                        </span>
+                                    </td>
+                                <?php } ?>
+                                <td class="numero">
+                                    <span class="<?php echo $calificaciones[$alumno->id]['ORD']['status']; ?>">
+                                        <?php echo $calificaciones[$alumno->id]['ORD']['valor'] != '' ?
+                                                               $calificaciones[$alumno->id]['ORD']['valor'] : '-'  ?>
+                                    </span>
+                                </td>
+                                <td class="numero">
+                                    <span class="<?php echo $calificaciones[$alumno->id]['EXT']['status']; ?>">
+                                        <?php echo $calificaciones[$alumno->id]['EXT']['valor'] != '' ?
+                                                               $calificaciones[$alumno->id]['EXT']['valor'] : '-'  ?>
+                                    </span>
+                                </td>
+                            </tr>
+                        <?php $n++; ?>
+                        <?php } ?>
+                    </table>
+                    </div>
+                </div>
+            <?php  break; ?>
+            <?php case 'alert': ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path . 'grupos/curso/' . $curso->id ?>"
+                           alt="Volver al resumen"
+                           title="Volver al resumen">Volver al resumen
+                        <img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+                    </div>
+                </div>
+                <p class="info">
+                    <br />
+                    <?php echo $alert ?>
+                </p>
+            <?php  break; ?>
+            <?php case 'error':
+                  default:
+            ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path . 'grupos' ?>">Volver a grupos
+                        <img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+                    </div>
+                </div>
+                <p class="error">
+                    <br />
+                    <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
+</div>

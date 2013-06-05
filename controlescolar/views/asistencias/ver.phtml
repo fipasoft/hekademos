@@ -1,0 +1,171 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+        <h1>Asistencias</h1>
+        <h2><?php echo $curso->verMateriaNombre()?></h2>
+        <h2><?php echo 'Prof. ' . $curso->verProfesor() ?></h2>
+        <h2>
+            <?php echo $grupo->grado .'&deg;' .  $grupo->letra .  ' ' .
+                       $grupo->verTurno() . ', ' . $ciclo->numero?>
+        </h2>
+        <h2><?php echo  $grupo->verOferta(); ?></h2>
+
+        <?php switch($option) {
+                case 'vista': ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path . 'grupos/curso/' . $curso->id ?>">Volver al resumen
+                        <img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+                        <span class="op-asistencias">
+                        <?php if($acl_asistencias['agregar']){ ?>
+                            / <a href="<?php echo $path . 'asistencias/selector/agregar/' . $curso->id ?>"
+                                 id="btn-asistencias-agr" class="selector">Agregar
+                                 <img src="<?php echo $path?>public/img/sp5/nuevo.png"/>
+                              </a>
+                        <?php } ?>
+                        <?php if($acl_asistencias['editar']){ ?>
+                            / <a href="<?php echo $path . 'asistencias/selector/editar/' . $curso->id ?>"
+                                 id="btn-asistencias-edi" class="selector">Editar
+                              <img src="<?php echo $path?>public/img/sp5/editar.png"/></a>
+                        <?php } ?>
+                        <?php if($acl_asistencias['eliminar']){ ?>
+                            / <a href="<?php echo $path . 'asistencias/selector/eliminar/' . $curso->id ?>"
+                                 id="btn-asistencias-eli" class="selector">Eliminar
+                              <img src="<?php echo $path?>public/img/sp5/eliminar.png"/></a>
+                        <?php } ?>
+                        </span>
+                    </div>
+                </div>
+                <div id="asistencias" class="contenedor">
+                    <div>
+                    <table>
+                        <?php $n = 1; foreach($alumnos as $alumno){?>
+                            <?php if(($n - 1) % 10 == 0){ ?>
+                            <tr>
+                                <th rowspan="2">#</th>
+                                <th rowspan="2">Alumno</th>
+                                <?php foreach($fechasHdr as $mes => $fs){ ?>
+                                    <th colspan="<?php echo count($fs)?>">
+                                        <?php echo substr($mes, 0, 3) ?>
+                                    </th>
+                                <?php } ?>
+                                <th rowspan="2">Ast.</th>
+                                <th rowspan="2">Fta.</th>
+                                <th rowspan="2">%</th>
+                            </tr>
+                            <tr>
+                                <?php foreach($fechasHdr as $mes => $fs){
+                                        foreach($fs as $f){
+                                ?>
+                                    <td style="background-color: #EEEEFE; font-weight:bold"><?php echo $f ?></td>
+                                <?php     }
+                                      }
+                                ?>
+                            </tr>
+                            <?php } ?>
+                            <tr class="<?php echo ($n%2 != 0 ? '' : 'odd') ?>">
+                                <td><?php echo $n ?></td>
+                                <td>
+                                    <a href="<?php echo $path . 'alumnos/ver/' . $alumno->id . '/' . $curso->id ?>"
+                                       alt="Ver datos del alumno" title="Ver datos del alumno">
+                                    <?php echo $alumno->nombre()  ?>
+                                    </a>
+                                    <br />
+                                    <span class="sub"><?php echo $alumno->codigo ?><span>
+                                    <span class="sub" style="color: #777">
+                                        <?php echo $alumno->grado . '&deg;' . $alumno->letra . ' ' . $alumno->turno?>
+                                    </span>
+                                    <?php if($alumno->curso_articulo!=''){ ?> <span style="color:#CC0000;"class="sub">{<?php echo $alumno->curso_articulo; ?>}</span><?php } ?></td>
+
+                                </td>
+                                <?php $asistencias = $curso->asistenciasAlumno($alumno->id)?>
+                                <?php foreach($hdrAsistencias as $hdr){?>
+                                    <?php $valor = $asistencias[str_replace('-','',$hdr->dia)] ?>
+                                    <td class="<?php echo  $valor == '' || $valor == 'FTA' ? 'FTA' : 'AST' ?>">
+                                        <?php if($valor == 'FTA'){?>
+                                            <span class="print"><?php echo $valor ?></span>
+                                        <?php } ?>
+                                    </td>
+                                <?php }?>
+                                <td class="numero">
+                                    <?php
+                                        $ast = $asistencias['AST'];
+                                        if($ast != ''){
+                                            echo $ast;
+                                        }else{
+                                            echo '-';
+                                        }
+                                    ?>
+                                </td>
+                                <td class="numero">
+                                    <?php
+                                        if($ast != ''){
+                                            echo $nAsistencias - $asistencias['AST'];
+                                        }else{
+                                            echo '-';
+                                        }
+                                    ?>
+                                </td>
+                                <td class="numero">
+                                    <?php
+                                        if($nAsistencias != 0){
+                                            $prc = ($ast * 100 / $nAsistencias);
+                                            $prc = number_format($prc, 1, '.', ',');
+                                        }else{
+                                            $prc = '-';
+                                        }
+
+
+                                        if($prc >= 80){
+                                            $prcStilo = 'bold';
+                                            $asistencias['derecho'] = 'ORD';
+                                        }else if($prc < 80 && $prc >= 60){
+                                            $prcStilo = 'alert';
+                                            $asistencias['derecho'] = 'EXT';
+                                        }else{
+                                            $prcStilo = 'false';
+                                            $asistencias['derecho'] = 'SD';
+                                        }
+                                        $asistencias['porcentaje'] = $prc;
+                                        $asistencias['estilo'] = $prcStilo;
+                                    ?>
+                                    <span class="<?php echo $prcStilo ?>">
+                                        <?php echo $prc?>
+                                    </span>
+                                </td>
+                            </tr>
+                        <?php $n++; } ?>
+                    </table>
+                    </div>
+                </div>
+            <?php  break; ?>
+            <?php case 'alert':
+            ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path . 'grupos/curso/' . $curso->id ?>">Volver al resumen
+                        <img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+                    </div>
+                </div>
+                <p class="info">
+                    <br />
+                    <?php echo $alert ?>
+                </p>
+            <?php  break; ?>
+            <?php case 'error':
+                  default:
+            ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path . 'grupos' ?>">Volver a grupos
+                        <img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+                    </div>
+                </div>
+                <p class="error">
+                    <br />
+                    <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
+</div>

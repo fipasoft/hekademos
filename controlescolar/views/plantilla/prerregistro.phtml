@@ -1,0 +1,179 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+        <h1>Plantilla</h1>
+        <h2 class="sub">Prerregistro de cursos por profesor</h2>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path ?>plantilla/profesores">Volver
+                    <img src="<?php echo $path?>public/img/sp5/volver.png" alt="volver"/>
+                </a>
+                <?php if( $option != 'captura' && $profesor && $profesor->id ){ ?>
+                <a href="<?php echo $path ?>plantilla/prerregistro/<?php echo $profesor->id ?>">Editar
+                    <img src="<?php echo $path?>public/img/sp5/editar.png" alt="editar"/>
+                </a>
+                <?php } ?>
+            </div>
+        </div>
+        <?php switch($option) { 
+            case 'captura': ?>
+                
+            <form action="<?php echo $path ?>plantilla/prerregistro" id="frm_prerreg" method="post">
+                    <fieldset>
+                        <legend>Profesor</legend>
+                        <input type="hidden" id="profesores_id" value="<?php echo $profesor->id ?>" name="profesores_id" />
+                        <table>
+                            <tr>
+                                <th>Nombre</th>
+                                <td><?php echo  $profesor->ap . ' ' .
+                                                $profesor->am. ', '.
+                                                $profesor->nombre  ?>
+                                </td>
+                                <td rowspan="5">
+                                    <?php if($profesor->foto != ''){ ?>
+                                        <img src="<?php echo $path . 'public/img/profesores/' . $profesor->foto . '?d=' . time() ?>" class="ficha"/>
+                                    <?php }else{ ?>
+                                        <img src="<?php echo $path ?>public/img/sp5/persona.png" class="ficha"/>
+                                    <?php }?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>CODIGO</th>
+                                <td><?php echo $profesor->codigo ?></td>
+                            </tr>
+                            <tr>
+                                <th>RFC</th>
+                                <td><?php echo ( $profesor->rfc ? $profesor->rfc : '-' ) ?></td>
+                            </tr>
+                            <tr>
+                                <th>CURP</th>
+                                <td><?php echo ( $profesor->curp ? $profesor->curp : '-' ) ?></td>
+                            </tr>
+                            <tr>
+                                <th>Sexo</th>
+                                <td><?php echo ( $profesor->sexo ? $profesor->sexo : '-' ) ?></td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                    <div class="divisor"></div>
+                    <fieldset>
+                        <legend>Asignaci&oacute;n</legend>
+                        <div id="tblCursos">
+                            <table  class="main <?php echo strtolower( $t->clave ) ?>" style="border-left:0">
+                                <tr>
+                                    <th></th>
+                                    <th>Curso</th>
+                                    <th>Horas</th>
+                                </tr>
+                                <?php if( count( $asignados ) >0 ){ ?>
+                                    <?php foreach( $asignados as $a ){ ?>
+                                        <tr class="selected">
+                                            <td>
+                                                <input type="checkbox"
+                                                       class="switch"
+                                                       checked="checked" />
+                                            </td>
+                                            <td>
+                                                <select name="cursos[]" class="curso">
+                                                    <option></option>
+                                                    <?php foreach( $cursos as $c ){ ?>
+                                                        <option value="<?php echo $c->id ?>" 
+                                                                class="<?php echo number_format( $c->horas, 2, '.', '' ) ?>"
+                                                                <?php if( $c->id == $a->id ){?> selected="selected"<?php }?>>
+                                                            <?php echo $c->verGrupo() . ' - ' . $c->verMateriaNombre() ?>
+                                                        </option>    
+                                                    <?php } ?>
+                                                </select>
+                                            </td>
+                                            <td style="text-align:right">
+                                                <span class="horas">-</span>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                <?php }else{ ?>
+                                    <tr class="selected">
+                                        <td>
+                                            <input type="checkbox"
+                                                   class="switch"
+                                                   checked="checked" />
+                                        </td>
+                                        <td>
+                                            <select name="cursos[]" class="curso">
+                                                <option></option>
+                                                <?php foreach( $cursos as $c ){ ?>
+                                                    <option value="<?php echo $c->id ?>"
+                                                            class="<?php echo number_format( $c->horas, 2, '.', '' ) ?>">
+                                                        <?php echo $c->verGrupo() . ' - ' . $c->verMateriaNombre() ?>
+                                                    </option>    
+                                                <?php } ?>
+                                            </select>
+                                        </td>
+                                        <td style="text-align:right">
+                                            <span class="horas">-</span>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                                <tr class="unique">
+                                    <td colspan="2" class="total-texto">
+                                        Frente a grupo
+                                    </td>
+                                    <td class="numero total-monto">
+                                        <span id="asignadas">
+                                        -
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr class="unique">
+                                    <td colspan="2" class="total-texto">
+                                        Descarga
+                                    </td>
+                                    <td class="numero total-monto">
+                                        <span id="disponibles">
+                                        -
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr class="unique">
+                                    <td colspan="2" class="total-texto">
+                                        Asignadas
+                                    </td>
+                                    <td class="numero total-monto">
+                                        <span id="requeridas">
+                                        <?php echo number_format( $profesor->hAsign, 2, '.', '' ) ?>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br />
+                            <div class="buttons">
+                                <a class="addRow">
+                                    <img title="Agregar fila" alt="agregar" src="<?php echo $path ?>img/sp5/mas.png"/>
+                                </a>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="divisor"></div>
+                    <div id="botones"  style="width:400px">
+                        <input type="button" id="cancelar" value="Cancelar" />
+                        <input type="button" id="aceptar" value="Guardar" />
+                    </div>
+            </form>
+                
+        <?php break;?>
+        <?php case 'exito': ?>
+                <p class="info">
+                    <br />
+                    <?php echo $exito ?>
+                </p>
+        <?php break;?>
+        
+        <?php case 'error': ?>
+                <p class="error">
+                    <br />
+                    <?php echo $error ?>
+                </p>
+        <?php break;?>
+        
+    <?php }?>
+    </div>
+</div>

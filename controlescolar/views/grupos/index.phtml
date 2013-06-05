@@ -1,0 +1,251 @@
+<?php //var_dump($acl);Exit;?>
+<div id="primary">
+            <?php switch($option) {
+                case 'vista':
+                ?>
+        <div class="content">
+
+        <h1>
+            <?php echo $registros;?>
+            Grupo<?php echo ($registros == 1 ? '' : 's') ?>
+            <?php if($busqueda->condicion() != '') {?><div class="filter-lab">Contenido filtrado</div><?php }?>
+        </h1>
+        <div id="options-bar">
+            <div id="options">
+                <a href="" id="aSearch" title="Buscar" alt="Buscar">
+                    Buscar
+                    <img src="<?php echo $path?>public/img/sp5/buscar.png"/>
+                </a> /
+                <?php if($acl['grupos']['exportaramonestaciones']){ ?>
+                  <a href="<?php echo $path . 'grupos/exportaramonestaciones/' ?>" title="Exportar amonestaciones" alt="Exportar amonestaciones">
+                    Exportar amonestaciones
+                    <img src="<?php echo $path?>public/img/sp5/excel.png"/>
+                </a>
+                /
+                <?php } ?>
+                <?php if($acl['grupos']['agregar']){ ?>
+                <a href="<?php echo $path ?>grupos/agregar" title="Agregar grupo" alt="Agregar grupo">
+                    Agregar grupo
+                    <img src="<?php echo $path?>public/img/sp5/nuevo.png"/>
+                </a> /
+                <?php } ?>
+                <a href="#" id="cicloBtn" title="Cambiar de ciclo escolar" alt="Cambiar de ciclo escolar">
+                    Ciclo:
+                </a>
+                <div id="cicloActual"><?php echo $ciclo->numero?></div>
+                <div id="cicloSel" style="display:none">
+                    <form id="frm_ciclo" method="post" action="<?php echo $path ?>sistema/seleccionar">
+                    <fieldset>
+                        <input type="hidden" name="controlador" value="<?php echo $controlador ?>" />
+                        <input type="hidden" name="accion" value="<?php echo $accion ?>" />
+                        <select name="ciclo" id="cicloSelect">
+                            <?php foreach($ciclos as $ccl){?>
+                            <option value="<?php echo $ccl->id?>"
+                                    <?php if($ccl->id == $ciclo->id){ ?>selected="selected"<?php } ?>>
+                                    <?php echo $ccl->numero?>
+                            </option>
+                            <?php } ?>
+                        </select>
+                    </fieldset>
+                    </form>
+                </div>
+            </div>
+            <div id="search" <?php if($busqueda->condicion() == ''){?> style="display:none" <?php } ?>>
+                <form action="<?php echo $path ?>grupos" method="post" id="frm_search">
+                    <fieldset>
+                        <label for="grado">Grado</label>
+                        <select name="grado" id="grado">
+                            <option></option>
+                            <option value="1" <?php if($busqueda->campo('grado') == 1){ ?>selected="selected"<?php } ?>>1</option>
+                            <option value="2" <?php if($busqueda->campo('grado') == 2){ ?>selected="selected"<?php } ?>>2</option>
+                            <option value="3" <?php if($busqueda->campo('grado') == 3){ ?>selected="selected"<?php } ?>>3</option>
+                            <option value="4" <?php if($busqueda->campo('grado') == 4){ ?>selected="selected"<?php } ?>>4</option>
+                            <option value="5" <?php if($busqueda->campo('grado') == 5){ ?>selected="selected"<?php } ?>>5</option>
+                            <option value="6" <?php if($busqueda->campo('grado') == 6){ ?>selected="selected"<?php } ?>>6</option>
+                        </select>
+                        <label for="letra">Letra</label>
+                        <input type="letra" name="letra" id="letra" value="<?php echo $busqueda->campo('letra') ?>" size="3" maxlength="1" />
+                        <label for="turno">Turno</label>
+                        <select name="turno" id="turno">
+                            <option></option>
+                            <option value="M" <?php if($busqueda->campo('turno') == 'M'){ ?>selected="selected"<?php } ?>>Matutino</option>
+                            <option value="V" <?php if($busqueda->campo('turno') == 'V'){ ?>selected="selected"<?php } ?>>Vespertino</option>
+                            <option value="N" <?php if($busqueda->campo('turno') == 'N'){ ?>selected="selected"<?php } ?>>Nocturno</option>
+                        </select>
+                        <label for="oferta_id">Oferta</label>
+                        <select name="oferta_id" id="oferta_id">
+                            <option></option>
+                            <?php foreach($ofertas as $oferta){ ?>
+                            <option value="<?php echo $oferta->id; ?>" <?php if($busqueda->campo('oferta_id') == $oferta->id){ ?>selected="selected"<?php } ?>><?php echo $oferta->nombre; ?></option>
+                            <?php } ?>
+                        </select>
+                        <input type="submit" id="btn_submit" value="Filtrar" />
+                        <input type="reset" id="reset" value="Quitar filtros" />
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+
+                <?php
+
+         if($registros > 0){ ?>
+                <table>
+                    <tr>
+                        <th>Grupo</th>
+                        <th>Turno</th>
+                        <th>Oferta</th>
+                        <?php if($acl['grupos']['asignar']){ ?>
+                        <th>Encargado</th>
+                        <?php } ?>
+                        <?php if($acl['grupos']['editar'] || $acl['grupos']['eliminar'] || $acl['grupos']['amonestaciones']){ ?>
+                        <th>Opciones</th>
+                        <?php } ?>
+                    </tr>
+                    <?php
+                        $i = 0;
+                        foreach($grupos as $grupo){
+                    ?>
+                    <tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+                        <td>
+                            <?php if($acl['grupos']['ver']){?>
+                                <a href="<?php echo $path . 'grupos/ver/' . $grupo->id?>"
+                                   alt="Ver resumen del grupo" title="Ver resumen del grupo">
+                                   <?php echo $grupo->grado . '&deg;' . $grupo->letra?>
+                                </a>
+                            <?php }elseif($acl['cursos']['grupo']){  ?>
+                                <a href="<?php echo $path . 'cursos/grupo/' . $grupo->id?>"
+                                   alt="Ver cursos del grupo" title="Ver cursos del grupo">
+                                   <?php echo $grupo->grado . '&deg;' . $grupo->letra?>
+                                </a>
+                            <?php } else{  ?>
+                                <?php echo $grupo->grado . '&deg;' . $grupo->letra?>
+                            <?php } ?>
+                        </td>
+                        <td>
+                            <?php echo $grupo->verTurno() ?>
+                        </td>
+
+                        <td>
+                            <?php echo $grupo->verOferta() ?>
+                        </td>
+
+                        <?php if($acl['grupos']['asignar']){ ?>
+                        <td>
+                            <?php $encargados = $grupo->encargados(); ?>
+                                <?php if(count($encargados) > 0){ ?>
+                                            <ul>
+                                            <?php foreach($encargados as $encargado){ ?>
+                                                <li>
+                                                    <a href="<?php echo $path . 'grupos/asignar/' . $grupo->id?>"
+                                                       alt="Modificar asignaciones de grupo" title="Modificar asignaciones de grupo">
+                                                        <?php echo $encargado->nombre() ?>
+                                                    </a>
+                                                </li>
+                                            <?php } ?>
+                                            </ul>
+                                <?php }else{ ?>
+                                            <a href="<?php echo $path . 'grupos/asignar/' . $grupo->id?>"
+                                               alt="Asignar grupo" title="Asignar grupo">
+                                                Asignar
+                                            </a>
+                                <?php } ?>
+                        </td>
+                        <?php } ?>
+                        <?php if($acl['grupos']['editar'] || $acl['grupos']['eliminar'] || $acl['grupos']['amonestaciones']){ ?>
+                        <td style="text-align:center">
+                            <?php if($acl['grupos']['editar']){ ?>
+                            <a href="<?php echo $path . 'grupos/editar/' . $grupo->id?>"
+                               alt="Editar datos del grupo" title="Editar datos del grupo">
+                               <img src="<?php echo $path?>public/img/sp5/editar.png" />
+                            </a>
+                            <?php } ?>
+                            <?php if($acl['grupos']['eliminar']){ ?>
+                            <a href="<?php echo $path . 'grupos/eliminar/' . $grupo->id?>"
+                               alt="Eliminar toda la informacion del grupo" title="Eliminar toda la informacion del grupo">
+                               <img src="<?php echo $path?>public/img/sp5/eliminar.png" />
+                            </a>
+                            <?php } ?>
+                            <?php if($acl['grupos']['amonestaciones']){ ?>
+                            <a href="<?php echo $path . 'grupos/amonestaciones/' . $grupo->id?>"
+                               alt="Ver amonestaciones del grupo." title="Ver amonestaciones del grupo.">
+                               <img src="<?php echo $path?>public/img/sp5/articulo.png" />
+                            </a>
+                            <?php } ?>
+                        </td>
+                        <?php } ?>
+                    </tr>
+                    <?php
+                        $i++;
+                    }
+                    ?>
+                </table>
+        <?php } else { ?>
+                <p class="info">
+                    <br />
+                    No hay registros que mostrar
+                </p>
+        <?php } ?>
+        <div id="pages">
+            <?php foreach($paginador->botones() as $boton){ ?>
+                 <a  href="<?php echo $path . $boton->url() ?>"
+                    title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
+                    class="<?php echo $boton->estilo() ?>">
+                    <?php echo $boton->etiqueta() ?>
+                </a>
+            <?php }?>
+        </div>
+    </div>
+    <?php
+        break;
+
+        case 'error':
+        ?>
+        <div class="content">
+
+        <h1>
+            Grupos
+        </h1>
+        <div id="options-bar">
+            <div id="options">
+                <a href="" id="aSearch" title="Buscar" alt="Buscar">
+                    Buscar
+                    <img src="<?php echo $path?>public/img/sp5/buscar.png"/>
+                </a> /
+                <?php if($acl['grupos']['agregar']){ ?>
+                <a href="<?php echo $path ?>grupos/agregar" title="Agregar grupo" alt="Agregar grupo">
+                    Agregar grupo
+                    <img src="<?php echo $path?>public/img/sp5/nuevo.png"/>
+                </a> /
+                <?php } ?>
+            <a href="#" id="cicloBtn" title="Cambiar de ciclo escolar" alt="Cambiar de ciclo escolar">
+                    Ciclo:
+                </a>
+                <div id="cicloActual"><?php echo $ciclo->numero?></div>
+                <div id="cicloSel" style="display:none">
+                    <form id="frm_ciclo" method="post" action="<?php echo $path ?>sistema/seleccionar">
+                    <fieldset>
+                        <input type="hidden" name="controlador" value="<?php echo $controlador ?>" />
+                        <input type="hidden" name="accion" value="<?php echo $accion ?>" />
+                        <select name="ciclo" id="cicloSelect">
+                            <?php foreach($ciclos as $ccl){?>
+                            <option value="<?php echo $ccl->id?>"
+                                    <?php if($ccl->id == $ciclo->id){ ?>selected="selected"<?php } ?>>
+                                    <?php echo $ccl->numero?>
+                            </option>
+                            <?php } ?>
+                        </select>
+                    </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <p class="error"><br/>
+                <?php echo $error ?>
+                </p>
+        <?php
+        break;
+
+     }?>
+
+</div>

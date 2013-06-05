@@ -1,0 +1,11 @@
+div.texto_contenido{
+padding-left: 10%;
+padding-right: 15%;
+}
+p{
+text-align: justify;
+}
+.texto_contenido img{
+border:solid 3px #DCDBD6;
+margin-left:15px;
+}

@@ -1,0 +1,48 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+        <h1>Editar ciclo <?php echo $ciclo->numero?></h1>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path ?>ciclos">Volver
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+            </div>
+        </div>
+        <?php switch($option) {
+                case 'captura': ?>
+                <form action="<?php echo $path ?>ciclos/editar" id="frm_editar" method="post">
+                    <fieldset>
+                        <legend>Datos</legend>
+                        <input type="hidden" name="id" id="id" value="<?php echo $ciclo->id?>"/>
+                        <input type="hidden" name="annio" id="annio" value="<?php echo $ciclo->annio?>"/>
+                        <label for="inicio">Inicio</label><br />
+                        <input type="text" name="inicio" id="inicio" size="10" maxlength="10" value="<?php echo $ciclo->inicio?>" />
+                        <img id="calendario" src="<?php echo $path ?>public/img/sp5/calendario.png" />
+                        <br />
+                        <label for="fin">Fin</label><br />
+                        <input type="text" name="fin" id="fin" size="10" maxlength="10"  value="<?php echo $ciclo->fin?>"/>
+                        <img id="calendario2" src="<?php echo $path ?>public/img/sp5/calendario.png" />
+                        <br />
+                    </fieldset>
+                    <div></div>
+                    <div id="botones">
+                        <input type="button" id="aceptar" value="Editar">
+                        <input type="button" id="cancelar" value="Cancelar">
+
+                    </div>
+                </form>
+            <?php  break; ?>
+            <?php case 'exito': ?>
+                <p class="info"><br />La informaci&oacute;n del ciclo se modific&oacute; correctamente</p>
+            <?php  break; ?>
+            <?php case 'error':
+                  default:
+            ?>
+                <p class="error"><br />Ha ocurrido un error al intentar modificar el ciclo.
+                    <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
+</div>

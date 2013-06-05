@@ -1,0 +1,183 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+        <h1>
+        Importar promedios alumnos
+        </h1>
+        <h2>Ciclo <?php echo $ciclo->numero; ?></h2>
+        <div id="options-bar">
+            <div id="options"></div>
+        </div>
+        <?php switch($option){
+            case "captura": ?>
+        <form id="frm_agregar" enctype="multipart/form-data" method="post" action="/sp5/alumnos/importar">
+        <fieldset>
+        <legend>Archivo</legend>
+        <input id="archivo" name="archivo" type="file" /> <input type="submit" value="Enviar" />
+        </fieldset>
+        </form>
+
+        <?php
+                break;
+            case "confirma":
+            $max=20;
+            $rs=count($importar->registros);
+            if($rs>0){
+        ?>
+        <form id="frm_agregar" enctype="multipart/form-data" method="post" action="/sp5/alumnos/importar">
+                    <fieldset>
+                    <legend>Opciones</legend>
+                    Crear Tutores
+                      <input type="checkbox" name="tutor" value="1"/>
+                      <br/>
+                      Importar todos al grupo.
+                    <select id="grupo" name="grupo" >
+                    <option value=""></option>
+                    <?php foreach($grupos as $g){ ?>
+                    <option value="<?php echo $g->id;?>"><?php echo $g->ver(); ?></option>
+                    <?php } ?>
+                    </select>
+                    <br/>
+                    Formato nombre.<br/>
+                    <select id="nombre" name="nombre" >
+                    <option value="1">Nombre Ap Am</option>
+                    <option value="2">Ap Am Nombre</option>
+
+                    </select>
+
+                    </fieldset>
+
+                    <fieldset>
+                    <legend>Archivo</legend>
+                    <p>
+                    Existe<?php echo ($rs == 1 ? '' : 'n'); ?> <?php echo $rs; ?> registro<?php echo ($rs == 1 ? '' : 's'); ?>.
+                    ¿Desea importarlos?</p>
+                    <input type="hidden" name="id_file" value="<?php echo $idFile; ?>" />
+                    <div id="botones">
+                        <input type="button" id="cancelar" value="Cancelar">
+                        <input type="submit" id="agregar" value="Importar">
+                    </div>
+                    </fieldset>
+        </form>
+        <?php if(count($importar->registros)>20){?>
+        <h3>Solo se muestran los primeros <?php echo $max; ?> registros para corroborar las columnas con los datos.</h3>
+        <?php } ?>
+        <table >
+        <tr>
+        <?php foreach($importar->columnas as $col ){
+            if($col!="*"){
+            ?>
+        <th><?php echo $col; ?></th>
+        <?php
+            }
+         } ?>
+        </tr>
+        <?php
+        $i = 0;
+        $r=0;
+
+        foreach($importar->registros as $registro){
+        if($r<$max){
+        ?>
+        <tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+        <?php for($c=0;$c<count($registro);$c++){
+
+            $celda=$registro[$c];
+
+             ?>
+        <td style="text-align:center;" ><?php echo (trim($celda)==""? '_' :     $celda); ?></td>
+        <?php
+
+         } ?>
+        </tr>
+        <?php
+        $i++;
+        $r++;
+        }else{
+            break;
+        }
+        } ?>
+        </table>
+
+        <?php }else{ ?>
+            <p class="error"><br/>No existe ningun registro en el archivo. </p>
+            <?php } ?>
+        <?php
+                break;
+            ?>
+        <?php
+                break;
+            case "exito": // echo "--- ".count($importar->columnas)."==".count($importar->registros[0]);var_dump($datos);
+             //var_dump($datos);
+             ?>
+            <p class="info"><br/><?php echo $datos["m"][0]; ?></p>
+            <?php $w=$datos["b"];
+            if(count($w)>0){
+                ?>
+                <h3>Correcto<?php echo (count($w) != 1 ? 's' : ''); ?></h3>
+                <table>
+                <tr><th><?php echo count($w); ?> correcto<?php echo (count($w) != 1 ? 's' : ''); ?></th></tr>
+                <?php
+                $i=0;
+                 foreach($w as $r){ ?>
+                <tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>"><td><?php echo $r; ?></td></tr>
+                <?php
+                    $i++;
+                } ?>
+                </table>
+            <?php
+
+            }
+             ?>
+
+            <?php $w=$datos["w"];
+            if(count($w)>0){
+                ?>
+                <h3>Warning<?php echo (count($w) != 1 ? 's' : ''); ?></h3>
+                <table>
+                <tr><th><?php echo count($w); ?> warning<?php echo (count($w) != 1 ? 's' : ''); ?></th></tr>
+                <?php
+                $i=0;
+                 foreach($w as $r){ ?>
+                <tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>"><td><?php echo $r; ?></td></tr>
+                <?php
+                    $i++;
+                } ?>
+                </table>
+            <?php
+
+            }
+             ?>
+
+            <?php $e=$datos["e"];
+            if(count($e)>0){
+                ?>
+                <h3>Error<?php echo (count($e) != 1 ? 'es' : ''); ?></h3>
+                <table>
+                <tr><th><?php echo count($e); ?> error<?php echo (count($e) != 1 ? 'es' : ''); ?></th></tr>
+                <?php
+                $i=0;
+                 foreach($e as $r){ ?>
+                <tr  class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>"><td><?php echo $r; ?></td></tr>
+                <?php
+                    $i++;
+                } ?>
+                </table>
+            <?php
+
+            }
+             ?>
+
+            <?php
+            break;
+            case "error":
+        ?>
+        <p class="error"><br /><?php echo $error; ?></p>
+        <?php
+                break;
+            ?>
+
+        <?php } ?>
+
+    </div>
+</div>

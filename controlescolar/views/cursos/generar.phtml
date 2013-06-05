@@ -1,0 +1,33 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+        <h1>Generar cursos</h1>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path . "cursos/index" . ($grupo_id == '' ? '' : '/' . $grupo_id); ?>">Volver
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+            </div>
+        </div>
+        <?php if($error != ''){ ?>
+            <p class="error"><br /><?php echo $error; ?></p>
+            <br />
+        <?php } ?>
+        <table>
+        <tr>
+            <th>Id</th>
+            <th>Grupo</th>
+            <th>Materia</th>
+            <th>Profesor</th>
+        </tr>        
+        <?php foreach($cursos as $curso){?>
+        <tr>
+            <td><?php echo $curso->id ?></td>
+            <td><?php echo $curso->verGrupo() ?></td>
+            <td><?php echo $curso->verMateria() ?></td>
+            <td><?php echo $curso->verProfesor() ?></td>
+        </tr>
+        <?php } ?>
+        </table>
+    </div>
+</div>

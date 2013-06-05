@@ -1,0 +1,195 @@
+<?php if($response != 'vista'){ ?>
+<?php
+// Hekademos, Creado el 2/11/2008
+/**
+ * selector
+ *
+ * @package    Hekademos Vistas
+ * @author     mimeks <mimex@fipasoft.com.mx>
+ * @copyright  2008 FiPa Software (contacto at fipasoft.com.mx)
+ * @license    http://www.gnu.org/licenses/gpl.html  GNU General Public License (GPL)
+ *
+ */
+
+ $path = KUMBIA_PATH;
+?>
+<div id="primary">
+    <div class="content">
+        <h1>Generador de reportes</h1>
+        <h2>
+            <?php echo $grupo->grado .'&deg;' .  $grupo->letra .  ' ' .
+                       $grupo->verTurno()?>
+        </h2>
+        <h2>
+            <?php echo $ciclo->numero ?>
+        </h2>
+        <?php switch($option) {
+                case 'selector': ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path . 'grupos/ver/' . $grupo->id ?>">Volver al resumen de grupo
+                        <img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+                    </div>
+                </div>
+                <div id="alumnos">
+                <?php if(count($cursos)>0){ ?>
+                    <form name="frm_imprimir" id="frm_imprimir" method="post" action="<?php echo $path ?>grupos/imprimir">
+                        <input type="hidden" name="grupos_id" id="grupos_id" value="<?php echo $grupo->id ?>" />
+                        <fieldset>
+                        <legend>Reporte</legend>
+                        <select id="reporte" name="reporte">
+                            <option></option>
+                            <!--<option value="lista">Lista de alumnos</option>-->
+                            <option value="finales">Boletas de calificaciones finales</option>
+                            <option value="boletas">Boletas de calificaciones parciales</option>
+                            <option value="lista">Lista de asistencia</option>
+                            <option value="inscritos">Alumnos Inscritos</option>
+                            <option value="resumen">Resumen grupo</option>
+                            <option value="ast">Concentrado de asistencias</option>
+                            <option value="cal">Concentrado de calificaciones</option>
+                            <option value="alu">Concentrado de Alumnos</option>
+                            <option value="reg">Registro de calificaciones</option>
+                            <option value="evaluaciones">Reporte de evaluaciones</option>
+                        </select>
+                        </fieldset>
+                        <div class="divisor"></div>
+
+                        <div id="cursos" style="display:none">
+                        <?php if(count($cursos)>0){ ?>
+                        <fieldset>
+                        <legend>Cursos</legend>
+                        <select id="cursos_select" name="cursos_select">
+                        <option></option>
+                        <?php
+                        foreach($cursos as $curso){
+                        ?>
+                        <option value="<?php echo $curso->id; ?>"><?php echo $curso->materia; ?></option>
+                        <?php
+
+                         } ?>
+                        </select>
+                        </fieldset>
+                        <?php }else{ ?>
+                            <p class="info"><br/>No existen cursos aprobados para el grupo</p>
+                        <?php } ?>
+                        </div>
+
+                        <div id="inscritoslst" style="display:none">
+                        <?php if(count($cursos)>0){ ?>
+                        <fieldset>
+                        <legend>Cursos</legend>
+                                             <table id="tbl_cur">
+                            <tr>
+                                <th></th>
+                                <th>
+                                    <a  id="a_<?php echo $j ?>"
+                                        title="Seleccionar todos los cursos"
+                                        class="select_all_cur"
+                                        href="javascript:;">
+                                        <img src="<?php echo $path?>public/img/sp5/ver.png"/>
+                                    </a>
+                                </th>
+                            </tr>
+                        <?php
+                        foreach($cursos as $curso){
+                        ?>
+                              <tr id="row_cur_<?php echo $curso->id;?>">
+                            <td><label for="curso_<?php echo $curso->id;?>"><?php echo $curso->materia;?></label></td>
+                            <td><input class="chk_cur" type="checkbox" value="<?php echo $curso->id;?>" id="curso_<?php echo $curso->id;?>" name="cursos_chk[]"></td>
+                            </tr>
+
+                        <?php
+                        }
+                        ?>
+
+                        </table>
+                        </fieldset>
+                            <?php }else{ ?>
+                            <p class="info"><br/>No existen cursos aprobados para el grupo</p>
+                        <?php } ?>
+                        </div>
+
+
+                        <div id="alumnos_" style="display:none">
+                        <?php if(count($cursos)>0){ ?>
+                        <fieldset>
+                        <legend>Alumnos</legend>
+                            <?php $i = 1 ?>
+                            <?php $j = 1 ?>
+                            <?php $j++ ?>
+                            <table id="tbl_<?php echo $j ?>">
+                            <tr>
+                                <th colspan="2"></th>
+                                <th>
+                                    <a  id="a_<?php echo $j ?>"
+                                        title="Seleccionar todos los alumnos"
+                                        class="select_all"
+                                        href="javascript:;">
+                                        <img src="<?php echo $path?>public/img/sp5/ver.png"/>
+                                    </a>
+                                </th>
+                            </tr>
+                            <?php foreach($alumnos as $alumno){ ?>
+                                <tr id="row_<?php echo $i ?>">
+                                    <td><?php echo $alumno->codigo ?></td>
+                                    <td><?php echo $alumno->nombre('reversa') ?></td>
+                                    <td>
+                                        <input type="checkbox" name="alumnos[]"
+                                               class="chk_alu"
+                                               id="chk_<?php echo $i?>"
+                                               value="<?php echo $alumno->id ?>"
+                                               checked="checked"
+                                        />
+                                    </td>
+                                    <?php $i ++;?>
+                                </tr>
+                            <?php } ?>
+                            </table>
+
+                        </fieldset>
+                            <?php }else{ ?>
+                            <p class="info"><br/>No existen cursos aprobados para el grupo</p>
+                        <?php } ?>
+                        </div>
+                        <input type="hidden" name="grupos_id" value="<?php echo $grupo->id?>" />
+                        <div class="botones">
+                                <input type="submit" value="Generar" />
+                        </div>
+                    </form>
+                        <?php }else{ ?>
+                            <p class="info"><br/>No existen cursos aprobados para el grupo</p>
+                        <?php } ?>
+                </div>
+                <?php  break; ?>
+                <?php case 'alert':
+                      default:
+                ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path . 'grupos/imprimir/' . $grupo->id ?>">Volver al generador de reportes
+                        <img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+                    </div>
+                </div>
+                <p class="info">
+                    <br />
+                    <?php echo $alert ?>
+                </p>
+                <?php  break; ?>
+                <?php case 'error':
+                      default:
+                ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path . 'grupos/imprimir/' . $grupo->id ?>">Volver al generador de reportes
+                        <img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+                    </div>
+                </div>
+                <p class="error">
+                    <br />
+                    <?php echo $error ?>
+                </p>
+                <?php  break; ?>
+        <?php } ?>
+    </div>
+</div>
+<?php } ?>

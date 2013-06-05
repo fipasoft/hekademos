@@ -1,0 +1,104 @@
+<h1>Inscripción</h1>
+<div id="options-bar">
+    <div id="options">
+    <a title="Volver a inicio." class="submenu" href="<?php echo KUMBIA_PATH?>escolar/inicio">Volver <img src="<?php  echo KUMBIA_PATH?>img/sp5/volver.png" alt="Volver a inicio"/></a>
+    </div>
+</div>
+<br/>
+<?php switch($option) {
+    case "captura"://var_dump($inscripcion);
+        if(is_array($cursos) && count($cursos)>0){ ?>
+        <p class="tipBox">
+        Debe seleccionar<br/>
+        <?php echo $mensaje; ?>
+        </p>
+        <div>
+        <form id="frm_inscribir" action="<?php echo KUMBIA_PATH ?>escolar/optativas" method="post" enctype="multipart/form-data">
+        <input type="hidden" value="<?php echo $periodo_id; ?>" name="periodo_id" />
+        <?php
+        $i=0;
+        foreach($cursos as $t=>$tipos){ ?>
+        <h2><?php echo $escolar->materiaTipo($t); ?></h2>
+        <table class="widget" id="grado_<?php echo $tipos[0]['grado'];?>_tipo_<?php echo $t;  ?>">
+        <tr><th>Grupo</th><th>Curso</th><th>Cupos</th><th></th></tr>
+         <?php foreach($tipos as $curso){ ?>
+
+
+        <tr id="crs_row_<?php echo $i ?>" >
+        <td <?php if(in_array($curso['periodoscursos_id'],$inscripcion)){ ?> class="selected"<?php } ?> >
+        <span class="sub"><?php echo $curso['grado'].$curso['letra']; ?></span>
+        <br/>
+        <span class="sub"><?php echo $escolar->regresaTurno($curso['turno']); ?></span>
+        <br/>
+        <span class="sub"><?php echo $curso['grupo_oferta']; ?></span>
+        </td>
+        <td <?php if(in_array($curso['periodoscursos_id'],$inscripcion)){ ?> class="selected"<?php } ?> >
+        <span class="sub"><?php echo $curso['materia_nombre']; ?></span>
+        <br/>
+        <span class="sub" style="color: rgb(119, 119, 119);">
+        <?php echo $escolar->materiaTipo($curso['materia_tipo']);?>
+        </span>
+        <span class="sub" style="color: rgb(119, 119, 119);">
+        <?php echo trim($curso['tipos_id']); ?>
+        </span>
+        </td>
+        <td <?php if(in_array($curso['periodoscursos_id'],$inscripcion)){ ?> class="selected"<?php } ?> >
+        <span class="sub" style="color: rgb(119, 119, 119);">
+        <?php echo $curso["total"]; ?>
+        </span>
+        </td>
+        <td <?php if(in_array($curso['periodoscursos_id'],$inscripcion)){ ?> class="selected"<?php } ?> >
+        <?php if($curso["total"]>0 || in_array($curso['periodoscursos_id'],$inscripcion)){ ?>
+        <input type="checkbox" name="cursos[]"
+                                                       class="chk_cur"
+                                                       id="<?php echo $curso['grado'].$curso['letra']; ?>_chk_<?php echo $i?>_<?php echo (trim($curso['tipos_id']) == "" ? "N" : $curso['tipos_id']); ?>"
+                                                       value="<?php echo $curso['periodoscursos_id']; ?>"
+                                                       <?php if(in_array($curso['periodoscursos_id'],$inscripcion)){ ?>
+                                                       checked="checked"
+                                                       <?php } ?>
+                                                />
+        <?php } ?>
+        </td>
+        </tr>
+
+        <?php
+        $i++;
+        }
+        ?>
+        </table>
+        <script language="javascript" type="text/javascript">
+          addDOMLoadEvent(function(){
+          var w=new Widget("grado_<?php echo $tipos[0]['grado'];?>_tipo_<?php echo $t;  ?>",<?php $conf=$configuracion[$tipos[0]["oferta_id"]][$tipos[0]["turno"]][$tipos[0]["grado"]][$t]; echo $conf['maximo'];  ?>,<?php echo $conf['diferente']; ?>,'<?php echo $escolar->materiaTipo($t); ?>','<?php echo $conf['dtipo']; ?>');
+            w.activar(w.id);
+            //alert(w.toString());
+          });
+        </script>
+
+        <?php } ?>
+
+            <div style="margin-left:80%;margin-top:20px">
+                <input type="submit" id="inscribir" value="Inscribir">
+            </div>
+        </form>
+        <p class="errorBox" id="mensaje" style="display:none;">
+        </p>
+        </div>
+        <?php }
+        break;
+        case "exito":
+        ?>
+        <p class="infoBox"><br/>Inscripcion realizada con exito.</p>
+        <?php
+        break;
+
+        default:
+        case "error":
+        ?>
+        <p class="errorBox"><br/>Ha ocurrido un error<br/><?php echo $error; ?></p>
+        <?php
+        break;
+
+    }
+        ?>
+
+

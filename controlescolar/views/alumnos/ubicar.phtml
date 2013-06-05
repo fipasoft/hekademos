@@ -1,0 +1,111 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+        <h1>Ubicar alumno</h1>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path ?>alumnos">Volver a alumnos
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+            </div>
+        </div>
+<?php switch($option){
+    case 'vista':
+?>
+        <h2>Datos del alumno</h2>
+                <table>
+                    <tr>
+                        <th>Codigo</th>
+                        <td><?php echo $alumno->codigo?></td>
+                    <tr>
+                        <th>Nombre</th>
+                        <td><?php echo  $alumno->nombre('reversa')?>
+                        </td>
+                    </tr>
+                    </tr>
+                    <tr>
+                        <th>Fecha de admisi&oacute;n</th>
+                        <td colspan="2"><?php echo $alumno->admision()?></td>
+                    </tr>
+                    <tr>
+                        <th>Situaci&oacute;n</th>
+                        <td colspan="2"><?php echo $alumno->situacion()?></td>
+                    </tr>
+                    <tr>
+                        <th>Grupo</th>
+                        <td colspan="2"><?php echo $grupo->ver('html');?></td>
+                    </tr>
+                    </table>
+
+<br/>
+<br/>
+                    <form action="<?php echo $path ?>alumnos/ubicar" id="frm_ubicar" method="post" enctype="multipart/form-data">
+                    <fieldset>
+                        <legend>Elija el grupo</legend>
+                    Grupo<br/>
+                    <select id="grupo" name="grupo">
+                    <option></option>
+                    <?php echo print_r($accesibles); foreach($accesibles as $accesible){ ?>
+                    <option value="<?php echo $accesible->id ?>"><?php echo $accesible->ver('html'); ?></option>
+                    <?php }?>
+                    </select>
+                    <input type="hidden" value="<?php echo $alumno->id;  ?>" name="alumno" id="alumno" />
+                    <input type="hidden" value="<?php echo $grupo->id;  ?>" name="actual" id="actual" />
+                    </fieldset>
+                    <div class="divisor"></div>
+                    <div id="botones">
+                        <input type="button" id="aceptar" value="Aceptar">
+                        <input type="button" id="cancelar" value="Cancelar">
+
+                    </div>
+                    </form>
+<?php break;
+        case 'exito':
+ ?>
+<p class="info"><br />El alumno se ubico correctamente</p>
+
+
+
+ <?php break;
+         case 'confirmar':
+         ?>
+             <form action="<?php echo $path ?>alumnos/ubicar/" id="frm_ubicar" method="post">
+                    <input type="hidden" name="id" id="id" value="<?php echo $alumno->id ?>" />
+                    <p class="error" style="text-align:left;padding-left:100px">
+
+                        Se dispone a ubicar al alumno <br/>
+                        <strong>Codigo:</strong> <?php echo $alumno->codigo; ?><br/>
+                        <strong>Nombre:</strong> <?php echo $alumno->nombre .' ' . $alumno->ap . ' ' . $alumno->am?>
+                        <br/>
+                        <strong>del grupo</strong> <?php echo $actual->ver('html'); ?>
+                        <br/>
+                        <strong>al grupo</strong> <?php echo $grupo->ver('html'); ?>
+
+                        <br />
+
+                        <strong>&iquest;Desea continuar?</strong>
+                    </p>
+                    <input type="hidden" name="alumno_id" value="<?php echo $alumno->id; ?>" />
+                      <input type="hidden" name="grupo_id" value="<?php echo $grupo->id; ?>" />
+                      <input type="hidden" name="actual" value="<?php echo $actual->id; ?>" />
+                    <div id="botones">
+                        <input type="submit" id="aceptar_c" value="Aceptar">
+                        <input type="button" id="cancelar_c" value="Cancelar">
+                    </div>
+                </form>
+
+
+         <?php
+        break;
+        case 'error':
+        default:
+ ?>
+        <p class="error">
+                    <br />
+                     <?php echo $error ?>
+                </p>
+ <?php break;
+    }
+ ?>
+</div>
+</div>

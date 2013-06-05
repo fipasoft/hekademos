@@ -1,0 +1,49 @@
+<div id="options-bar">
+    <div id="options">
+    <a title="Volver a inicio." class="submenu" href="<?php echo KUMBIA_PATH?>escolar/inicio">Volver <img src="<?php  echo KUMBIA_PATH?>img/sp5/volver.png" alt="Volver a inicio" /></a>
+    </div>
+</div>
+<div>
+<h1><?php echo $descargas->getTitle() ?></h1>
+<br/>
+    <?php
+    $categorias=array_keys($archivos);
+    foreach($categorias as $categoria){
+        $elementos=$archivos[$categoria];
+        $elementos=array_keys($elementos);
+    ?>
+        <h3 class="titulo_categoria" style=""><?php echo $categoria; ?></h3>
+        <div class="caja_categoria">
+        <table><tr><td>
+        <?php
+        $img=$descargas->getImagenByCategoria($categoria);
+        if(strlen($img)>0){
+
+        ?>
+        <img width="80" src="http://148.202.65.105/<?php echo $img ?>" alt="categoria <?php echo $categoria; ?>" />
+
+        <?php
+        }else{
+        ?>
+        <img src="http://148.202.65.105/public/img/prepa5/descargas.png" alt="categoria <?php echo $categoria; ?>" />
+        <?php
+        }
+        ?>
+        </td><td>
+        <ul class="lista_archivos" >
+        <?php
+        foreach($elementos as $ele){
+            $elemento=$archivos[$categoria][$ele];
+        ?>
+        <li><?php echo link_to("archivo/descargar/".$elemento->id,$elemento->des_texto,"rel: external", "title: ".$elemento->des_descripcion,"class: archivo" ); ?></li>
+        <?php
+            }
+        ?>
+        </ul></td></tr></table>
+        </div>
+        <br/>
+    <?php
+    }
+
+    ?>
+</div>

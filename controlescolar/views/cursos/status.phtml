@@ -1,0 +1,74 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+        <h1>Cambio status </h1>
+        <h2><?php if($curso->id!='')echo $curso->verMateriaNombre(); ?></h2>
+        <h2><?php if($grupo->id!='')echo $grupo->grado . '&deg;' . $grupo->letra . ' ' . $grupo->verTurno()?></h2>
+        <h2><?php if($grupo->id!='')echo $grupo->verOferta(); ?></h2>
+        <h2><?php if($ciclo->id!='')echo $ciclo->numero ?></h2>
+
+
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path . 'cursos/index/' . $grp?>">Volver
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+            </div>
+        </div>
+        <?php switch($option) {
+                case 'confirmar': ?>
+                <div>
+                <form action="<?php echo $path . 'cursos/status' ?>" id="frm_confirmar" method="post">
+                        <fieldset>
+                        <legend>Datos</legend>
+                        <p>Status</p>
+                        <p id="status" class="estado_<?php echo $curso->estado_id; ?>"><?php echo $curso->verEstado(); ?></p>
+                        <p>Nuevo Status</p>
+                        <p>
+                        <select id="estado_id" name="estado_id">
+                        <option></option>
+                        <?php
+                        foreach($status as $statu){
+                        ?>
+                        <option value="<?php echo $statu->id; ?>"><?php echo $statu->nombre; ?></option>
+                        <?php
+                        }
+                         ?>
+                        </select></p>
+
+                        <p>Comentarios</p>
+                        <div id="observaciones">
+                        <?php
+                        echo str_replace('\n','<br/>',$curso->observaciones);
+                          ?>
+                        </div>
+                        <br/>
+                        <p>Agregar Comentario</p>
+                        <p><textarea name="observaciones" id="observaciones" rows="5" cols="40" wrap="off"></textarea></p>
+                        <input type="hidden" id="curso_id" name="curso_id" value="<?php echo $curso->id?>" />
+
+                        </fieldset>
+
+                        </div>
+
+                        <div id="botones">
+                            <input type="button" id="aceptar" value="Aceptar">
+                            <input type="button" id="cancelar" value="Cancelar">
+                        </div>
+
+                    </form>
+                </div>
+            <?php  break; ?>
+            <?php case 'exito': ?>
+                <p class="info"><br />El cambio de estado del curso fue exitoso.</p>
+            <?php  break; ?>
+            <?php case 'error':
+                  default:
+            ?>
+                <p class="error">Ha ocurrido un error al intentar cambiar el estado del curso.<br />
+                <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
+</div>

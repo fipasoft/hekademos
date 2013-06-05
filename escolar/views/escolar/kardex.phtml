@@ -1,0 +1,113 @@
+<h1>Kardex</h1>
+<?php if($escolar->total_cursos>0){ ?>
+<div id="options-bar">
+    <div id="options">
+     <a title="Volver a inicio." class="submenu" href="<?php echo KUMBIA_PATH?>escolar/inicio">Volver <img src="<?php  echo KUMBIA_PATH?>img/sp5/volver.png" alt="Volver a inicio" /></a>
+     /
+    <a href="<?php echo KUMBIA_PATH; ?>escolar/pdf/kardex">Descargar <img src="<?php  echo KUMBIA_PATH?>img/sp5/pdf.gif" alt="Descargar pdf." /></a>
+    </div>
+</div>
+
+<div>
+    <table summary="Datos Personales del Alumno." border="0" cellspacing="2" cellpadding="2">
+    <thead>
+    <tr><th colspan="5">Ficha del alumno.</th></tr>
+    </thead>
+    <tbody>
+    <tr class="odd"><th>Código</th><td><?php echo $alumno["codigo"] ?>&nbsp;</td><td rowspan="3"><img height="100" src="<?php
+     $img_path=KUMBIA_PATH."img/sp5/persona.png";
+     if(trim($alumno["foto"])!='' && file_exists("C:\\xampp\\htdocs\\sp5\\public\\img\\alumnos\\".$alumno["foto"]))
+        $img_path="/sp5/img/alumnos/".$alumno["foto"];
+
+     echo $img_path;
+    ?>" alt="Foto del alumno <?php echo $alumno["nombre"]." ".$alumno["ap"]." ".$alumno["am"] ?>." /></td></tr>
+    <tr class="no_odd"><th>Situación</th><td><?php echo $alumno["situacion"] ?>&nbsp;</td></tr>
+    <tr class="odd"><th>Nombre</th><td><?php echo $alumno["nombre"]." ".$alumno["ap"]." ".$alumno["am"] ?>&nbsp;</td></tr>
+    <tr class="no_odd"><th >Fecha de Admisión</th><td colspan="2"><?php if(trim($alumno["admision"])!="")echo fecha_espanol($alumno["admision"]) ?>&nbsp;</td></tr>
+    </tbody>
+    </table>
+</div>
+<div class="espacio"></div>
+
+
+<div>
+<table summary="Promedio del Alumno." border="0" cellspacing="2" cellpadding="2" >
+<thead>
+<tr><th>Materias cursadas</th><th>Promedio</th></tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><?php echo $alumno["aprobadas"]; ?>&nbsp;</td>
+<td><?php if($alumno["promedio"]<60){
+            echo '<span class="alerta">'.$alumno["promedio"]."</span>";
+        }else
+         echo $alumno["promedio"]; ?>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="espacio"></div>
+<div>
+<?php
+foreach($ciclos as $ciclo){
+    $llav=array_keys($ciclo);
+    $cic=$ciclo[$llav[0]];
+
+?>
+    <div>
+    <h3>Ciclo <?php echo $cic["numero"];?></h3>
+    <table summary="Calificaciones del Alumno." border="0" cellspacing="2" cellpadding="2">
+    <thead>
+    <tr><th>Ciclo</th><th>Clave</th><th>Materia</th><th>Calificación</th><th>Profesor</th><th>Tipo</th></tr>
+    </thead>
+    <tbody>
+    <?php
+    $cont=0;
+        foreach($ciclo as $ele){
+            $class="";
+            if($cont%2==0)
+                $class=' class="odd" ';
+
+            $cont++;
+
+
+    ?>
+
+    <tr<?php echo $class ?>>
+    <td><span class="sub" style="color: rgb(119, 119, 119);"><?php echo $ele["numero"]; ?>&nbsp;</span></td>
+    <td><span class="sub" style="color: rgb(119, 119, 119);"><?php echo $ele["clave"]; ?>&nbsp;</span></td>
+    <td><span class="sub"><?php echo $ele["nombre_materia"]; ?></span>&nbsp;</td>
+    <td><?php if($ele["valor"]<60){
+            echo '<span class="alerta">'.$ele["valor"]."</span>";
+        }else
+         echo $ele["valor"]; ?>&nbsp;</td>
+    <td><span class="sub" style="color: rgb(119, 119, 119);"><?php echo $ele["nombre_profesor"]." ".$ele["ap_profesor"]." ".$ele["am_profesor"]; ?>&nbsp;</span></td>
+    <td>
+    <?php
+    if($ele["oportunidades_id"]==1)
+    echo $ele["oportunidad"];
+    elseif($ele["oportunidades_id"]==2)
+    echo '<span class="extraordinario">'.$ele["oportunidad"].'</span>';
+
+     ?>&nbsp;</td>
+    </tr>
+    <?php
+        }
+    ?>
+    </tbody>
+    </table>
+    </div>
+
+<div class="espacio"></div>
+<?php
+}
+?>
+</div>
+
+<?php }else{ ?>
+    <br/>
+    <br/>
+
+    <p class="infoBox"><br/>El alumno no cuenta con con materias cursadas.</p>
+<?php } ?>

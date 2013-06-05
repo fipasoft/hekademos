@@ -1,0 +1,10 @@
+div.content div.botones{
+margin: 15px auto 0 auto;
+text-align: right;
+width: 300px;
+}
+div.content tr.selected, div.content td.selected{
+background-color: #ffb;
+}
+div.content fieldset{width:400px;}
+#botones{width: 220px;}

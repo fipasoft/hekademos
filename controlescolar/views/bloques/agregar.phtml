@@ -1,0 +1,55 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+        <h1>Agregar bloque al periodo</h1>
+        <?php if($option!="error"){ ?>
+        <h2>Periodo inicia el <?php echo Utils::fecha_espanol(substr($periodo->inicio,0,10)); ?> a las <?php echo substr($periodo->inicio,10,6); ?></h2>
+        <h2>Periodo finaliza el <?php echo Utils::fecha_espanol(substr($periodo->fin,0,10)); ?> a las <?php echo substr($periodo->fin,10,6); ?></h2>
+        <h2><?php echo ($periodo->activo==1? "Activo" : "Inactivo"); ?></h2>
+
+        <div id="options-bar">
+            <div id="options">
+
+                <a href="<?php echo $path ?>bloques/index/<?php echo $periodo->id; ?>">Volver a bloques
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+            </div>
+        </div>
+        <?php } ?>
+        <?php switch($option) {
+                case 'captura': ?>
+                <form action="<?php echo $path ?>bloques/agregar" id="frm_editar" method="post">
+                    <fieldset>
+                        <legend>Datos</legend>
+                        <input type="hidden" name="periodo_id" id="periodo_id" value="<?php echo $periodo->id; ?>" />
+                        <input type="hidden" name="KUMBIA_PATH" id="KUMBIA_PATH" value="<?php echo $path; ?>" />
+                        <label for="inicio">Inicio</label><br />
+                        <input type="text" name="inicio" id="inicio" size="16" maxlength="16" />
+                        <img id="calendario" src="<?php echo $path ?>public/img/sp5/calendario.png" />
+                        <br />
+                        <label for="fin">Fin</label><br />
+                        <input type="text" name="fin" id="fin" size="16" maxlength="16"/>
+                        <img id="calendario2" src="<?php echo $path ?>public/img/sp5/calendario.png" />
+                    </fieldset>
+                    <div></div>
+                    <div id="botones">
+                        <input type="button" id="aceptar" value="Agregar">
+                        <input type="button" id="cancelar" value="Cancelar">
+
+                    </div>
+                </form>
+            <?php  break; ?>
+            <?php case 'exito':
+            ?>
+                <p class="info"><br />El bloque se agrego correctamente.</p>
+            <?php  break; ?>
+            <?php case 'error':
+                  default:
+            ?>
+                <p class="error"><br />Ha ocurrido al intentar agregar el bloque.<br />
+                <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
+</div>

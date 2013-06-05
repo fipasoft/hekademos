@@ -1,0 +1,248 @@
+/* tags */
+div.content .hide{
+display: none;
+}
+div.content legend{
+font-weight: bold;
+}
+div.content legend {
+margin-bottom:0;
+color: #533A54;
+}
+div.content fieldset{
+-moz-border-radius:14px;
+background-color: #F5F5F5;
+line-height:165%;
+margin:0.3em auto;
+text-align:left;
+width:350px;
+color: #666666;
+}
+div.content ul, div.content ol{
+margin-bottom:0;
+}
+/* ids */
+#botones{
+width: 380px;
+margin: 8px auto;
+padding: 0px;
+text-align:right;
+}
+#search fieldset{
+background-color: transparent;
+text-align:right;
+width:auto;
+}
+#cicloActual{
+display:inline;
+margin:0;
+padding;0;
+width:30px;
+}
+#cicloActual div{
+display:inline;
+}
+#cicloSel{
+display:inline;
+margin:0;
+padding;0;
+}
+#cicloSel div{
+display: inline;
+}
+#cicloSel form{
+display:inline;
+margin:0;
+padding:0;
+}
+#cicloSel fieldset{
+display:inline;
+background-color: transparent;
+margin:0;
+padding:0;
+text-align:right;
+width: 40px;
+}
+#cicloSel select{
+padding:0;
+height:18px;
+color:#222222;
+}
+/* classes */
+div.content .hide{
+}
+div.content img.ficha{
+border: 1px solid #ddd;
+margin: 0 auto;
+padding: 2px;
+width: 120px;
+}
+div.content img.thumb{
+border: 1px solid #ddd;
+margin: 0 auto;
+padding: 2px;
+width: 50px;
+}
+div.content div.check{
+float: right;
+height:20px;
+margin-right:115px;
+margin-top:-20px;
+}
+div.content div.separador{
+height:1px;
+margin:0;
+padding:0;
+}
+p.error,p.tip,p.info,p.msj {
+-moz-border-radius:14px;
+text-align: center;
+vertical-align: middle;
+line-height: 150%;
+min-height: 50px;
+height: auto !important;
+height: 50px;
+color:#666;
+}
+p.error,p.tip,p.info {
+border: 1px #FF6600 solid;
+width: 533px;
+padding: 4px;
+padding-left: 55px;
+padding-bottom: 10px;
+margin: 0 auto 10px auto;
+margin-bottom: 10px;
+background-repeat: no-repeat;
+background-position: 0px 2px;
+background-image: url("../img/sp5/tip.png");
+background-color: #ffa;
+vertical-align: middle;
+}
+p.error {
+background-image: url("../img/sp5/error.png");
+border-color: #888;
+background-color: #fff;
+}
+p.info {
+background-image: url("../img/sp5/info.png");
+border-color: #336;
+background-color: #fff;
+}
+span.advert {
+font-weight: bold;
+color: #ea0;
+}
+span.alert {
+font-weight: bold;
+color: #ec0;
+}
+span.bold {
+font-weight: bold;
+color: #000;
+}
+span.normal {
+font-weight: normal;
+}
+span.false{
+font-weight: bold;
+color: #c00;
+}
+span.true {
+font-weight: bold;
+color: #6c0;
+}
+span.uc{
+text-transform: uppercase;
+}
+div.content span.main{
+font-weight: bold;
+font-size: 90%;
+}
+div.content span.sub{
+color: #9a0;
+font-weight: bold;
+font-size: 90%;
+}
+div.content span.print{
+display:none;
+}
+div.content td.numero{
+text-align:right;
+}
+div.content td.centrar{
+text-align:center;
+}
+div.content th.sub{
+background-color: #EEEEFE;
+font-size: 75%;
+}
+div.content .aprobado, div.content .ordinario{
+font-weight: bold;
+color: #000;
+}
+div.content .reprobado, div.content .sin-derecho{
+font-weight: bold;
+color: #c00;
+}
+div.content .extraordinario{
+font-weight: bold;
+color: #ec0;
+}
+
+div.campo{
+background-color:#FFF;
+border:solid 1px #000;
+height:10px;
+padding-left:5px;
+}
+span.fin{
+font-weight: bold;
+color: #c00;
+font-size: 10px;
+}
+
+#informacion_usuarios{
+    float: left;
+    border: 1px solid #CCCCCC;
+    height: 300px;
+    margin-left: 5%;
+    background-color: #F5F5F5;
+    border-radius: 14px 14px 14px 14px;
+    line-height: 165%;
+    margin-top: 2.2em;
+    margin-bottom:40px;
+    text-align: left;
+    width: 200px;
+    padding: 1.6em;
+    color: #666666;
+}
+#img_header{
+    margin-left:22px;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+#footer {
+    border: 1px #CCCCCC solid;
+    background-color: #F4F4F4;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.content h1{
+    color: #533A54;
+}
+
+ul.opciones li a, ul.opciones li a:visited, ul.opciones li a:link{
+    color:#666;
+    text-decoration: none;
+}
+
+ul.opciones li a:hover{
+    color:#533a54;
+    text-decoration: none;
+}
+.content th{
+    color:#533a54;
+    background: none repeat scroll 0 0 #c0b8c0;
+}

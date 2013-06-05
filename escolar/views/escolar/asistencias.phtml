@@ -1,0 +1,56 @@
+<h1>Asistencias</h1>
+<?php if(sizeof($ciclos)>0){ ?>
+<div id="options-bar">
+    <div id="options">
+    <a title="Volver a inicio." class="submenu" href="<?php echo KUMBIA_PATH?>escolar/inicio">Volver <img src="<?php  echo KUMBIA_PATH?>img/sp5/volver.png" alt="Volver a inicio" /> </a> /
+    <a href="<?php echo KUMBIA_PATH; ?>escolar/pdf/asistencias">Descargar <img src="<?php  echo KUMBIA_PATH?>img/sp5/pdf.gif" alt="Descargar pdf." /></a>
+    / <span title="Seleccione el ciclo escolar." class="submenu" >Ciclo <select id="selector_ciclos">
+    <?php
+$ultimo=sizeof($ciclos)-1;
+$bandera=false;
+foreach($ciclos as $ciclo){
+$select="";
+if(($ciclo["id"]==$cicloActivo || $ciclos[$ultimo]["id"]==$ciclo["id"]) && !$bandera){
+    $select=' selected="selected" ';
+    $cicloCarga=$ciclo["id"];
+    $bandera=true;
+}
+?>
+<option value="<?php echo $ciclo["id"]; ?>" <?php echo $select; ?>><?php echo $ciclo["numero"]; ?></option>
+<?php
+}
+
+?>
+</select>
+</span>
+
+    </div>
+</div>
+<div id="ficha">
+<table>
+<tr><th>Código</th><td><?php echo $alumno["codigo"];  ?></td><th>Nombre</th><td><?php echo $alumno["nombre"];  ?></td></tr>
+</table>
+</div>
+<br/>
+<div id="infoPrincipal">
+</div>
+<?php
+if($cicloCarga!=null){
+?>
+<script type="text/javascript" >
+addDOMLoadEvent(function(){
+    cargaInfo('<?php echo trim($cicloCarga); ?>');
+
+});
+</script>
+<?php
+}
+?>
+
+<?php }else{ ?>
+    <div class="espacio"></div>
+    <h1>Asistencias</h1>
+    <p style="text-align:right;"><?php echo generar_fecha_hora(); ?></p>
+    <p class="infoBox"><br/>No existen registros de asistencias del alumno para el ciclo actual.</p>
+
+<?php } ?>

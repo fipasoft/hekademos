@@ -1,0 +1,133 @@
+<?php $path=KUMBIA_PATH; ?>
+<div id="primary">
+            <?php switch($option) {
+                case 'vista':
+                ?>
+        <div class="content">
+
+        <h1>
+            <?php echo $registros;?>
+            Aula<?php echo ($registros == 1 ? '' : 's') ?>
+            <?php if($busqueda->condicion() != '') {?><div class="filter-lab">Contenido filtrado</div><?php }?>
+        </h1>
+        <div id="options-bar">
+            <div id="options">
+                <?php if($acl['aulas']['buscar']){ ?>
+                <a href="" id="aSearch" title="Buscar" alt="Buscar">
+                    Buscar
+                    <img src="<?php echo $path?>public/img/sp5/buscar.png"/>
+                </a> /
+                <?php } ?>
+                <?php if($acl['aulas']['agregar']){ ?>
+                <a href="<?php echo $path ?>aulas/agregar" title="Agregar aula" alt="Agregar aula">
+                    Agregar aula
+                    <img src="<?php echo $path?>public/img/sp5/nuevo.png"/>
+                </a>/
+                <?php } ?>
+                <?php if($acl['aulas']['exportar']){ ?>
+                <a href="<?php echo $path ?>aulas/exportar" title="Exportar aulas" alt="Exportar aulas">
+                    Exportar
+                    <img src="<?php echo $path?>public/img/sp5/excel.png"/>
+                </a>
+                <?php } ?>
+            </div>
+            <div id="search" <?php if($busqueda->condicion() == ''){?> style="display:none" <?php } ?>>
+                <form action="<?php echo $path ?>aulas" method="post" id="frm_search">
+                    <fieldset>
+                        <label for="clave">Letra</label>
+                        <input type="text" name="clave" id="clave" value="<?php echo $busqueda->campo('clave') ?>" size="6" maxlength="6" />
+
+                        <label for="nombre">Letra</label>
+                        <input type="text" name="nombre" id="nombre" value="<?php echo $busqueda->campo('nombre') ?>" size="30" maxlength="30" />
+
+                        <input type="submit" id="btn_submit" value="Filtrar" />
+                        <input type="reset" id="reset" value="Quitar filtros" />
+                    </fieldset>
+                </form>
+            </div>
+
+        </div>
+
+                <?php
+
+         if($registros > 0){ ?>
+                <table>
+                    <tr>
+                        <th>Clave</th>
+                        <th>Nombre</th>
+                        <th>Opciones</th>
+                    </tr>
+                    <?php
+                        $i = 0;
+                        foreach($aulas as $aula){
+                    ?>
+                    <tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+                        <td>
+                        <?php echo $aula->clave; ?>
+                        </td>
+                        <td>
+                        <?php echo $aula->nombre; ?>
+                        </td>
+                        <?php if($acl['aulas']['editar'] || $acl['aulas']['eliminar']){ ?>
+                        <td style="text-align:center">
+                            <?php if($acl['aulas']['editar']){ ?>
+                            <a href="<?php echo $path . 'aulas/editar/' . $aula->id?>"
+                               alt="Editar datos del aula" title="Editar datos del aula">
+                               <img src="<?php echo $path?>public/img/sp5/editar.png" />
+                            </a>
+                            <?php } ?>
+                            <?php if($acl['aulas']['editar'] || $acl['aulas']['eliminar']){ ?>
+                            <a href="<?php echo $path . 'aulas/eliminar/' . $aula->id?>"
+                               alt="Eliminar toda la informacion del aula" title="Eliminar toda la informacion del aula">
+                               <img src="<?php echo $path?>public/img/sp5/eliminar.png" />
+                            </a>
+                            <?php } ?>
+                        </td>
+                        <?php } ?>
+                    </tr>
+                    <?php
+                        $i++;
+                    }
+                    ?>
+                </table>
+        <?php } else { ?>
+                <p class="info">
+                    <br />
+                    No hay registros que mostrar
+                </p>
+        <?php } ?>
+        <div id="pages">
+            <?php foreach($paginador->botones() as $boton){ ?>
+                 <a  href="<?php echo $path . $boton->url() ?>"
+                    title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
+                    class="<?php echo $boton->estilo() ?>">
+                    <?php echo $boton->etiqueta() ?>
+                </a>
+            <?php }?>
+        </div>
+    </div>
+    <?php
+        break;
+
+        case 'error':
+        ?>
+        <div class="content">
+
+        <h1>
+            Aulas
+        </h1>
+        <div id="options-bar">
+            <div id="options">
+
+            </div>
+        </div>
+
+        <p class="error"><br/>
+                <?php echo $error ?>
+                </p>
+        <?php
+        break;
+
+     }?>
+
+</div>

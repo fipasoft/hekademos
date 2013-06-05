@@ -1,0 +1,27 @@
+<?php
+try{
+    mysql_query("BEGIN") or die("ALU_ELI_1");
+     foreach($grupos as $grupo){ ?>
+        <h2><?php echo $grupo->grado.$grupo->letra.$grupo->turno; ?></h2>
+        <?php    $cursos=$grupo->cursosInfo();
+                $alumnos=$grupo->alumnos();
+                foreach($cursos as $curso){
+                    $curso->estado_id=3;
+                    $curso->save();
+                    $curso->inscribirAlumnosdelGrupo();
+         ?>
+         <h3 style="margin-left:30px"><?php echo $curso->id." - ".$curso->verMateria(); ?></h3>
+
+         <?php } ?>
+
+
+<?php }
+    mysql_query("COMMIT") or die("ALU_ELI_1");
+    //mysql_query("ROLLBACK") or die("ALU_ELI_1");
+
+    } catch (Exception $e) {
+                            mysql_query("ROLLBACK") or die("ALU_ELI_1");
+
+                            echo ' Error de la BD.';
+                        }
+ ?>

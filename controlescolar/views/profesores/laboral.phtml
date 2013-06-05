@@ -1,0 +1,64 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+        <h1>Datos laborales</h1>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path ?>profesores">Volver
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+            </div>
+        </div>
+        <?php switch($option) { 
+                case 'captura': ?>
+                <form action="<?php echo $path ?>profesores/laboral" id="frm_agregar" method="post" enctype="multipart/form-data">
+                    <fieldset>
+                        <legend>Profesores</legend>
+                        <table>
+                            <tr><th>#</th><th>Profesor</th><th>Categoria</th></tr>
+                            <?php 
+                                $i = 1;
+                                foreach($profesores as $p){
+                                    $lb = $p->laboral();
+                                ?>
+                                <tr>
+                                    <td><?php echo $i; ?></td>
+                                    <td><?php echo $p->ap." ".$p->am." ".$p->nombre ?><br/>
+                                        <span class="sub"><?php echo $p->codigo; ?></span>
+                                    </td>
+                                    <td>
+                                    <select name="datos[<?php echo $p->id ?>]" id="dato_<?php echo $p->id ?>">
+                                    <option></option>
+                                    <?php foreach($lcategorias as $l){ ?>
+                                        <option value="<?php echo $l->id ?>"
+                                        <?php if($l->id == $lb->lcategoria_id){ ?>
+                                            selected = "selected"
+                                        <?php } ?>
+                                        ><?php echo $l->nombre; ?></option>
+                                    <?php } ?>
+                                    </select>
+                                    </td>
+                                </tr>
+                            <?php 
+                                    $i++;
+                                } ?>
+                        </table>
+                    </fieldset>
+                    <div id="botones">
+                        <input type="submit" id="agregar" value="Guardar">
+                    </div>
+                </form>
+            <?php  break; ?>
+            <?php case 'exito': ?>
+                <p class="info"><br />La informaci&oacute;n se guardo exitosamente.</p>
+            <?php  break; ?>
+            <?php case 'error': 
+                  default: 
+            ?>
+                <p class="error"><br />Ha ocurrido un error al intentar guardar.<br/>
+                    <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
+</div>

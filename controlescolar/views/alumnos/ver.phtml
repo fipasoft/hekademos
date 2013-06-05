@@ -1,0 +1,173 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+        <h1>Datos del alumno</h1>
+        <?php switch($option) {
+                case 'vista': ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path ?>alumnos">Volver a alumnos
+                            <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                        </a>
+
+                        <?php if($acl['alumnos']['cursos']){ ?>
+                                    /<a href="<?php echo $path . 'alumnos/cursos/' . $alumno->id?>"
+                                           alt="Cursos del alumno" title="Cursos del alumno">
+                                           Cursos
+                                           <img src="<?php echo $path?>public/img/sp5/cursos.png" />
+                                    </a>
+                                    <?php } ?>
+
+                        <?php if($acl['alumnos']['kardex']){ ?>
+                                    /<a href="<?php echo $path . 'alumnos/kardex/' . $alumno->id?>"
+                                           alt="Kardex del alumno" title="Kardex del alumno">
+                                           Kardex
+                                           <img src="<?php echo $path?>public/img/sp5/kardex.png" />
+                                    </a>
+                        <?php } ?>
+                        <?php if($acl['alumnos']['editar']){ ?>
+                          / <a href="<?php echo $path . 'alumnos/editar/' . $alumno->id ?>"
+                           alt="Editar datos del alumno" title="Editar datos del alumno">
+                           Editar
+                           <img src="<?php echo $path?>public/img/sp5/editar.png" />
+                        </a>
+                        <?php } ?>
+                        <?php if($acl['alumnos']['eliminar']){ ?>
+                         / <a href="<?php echo $path . 'alumnos/eliminar/' . $alumno->id ?>"
+                           alt="Eliminar toda la informacion del alumno" title="Eliminar toda la informacion del alumno">
+                           Eliminar
+                           <img src="<?php echo $path?>public/img/sp5/eliminar.png" />
+                        </a>
+                        <?php } ?>
+                        <?php if($acl['alumnos']['password']){ ?>
+                                    / <a href="<?php echo $path . 'alumnos/password/' . $alumno->id?>"
+                                           alt="Cambiar el password del alumno" title="Cambiar password del alumno">
+                                           Password
+                                           <img src="<?php echo $path?>public/img/sp5/pass.png" />
+                                    </a>
+                        <?php } ?>
+                        <?php if($acl['alumnos']['ubicar']){ ?>
+                                    / <a href="<?php echo $path . 'alumnos/ubicar/' . $alumno->id?>"
+                                           alt="Ubicar al alumno" title="Ubicar al alumno">
+                                           Ubicar
+                                           <img src="<?php echo $path?>public/img/sp5/ubicar.png" />
+                                    </a>
+                        <?php } ?>
+                    </div>
+                </div>
+                <table>
+                    <tr>
+                        <th>Codigo</th>
+                        <td><?php echo $alumno->codigo?></td>
+                        <td rowspan="5">
+                            <?php if($alumno->foto != ''){ ?>
+                                <img src="<?php echo $path . 'public/img/alumnos/' . $alumno->foto . '?d=' . time() ?>" class="ficha"/>
+                            <?php }else{ ?>
+                                <img src="<?php echo $path ?>public/img/sp5/persona.png" class="ficha"/>
+                            <?php }?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Nombre</th>
+                        <td><?php echo  $alumno->nombre('reversa')?>
+                        </td>
+                    </tr>
+                    </tr>
+                    <tr>
+                        <th>CURP</th>
+                        <td><?php echo ($alumno->curp != '' ? $alumno->curp : '-') ?></td>
+                    </tr>
+                    <tr>
+                        <th>Sexo</th>
+                        <td><?php echo $alumno->sexo()?></td>
+                    </tr>
+                    <tr>
+                        <th>Fecha de nacimiento</th>
+                        <td><?php echo $alumno->fnacimiento()?></td>
+                    </tr>
+                    <tr>
+                        <th>Fecha de admisi&oacute;n</th>
+                        <td colspan="2"><?php echo $alumno->admision()?></td>
+                    </tr>
+                    <tr>
+                        <th>Situaci&oacute;n</th>
+                        <td colspan="2"><?php echo $alumno->situacion()?></td>
+                    </tr>
+                    <tr>
+                        <th>Domicilio</th>
+                        <td colspan="2"><?php echo ($alumno->domicilio != '' ? $alumno->domicilio : '-') ?></td>
+                    </tr>
+                    <tr>
+                        <th>Tel&eacute;fono</th>
+                        <td colspan="2"><?php echo ($alumno->tel != '' ? $alumno->tel : '-') ?></td>
+                    </tr>
+                    <tr>
+                        <th>Tel&eacute;fono m&oacute;vil</th>
+                        <td colspan="2"><?php echo ($alumno->cel != '' ? $alumno->cel : '-') ?></td>
+                    </tr>
+                    <tr>
+                        <th>Correo Electr&oacute;nico</th>
+                        <td colspan="2">
+                            <?php if($alumno->mail != ''){ ?>
+                                <a href="mailto:<?php echo $alumno->mail?>" />
+                                    <?php echo $alumno->mail?>
+                                </a>
+                            <?php }else{ ?>
+                                -
+                            <?php } ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <?php $tutores = $alumno->tutores() ?>
+                        <th>Tutores</th>
+                        <td colspan="2">
+                            <?php if(count($tutores) > 0){ ?>
+                                <ul>
+                                <?php foreach($tutores as $tutor){ ?>
+                                    <li>
+                                        <a href="<?php echo $path . 'tutores/ver/' . $tutor->id ?>"
+                                           alt="Ver datos del tutor"
+                                           title="Ver datos del tutor" >
+                                            <?php echo $tutor->nombre() ?>
+                                        </a>
+                                    </li>
+                                <?php } ?>
+                                </ul>
+                            <?php }else{ ?>
+                                -
+                            <?php } ?>
+                        </td>
+                    </tr>
+                </table>
+        <?php break; ?>
+        <?php case 'alert': ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path ?>alumnos">Volver a alumnos
+                            <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                        </a>
+                    </div>
+                </div>
+                <p class="info">
+                    <br />
+                    <?php echo $alert ?>
+                </p>
+        <?php  break; ?>
+        <?php case 'error':
+              default:
+        ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path ?>alumnos">Volver a alumnos
+                            <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                        </a>
+                    </div>
+                </div>
+                <p class="error">
+                    <br />
+                     <?php echo $error ?>
+                </p>
+        <?php break; ?>
+        <?php } ?>
+    </div>
+</div>

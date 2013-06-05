@@ -1,0 +1,11 @@
+<div id="div_plantilla" style="display:none" class="opciones" >
+<h1>Departamentos</h1>
+<br/>
+<ul style="margin-left:30%;">
+<?php
+$departamentos = $datos['departamentos']; 
+foreach($departamentos as $departamento){ ?>
+    <li><a href="<?php echo KUMBIA_PATH ?>reportes/plantilla/<?php echo $departamento->id; ?>" alt="Reporte de plantilla del departamento" title="Reporte de plantilla del departamento"><?php echo $departamento->nombre; ?></a></li>
+<?php } ?>
+</ul>
+</div>

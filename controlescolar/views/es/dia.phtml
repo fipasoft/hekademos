@@ -1,0 +1,86 @@
+<?php $path = KUMBIA_PATH;
+//echo $sql;
+?>
+<div id="primary">
+    <div class="content">
+    <?php switch($option) {
+     case "vista": ?>
+         <h1>
+        Accesos del dia <a id="fecha" href="javascript:;"><?php echo $fecha; ?></a>
+        </h1>
+        <h2>Tarjeta <?php echo $user->CardNumber; ?></h2>
+        <h2>Codigo <?php echo $elemento->codigo; ?></h2>
+        <h2><?php echo $elemento->nombre(); ?></h2>
+        <?php if(count($eventos)>0){ ?>
+            <h2>El <?php echo $usuario; ?> cuenta con <?php echo $entradas ?> entrada<?php echo ($entradas==1? "" : "s"); ?> y <?php echo $salidas; ?> salida<?php echo ($salidas==1? "" : "s"); ?>.</h2>
+        <?php }?>
+        <div id="options-bar">
+            <div id="options">
+
+            </div>
+
+
+        <br/>
+        <br/>
+          <input type="hidden" name="kumbia_path" id="kumbia_path"  value="<?php echo $path ?>"/>
+          <input type="hidden" name="card" id="card" value="<?php echo $card ?>"/>
+          <input type="hidden" name="date" id="date" value="<?php echo $date ?>"/>
+
+        <?php if(count($eventos)>0){ ?>
+        <table style="width:60%;">
+            <tr><th>Evento</th><th>Hora</th><th>Puerta</th></tr>
+            <?php
+                $i = 0;
+                foreach($eventos as $evento){
+                        ?>
+                <tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+                <?php $tipo=utf8_encode(substr($evento->DoorNumberText,0,strlen($evento->DoorNumberText)-2)); ?>
+                <td style="text-align:center">
+                <span class="t<?php echo $evento->PodDoorIndex; ?>">
+                <?php echo $evento->tipo();?>
+                </span>
+                </td>
+                <td style="text-align:center">
+                <span class="t<?php echo $evento->PodDoorIndex; ?>" >
+                <?php echo $evento->fecha->format("H:i:s");?>
+                </span>
+                </td>
+                <td style="text-align:center">
+                <span class="t<?php echo $evento->PodDoorIndex; ?>">
+                <?php echo $evento->DoorNumberText;?>
+                </span>
+                <br/>
+                <span class="sub" style="color: rgb(119, 119, 119);">
+                <?php echo utf8_encode($evento->AreaNumberText);?>
+                </span>
+                </td>
+                </tr>
+            <?php
+            $i++;
+                }
+              ?>
+        </table>
+        <?php }else{ ?>
+        <br/><br/>
+        <p class="info" >
+        <br/>
+        El usuario no cuenta con accesos en el dia.
+        </p>
+        <?php } ?>
+        </div>
+        <?php break; ?>
+        <?php case "default": ?>
+        <?php case "error": ?>
+            <h1>
+        Accesos del dia <?php echo $fecha; ?>
+        </h1>
+        <br/><br/>
+        <p class="error" >
+        <br/>
+        <?php echo $error;  ?>
+        </p>
+        <?php break; ?>
+        <?php } ?>
+
+    </div>
+</div>

@@ -1,0 +1,11 @@
+<?php if( count($cursos)> 0){ ?>
+        <label for="cursos_id">Curso</label><br />
+        <select name = "cursos_id" id = "cursos_id">
+        <option value=""></option>
+        <?php foreach($cursos as $curso){ ?>
+            <option value="<?php echo $curso->id; ?>"><?php $materia = $curso->materia(); echo $materia->nombre; ?></option>
+        <?php } ?>
+        </select>
+<?php }else{ ?>
+        <p class = "info"> No hay ningun curso para el grupo.</p>
+<?php } ?>

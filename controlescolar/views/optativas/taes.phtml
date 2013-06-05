@@ -1,0 +1,148 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+        <h1>Configurar TAES</h1>
+        <?php if($option!="error"){ ?>
+        <h2>Inicia el <?php echo Utils::fecha_espanol(substr($periodo->inicio,0,10)); ?> a las <?php echo substr($periodo->inicio,10,6); ?></h2>
+        <h2>Finaliza el <?php echo Utils::fecha_espanol(substr($periodo->fin,0,10)); ?> a las <?php echo substr($periodo->fin,10,6); ?></h2>
+        <h2><?php echo ($periodo->activo==1? "Activo" : "Inactivo"); ?></h2>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path ?>optativas/index/<?php echo $periodo->id; ?>">Volver a optativas
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+            </div>
+        </div>
+        <?php } ?>
+
+        <?php switch($option) {
+                case 'vista': ?>
+                    <?php
+                        if(count($trayectorias)>0){
+                     ?>
+                    <p class="tip">
+                    <br/>
+                        Al eliminar una trayectoria se eliminarán las inscripciones que dependan de ésta.
+                        Se necesitan cubrir <?php echo $totalmatutino; ?> inscripciones para el turno matutino y<br/>
+                         <?php echo $totalvespertino; ?> inscripciones para el turno vespertino.
+                    <br/>
+                    </p>
+                    <br/>
+                    <form name="frm" id="frm" method="post" action="<?php echo $path ?>optativas/taes" >
+                    <input type="hidden" name="periodo_id" id="periodo_id" value="<?php echo $periodo->id; ?>"/>
+                    <input type="hidden" name="path" id="path" value="<?php echo $path; ?>"/>
+                      <table>
+                        <tr>
+                        <th rowspan="2">Trayectoria</th>
+                        <th colspan="2">Matutino</th><th colspan="2">Vespertino</th>
+                        </tr>
+                        <tr>
+                        <th>Incluir</th><th>Cupo</th>
+                        <th>Incluir</th><th>Cupo</th>
+                        </tr>
+                        <?php
+                         $i = 0;
+                         $totalm=0;
+                         $totalv=0;
+                         foreach($trayectorias as $trayectoria ){
+                             $pt = $datos[$trayectoria->id];
+                            if($pt["M"]->cupos=="")
+                                $pt["M"]->cupos = 0;
+
+                            if($pt["V"]->cupos=="")
+                                $pt["V"]->cupos = 0;
+
+                                $totalm+=$pt["M"]->cupos;
+                                $totalv+=$pt["V"]->cupos;
+                              ?>
+                            <tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+                                <td>
+                                <?php echo $trayectoria->nombre; ?>
+                                </td>
+                                <td style="text-align:center;">
+                                <input id="incluir_<?php echo $i ?>M" <?php echo ($pt["M"]->id !="" ? 'checked="checked"' : "" ); ?> class="chk_taes" type="checkbox" name="incluir[M][<?php echo $trayectoria->id; ?>]" value="<?php echo $trayectoria->id;  ?>"/>
+                                </td>
+                                                                <td id="td_<?php echo $i ?>M" style="text-align: center"  class="<?php echo ($pt["M"]->cupos >= 0 ? 'TRUE' : 'FALSE')?> switch">
+                                <a id="ancla_<?php echo $i ?>M" class="switch" alt="Presione para editar" title="Presione para editar">
+                                               <?php echo $pt["M"]->cupos; ?>
+                                           </a>
+                                           <input type="text"
+                                               name="cupos[M][<?php echo $trayectoria->id; ?>]"
+                                               class="cupos matutino"
+                                               size="3"
+                                               maxlength="3"
+                                               id="cupos_<?php echo $i ?>M"
+                                               value="<?php echo $pt["M"]->cupos ?>"
+                                               disabled="disabled"
+                                               style="display:none" />
+
+                                </td>
+                                <td style="text-align:center;">
+                                <input id="incluir_<?php echo $i ?>V" <?php echo ($pt["V"]->id !="" ? 'checked="checked"' : "" ); ?> class="chk_taes" type="checkbox" name="incluir[V][<?php echo $trayectoria->id; ?>]" value="<?php echo $trayectoria->id;  ?>"/>
+                                </td>
+                                <td id="td_<?php echo $i ?>V" style="text-align: center"  class="<?php echo ($pt["V"]->cupos >= 0 ? 'TRUE' : 'FALSE')?> switch">
+                                <a id="ancla_<?php echo $i ?>V" class="switch" alt="Presione para editar" title="Presione para editar">
+                                               <?php echo $pt["V"]->cupos; ?>
+                                           </a>
+                                           <input type="text"
+                                               name="cupos[V][<?php echo $trayectoria->id; ?>]"
+                                               class="cupos vespertino"
+                                               size="3"
+                                               maxlength="3"
+                                               id="cupos_<?php echo $i ?>V"
+                                               value="<?php echo $pt["V"]->cupos ?>"
+                                               disabled="disabled"
+                                               style="display:none"
+                                                />
+
+                                </td>
+
+                            </tr>
+                        <?php
+                            $i++;
+                        } ?>
+
+                    <tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+                    <td>Total</td>
+                    <td colspan="2" style="text-align: center">
+                    <span id="totalM">
+                    <?php echo $totalm; ?>
+                    </span>
+                    </td>
+                    <td colspan="2" style="text-align: center">
+                    <span id="totalV">
+                    <?php echo $totalv; ?>
+                    </span>
+                    </td>
+                    </tr>
+                    </table>
+                    <div class="divisor"></div>
+                    <div id="botones">
+                        <input type="button" id="cancelar" value="Cancelar">
+                        <input type="submit" id="agregar" value="Guardar">
+                    </div>
+                    </form>
+                    <?php }else{ ?>
+                        <p class="error">
+                        <br />No se han cargado las trayectorias especializantes <br />
+
+                        </p>
+
+                    <?php } ?>
+
+            <?php  break; ?>
+            <?php case 'exito':    ?>
+                <p class="info">
+                <br />Se ha guardado con exito.<br />
+                </p>
+            <?php  break; ?>
+        <?php case 'error':
+                  default:
+            ?>
+                <p class="error"><br />Ha ocurrido un error en el modulo optativas.<br />
+                <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
+</div>

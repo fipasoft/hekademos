@@ -1,0 +1,34 @@
+<?php $path=KUMBIA_PATH; ?>
+<div id="primary">
+        <div class="content">
+
+        <div id="options-bar">
+            <div id="options">
+            </div>
+
+        </div>
+            <h1>Ciclo <?php echo $ciclo->numero; ?></h1>
+                <table>
+                    <tr>
+                        <th>Mensaje</th>
+                    </tr>
+                    <?php
+                        $i = 0;
+                        foreach($datos as $dato){
+                    ?>
+                    <tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+                        <td>
+                        <?php echo $dato; ?>
+                        </td>
+                    </tr>
+                    <?php
+                        $i++;
+                    }
+                    ?>
+                </table>
+
+        </div>
+    </div>
+
+
+</div>

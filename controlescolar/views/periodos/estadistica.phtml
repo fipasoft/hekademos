@@ -1,0 +1,170 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+        <h1>Estadisticas del periodo
+        <?php if($option=="vista"){ ?>
+        <?php echo $periodo->id;?>
+        <?php } ?>
+        </h1>
+        <div id="options-bar">
+            <div id="options">
+
+            </div>
+        </div>
+        <?php switch($option) {
+                case 'vista': ?>
+
+        <div id="tabs">
+    <ul>
+    <li style="margin-left: 1px" id="tabHeader1" class="currenttab"><a href="javascript:void(0)" onClick="toggleTab(1,2)"><span>Alumnos</span></a></li>
+     <li id="tabHeader2"><a href="javascript:void(0)" onClick="toggleTab(2,2)" ><span>Cursos</span></a></li>
+        <!--<li style="margin-left: 1px" id="tabHeader1" class="currenttab"><a href="javascript:void(0)" onClick="toggleTab(1,6)"><span>Tab 1</span></a></li>
+        <li id="tabHeader2"><a href="javascript:void(0)" onClick="toggleTab(2,6)" ><span>Tab 2</span></a></li>
+        <li id="tabHeader3"><a href="javascript:void(0)" onclick="toggleTab(3,6)"><span>Tab 3</span></a></li>
+        <li id="tabHeader4"><a href="javascript:void(0)" onClick="toggleTab(4,6)"><span>Tab 4</span></a></li>
+        <li id="tabHeader5"><a href="javascript:void(0)" onclick="toggleTab(5,6);"><span>Tab 5</span></a></li>
+        <li id="tabHeader6"><a href="javascript:void(0)" onclick="toggleTab(6,6);"><span>Tab 6</span></a></li>-->
+    </ul>
+    </div>
+    <div id="tabscontent">
+            <div id="tabContent1" class="tabContent" style="display:none;">
+            <br />    <div>
+                    <?php
+                    $alumnos=$estadistica['alumnos'];
+                    if(count($alumnos)>1){
+                    $encabezados=array_keys(current($alumnos));
+                    ?>
+                    <table>
+                    <tr>
+                        <?php
+                            foreach($encabezados as $encabezado){
+                         ?>
+                            <th style="text-align:center;"><?php echo $encabezado; ?></th>
+                        <?php
+                            }
+                          ?>
+                    </tr>
+                    <?php $i=0; foreach($alumnos as $grupo){ ?>
+                    <tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+                        <?php
+                            foreach($encabezados as $encabezado){
+                         ?>
+                            <td style="text-align:center;"><?php echo $grupo[$encabezado]; ?></td>
+                        <?php
+                            }
+                          ?>
+                    </tr>
+                    <?php
+                        $i++;
+                        } ?>
+                    </table>
+                    <br/><br/>
+                    <?php
+                        }else{
+                    ?>
+                    <p class="info"><br/>No se han cargado los datos.</p>
+                    <?php
+                        }
+                     ?>
+                    </div>
+                   </div>
+             <div id="tabContent2" class="tabContent" style="display:none;">
+            <br /><div>
+                <?php
+                    $cursos=$estadistica['cursos'];
+                    if(count($cursos)>1){
+                    $encabezados=array_keys(current($cursos));
+                    ?>
+                    <table>
+                    <tr>
+                        <?php
+                            foreach($encabezados as $encabezado){
+                         ?>
+                            <th style="text-align:center;"><?php echo $encabezado; ?></th>
+                        <?php
+                            }
+                          ?>
+                    </tr>
+                    <?php $i=0; foreach($cursos as $curso){ ?>
+                    <tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+                        <?php
+                            foreach($encabezados as $encabezado){
+                         ?>
+                         <?php if($encabezado!="Opciones"){ ?>
+                            <td style="text-align:center;"><?php echo $curso[$encabezado]; ?></td>
+                        <?php }else{
+                            if($curso[$encabezado]!=""){
+                            ?>
+                            <td style="text-align:center;"><a href="<?php echo $path . 'optativas/inscritos/' . $curso[$encabezado]?>"
+                                           alt="Lista del curso" title="Lista del curso">
+                                           <img src="<?php echo $path?>public/img/sp5/lista.png" />
+                            </a>
+                            </td>
+
+                        <?php
+                            }else{
+                        ?>
+                        <td></td>
+                        <?php
+                            }
+                        } ?>
+                        <?php
+                            }
+                          ?>
+                    </tr>
+                    <?php
+                        $i++;
+                        } ?>
+                    </table>
+                    <br/><br/>
+                    <?php
+                        }else{
+                    ?>
+                    <p class="info"><br/>No se han cargado los datos.</p>
+                    <?php
+                        }
+                     ?>
+                </div>
+                </div>
+
+
+      <!--  <div id="tabContent1" class="tabContent" $gttstyle="display:none;">
+            <br /><div>First Tab Content goes here</div>
+        </div>
+
+        <div id="tabContent2" class="tabContent" style="display:none;">
+            <br /><div>Second Tab Content goes here</div>
+        </div>
+
+        <div id="tabContent3" class="tabContent" style="display:none;">
+            <br /><div>Third Tab Content goes here</div>
+        </div>
+
+        <div id="tabContent4" class="tabContent" style="display:none;">
+            <br /><div>Fourth Tab Content goes here</div>
+        </div>
+
+        <div id="tabContent5" class="tabContent" style="display:none;">
+            <br /><div>Fifth Tab Content goes here</div>
+        </div>
+
+        <div id="tabContent6" class="tabContent" style="display:none;">
+            <br /><div>Sixth Tab Content goes here</div>
+        </div>
+        -->
+    </div><!--End of tabscontent-->
+</div><!--End of tabs-->
+
+
+
+            <?php  break; ?>
+            <?php case 'error':
+                  default:
+            ?>
+                <p class="error"><br />Ha ocurrido un error en el modulo optativas.<br />
+                <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
+</div>

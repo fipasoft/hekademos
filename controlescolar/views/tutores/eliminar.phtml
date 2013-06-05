@@ -1,0 +1,44 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+        <h1>Eliminar tutor</h1>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path ?>tutores">Volver
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+            </div>
+        </div>
+        <?php switch($option) { 
+                case 'captura': ?>
+                <form action="<?php echo $path ?>tutores/eliminar/" id="frm_eliminar" method="post">
+                    <input type="hidden" name="id" id="id" value="<?php echo $tutor->id ?>" />
+                    <p class="error">
+                        Se dispone a eliminar toda la informaci&oacute;n del tutor 
+                        <?php echo $tutor->nombre .' ' . $tutor->ap . ' ' . $tutor->am?>
+                        <br />
+                        <strong>&iquest;Desea continuar?</strong>
+                    </p>
+                    <div id="botones">
+                        <input type="button" id="aceptar" value="Aceptar">
+                        <input type="button" id="cancelar" value="Cancelar">                    
+                    </div>
+                </form>
+            <?php  break; ?>
+            <?php case 'exito': ?>
+                <p class="info">
+                    <br />
+                    El tutor se elimin&oacute; correctamente.
+                    <?php echo $exito ?>
+                </p>
+            <?php  break; ?>
+            <?php case 'error': 
+                  default: 
+            ?>
+                <p class="error">Ha ocurrido un error al intentar eliminar el tutor.<br />
+                <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
+</div>

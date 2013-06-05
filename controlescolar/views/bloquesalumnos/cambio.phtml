@@ -1,0 +1,57 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+    <?php if($option!="error"){ ?>
+        <h1>Cambiar alumno de bloque</h1>
+        <h2><?php echo $ciclo->numero; ?></h2>
+        <h2>Bloque <?php echo $bloque->id; ?></h2>
+        <h2>Inicia el <?php echo Utils::fecha_espanol(substr($bloque->inicio,0,10)); ?> a las <?php echo substr($bloque->inicio,10,6); ?></h2>
+        <h2>Finaliza el <?php echo Utils::fecha_espanol(substr($bloque->fin,0,10)); ?> a las <?php echo substr($bloque->fin,10,6); ?></h2>
+
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path ?>bloquesalumnos/index/<?php echo $bloquealumno->bloque_id; ?>">Volver a bloque
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+            </div>
+        </div>
+        <?php } ?>
+        <?php switch($option) {
+                case 'captura': ?>
+                <form action="<?php echo $path ?>bloquesalumnos/cambio/" id="frm_cambio" method="post">
+                    <fieldset>
+                    <legend>Bloques</legend>
+                    <input type="hidden" name="id" id="id" value="<?php echo $bloquealumno->id ?>" />
+                    <input type="hidden" name="bloque_id" id="bloque_id" value="<?php echo $bloquealumno->bloque_id ?>" />
+                    <input type="hidden" name="KUMBIA_PATH" id="KUMBIA_PATH" value="<?php echo $path ?>" />
+                    <p><span class="sub"><?php echo $alumno->codigo; ?></span></p>
+                    <p><span class="sub"><?php echo $alumno->nombre(); ?></span></p>
+                    <label for="bloque_id">Cambiar al bloque </label>
+                      <select name="bloque_id" >
+                        <option></option>
+                        <?php foreach($bloques as $bloque){ ?>
+                        <option value="<?php echo $bloque->id; ?>">bloque <?php echo $bloque->id; ?></option>
+                        <?php } ?>
+                        </select>
+
+                    <div id="botones">
+                        <input type="submit" id="aceptar" value="Aceptar">
+                        <input type="button" id="cancelar" value="Cancelar">
+                    </div>
+                    </fieldset>
+                </form>
+            <?php  break; ?>
+            <?php case 'exito': ?>
+                <p class="info"><br />El alumno se cambio de bloque correctamente.</p>
+            <?php  break; ?>
+            <?php case 'error':
+                  default:
+            ?>
+                <br/>
+                <p class="error"><br />Ha ocurrido un error al intentar cambio de bloque el alumno.<br />
+                <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
+</div>

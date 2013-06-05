@@ -1,0 +1,1 @@
+function init(){}addDOMLoadEvent(init);

@@ -1,0 +1,304 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+        <h1>Alumnos para el periodo <?php if($option!="error"){ ?>del ciclo <?php echo $ciclo->numero; ?><?php } ?></h1>
+        <?php if($option!="error"){ ?>
+        <h2>Inicia el <?php echo Utils::fecha_espanol(substr($periodo->inicio,0,10)); ?> a las <?php echo substr($periodo->inicio,10,6); ?></h2>
+        <h2>Finaliza el <?php echo Utils::fecha_espanol(substr($periodo->fin,0,10)); ?> a las <?php echo substr($periodo->fin,10,6); ?></h2>
+        <h2><?php echo ($periodo->activo==1? "Activo" : "Inactivo"); ?></h2>
+
+        <div id="options-bar">
+            <div id="options">
+                <?php if($option!="agregar"){ ?>
+                <a href="<?php echo $path ?>optativas/index/<?php echo $periodo->id; ?>">Volver a configuración
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+                <?php }else{ ?>
+                <a href="<?php echo $path ?>optativas/alumnos/<?php echo $periodo->id; ?>">Volver a alumnos
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+                <?php } ?>
+            </div>
+        </div>
+        <?php } ?>
+        <?php switch($option) {
+                case 'captura': ?>
+            <div id="tabs">
+    <ul>
+        <li style="margin-left: 1px" id="tabHeaderActive" class="currenttab"><a href="javascript:void(0)" onClick="toggleTab(1,2)"><span>Selección de Alumnos</span></a></li>
+        <li  id="tabHeader2"><a href="javascript:void(0)" onClick="toggleTab(2,2)" ><span>Administración de Alumnos</span></a></li>
+    </ul>
+    </div>
+    <div id="tabscontent">
+        <div id="tabContent1" class="tabContent" >
+            <br />
+            <div>
+                <div id="search">
+                <form action="<?php echo $path ?>optativas/alumnos/<?php echo $periodo->id; ?>" method="post" id="frm_search">
+                    <fieldset>
+                    <label for="codigo">C&oacute;digo</label>
+                        <input type="text" name="codigo" id="codigo" value="<?php echo $busqueda->campo('codigo') ?>" size="20" maxlength="20" />
+                        <label for="nombre">Nombre</label>
+                        <input type="text" name="nombre" id="nombre" value="<?php echo $busqueda->campo('nombre') ?>" size="15" maxlength="70" />
+                        <br/>
+                        <br/>
+                        <label for="grado">Grado</label>
+                        <select name="grado" id="grado">
+                            <option></option>
+                            <option value="1" <?php if($busqueda->campo('grado') == 1){ ?>selected="selected"<?php } ?>>1</option>
+                            <option value="2" <?php if($busqueda->campo('grado') == 2){ ?>selected="selected"<?php } ?>>2</option>
+                            <option value="3" <?php if($busqueda->campo('grado') == 3){ ?>selected="selected"<?php } ?>>3</option>
+                            <option value="4" <?php if($busqueda->campo('grado') == 4){ ?>selected="selected"<?php } ?>>4</option>
+                            <option value="5" <?php if($busqueda->campo('grado') == 5){ ?>selected="selected"<?php } ?>>5</option>
+                            <option value="6" <?php if($busqueda->campo('grado') == 6){ ?>selected="selected"<?php } ?>>6</option>
+                        </select>
+                        <label for="letra">Letra</label>
+                        <input type="text" name="letra" id="letra" value="<?php echo $busqueda->campo('letra') ?>" size="3" maxlength="1" />
+                        <label for="turno">Turno</label>
+                        <select name="turno" id="turno">
+                            <option></option>
+                            <option value="M" <?php if($busqueda->campo('turno') == 'M'){ ?>selected="selected"<?php } ?>>Matutino</option>
+                            <option value="V" <?php if($busqueda->campo('turno') == 'V'){ ?>selected="selected"<?php } ?>>Vespertino</option>
+                            <option value="N" <?php if($busqueda->campo('turno') == 'N'){ ?>selected="selected"<?php } ?>>Nocturno</option>
+                        </select>
+
+                        <label for="oferta_id">Oferta</label>
+                        <select name="oferta_id" id="oferta_id">
+                            <option></option>
+                            <?php foreach($ofertas as $oferta){ ?>
+                            <option value="<?php echo $oferta->id; ?>" <?php if($busqueda->campo('oferta_id') == $oferta->id){ ?>selected="selected"<?php } ?>><?php echo $oferta->nombre; ?></option>
+                            <?php } ?>
+                        </select>
+
+                        <input type="submit" id="btn_submit" value="Filtrar" />
+                    </fieldset>
+                </form>
+            </div>
+            <div id="alumnos">
+                <?php switch($option_cursos){
+                    case "alumnos":?>
+                    <?php if($registros>0){ ?>
+                    <br/>
+                    <form name="frm_agregar" id="frm_agregar" method="post" action="<?php echo $path ?>optativas/alumnos/">
+                        <input type="hidden" name="periodo_id" id="periodo_id" value="<?php echo $periodo->id ?>" />
+                        <div class="divisor"></div>
+                        <fieldset>
+                        <legend><?php echo $registros; ?> alumnos</legend>
+                    <?php $i = 1 ?>
+                            <?php $j = 1 ?>
+                            <?php $j++ ?>
+                            <table id="tbl_<?php echo $j ?>">
+                            <tr>
+                            <th>#</th>
+                            <th>Alumno</th>
+                            <th>
+                                    <a  id="a_<?php echo $j ?>"
+                                        title="Seleccionar todos los cursos"
+                                        class="select_all"
+                                        href="#">
+                                        <img src="<?php echo $path?>public/img/sp5/ver.png"/>
+                                    </a>
+                                </th>
+                            </tr>
+                            <?php foreach($alumnos as $a){
+                                    $grupo=$a->obtenerGrupoPorCiclo($periodo->ciclos_id);
+                                    ?>
+
+                                    <?php if(!in_array($a->id,$existentes)){ ?>
+                                    <tr id="row_<?php echo $i ?>">
+                                    <td style="text-align: center"><span class="sub"><?php echo $i ?></span></td>
+                                    <td><span class="sub" style="color: rgb(119, 119, 119);"><?php echo $a->codigo; ?></span><br/>
+                                        <span class="sub" ><?php echo $a->nombre(); ?></span><br/>
+                                        <span class="sub" ><?php echo $grupo->ver(); ?></span>
+                                        </td>
+                                    <td>
+                                        <input type="checkbox" name="alumnos[]"
+                                               class="chk_alu"
+                                               id="chk_<?php echo $i?>"
+                                               value="<?php echo $a->id ?>"
+                                        />
+                                    </td>
+                                    </tr>
+                                    <?php }else{ ?>
+                                    <tr id="row_<?php echo $i ?>" class="agregado" >
+                                    <td style="text-align: center" class="agregado" ><span class="sub"><?php echo $i ?></span></td>
+                                    <td class="agregado" ><span class="sub" style="color: rgb(119, 119, 119);"><?php echo $a->codigo; ?></span><br/>
+                                        <span class="sub" ><?php echo $a->nombre(); ?></span><br/>
+                                        <span class="sub" ><?php echo $grupo->ver(); ?></span>
+                                    </td>
+                                    <td class="agregado">
+                                        <span class="sub" >Agregado</span>
+                                    </td>
+                                    </tr>
+
+                                    <?php } ?>
+
+                                    <?php $i ++;?>
+
+                            <?php } ?>
+                            </table>
+
+                        </fieldset>
+                        <br/>
+                        <div class="botones">
+                            <input type="submit" id="seleccionar" value="Seleccionar">
+                        </div>
+                        </form>
+                    <?php }else{ ?>
+                        <p class="info"><br/>No se encontro ningun alumno con los filtros establecidos. </p>
+                    <?php } ?>
+                    <br/>
+                    <?php break; ?>
+
+                <?php case "info": ?>
+                <p class="info"><br/><?php echo $info_cursos; ?> </p>
+                <?php break; ?>
+                <?php } ?>
+            </div>
+            </div>
+        </div>
+
+        <div id="tabContent2" class="tabContent" style="display:none;">
+            <br />
+            <div>
+            <?php if(count($grupos)>0){ ?>
+                <h3><?php echo $alumnosTotal;?> Alumno<?php echo ($alumnosTotal == 1 ? '' : 's') ?> seleccionado<?php echo ($alumnosTotal == 1 ? '' : 's') ?>.</h3>
+
+                <div id="search">
+                    <form action="<?php echo $path ?>optativas/alumnos/<?php echo $periodo->id; ?>" method="post" id="frm_search2">
+                        <fieldset>
+                        <label for="codigo1">C&oacute;digo</label>
+                        <input type="text" name="codigo1" id="codigo1" value="<?php echo $busqueda1->campo('codigo1') ?>" size="20" maxlength="20" />
+                        <label for="nombre">Nombre</label>
+                        <input type="text" name="nombre1" id="nombre1" value="<?php echo $busqueda1->campo('nombre1') ?>" size="15" maxlength="70" />
+                        <label for="grupos_id">Grupos</label>
+                        <select id="grupos_id" name="grupos_id" >
+                        <option></option>
+                        <?php foreach($grupos as $g){ ?>
+                        <option value="<?php echo $g->id; ?>" <?php if($busqueda1->campo("grupos_id")==$g->id){ ?>selected="selected"<?php } ?>><?php echo $g->ver(); ?></option>
+                        <?php } ?>
+                        </select>
+                        <input type="submit" id="btn_submit1" value="Filtrar" />
+                        </fieldset>
+                    </form>
+                    </div>
+                <?php } ?>
+                <?php if($registrados>0){ ?>
+
+                    <br/>
+                    <form name="frm_eliminar" id="frm_eliminar" method="post" action="<?php echo $path ?>optativas/eliminar/alumnos">
+                        <input type="hidden" name="periodo_id" id="periodo_id" value="<?php echo $periodo->id ?>" />
+                        <input type="hidden" name="KUMBIA_PATH" id="KUMBIA_PATH" value="<?php echo $path; ?>" />
+                        <div class="divisor"></div>
+
+                        <fieldset>
+                        <legend><?php echo $registrados; ?> alumnos registrados</legend>
+                            <?php $i = 1 ?>
+                            <?php $j = 1 ?>
+                            <?php $j++ ?>
+                            <table id="crs_tbl_<?php echo $j ?>">
+                            <tr>
+                            <th>#</th>
+                            <th>Alumno</th>
+                            <?php if($acl['optativas']['eliminar']){ ?>
+                            <th>
+                                    <a  id="a_<?php echo $j ?>"
+                                        title="Seleccionar todos los alumnos"
+                                        class="select_all_crs"
+                                        href="#">
+                                        <img src="<?php echo $path?>public/img/sp5/ver.png"/>
+                                    </a>
+                                </th>
+                            <?php } ?>
+                            </tr>
+                            <?php foreach($alumnos_admin as $a){
+                                $grupo=$a->obtenerGrupoPorCiclo($periodo->ciclos_id);
+                                    ?>
+
+                                    <?php if(in_array($a->id,$existentes)){ ?>
+                                    <tr id="crs_row_<?php echo $i ?>">
+                                    <td style="text-align: center"><span class="sub"><?php echo $i ?></span></td>
+                                    <td><span class="sub" style="color: rgb(119, 119, 119);"><?php echo $a->codigo; ?></span><br/>
+                                        <span class="sub" ><?php echo $a->nombre(); ?></span><br/>
+                                        <span class="sub" ><?php echo $grupo->ver(); ?></span>
+                                    </td>
+                                    </td>
+                                    <?php if($acl['optativas']['eliminar']){ ?>
+                                    <td>
+                                        <input type="checkbox" name="elimina[]"
+                                               class="chk_eli"
+                                               id="eli_chk_<?php echo $i?>"
+                                               value="<?php echo $a->periodosalumnos_id ?>"
+                                        />
+                                    </td>
+                                    <?php } ?>
+                                    </tr>
+                                    <?php } ?>
+
+                                    <?php $i ++;?>
+
+                            <?php } ?>
+                            </table>
+
+                        </fieldset>
+                        <?php if($acl['optativas']['eliminar']){ ?>
+                        <br/>
+                        <div class="botones">
+                            <input type="submit" id="quitar" value="Quitar">
+                        </div>
+                        <?php } ?>
+                        </form>
+                    <br/>
+                    <script language="JavaScript">
+                        addDOMLoadEvent(function(){toggleTab(<?php echo $tab; ?>,2);});
+                    </script>
+
+                    <?php }else{ ?>
+                        <p class="info"><br/>No se ha agregado ningun alumno. </p>
+                    <?php } ?>
+                    <br/>
+            </div>
+        </div>
+
+    </div><!--End of tabscontent-->
+</div><!--End of tabs-->
+
+
+            <?php  break; ?>
+            <?php case 'agregar':
+            ?>
+
+                <?php if(count($agregados)>0){ ?>
+                <table>
+                <tr><th colspan="3">Información de los cursos que se agregarón.</th></tr>
+                <tr><th>Alumno</th><th>Mensaje</th></tr>
+                <?php foreach($agregados as $c){
+                    $alumno=$c['alumno'];
+                    $msj=$c['msj'];
+                    $clase=$c['clase'];
+                    ?>
+                <tr class="<?php echo $clase; ?>" >
+                <td class="<?php echo $clase; ?>"><span class="sub" style="color: rgb(119, 119, 119);"><?php echo $alumno->codigo; ?></span><br/>
+                    <span class="sub" ><?php echo $alumno->nombre(); ?></span></td>
+                <td class="<?php echo $clase; ?>"><span class="sub" ><?php echo $msj; ?></span></td>
+                </tr>
+                <?php } ?>
+                </table>
+                <?php } ?>
+
+            <?php  break; ?>
+
+            <?php case 'exito':
+            ?>
+                <p class="info"><br />El periodo se edito correctamente.</p>
+            <?php  break; ?>
+            <?php case 'error':
+                  default:
+            ?>
+                <p class="error"><br />Ha ocurrido al intentar editar el periodo.<br />
+                <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
+</div>

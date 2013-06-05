@@ -1,0 +1,96 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+        <h1>Agregar materia</h1>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path ?>materias">Volver
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+            </div>
+        </div>
+        <?php switch($option) {
+                case 'captura': ?>
+                <form action="<?php echo $path ?>materias/agregar" id="frm_agregar" method="post">
+                    <fieldset>
+                        <legend>Datos</legend>
+                        <label for="clave">Clave</label><br />
+                        <input type="text" name="clave" id="clave" size="12" maxlength="12"/>
+                        <img id="spinner" src="<?php echo $path ?>/public/img/sp5/spinner.gif" style="display:none"/>
+                        <div id="check" class="check"></div>
+                        <br />
+                        <label for="nombre">Nombre</label><br />
+                        <input type="text" name="nombre" id="nombre" size="30" maxlength="60" />
+                        <br />
+                        <label for="descripcion">Descripcion</label><br />
+                        <input type="text" name="descripcion" id="descripcion" size="30" maxlength="255" />
+                        <br />
+                        <label for="semestre">Semestre</label><br />
+                        <select name="semestre" id="semestre">
+                            <option></option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        </select>
+                        <br />
+                        <label for="tipo">Tipo</label><br />
+                        <select name="tipo" id="tipo">
+                            <option></option>
+                            <option value="OBL">Obligatoria</option>
+                            <option value="OPT">Optativa</option>
+                            <option value="TLR">Taller</option>
+                            <option value="PRO">Programa de Extensi&oacute;n y difusi&oacute;n</option>
+                        </select>
+                        <br />
+                        <label for="oferta">Oferta</label><br />
+                        <select name="oferta" id="oferta">
+                            <option></option>
+                            <?php foreach($ofertas as $oferta){ ?>
+                            <option value="<?php echo $oferta->id; ?>"><?php echo $oferta->nombre; ?></option>
+                            <?php } ?>
+                        </select>
+                        <br />
+                        <div id="datos_competencia" style="display:hidden;">
+                        <label for="creditos">Creditos</label><br />
+                        <input type="text" name="creditos" id="creditos" size="5" maxlength="2" />
+                        <br />
+                        <label for="duracion">Duración semanas</label><br />
+                        <input type="text" name="duracion" id="duracion" size="5" maxlength="5" />
+                        <br />
+                        <label for="horas">Horas por semana</label><br />
+                        <input type="text" name="horas" id="horas" size="5" maxlength="5" />
+                        <br />
+                        <label for="competencia">Tipo competencia</label><br />
+                        <select name="competencia" id="competencia">
+                            <option></option>
+                            <option value="gen">Competencia genérica</option>
+                            <option value="esp">Trayectoria especializante</option>
+                        </select><img id="spinner2" src="<?php echo $path ?>/public/img/sp5/spinner.gif" style="display:none"/>
+                        <div id="competencia_tipo"  style="display:hidden;">
+                        </div>
+                        </div>
+                    </fieldset>
+                    <div></div>
+                    <div id="botones">
+                        <input type="button" id="aceptar" value="Agregar">
+                        <input type="button" id="cancelar" value="Cancelar">
+
+                    </div>
+                </form>
+            <?php  break; ?>
+            <?php case 'exito': ?>
+                <p class="info"><br />La materia se agreg&oacute; correctamente</p>
+            <?php  break; ?>
+            <?php case 'error':
+                  default:
+            ?>
+                <p class="error"><br />Ha ocurrido un error al intentar agregar la materia
+                    <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
+</div>

@@ -1,0 +1,91 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+        <h1>Prerrequisitos de la materia <?php echo $materia->clave?></h1>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path ?>materias">Volver
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+            </div>
+        </div>
+        <?php switch($option) {
+                case 'captura': ?>
+                <form action="<?php echo $path ?>materias/enlazar" id="frm_enlazar" method="post" enctype="multipart/form-data">
+                    <fieldset>
+                        <legend>Materia</legend>
+                        <input type="hidden" name="id" id="id" value="<?php echo $materia->id ?>" />
+                        <?php echo $materia->nombre ?><br />
+                        <?php echo $materia->descripcion() ?><br />
+                        <?php echo $materia->semestre() ?> semestre<br />
+                        <?php echo $materia->tipo() ?>
+                    </fieldset>
+                    <div class="separador"></div>
+                    <fieldset>
+                        <legend>Prerrequisitos</legend>
+                        <div id="materias">
+                            <?php
+                                    foreach($materia->prerrequisitos() as $p){
+                            ?>
+                                    Materia
+                                    <br />
+                                    <select name="series[]">
+                                    <option></option>
+                                    <?php
+                                          $s = 0;
+                                              $ofertasMaterias=new Ofertasmaterias();
+                                            $ofertasMaterias=$ofertasMaterias->find_first("materias_id=".$materia->id);
+
+                                              $materias = new Materias();
+                                              $materias = $materias->find_all_by_sql(
+                                                    "SELECT materias.* " .
+                                                    " FROM materias " .
+                                                    " INNER JOIN " .
+                                                    " ofertasmaterias ON materias.id=ofertasmaterias.materias_id" .
+                                                    " WHERE materias.semestre < '" . $materia->semestre . "' AND materias.id != '" . $id . "' AND ofertasmaterias.oferta_id='".$ofertasMaterias->oferta_id."'" .
+                                                    " ORDER BY semestre, tipo, nombre");
+                                    ?>
+                                    <?php foreach($materias as $m){ ?>
+                                        <?php if($s < $m->semestre){ $s++; ?>
+                                        <option>- <?php echo $m->semestre()?> semestre -</option>
+                                        <?php }?>
+                                        <option value="<?php echo $m->id ?>"
+                                                alt="TIPO: <?php echo $m->tipo() ?>"
+                                                title="TIPO: <?php echo $m->tipo() ?>"
+                                                <?php if($m->id == $p->requisito){?> selected="selected"<?php } ?>
+                                        >
+                                            <?php echo '[' . $m->clave . '] ' . $m->nombre ?>
+                                        </option>
+                                    <?php }?>
+                                    </select>
+                                    <br />
+                            <?php
+                                    $n++;
+                                 }
+                             ?>
+                        </div>
+                        <img id="spinner" src="<?php echo $path ?>/public/img/sp5/spinner.gif" style="display:none"/>
+                        <a href="#" id="agregar"><img src="<?php echo $path . 'img/sp5/mas.png' ?>" /></a>
+                        <br />
+                    </fieldset>
+                    <div></div>
+                    <div id="botones">
+                        <input type="button" id="aceptar" value="Editar">
+                        <input type="button" id="cancelar" value="Cancelar">
+
+                    </div>
+                </form>
+            <?php  break; ?>
+            <?php case 'exito': ?>
+                <p class="info"><br />La materia se edit&oacute; correctamente</p>
+            <?php  break; ?>
+            <?php case 'error':
+                  default:
+            ?>
+                <p class="error"><br />Ha ocurrido un error al intentar editar la materia
+                    <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
+</div>

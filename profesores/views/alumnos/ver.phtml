@@ -1,0 +1,218 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+        <h1>Datos del alumno</h1>
+        <?php switch($option) {
+                case 'vista': ?>
+                <h2>
+                <?php
+                if($alumno->estutor()){
+                ?>
+                <span class="sub">{Tutor}</span>
+                <?php
+                    }
+                 ?>
+                </h2>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path ?>alumnos">Volver a alumnos
+                            <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                        </a>
+                        <?php
+                        if($alumno->estutor() ){
+                         if($acl['alumnos']['kardex']){ ?>
+                                    /<a href="<?php echo $path . 'alumnos/kardex/' . $alumno->id?>"
+                                           alt="Kardex del alumno" title="Kardex del alumno">
+                                           Kardex
+                                           <img src="<?php echo $path?>public/img/sp5/kardex.png" />
+                                    </a>
+                        <?php } ?>
+                        <?php if($acl['alumnos']['cursos']){ ?>
+                                    /<a href="<?php echo $path . 'alumnos/cursos/' . $alumno->id?>"
+                                           alt="Cursos del alumno" title="Cursos del alumno">
+                                           Cursos
+                                           <img src="<?php echo $path?>public/img/sp5/cursos.png" />
+                                    </a>
+                        <?php }
+                            }
+                            ?>
+
+                        </div>
+                </div>
+                <table>
+                    <tr>
+                        <th>Codigo</th>
+                        <td><?php echo $alumno->codigo?></td>
+                        <td rowspan="5">
+                            <?php if($alumno->foto != ''){ ?>
+                                <img src="<?php echo '/sp5/public/img/alumnos/' . $alumno->foto . '?d=' . time() ?>" class="ficha"/>
+                            <?php }else{ ?>
+                                <img src="<?php echo $path ?>public/img/sp5/persona.png" class="ficha"/>
+                            <?php }?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Nombre</th>
+                        <td><?php echo  $alumno->nombre('reversa')?>
+                        </td>
+                    </tr>
+                    </tr>
+                    <tr>
+                        <th>Sexo</th>
+                        <td><?php echo $alumno->sexo()?></td>
+                    </tr>
+                    <tr>
+                        <th>Fecha de nacimiento</th>
+                        <td><?php echo $alumno->fnacimiento()?></td>
+                    </tr>
+                    <tr>
+                        <th>Curp</th>
+                        <td><?php echo $alumno->curp?></td>
+                    </tr>
+                    <tr>
+                        <th>Fecha de admisi&oacute;n</th>
+                        <td colspan="2"><?php echo $alumno->admision()?></td>
+                    </tr>
+                    <tr>
+                        <th>Situaci&oacute;n</th>
+                        <td colspan="2"><?php echo $alumno->situacion()?></td>
+                    </tr>
+                    <?php
+                        if($alumno->estutor()){
+                    ?>
+                    <tr>
+                        <th>Domicilio</th>
+                        <td colspan="2"><?php echo $alumno->domicilio ?></td>
+                    </tr>
+                    <tr>
+                        <th>Telefono</th>
+                        <td colspan="2"><?php echo $alumno->tel ?></td>
+                    </tr>
+                    <tr>
+                        <th>Celular</th>
+                        <td colspan="2"><?php echo $alumno->cel ?></td>
+                    </tr>
+                    <?php } ?>
+                    <tr>
+                        <th>Correo Electr&oacute;nico</th>
+                        <td colspan="2">
+                            <?php if($alumno->mail != ''){ ?>
+                                <a href="mailto:<?php echo $alumno->mail?>" />
+                                    <?php echo $alumno->mail?>
+                                </a>
+                            <?php }else{ ?>
+                                -
+                            <?php } ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Promedio</th>
+                        <td colspan="2"><?php echo $alumno->promedio ?></td>
+                    </tr>
+                </table>
+                <?php
+                        if($alumno->estutor()){
+                            if(is_array($tutores) && count($tutores)>0){
+                    ?>
+                            <br/>
+                    <h1>Datos padres de familia / tutores</h1>
+                    <?php
+                        foreach($tutores as $tutor){
+                            ?>
+                            <br/>
+                            <h3><?php echo $tutor->nombre(); ?></h3>
+                            <table>
+                    <tr>
+                        <th>Nombre</th>
+                        <td>
+                        <?php echo  $tutor->nombre('reversa')?>
+                        </td>
+
+                        <td rowspan="4">
+                            <?php if($tutor->foto != ''){ ?>
+                                <img src="<?php echo '/sp5/public/img/tutores/' . $tutor->foto . '?d=' . time() ?>" class="ficha"/>
+                            <?php }else{ ?>
+                                <img src="<?php echo $path ?>public/img/sp5/persona.png" class="ficha"/>
+                            <?php }?>
+                        </td>
+                    </tr>
+                    </tr>
+                    <tr>
+                        <th>Sexo</th>
+                        <td><?php echo $tutor->sexo()?></td>
+                    </tr>
+                    <tr>
+                        <th>Fecha de nacimiento</th>
+                        <td ><?php echo $tutor->fnacimiento()?></td>
+                    </tr>
+
+                    <tr>
+                        <th>Domicilio</th>
+                        <td ><?php echo $tutor->domicilio ?></td>
+                    </tr>
+                    <tr>
+                        <th>Telefono</th>
+                        <td colspan="2"><?php echo $tutor->tel ?></td>
+                    </tr>
+                    <tr>
+                        <th>Celular</th>
+                        <td colspan="2"><?php echo $tutor->cel ?></td>
+                    </tr>
+                    <tr>
+                        <th>Correo Electr&oacute;nico</th>
+                        <td colspan="2">
+                            <?php if($tutor->mail != ''){ ?>
+                                <a href="mailto:<?php echo $tutor->mail?>" />
+                                    <?php echo $tutor->mail?>
+                                </a>
+                            <?php }else{ ?>
+                                -
+                            <?php } ?>
+                        </td>
+                    </tr>
+                </table>
+
+
+                            <?php
+                        }
+                    ?>
+                    <?php
+                            }else{
+                                ?>
+                                <p class="info">EL alumno no tiene tutores padres de familia asociados en el sistema.</p>
+                                <?
+                            }
+                     }     ?>
+
+        <?php break; ?>
+        <?php case 'alert': ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path ?>alumnos">Volver a alumnos
+                            <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                        </a>
+                    </div>
+                </div>
+                <p class="info">
+                    <br />
+                    <?php echo $alert ?>
+                </p>
+        <?php  break; ?>
+        <?php case 'error':
+              default:
+        ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path ?>alumnos">Volver a alumnos
+                            <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                        </a>
+                    </div>
+                </div>
+                <p class="error">
+                    <br />
+                     <?php echo $error ?>
+                </p>
+        <?php break; ?>
+        <?php } ?>
+    </div>
+</div>

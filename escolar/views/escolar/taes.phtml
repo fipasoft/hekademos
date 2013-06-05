@@ -1,0 +1,83 @@
+<h1>Trayectorias especializantes</h1>
+<div id="options-bar">
+    <div id="options">
+    <a title="Volver a inicio." class="submenu" href="<?php echo KUMBIA_PATH?>escolar/inicio">Volver <img src="<?php  echo KUMBIA_PATH?>img/sp5/volver.png" alt="Volver a inicio"/></a>
+    </div>
+</div>
+<br/>
+<?php switch($option) {
+    case "captura":
+        if(is_array($trayectorias) && count($trayectorias)>0){ ?>
+        <p class="tipBox">
+        <br/>
+        <?php if(count($inscripcion)>0){ ?>
+        Cambie a la trayectoria especializante de su agrado.
+        <?php }else{ ?>
+        Seleccione la trayectoria especializante de su agrado.
+        <?php } ?>
+        <br/>
+        </p>
+        <br/>
+        <div>
+        <form id="frm_inscribir" action="<?php echo KUMBIA_PATH ?>escolar/taes" method="post" enctype="multipart/form-data">
+        <input type="hidden" value="<?php echo $periodo_id; ?>" name="periodo_id" />
+
+        <table class="widget" id="tblTrayectoria">
+        <tr><th>Trayectoria especializante</th><th>Cupos</th><th></th></tr>
+         <?php
+          $i = 0;
+          foreach($trayectorias as $t){ ?>
+                <tr id="row_<?php echo $i ?>">
+                <td <?php if(in_array($t['id'],$inscripcion)){ ?> class="selected"<?php } ?>>
+                <span class="sub"><?php echo $t['nombre']; ?></span>
+                </td>
+                <td <?php if(in_array($t['id'],$inscripcion)){ ?> class="selected"<?php } ?>>
+                <span class="sub" style="color: rgb(119, 119, 119);">
+                <?php echo $t['total'];?>
+                </span>
+                </td>
+                <td <?php if(in_array($t['id'],$inscripcion)){ ?> class="selected"<?php } ?>>
+                <?php if($t["total"]>0  || in_array($t['id'],$inscripcion)){ ?>
+                <input type="checkbox" name="trayectorias[]"
+                                                               class="chk_tra"
+                                                               id="chk_<?php echo $i?>"
+                                                               value="<?php echo$t['id']; ?>"
+                                                                <?php if(in_array($t['id'],$inscripcion)){ ?>
+                                                                   checked="checked"
+                                                                <?php } ?>
+                                                        />
+                <?php } ?>
+                </td>
+                </tr>
+        <?php
+            $i++;
+         } ?>
+
+        </table>
+
+            <div style="margin-left:80%;margin-top:20px">
+                <input type="submit" id="inscribir" value="Inscribir">
+            </div>
+        </form>
+        <p class="errorBox" id="mensaje" style="display:none;">
+        </p>
+        </div>
+        <?php }
+        break;
+        case "exito":
+        ?>
+        <p class="infoBox"><br/>Inscripcion realizada con exito.</p>
+        <?php
+        break;
+
+        default:
+        case "error":
+        ?>
+        <p class="errorBox"><br/>Ha ocurrido un error<br/><?php echo $error; ?></p>
+        <?php
+        break;
+
+    }
+        ?>
+
+
