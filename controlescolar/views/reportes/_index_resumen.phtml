@@ -1,0 +1,24 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="div_resumen" style="display:none" class="opciones">
+<h1>Resumen de grupos</h1>
+<table id="tblRes">
+<tr>
+	<th>Grupo</th>
+	<th>	<a  id="allRes"
+						title="Seleccionar todos los registros"
+						class="chk_all"
+						href="javascript:;">
+						<img src="<?php echo $path?>public/img/sp5/ver.png"/>
+					</a>
+	</th>
+</tr>
+<?php foreach($grupos as $g){ ?>
+<tr id="trRes<?php echo $g->id ?>">
+<td><?php echo $g->ver(); ?></td>
+<td>
+<input type="checkbox" name="grupos[]" id="chkRes<?php echo $g->id ?>"
+	 value="<?php echo $g->id ?>" class="chk cnv_grupos"/>
+  </td></tr>
+<?php } ?>
+</table>
+</div>

@@ -1,0 +1,19 @@
+<div id="primary">
+	<div class="content">
+		<h1>Cargar oferta default para todas las materias</h1>
+		<table>
+		<tr>
+			<th>Id</th>
+			<th>Oferta Id</th>
+			<th>Materia Id</th>
+		</tr>
+		<?php foreach($ofertas as $o){?>
+		<tr>
+			<td><?php echo $o->id ?></td>
+			<td><?php echo $o->oferta_id ?></td>
+			<td><?php echo $o->materias_id ?></td>
+		</tr>
+		<?php } ?>
+		</table>
+	</div>
+</div>

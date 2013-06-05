@@ -1,0 +1,140 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>Agregar amonestación</h1>
+		<div id="options-bar">
+			<div id="options">
+				<a href="<?php echo $path ?>amonestaciones">Volver
+				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
+				</a>
+			</div>
+		</div>
+		<?php switch($option) {
+				case 'captura': ?>
+				<form action="<?php echo $path ?>amonestaciones/agregar" id="frm_agregar" method="post" enctype="multipart/form-data">
+					<div id = "selector">
+						<fieldset>
+							<legend>Tipo</legend>
+							<label for="amonestacion">Amonestaci&oacute;n</label>
+							<select name="amonestacion" id="amonestacion">
+							<option></option>
+							<?php foreach($categorias as $categoria){ ?>
+								<option value = "<?php echo $categoria->id ?>"><?php echo $categoria->nombre ?></option>
+							<?php } ?>
+						</select>
+						<input type="hidden" name="suspension" id="suspension" value="<?php echo $suspension->id ?>" />
+						<input type="hidden" name="grupal" id="grupal" value="<?php echo $grupal->id ?>" />
+						</fieldset>				
+					</div>
+					<div id = "alumno" style="display:none;">
+						<fieldset>
+						<legend>Alumno</legend>
+							<label for="codigo">Código</label><br />
+  							<input 
+  								type="text" 
+  								name="codigo" 
+  								id="codigo" 
+  								value="" 
+  								size="20" 
+  								maxlength="20"/>
+  							<img id="spinner" src="<?php echo $path ?>/public/img/sp5/spinner.gif" style="display:none"/>
+							<br />
+							<br />
+							<div id="ficha">
+							</div>
+						</fieldset>
+					</div>
+					<div id = "grupo" style="display:none;">
+						<fieldset>
+						<legend>Grupo</legend>
+							<label for="grupos">Grupo</label><br />
+  							<select id = "grupos" name = "grupos">
+  								<option></option>
+  								<?php foreach($grupos as $grupo){ ?>
+  									<?php $oferta = new Oferta();
+  										  $oferta = $oferta->find($grupo->oferta_id); ?>
+  									<option value = "<?php echo $grupo->id ?>"><?php echo $grupo->grado.'°'.$grupo->letra.$grupo->turno.' '.$oferta->nombre ?></option>
+  								<?php } ?>
+  							</select>
+  							<br /> <br />
+  							<a href = "" style = "display:none" id = "mostrar">Mostrar lista</a>
+  							<a href = "" style = "display:none" id = "ocultar">Ocultar lista</a>
+  							<div id = "num_alumnos" style = "display:none;"> </div>
+  							<div id = "alumnos" style = "display:none;"></div>
+						</fieldset>
+					</div>
+					<div id="datos" style="display:none;">
+					<fieldset>
+					<legend>Amonestación</legend>  
+						<label for="fecha">Fecha</label><br />
+						<?php $hoy = new Datetime(); ?>
+  						<input type="text" name="fecha" id="fecha" value="<?php echo $hoy->format("d/m/Y"); ?>" size="10" maxlength="10" readonly="readonly"/>
+  						<br/>
+  						<br/>
+  						<label for="descripcion">Descripción</label><br />
+						<textarea id="descripcion" name="descripcion" cols="40" rows="5"></textarea>
+						<br/>
+  						<br/>
+  						<label for="imagen">Imagen</label><br />
+						<input type="file" id="imagen" name="imagen" /><br/>
+						<span id="emsj" class="false" style="display:none">El formato no es válido, seleccione una imagen jpg,png o gif.</span>
+						<br />
+						<input type="checkbox" name="aprobar" value="1">
+						Aprobar
+						<br /><br />
+						<div id = "contenedor">
+						<div>
+							<label for = "reglamento">Reglamento</label><br >
+							<select name = "reglamentos[]" id = "sel">
+								<option></option>
+								<?php $r = new Reglamentos();?>
+								<?php foreach($reglamentos as $reglamento){ ?>
+								<?php $r = $r->find($reglamento->reglamentos_id); ?>
+									<option value = "<?php echo $r->id ?>"><?php echo $r->nombre?></option>
+								<?php } ?>
+							</select>
+							<div id = "div"></div>
+						</div>	
+						</div>
+						<img id="spinner1" src="<?php echo $path ?>/public/img/sp5/spinner.gif" style="display:none"/>
+						<div id="mas" style = "display:none;">
+							<a href="" id = 'a_mas'>
+								<img src="<?php echo $path?>public/img/sp5/mas.png"/>
+							</a>
+						</div>
+					</fieldset>
+					</div>
+					
+					<div id = "vigencia" style="display:none">
+						<fieldset>
+							<legend>Vigencia</legend>
+							<label for="inicio">Inicio</label><br />
+							<input type="text" name="inicio" id="inicio" size="10" maxlength="10" readonly/>
+							<a id="calendario"><img src="<?php echo $path ?>/public/img/sp5/calendario.png" /></a><br />
+							<label for="fin">Fin</label><br />
+							<input type="text" name="fin" id="fin" size="10" maxlength="10" readonly/>
+							<a id="calendario2"><img src="<?php echo $path ?>/public/img/sp5/calendario.png" /></a><br />
+						</fieldset>
+					</div>
+					<div id="botones">
+
+						<input type="button" id="agregar" value="Agregar">
+						<input type="button" id="cancelar" value="Cancelar">
+
+					</div>
+				</form>
+			<?php  break; ?>
+			<?php case 'exito': ?>
+				<p class="info"><br />La informaci&oacute;n de la amonestaci&oacute;n se agreg&oacute; correctamente</p>
+			<?php  break; ?>
+			<?php case 'error':
+				  default:
+			?>
+				<p class="error"><br />Ha ocurrido un error al intentar agregar la amonestaci&oacute;n
+					<br />
+					<?php echo $error ?>
+				</p>
+			<?php  break; ?>
+		<?php } ?>
+	</div>
+</div>

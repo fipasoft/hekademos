@@ -1,0 +1,102 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<?php if($option!="error"){ ?>
+		<h1><?php echo $registros;?>
+			Alumno<?php echo ($registros == 1 ? '' : 's') ?> </h1>
+
+		<h2><?php echo $ciclo->numero; ?></h2>
+		<h2>Bloque <?php echo $bloque->id; ?></h2>
+		<h2>Inicia el <?php echo Utils::fecha_espanol(substr($bloque->inicio,0,10)); ?> a las <?php echo substr($bloque->inicio,10,6); ?></h2>
+		<h2>Finaliza el <?php echo Utils::fecha_espanol(substr($bloque->fin,0,10)); ?> a las <?php echo substr($bloque->fin,10,6); ?></h2>
+
+		<div id="options-bar">
+			<div id="options">
+			<?php if($option=="vista"){ ?>
+				<a href="<?php echo $path ?>bloques/index/<?php echo $periodo->id; ?>">Volver
+				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
+				</a>
+				<?php if($acl['bloquesalumnos']['agregar']){ ?>
+				/
+				<a href="<?php echo $path ?>bloquesalumnos/agregar/<?php echo $bloque->id; ?>" title="Agregar alumno al bloque" alt="Agregar alumno al bloque">
+					Agregar alumno
+					<img src="<?php echo $path?>public/img/sp5/nuevo.png"/>
+				</a>
+				<?php } ?>
+			<?php } ?>
+			</div>
+		</div>
+		<?php } ?>
+		<?php switch($option) {
+				case 'vista': ?>
+
+		<?php if($registros>0){  ?>
+		<table>
+		<tr>
+			<th>Alumno</th>
+			<th>Promedio</th>
+			<?php if($acl['bloquesalumnos']['cambio'] || $acl['bloquesalumnos']['eliminar']){ ?>
+			<th>Opciones</th></tr>
+			<?php } ?>
+			<?php
+			$i = 0;
+			foreach($alumnos as $a){
+			$grupo=$a->obtenerGrupoPorCiclo($periodo->ciclos_id);
+			?>
+			<tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+			<td>
+			<span class="sub" style="color: rgb(119, 119, 119);" ><?php echo $a->codigo; ?></span><br/>
+			<span class="sub"><?php echo $a->nombre(); ?></span><br/>
+			<span class="sub" ><?php echo $grupo->ver(); ?></span>
+			</td>
+			<td style="text-align:center;">
+			<span class="sub"><?php echo $a->promedio; ?></span>
+			</td>
+
+			<?php if($acl['bloquesalumnos']['cambio'] || $acl['bloquesalumnos']['eliminar']){ ?>
+			<td style="text-align:center;">
+			<?php if($acl['bloquesalumnos']['cambio']){ ?>
+				<a href="<?php echo $path . 'bloquesalumnos/cambio/' . $a->bloquesalumnos_id?>"
+											   alt="Cambiar al alumno de bloque" title="Cambiar al alumno de bloque">
+											   <img src="<?php echo $path?>public/img/sp5/ubicar.png" />
+				</a>
+			<?php } ?>
+			<?php if($acl['bloquesalumnos']['eliminar']){ ?>
+				<a href="<?php echo $path . 'bloquesalumnos/eliminar/' . $a->bloquesalumnos_id?>"
+										   alt="Eliminar al alumno del periodo de optativas" title="Eliminar al alumno del periodo de optativas">
+										   <img src="<?php echo $path?>public/img/sp5/eliminar.png" />
+				</a>
+			<?php } ?>
+			</td>
+			<?php } ?>
+			</tr>
+		<?php
+			$i++;
+		 }?>
+		</table>
+		<div id="pages">
+			<?php foreach($paginador->botones() as $boton){ ?>
+				 <a  href="<?php echo $path . $boton->url() ?>"
+					title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
+					class="<?php echo $boton->estilo() ?>">
+					<?php echo $boton->etiqueta() ?>
+				</a>
+			<?php }?>
+		</div>
+		<?php }else{ ?>
+
+				<p class="error"><br />No hay ningun alumno en el bloque.
+				</p>
+		<?php } ?>
+			<?php  break; ?>
+			<?php case 'error':
+				  default:
+			?>
+				<br/>
+				<p class="error"><br />No se han podido mostrar los bloques.
+				<?php echo $error ?>
+				</p>
+			<?php  break; ?>
+		<?php } ?>
+	</div>
+</div>

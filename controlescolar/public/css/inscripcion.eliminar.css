@@ -1,0 +1,17 @@
+div.content h2{
+color: #777;
+font-size: 0.9em;
+margin-top: 0;
+}
+div.content fieldset{width:200px;}
+#botones{width: 220px;}
+div.content div.check{margin-right:0px;}
+
+div.content div.botones{
+margin: 15px auto 0 auto;
+text-align: right;
+width: 450px;
+}
+div.content tr.selected, div.content td.selected {background-color:#FFCC99;}
+div.content fieldset{width:400px;}
+#botones{width: 220px;}

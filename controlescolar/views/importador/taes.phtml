@@ -1,0 +1,148 @@
+<?php $path = KUMBIA_PATH; ?>
+		<?php switch($option) {
+				case 'captura': ?>
+			<div id="primary">
+				<div class="content">
+				<h1>Importar alumnos a las TAES</h1>
+				<div id="options-bar">
+				<div id="options">
+				</div>
+				</div>
+				<?php if(count($taes)>0){?>
+				<form action="<?php echo $path ?>importador/taes"  method="post" enctype="multipart/form-data" target="upload_target" id="frm_captura">
+					<input type="hidden" name="kumbia_path" id="kumbia_path" value="<?php echo $path; ?>"/>
+					<fieldset>
+					<legend>Datos</legend>
+					Trayectoria
+					<select name ="id" id="id">
+						<option></option>
+						<?php foreach($taes as $tae){?>
+							<option value="<?php echo $tae->id; ?>"><?php echo $tae->nombre; ?></option>
+						<?php } ?>
+					</select>
+					Archivo <br/>
+					<input name="archivo" id="archivo" type="file" />
+					<img id="spinner1" src="<?php echo $path ?>/public/img/sp5/spinner_gd.gif" style="display:none"/>	
+					</fieldset>
+					<div class="separador"></div>
+					<div id="botones">
+					<input type="button" id = "aceptar"  name="aceptar" value="Cargar"/>
+					<input type="button" id = "cancelar"  name="cancelar" value="Cancelar"/>
+					</div>
+				</form>
+					<div id="iframe" style="display:none">
+					<iframe id="upload_target" name="upload_target" src="#" style = "width: 800px; height: 600px;"></iframe>
+					</div>
+					<?php }else{ ?>
+						<p class="info"><br />No existen TAES.</p>
+					<?php } ?>
+					</div>
+				</div>
+				 <?php break;
+				case 'confirma': ?>
+				<div id="primary" style = "width:500px;">
+				<div class="content">
+				
+				<img id="spinner" src="<?php echo $path ?>/public/img/sp5/spinner_gd.gif" style="display:none"/>
+				<div id = "contenido">
+				<h1><?php echo $trayectoria->nombre; ?></h1>
+				<br/>
+				<h3>Alumnos que se importaran a la TAE</h3>
+				<br/>
+				<form  action="<?php echo $path ?>importador/taes" id="frm_agregar" method="post">
+						<input type="hidden" name="kumbia_path" id="kumbia_path" value="<?php echo $path; ?>"/>
+						<input type="hidden" name="did" id="did" value="<?php echo $trayectoria->id; ?>"/>
+					<div id="botones">
+						<input type="button" id="importar" value="Importar">
+						<input type="button" id="cancelar2" value="Cancelar">
+					</div>
+					<div class="separador"></div>
+					<table>
+						<tr><th>#</th><th>Codigo</th><th>Importar</th></tr>
+						<?php
+						$i = 1;
+						foreach($datos as $dato){?>
+							<tr  <?php echo ($i%2 == 0 ? 'style="background-color:#FFFFFF;"' : 'class="odd"'); ?>
+							<?php if($dato[0] == -1){ ?>
+									<td><?php echo $i; ?></td>
+									<td>
+									<span class="sub" style="color:#ff0000">
+									<?php echo $dato[2]; ?>
+									</span>
+									</td>
+									<td></td>
+							<?php }else{ ?>
+								<td><?php echo $i; ?></td>
+								<td>
+								<span class = "sub" style="color:#777777">
+								<?php $alumno = $dato[1]; echo $alumno->nombre() ?>
+								</span>
+								<br/>
+								<span class = "sub"><?php echo $alumno->codigo; ?></span>
+								<br/>
+								<span class="sub" style="color:#ff0000"><?php echo $dato[2]; ?></span>
+								</td>
+								<td style = "text-align:center;"><input class="valor" type="checkbox" checked="checked" id="chx_<?php echo $alumno->id ?>" value="<?php echo $alumno->id ?>" name="importa[<?php echo $alumno->id ?>]"/></td>
+							<?php } ?>
+							</tr>
+						<?php
+							$i++;
+						} ?>
+						
+					</table>
+					<a href="#importar" id="gotop">Ir arriba</a>
+				</form>
+				</div>
+				</div>
+				</div>
+				
+			<?php  break; ?>
+			<?php case 'exito': ?>
+				<h1><?php echo $trayectoria->nombre; ?></h1>
+				<br/>
+				<h3>Importacion exitosa</h3>
+				<br/>
+				<br/>
+				<table>
+						<tr><th>#</th><th>Codigo</th></tr>
+						<?php
+						$i = 1;
+						foreach($datos as $dato){?>
+							<tr  <?php echo ($i%2 == 0 ? 'style="background-color:#FFFFFF;"' : 'class="odd"'); ?>
+							<?php if($dato[0] == -1){ ?>
+									<td><?php echo $i; ?></td>
+									<td>
+									<span class="sub" style="color:#ff0000">
+									<?php echo $dato[2]; ?>
+									</span>
+									</td>
+							<?php }else{ ?>
+								<td><?php echo $i; ?></td>
+								<td>
+								<span class = "sub" style="color:#777777">
+								<?php $alumno = $dato[1]; echo $alumno->nombre() ?>
+								</span>
+								<br/>
+								<span class = "sub"><?php echo $alumno->codigo; ?></span>
+								<br/>
+								<span class="sub"><?php echo $dato[2]; ?></span>
+								</td>
+							<?php } ?>
+							</tr>
+						<?php
+							$i++;
+						} ?>
+						
+					</table>
+			<?php  break; ?>
+			<?php case 'error':
+				  default:
+			?>
+				<br/>
+				<br/>
+				<br/>
+				<p class="error"><br />Ha ocurrido un error al intentar importar.<br/>
+					<?php echo $error ?>
+				</p>
+			<?php  break; ?>
+		<?php } ?>

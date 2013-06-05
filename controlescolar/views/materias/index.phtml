@@ -1,0 +1,131 @@
+<div id="primary">
+	<div class="content">
+		<h1>
+			<?php echo $registros;?>
+			Materia<?php echo ($registros == 1 ? '' : 's') ?>
+			<?php if($busqueda->condicion() != '') {?><div class="filter-lab">Contenido filtrado</div><?php }?>
+		</h1>
+		<div id="options-bar">
+			<div id="options">
+				<a href="" id="aSearch" title="Buscar" alt="Buscar">
+					Buscar
+					<img src="<?php echo $path?>public/img/sp5/buscar.png"/>
+				</a>
+				/
+                  <a href="<?php echo $path . 'materias/exportar/' ?>" title="Exportar materias" alt="Exportar materias">
+                    Exportar
+                    <img src="<?php echo $path?>public/img/sp5/excel.png"/>
+                </a>
+                <?php if($acl["agregar"]){ ?>
+                 /
+				<a href="<?php echo $path ?>materias/agregar" title="Agregar materia" alt="Agregar materia">
+					Agregar materia
+					<img src="<?php echo $path?>public/img/sp5/nuevo.png"/>
+				</a>
+				<?php } ?>
+			</div>
+			<div id="search" <?php if($busqueda->condicion() == ''){?> style="display:none" <?php } ?>>
+				<form action="<?php echo $path ?>materias" method="post" id="frm_search">
+					<fieldset>
+						<label for="clave">Clave</label>
+						<input type="text" name="clave" id="clave" value="<?php echo $busqueda->campo('clave') ?>" size="12" maxlength="12" />
+						<label for="nombre">Nombre</label>
+						<input type="text" name="nombre" id="nombre" value="<?php echo $busqueda->campo('nombre') ?>" size="30" maxlength="60" />
+						<label for="semestre">Semestre</label>
+						<select name="semestre" id="semestre">
+							<option></option>
+							<option value="1" <?php if($busqueda->campo('semestre') == 1){ ?>selected="selected"<?php } ?>>1</option>
+							<option value="2" <?php if($busqueda->campo('semestre') == 2){ ?>selected="selected"<?php } ?>>2</option>
+							<option value="3" <?php if($busqueda->campo('semestre') == 3){ ?>selected="selected"<?php } ?>>3</option>
+							<option value="4" <?php if($busqueda->campo('semestre') == 4){ ?>selected="selected"<?php } ?>>4</option>
+							<option value="5" <?php if($busqueda->campo('semestre') == 5){ ?>selected="selected"<?php } ?>>5</option>
+							<option value="6" <?php if($busqueda->campo('semestre') == 6){ ?>selected="selected"<?php } ?>>6</option>
+						</select>
+						<label for="tipo">Tipo</label>
+						<select name="tipo" id="tipo">
+							<option></option>
+							<option value="OBL" <?php if($busqueda->campo('tipo') == 'OBL'){ ?>selected="selected"<?php } ?>>Obligatoria</option>
+							<option value="OPT" <?php if($busqueda->campo('tipo') == 'OPT'){ ?>selected="selected"<?php } ?>>Optativa</option>
+							<option value="TLR" <?php if($busqueda->campo('tipo') == 'TLR'){ ?>selected="selected"<?php } ?>>Taller</option>
+							<option value="PRO" <?php if($busqueda->campo('tipo') == 'PRO'){ ?>selected="selected"<?php } ?>>P. Ext. y Dif.</option>
+						</select>
+						<br/>
+						<br/>
+						<label for="oferta_id">Oferta</label>
+						<select name="oferta_id" id="oferta_id">
+							<option></option>
+							<?php foreach($ofertas as $oferta){ ?>
+							<option value="<?php echo $oferta->id; ?>" <?php if($busqueda->campo('oferta_id') == $oferta->id){ ?>selected="selected"<?php } ?>><?php echo $oferta->nombre; ?></option>
+							<?php } ?>
+						</select>
+						<input type="submit" id="btn_submit" value="Filtrar" />
+						<input type="reset" id="reset" value="Quitar filtros" />
+					</fieldset>
+				</form>
+			</div>
+		</div>
+		<?php if($registros > 0){ ?>
+				<table>
+					<tr>
+						<th>Clave</th>
+						<th>Nombre</th>
+						<th>Semestre</th>
+						<th>Tipo</th>
+						<th>Oferta</th>
+						<th>Opciones</th>
+					</tr>
+					<?php
+						$i = 0;
+						foreach($materias as $materia){
+					?>
+					<tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+						<td><?php echo $materia->clave ?></td>
+						<td>
+							<a href="<?php echo $path . 'materias/ver/' . $materia->id?>"
+							   alt="Ver datos de la materia" title="Ver datos de la materia">
+								<?php echo $materia->nombre ?>
+							</a>
+						</td>
+						<td><?php echo $materia->semestre ?></td>
+						<td><?php echo $materia->tipo() ?></td>
+							<td><?php echo $materia->oferta('clave'); ?></td>
+						<td style="text-align:center">
+							<?php if($materia->semestre > 1 && $acl["enlazar"]){?>
+							<a href="<?php echo $path . 'materias/enlazar/' . $materia->id?>"
+							   alt="Establecer prerrequisitos" title="Establecer prerrequisitos">
+							   <img src="<?php echo $path?>public/img/sp5/ligar.png" />
+							</a>
+							<?php } ?>
+							<?php if($acl["editar"]){ ?>
+							<a href="<?php echo $path . 'materias/editar/' . $materia->id?>"
+							   alt="Editar datos de la materia" title="Editar datos de la materia">
+							   <img src="<?php echo $path?>public/img/sp5/editar.png" />
+							</a>
+							<?php } ?>
+							<?php if($acl["eliminar"]){ ?>
+							<a href="<?php echo $path . 'materias/eliminar/' . $materia->id?>"
+							   alt="Eliminar toda la informacion de la materia" title="Eliminar toda la informacion de la materia">
+							   <img src="<?php echo $path?>public/img/sp5/eliminar.png" />
+							</a>
+							<?php } ?>
+						</td>
+					</tr>
+					<?php
+						$i++;
+					}
+					?>
+				</table>
+		<?php } else { ?>
+				<p class="info"><br />No hay registros que mostrar...</p>
+		<?php } ?>
+		<div id="pages">
+			<?php foreach($paginador->botones() as $boton){ ?>
+				 <a  href="<?php echo $path . $boton->url() ?>"
+					title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
+					class="<?php echo $boton->estilo() ?>">
+					<?php echo $boton->etiqueta() ?>
+				</a>
+			<?php }?>
+		</div>
+	</div>
+</div>

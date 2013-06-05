@@ -1,0 +1,17 @@
+Materia 
+<br />
+<select name="series[]">
+<option></option>
+<?php $s = 0 ?>
+<?php foreach($materias as $m){ ?>
+	<?php if($s < $m->semestre){ $s++; ?>
+	<option>- <?php echo $m->semestre()?> semestre -</option>
+	<?php }?>
+	<option value="<?php echo $m->id ?>" 
+			alt="TIPO: <?php echo $m->tipo() ?>" 
+			title="TIPO: <?php echo $m->tipo() ?>">
+		<?php echo '[' . $m->clave . '] ' . $m->nombre ?>
+	</option>
+<?php }?>
+</select>
+<br />

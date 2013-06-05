@@ -1,0 +1,104 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>Importar plantilla</h1>
+		<?php switch($option) {
+				case 'captura': ?>
+				<div id="options-bar">
+					<div id="options">
+						<a href="<?php echo $path ?>importar/index">Volver a importar
+							<img src="<?php echo $path?>public/img/sp5/volver.png"/>
+						</a>
+					</div>
+				</div>
+				<form action="<?php echo $path ?>importar/plantilla/"  method="post" enctype="multipart/form-data">
+				<fieldset>
+				<legend>Archivo</legend>
+				<input id="archivo" name="archivo" type="file" /> <input type="submit" value="Enviar" />
+				</fieldset>
+				</form>
+		<?php break; ?>
+		<?php 			case "exito": //echo count($importar->registros); echo $tutor."-".$grupo."-".$nombre;// echo "--- ".count($importar->columnas)."==".count($importar->registros[0]);var_dump($datos);
+			 //var_dump($datos);
+			  ?>
+			<?php $w=$datos["m"];
+			if(count($w)>0){
+				?>
+				<h3>Mensaje<?php echo (count($w) != 1 ? 's' : ''); ?></h3>
+				<table>
+				<tr><th>#</th><th><?php echo count($w); ?> mensaje<?php echo (count($w) != 1 ? 's' : ''); ?></th></tr>
+				<?php
+				$i=0;
+				 foreach($w as $r){ ?>
+				<tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+				<td><?php echo $i+1; ?></td>
+				<td><?php echo $r; ?></td>
+				</tr>
+				<?php
+					$i++;
+				} ?>
+				</table>
+			<?php
+
+			}
+			 ?>
+
+			<?php $w=$datos["w"];
+			if(count($w)>0){
+				?>
+				<h3>Warning<?php echo (count($w) != 1 ? 's' : ''); ?></h3>
+				<table>
+				<tr><th><?php echo count($w); ?> warning<?php echo (count($w) != 1 ? 's' : ''); ?></th></tr>
+				<?php
+				$i=0;
+				 foreach($w as $r){ ?>
+				<tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>"><td><?php echo $r; ?></td></tr>
+				<?php
+					$i++;
+				} ?>
+				</table>
+			<?php
+
+			}
+			 ?>
+
+			<?php $e=$datos["e"];
+			if(count($e)>0){
+				?>
+				<h3>Error<?php echo (count($e) != 1 ? 'es' : ''); ?></h3>
+				<table>
+				<tr><th><?php echo count($e); ?> error<?php echo (count($e) != 1 ? 'es' : ''); ?></th></tr>
+				<?php
+				$i=0;
+				 foreach($e as $r){ ?>
+				<tr  class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>"><td><?php echo $r; ?></td></tr>
+				<?php
+					$i++;
+				} ?>
+				</table>
+			<?php
+
+			}
+			 ?>
+
+			<?php
+			break; ?>
+			<?php case 'error':
+			  default:
+			?>
+				<div id="options-bar">
+					<div id="options">
+						<a href="<?php echo $path ?>importar/index">Volver a importar
+							<img src="<?php echo $path?>public/img/sp5/volver.png"/>
+						</a>
+					</div>
+				</div>
+				<p class="error">
+					<br />Ocurrio un error al realizar la importacion. No se realizo ningun cambio.
+					<br/>
+				 	<?php echo $error ?>
+				</p>
+		<?php break; ?>
+		<?php } ?>
+	</div>
+</div>

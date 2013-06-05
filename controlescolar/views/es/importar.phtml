@@ -1,0 +1,78 @@
+<?php $path = KUMBIA_PATH;
+
+?>
+<div id="primary">
+	<div class="content">
+	<?php switch($option) {
+	 case "vista": ?>
+		<h1>
+		Importar
+		</h1>
+		<h2><?php echo "Elementos ".count($elementos).", Usuarios ".count($usuarios) ?></h2>
+		<div id="options-bar">
+			<div id="options">
+
+			</div>
+		<br/>
+		<br/>
+  		<input type="hidden" name="kumbia_path" id="kumbia_path"  value="<?php echo $path ?>"/>
+  		<input type="hidden" name="card" id="card" value="<?php echo $card ?>"/>
+  		<input type="hidden" name="date" id="date" value="<?php echo $date ?>"/>
+
+
+		<table>
+			<tr><th>#</th><th>Codigo</th><th>Nombre</th><th>CardNumber</th><th>Cadena</th><th>Query</th></tr>
+			<?php
+				$i = 0;
+				$af=new AFxUser();
+				foreach($elementos as $e){
+					$ne=str_replace(array("á","é","í","ó","ú"," ","ñ"),array("a","e","i","o","u","","n"),strToLower(utf8_decode($e->nombre.$e->ap.$e->am)));
+
+					foreach($usuarios as $u){
+						$nu=str_replace(array("á","é","í","ó","ú"," ","ñ"),array("a","e","i","o","u","","n"),strToLower(($u->FirstName.$u->LastName)));
+						if($nu==$ne){
+							$tsql = "UPDATE [Director].[dbo].[AFxUser]
+							               SET UserInfo3='".$e->codigo."'
+							         		WHERE CardNumber=".$u->CardNumber;
+
+							if(!sqlsrv_query($af->db, $tsql, $params)){
+							$tsql="Error;";
+							}
+
+						?>
+							<tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+							<td style="text-align:center"><?php echo ($i+1);?></td>
+							<td style="text-align:center"><?php echo $e->codigo;?></td>
+							<td style="text-align:center"><?php echo $e->nombre();?></td>
+							<td style="text-align:center"><?php echo $u->CardNumber;?></td>
+							<td style="text-align:center"><?php echo $nu."==".$ne; ?></td>
+							<td style="text-align:center"><?php echo $tsql; ?></td>
+							</tr>
+			<?php
+			$i++;
+						}
+					}
+				}
+				$af->close();
+				?>
+		</table>
+		<br/>
+		<br/>
+		<table>
+		<tr><th>Elementos</th><th>Importados</th><th>%</th></tr>
+		<tr><td><?php echo count($elementos); ?></td><td><?php echo $i; ?></td><td><?php echo round(($i/count($elementos)*100)); ?></td></tr>
+		</table>
+		</div>
+		<?php break; ?>
+		<?php case "default": ?>
+		<?php case "error": ?>
+		<br/><br/>
+		<p class="error" >
+		<br/>
+		<?php echo $error;  ?>
+		</p>
+		<?php break; ?>
+		<?php } ?>
+
+	</div>
+</div>

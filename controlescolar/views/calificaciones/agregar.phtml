@@ -1,0 +1,167 @@
+<?php $path = KUMBIA_PATH;?>
+<div id="primary">
+	<div class="content">
+		<h1>Agregar calificaciones</h1>
+		<h2><?php echo $materia->nombre ?></h2>
+		<h2>
+			<?php echo 'Prof. ' . $curso->verProfesor() ?></h2>
+		<h2>
+			<?php echo $grupo->grado .'&deg;' .  $grupo->letra .  ' ' . $grupo->verTurno() . ', ' . $ciclo->numero?>
+		</h2>
+		<h2><?php echo  $grupo->verOferta(); ?></h2>
+		<?php switch($option) {
+				case 'captura': ?>
+
+				<div id="options-bar">
+					<div id="options">
+						<a href="<?php echo $path . 'calificaciones/ver/' . $curso->id ?>">Volver a calificaciones
+						<img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+					</div>
+				</div>
+				<div id="calificaciones" class="contenedor">
+					<form name="frm_agregar" id="frm_agregar" method="post">
+					<input type="hidden" name="cursos_id" id="cursos_id" value="<?php echo $curso->id ?>" />
+					<div>
+					<table id="main">
+						<?php $n = 1; ?>
+						<?php $i = 1; ?>
+						<?php foreach($alumnos as $alumno){?>
+							<?php if(($n - 1) % 10 == 0){ ?>
+							<tr>
+								<th rowspan="2">#</th>
+								<th rowspan="2">Alumno</th>
+								<?php if($nParciales > 0){ ?>
+									<th colspan="<?php echo $nParciales ?>">Parciales</th>
+								<?php } ?>
+								<?php if($nCalificaciones > 0){ ?>
+									<th colspan="<?php echo $nCalificaciones ?>">Finales</th>
+								<?php } ?>
+							</tr>
+							<tr>
+								<?php foreach($parciales as $nParcial => $parcial){?>
+									<th style="background-color: #EEEEFE;"><?php echo $nParcial ?></th>
+								<?php } ?>
+								<?php foreach($calificaciones as $idCal => $calificacion){?>
+									<th style="background-color: #EEEEFE;">
+										<?php echo $idCal ?>
+									</th>
+								<?php } ?>
+							</tr>
+							<?php } ?>
+							<tr>
+								<td  class="<?php echo ($n%2 != 0 ? '' : 'odd') ?>">
+									<?php echo $n ?>
+								</td>
+								<td  class="<?php echo ($n%2 != 0 ? '' : 'odd') ?>">
+									<?php echo $alumno->nombre()  ?>
+									<br />
+									<span class="sub"><?php echo $alumno->codigo ?><span>
+									<span class="sub" style="color: #777">
+										<?php echo $alumno->grado . '&deg;' . $alumno->letra . ' ' . $alumno->turno?>
+									</span>
+								</td>
+								<?php foreach($parciales as $nParcial => $parcial){?>
+									<td id="td_<?php echo $i ?>"  class="<?php echo ($n%2 != 0 ? '' : 'odd') ?>">
+										<input type="text"
+											   name="calificaciones[<?php echo $alumno->id ?>][<?php echo $parcial?>]"
+											   class="calificacion"
+											   size="3"
+											   maxlength="3"
+											   id="cal_<?php echo $i ?>" />
+									</td>
+									<?php $i++ ?>
+								<?php } ?>
+								<?php $oportunidad = $curso->oportunidadClaveAlumno($alumno->id); ?>
+								<?php foreach($calificaciones as $idCal => $calificacion){ ?>
+  									 	<?php if( $idCal == $oportunidad ){ ?>
+												<?php if($materia->tipo != 'TLR' && $materia->tipo != 'PRO'){ ?>
+													<td id="td_<?php echo $i ?>"
+				  									 	class="<?php echo ($n%2 != 0 ? '' : 'odd') ?>">
+														<input type="text"
+															   name="calificaciones[<?php echo $alumno->id ?>][<?php echo $calificacion?>]"
+															   class="calificacion"
+															   size="3"
+															   maxlength="3"
+															   id="cal_<?php echo $i ?>" />
+												   </td>
+											   <? } else{ ?>
+												   <td id="td_<?php echo $i ?>"
+				  									 	class="<?php echo ($n%2 != 0 ? '' : 'odd') ?> TRUE">
+													   	<select name="calificaciones[<?php echo $alumno->id ?>][<?php echo $calificacion?>]"
+													   	        class="calificacion"
+													   	        id="cal_<?php echo $i ?>" />
+													   		<option value="A">Acreditado</option>
+													   		<option value="NA">No acreditado</option>
+													   </select>
+												   </td>
+											   <?php } ?>
+									   <?php }else if($oportunidad == 'ORD'){ ?>
+									   			<td id="td_<?php echo $i ?>"
+				  								 	class="<?php echo ($n%2 != 0 ? '' : 'odd') ?>">
+										   			<span>-</span>
+									   			</td>
+									   <?php }else{ ?>
+											   	<td id="td_<?php echo $i ?>"
+				  									class="<?php echo ($n%2 != 0 ? '' : 'odd') ?> FALSE">
+												   	<span class="false">Sin derecho</span>
+											   		<input type="hidden"
+											   		       name="calificaciones[<?php echo $alumno->id ?>][<?php echo $calificacion?>]"
+											   		       value="SD" />
+											   	</td>
+									   <?php } ?>
+									<?php $i++ ?>
+								<?php } ?>
+							</tr>
+						<?php $n++; ?>
+						<?php } ?>
+
+					</table>
+					</div>
+					<div id="botones">
+						<input type="button" id="cancelar" value="Cancelar" />
+						<input type="submit" value="Agregar" />
+					</div>
+					</form>
+				</div>
+			<?php  break; ?>
+			<?php case 'exito': ?>
+				<div id="options-bar">
+					<div id="options">
+						<a href="<?php echo $path . 'calificaciones/ver/' . $curso->id ?>">Volver a calificaciones
+						<img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+					</div>
+				</div>
+				<p class="info">
+					<br />
+					<?php echo $exito ?>
+				</p>
+			<?php  break; ?>
+			<?php case 'alert': ?>
+				<div id="options-bar">
+					<div id="options">
+						<a href="<?php echo $path . 'calificaciones/ver/' . $curso->id ?>">Volver a calificaciones
+						<img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+					</div>
+				</div>
+				<p class="info">
+					<br />
+					<?php echo $alert ?>
+				</p>
+			<?php  break; ?>
+			<?php case 'error':
+				  default:
+			?>
+				<div id="options-bar">
+					<div id="options">
+						<a href="<?php echo $path . 'grupos' ?>">Volver a grupos
+						<img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+					</div>
+				</div>
+				<p class="error">
+					<br />
+					<?php echo $error ?>
+				</p>
+			<?php  break; ?>
+		<?php } ?>
+	</div>
+</div>

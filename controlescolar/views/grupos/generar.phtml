@@ -1,0 +1,43 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>Generar grupos</h1>
+		<div id="options-bar">
+			<div id="options">
+				<a href="<?php echo $path ?>grupos">Volver
+				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
+				</a>
+			</div>
+		</div>
+		<?php if($error == ''){ ?>
+			<table>
+			<tr>
+				<th>Id</th>
+				<th>Grado</th>
+				<th>Letra</th>
+				<th>Turno</th>
+				<th>Encargado</th>
+			</tr>
+			<?php foreach($grps as $grupo){?>
+			<tr>
+				<td><?php echo $grupo->id ?></td>
+				<td><?php echo $grupo->grado ?></td>
+				<td><?php echo $grupo->letra ?></td>
+				<td><?php echo $grupo->turno ?></td>
+				<td>
+					<ul>
+					<?php foreach($grupo->encargados() as $encargado){ ?>
+						<li>
+							<?php echo $encargado->nombre() ?>
+						</li>
+					<?php } ?>
+					</ul>
+				</td>
+			</tr>
+			<?php } ?>
+			</table>
+		<?php }else{ ?>
+			<p class="error"><br /><?php echo $error; ?></p>
+		<?php } ?>
+	</div>
+</div>

@@ -1,0 +1,100 @@
+<div id="primary">
+    <div class="content">
+        <h1>
+            <?php echo 'Ciclo escolar ';?>
+            <?php echo $ciclo->numero?>
+        </h1>
+        <h2 class="info">
+            <?php echo $registros;?>
+            Curso<?php echo ($registros == 1 ? '' : 's') ?>
+            registrado<?php echo ($registros == 1 ? '' : 's') ?>
+            para el alumno <?php echo $alumno->codigo; ?>
+        </h2>
+        <div id="options-bar">
+            <div id="options">
+             </div>
+             </div>
+        <?php if($registros > 0){ ?>
+                <table>
+                    <tr>
+                        <th rowspan="2">Grupo</th>
+                        <th rowspan="2">Materia</th>
+                        <th rowspan="2">Profesor</th>
+                        <th colspan="6">Horario</th>
+                    </tr>
+                    <tr>
+                        <th>Lunes</th>
+                        <th>Martes</th>
+                        <th>Mi&eacute;rcoles</th>
+                        <th>Jueves</th>
+                        <th>Viernes</th>
+                        <th>S&aacute;bado</th>
+                    </tr>
+                    <?php
+                        $i = 0;
+                        foreach($cursos as $curso){
+                    ?>
+                    <tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+
+                        <td>
+                        <?php if($acl['grupo']){ ?>
+                        <a href="<?php echo $path . 'cursos/grupo/'.$curso->grupos_id; ?>"><?php echo $curso->verGrupo()?></a></td>
+                        <?php }else{ ?>
+                        <?php echo $curso->verGrupo()?>
+                        <?php } ?>
+                        <td>
+                        <?php if($acl['ver']){ ?>
+                            <a href="<?php echo $path . 'cursos/ver/' . $curso->id ?>"
+                               alt="Ver datos del curso" title="Ver datos del curso">
+                                <?php echo $curso->materia ?>
+                            </a>
+                        <?php }else{ ?>
+								<?php echo $curso->materia ?>
+                        <?php } ?>
+                        <?php
+                        		$articulo=$articulos[$curso->id];
+                        		if($articulo!=null){
+                        			echo '<span style="color: rgb(204, 0, 0);">{'.$articulo->clave.'}</span>';
+                        			?>
+
+                        <?php } ?>
+                            <br />
+                            <span class="sub"><?php echo $curso->verMateriaTipo() ?></span>
+                        	<?php $m=$curso->materia(); if($m->oferta('id')==2){ ?> <span class="sub" style="color:#777777"><?php echo Utils::convierteFecha($curso->inicio); ?></span><?php } ?>
+                        </td>
+                        <td><?php echo $curso->verProfesor() ?></td>
+                        <?php for($d=1; $d<7; $d++){
+                        ?>
+                            <td>
+                                <?php if($horario = $curso->horario($d)){?>
+
+                                    <span class="main"><?php echo substr($horario->inicio, 0, 5) . '-' .
+                                               substr($horario->fin, 0, 5) ?>
+                                    </span>
+                                    <br />
+                                    <span class="sub"><?php echo $horario->aulaClave() ?></span>
+                                <?php } else{?>
+                                    <span class="main">-</span>
+                                <?php } ?>
+                            </td>
+                        <?php } ?>
+                       </tr>
+                    <?php
+                        $i++;
+                    }
+                    ?>
+                </table>
+        <?php } else { ?>
+                <p class="info">
+                    <br />
+                    <?php if($busqueda->condicion() != ''){?>
+                        No hay registros que concidan con la b&uacute;squeda
+                    <?php }else{?>
+                    	No existen cursos para el ciclo.
+                    <?php  }  ?>
+                </p>
+        <?php } ?>
+        <div id="pages">
+        </div>
+    </div>
+</div>

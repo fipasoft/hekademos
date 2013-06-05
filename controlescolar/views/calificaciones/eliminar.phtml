@@ -1,0 +1,79 @@
+<?php
+// Hekademos, Creado el 21/11/2008
+/**
+ * eliminar
+ *
+ * @package    Hekademos Vistas
+ * @author     mimeks <mimex@fipasoft.com.mx>
+ * @copyright  2008 FiPa Software (contacto at fipasoft.com.mx)
+ * @license    http://www.gnu.org/licenses/gpl.html  GNU General Public License (GPL)
+ *
+ */
+
+ $path = KUMBIA_PATH;
+?>
+<div id="primary">
+	<div class="content">
+		<h1>Eliminar calificaciones</h1>
+		<h2><?php echo $curso->verMateriaNombre()?></h2>
+		<h2><?php echo 'Prof. ' . $curso->verProfesor() ?></h2>
+		<h2>
+			<?php echo $grupo->grado .'&deg;' .  $grupo->letra .  ' ' .
+				       $grupo->verTurno() . ', ' . $ciclo->numero?>
+		</h2>
+		<h2><?php echo  $grupo->verOferta(); ?></h2>
+		<?php switch($option) {
+				 case 'confirm':	?>
+					 <div id="options-bar">
+						<div id="options">
+							<a href="<?php echo $path . 'calificaciones/ver/' . $curso->id ?>">Volver a calificaciones
+							<img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+						</div>
+					</div>
+					<form action="<?php echo $path . 'calificaciones/eliminar/' ?>" id="frm_eliminar" method="post">
+						<input type="hidden" name="cursos_id" value="<?php echo $curso->id?>" />
+						<p class="error">
+							<?php echo $confirm ?>
+						</p>
+						<?php foreach($calificaciones as $tipo => $cals){ ?>
+							<?php foreach($cals as $cal){ ?>
+								<input type="hidden" name="calificaciones[<?php echo $tipo ?>][]"
+								       value="<?php echo $cal ?>" />
+							<?php } ?>
+						<?php } ?>
+						<div id="botones">
+							<input type="submit" id="aceptar" value="Aceptar">
+							<input type="button" id="cancelar" value="Cancelar">
+						</div>
+					</form>
+				<?php  break; ?>
+			    <?php case 'exito':
+				?>
+					<div id="options-bar">
+						<div id="options">
+							<a href="<?php echo $path . 'calificaciones/ver/' . $curso->id ?>">Volver a calificaciones
+							<img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+						</div>
+					</div>
+					<p class="info">
+						<br />
+						<?php echo $exito ?>
+					</p>
+				<?php  break; ?>
+				<?php case 'error':
+					  default:
+				?>
+				<div id="options-bar">
+					<div id="options">
+						<a href="<?php echo $path . 'grupos' ?>">Volver a grupos
+						<img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+					</div>
+				</div>
+				<p class="error">
+					<br />
+					<?php echo $error ?>
+				</p>
+				<?php  break; ?>
+		<?php } ?>
+	</div>
+</div>

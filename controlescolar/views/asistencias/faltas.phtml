@@ -1,0 +1,131 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>Capturar faltas</h1>
+		<h2><?php echo $materia->nombre ?></h2>
+		<h2>
+			<?php echo 'Prof. ' . $curso->verProfesor() ?></h2>
+		<h2>
+			<?php echo $grupo->grado .'&deg;' .  $grupo->letra .  ' ' . $grupo->verTurno() . ', ' . $ciclo->numero?>
+		</h2>
+		<h2><?php echo  $grupo->verOferta(); ?></h2>
+		<?php switch($option) {
+				case 'captura': ?>
+
+				<div id="options-bar">
+					<div id="options">
+						<a href="<?php echo $path . 'grupos/curso/' . $curso->id ?>">Volver al resumen
+						<img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+					</div>
+				</div>
+				<div id="calificaciones" class="contenedor">
+					<form name="frm_editar" id="frm_editar" method="post" action="<?php echo $path ?>asistencias/faltas">
+					<input type="hidden" name="cursos_id" id="cursos_id" value="<?php echo $curso->id ?>" />
+					<div>
+					<table id="main">
+						<?php $n = 1; ?>
+						<?php $i = 1; ?>
+						<?php foreach($alumnos as $alumno){?>
+							<?php if(($n - 1) % 10 == 0){ ?>
+							<tr>
+								<th >#</th>
+								<th >Alumno</th>
+								<th >Faltas</th>
+							</tr>
+
+							<?php } ?>
+							<tr>
+								<td  class="<?php echo ($n%2 != 0 ? '' : 'odd') ?>">
+									<?php echo $n ?>
+								</td>
+								<td  class="<?php echo ($n%2 != 0 ? '' : 'odd') ?>">
+									<?php echo $alumno->nombre()  ?>
+									<br />
+									<span class="sub"><?php echo $alumno->codigo ?><span>
+									<span class="sub" style="color: #777">
+										<?php echo $alumno->grado . '&deg;' . $alumno->letra . ' ' . $alumno->turno?>
+									</span>
+								</td>
+									<?php
+
+										$valor=$capturadas[$alumno->id];
+										$capturada=true;
+										if($valor==null){
+											$capturada=false;
+											$valor=0;
+										}
+									?>
+									<td id="td_<?php echo $i ?>"
+									    class="<?php echo ($n%2 != 0 ? '' : 'odd') ?>  <?php echo ($valor == 0 ? 'TRUE' : 'FALSE')?> switch">
+										<a id="a_<?php echo $i ?>"
+											   <?php if(!$capturada){ ?>style="display:none" <?php } ?>class="switch" alt="Presione para editar" title="Presione para editar">
+									   		<?php echo $valor?>
+									   	</a>
+										<input type="text"
+											   name="faltas[<?php echo $alumno->id ?>]"
+											   class="calificacion"
+											   size="3"
+											   maxlength="3"
+											   id="cal_<?php echo $i ?>"
+											   value="<?php echo $valor ?>"
+											   <?php if($capturada){ ?>
+											   disabled="disabled"
+											   style="display:none" <?php } ?>
+											   />
+									</td>
+
+							</tr>
+						<?php $n++; ?>
+						<?php $i++; ?>
+						<?php } ?>
+					</table>
+					</div>
+					<div id="botones">
+						<input type="submit" value="Capturar" />
+						<input type="button" id="cancelar" value="Cancelar" />
+
+					</div>
+					</form>
+				</div>
+			<?php  break; ?>
+			<?php case 'exito': ?>
+				<div id="options-bar">
+					<div id="options">
+						<a href="<?php echo $path . 'asistencias/ver/' . $curso->id ?>">Volver a asistencias
+						<img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+					</div>
+				</div>
+				<p class="info">
+					<br />
+					<?php echo $exito ?>
+				</p>
+			<?php  break; ?>
+			<?php case 'alert': ?>
+				<div id="options-bar">
+					<div id="options">
+						<a href="<?php echo $path . 'asistencias/ver/' . $curso->id ?>">Volver a asistencias
+						<img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+					</div>
+				</div>
+				<p class="info">
+					<br />
+					<?php echo $alert ?>
+				</p>
+			<?php  break; ?>
+			<?php case 'error':
+				  default:
+			?>
+				<div id="options-bar">
+					<div id="options">
+						<a href="<?php echo $path . 'grupos' ?>">Volver a grupos
+						<img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+					</div>
+				</div>
+				<p class="error">
+					<br />
+					<?php echo $error ?>
+				</p>
+			<?php  break; ?>
+		<?php } ?>
+	</div>
+</div>

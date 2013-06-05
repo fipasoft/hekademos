@@ -1,0 +1,202 @@
+<?php $path=KUMBIA_PATH; ?>
+<div id="primary"><?php switch($option) {
+	case 'vista':
+		?>
+<div class="content">
+
+<h1><?php echo $registros;?> Amonestacion<?php echo ($registros == 1 ? '' : 'es') ?>
+<h2 class = "info"><?php echo $grupo->grado.'°'.$grupo->letra.' '.($grupo->turno == 'V' ? 'Vespertino' : 'Matutino').', '.$ciclo->numero?></h2>
+<h2 class = "info"><?php echo $oferta->nombre ?></h2>
+		<?php if($busqueda->condicion() != '') {?>
+<div class="filter-lab">Contenido filtrado</div>
+		<?php }?></h1>
+<div id="options-bar">
+<div id="options"><a href="" id="aSearch" title="Buscar" alt="Buscar">
+Buscar <img src="<?php echo $path?>public/img/sp5/buscar.png" /> </a> /
+
+<?php if($acl['amonestaciones']['agregar']){ ?>
+<a href="<?php echo $path ?>amonestaciones/agregar"
+	title="Agregar amonestación" alt="Agregar amonestación"> Agregar
+amonestación <img src="<?php echo $path?>public/img/sp5/nuevo.png" /> </a>/
+<?php } ?>
+
+<?php if($acl['amonestaciones']['exportar']){ ?>
+<a href="<?php echo $path ?>amonestaciones/exportar"
+	title="Exportar amonestaciones" alt="Exportar amonestaciones"> Exportar
+<img src="<?php echo $path?>public/img/sp5/excel.png" /> </a>
+/ 
+<?php } ?>
+<a href="#" id="cicloBtn" title="Cambiar de ciclo escolar" alt="Cambiar de ciclo escolar">
+                    Ciclo:
+                </a>
+                <div id="cicloActual"><?php echo $ciclo->numero?></div>
+                <div id="cicloSel" style="display:none">
+                    <form id="frm_ciclo" method="post" action="<?php echo $path ?>sistema/seleccionar">
+                    <fieldset>
+                        <input type="hidden" name="controlador" value="<?php echo $controlador ?>" />
+                        <input type="hidden" name="accion" value="<?php echo $accion.'/'.$id ?>" />
+                        <select name="ciclo" id="cicloSelect">
+                            <?php foreach($ciclos as $ccl){?>
+                            <option value="<?php echo $ccl->id?>"
+                                    <?php if($ccl->id == $ciclo->id){ ?>selected="selected"<?php } ?>>
+                                    <?php echo $ccl->numero?>
+                            </option>
+                            <?php } ?>
+                        </select>
+                    </fieldset>
+                    </form>
+                </div>
+</div>
+<div id="search" <?php if($busqueda->condicion() == ''){?>
+	style="display: none" <?php } ?>>
+<form action="<?php echo $path ?>grupos/amonestaciones/<?php echo $id ?>" method="post"
+	id="frm_search">
+<fieldset><label for="fecha">Fecha</label> <input type="text"
+	value="<?php echo $busqueda->campo("fecha"); ?>" name="fecha"
+	id="fecha" size="10" maxlength="10" readonly="readonly" /> <label
+	for="codigo">Código</label> <input type="text"
+	value="<?php echo $busqueda->campo("codigo"); ?>" name="codigo"
+	id="codigo" size="20" maxlength="20" /> <label for="descripcion">Descripción</label>
+<input type="text"
+	value="<?php echo $busqueda->campo("descripcion"); ?>"
+	name="descripcion" id="descripcion" size="50" maxlength="255" /> 
+	<br />
+	<br />
+	<br />
+<input type="submit" id="btn_submit" value="Filtrar" /> <input
+	type="reset" id="reset" value="Quitar filtros" /></fieldset>
+</form>
+</div>
+
+</div>
+
+		<?php
+
+		if($registros > 0){ ?>
+<table>
+	<tr>
+		<th>Fecha</th>
+		<th>Estado</th>
+		<th>Alumno</th>
+		<th style="width:30%;">Descripción</th>
+		<th>Infracción</th>
+		<th>Opciones</th>
+	</tr>
+	<?php
+	$i = 0;
+	$estado = new Aestado();
+	$estado = $estado->pornombre("No aprobada");
+
+	$cancelada = new Aestado();
+	$cancelada = $cancelada->pornombre("Cancelada");
+
+	$aprobada = new Aestado();
+	$aprobada = $aprobada->pornombre("aprobada");
+	foreach($amonestaciones as $amonestacion){
+		$alumno = new Alumnos();
+		$alumno = $alumno->find($amonestacion->alumno_id);
+		$infracciones = new Reglamento();
+		$infracciones = $infracciones->find_all_by_sql('SELECT reglamento.* FROM '.
+				'amonestacion INNER JOIN infringe ON amonestacion.id = infringe.amonestacion_id '.
+				'INNER JOIN reglamento on infringe.reglamento_id = reglamento.id '.
+				'WHERE amonestacion.id = '.$amonestacion->id);
+		?>
+	<tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+		<td><?php echo Utils::fecha_mix($amonestacion->fecha); ?></td>
+		<td><?php
+		$e = $amonestacion->estado();
+		if($amonestacion->aestado_id == $cancelada->id){
+			echo '<span class="sin-derecho">'.$e->nombre.'</span>';
+		}elseif($amonestacion->aestado_id == $estado->id){
+			echo '<span class="sub" style="color: rgb(119, 119, 119);">'.$e->nombre.'</span>';
+		}elseif($amonestacion->aestado_id == $aprobada->id){
+			echo '<span class="sub">'.$e->nombre.'</span>';
+		}
+		?></td>
+		<td>
+			<a href="<?php echo $path . 'alumnos/amonestaciones/' . $alumno->id?>"
+			alt="Ver datos del alumno" title="Ver datos del alumno">
+				<span class="uc">
+					<?php echo $alumno->ap . ' '  . $alumno->am . ', '?>
+				</span>
+					<?php echo $alumno->nombre	?>
+		</a>
+		<br />
+		<span class="sub">
+			<?php echo $alumno->codigo ?>
+		</span>
+							  <br/>
+							  <?php
+									$amtotal = $alumno->totalamonestaciones();
+									if($amtotal > 0){ ?>
+								<span class="fin">
+								<?php
+									echo $amtotal. ' amonestaci'.($amtotal==1 ? '&oacute;n' : 'ones');
+								?>
+								</span>
+								<?php } ?>
+		</td>
+		<td>
+		<?php $categoria = $categoria->find($amonestacion->acategoria_id) ?>
+		<span class = "fin"><?php echo $categoria->nombre ?></span>
+		<br />
+			<?php echo substr($amonestacion->descripcion,0,100);
+				if(strlen($amonestacion->descripcion)>100){
+				echo "...";
+				}
+		?></td>
+		<td>
+			<?php if(count($infracciones)){ ?>	
+				<ul>
+					<?php foreach($infracciones as $infraccion){ ?>
+						<?php $reglamento = $reglamento->find($infraccion->reglamentos_id) ?>
+						<?php $articulo = $articulo->find($infraccion->articulo_id) ?>
+						<li><?php echo 'Articulo '.$articulo->numero.' del reglamento '.$reglamento->nombre ?></li>
+					<?php }?>
+				</ul>
+			<?php }else{ ?>
+				No asignado.
+			<?php } ?>
+		</td>
+		<td style="text-align: center">			
+			<?php if($acl['amonestaciones']['ver']){ ?>
+			<a href="<?php echo $path . 'amonestaciones/ver/' . $amonestacion->id.'/'.$alumno->id?>"
+			alt="Ver la informacion de la amonestación"
+			title="Ver la informacion de la amonestación"> <img
+			src="<?php echo $path?>public/img/sp5/ver.png" /> </a>
+			<?php } ?>
+		</td>
+	</tr>
+	<?php
+	$i++;
+	}
+	?>
+</table>
+	<?php } else { ?>
+<p class="info"><br />
+No hay registros que mostrar</p>
+	<?php } ?>
+<div id="pages"><?php foreach($paginador->botones() as $boton){ ?> <a
+	href="<?php echo $path . $boton->url() ?>"
+	title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
+	class="<?php echo $boton->estilo() ?>"> <?php echo $boton->etiqueta() ?>
+</a> <?php }?></div>
+</div>
+	<?php
+	break;
+
+case 'error':
+	?>
+<div class="content">
+
+<h1>Amonestaciones</h1>
+<div id="options-bar">
+<div id="options"></div>
+</div>
+
+<p class="error"><br />
+	<?php echo $error ?></p>
+	<?php
+	break;
+
+}?></div>

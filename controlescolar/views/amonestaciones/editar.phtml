@@ -1,0 +1,176 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>Editar amonestación</h1>
+		<div id="options-bar">
+			<div id="options">
+				<a href="<?php echo $path ?>amonestaciones">Volver
+				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
+				</a>
+			</div>
+		</div>
+		<?php switch($option) {
+				case 'captura': ?>
+				<form action="<?php echo $path ?>amonestaciones/editar" id="frm_agregar" method="post" enctype="multipart/form-data">
+					<fieldset>
+						<input type="hidden" name="id" id="id" value="<?php echo $amonestacion->id; ?>"/>
+						<input type="hidden" name="KUMBIA_PATH" id="KUMBIA_PATH" value="<?php echo $path; ?>"/>
+					<?php if(count($amonestados) > 1){ ?>
+						<?php $grupo = $amonestados[0]->grupo();
+							  $alumnos = $grupo->alumnos(); ?>
+						<legend><?php echo $grupo->grado.'°'.$grupo->letra.' '.$grupo->turno.' '.$grupo->verOferta()?></legend>
+						<a href = "javascript:;" id = "mostrar" >Mostrar</a>
+						<a href = "javascript:;" id = "ocultar" style = "display:none">Ocultar</a>
+						<br />
+						<strong><?php echo count($alumnos).(count($alumnos) == 1 ? ' alumno.' : ' alumnos') ?></strong>
+						<div id = "alumnos" style = "display:none">
+							<ol>
+							<?php foreach($alumnos as $alumno){ ?>
+								<li><?php echo $alumno->ap.' '.$alumno->am.' '.$alumno->nombre?><br /><span class = "sub"><?php echo $alumno->codigo ?></span></li>
+							<?php } ?>
+							</ol>
+						</div>
+					<?php }else{ ?>
+						<legend>Alumno</legend>
+  						<label for="codigo">Código</label><br />
+  						<input 
+  							type="text" 
+  							name="codigo" 
+  							id="codigo" 
+  							value="<?php echo $alumno->codigo; ?>" 
+  							size="20" 
+  							maxlength="20"/>
+  						<img id="spinner" src="<?php echo $path ?>/public/img/sp5/spinner.gif" style="display:none"/>
+						<br />
+						<br />
+						<div id="ficha">
+						</div>
+					<?php } ?>
+					
+					</fieldset>
+					
+					<div id="datos">
+					<fieldset>
+					<legend>Amonestación</legend>
+						<input type="hidden" name="tipo" id="tipo" value="<?php echo $categoria->nombre; ?>"/>
+						<div>Tipo : <?php echo $categoria->nombre ?></div>
+						<label for="fecha">Fecha</label><br />
+  						<input type="text" name="fecha" id="fecha" value="<?php echo Utils::convierteFecha($amonestacion->fecha); ?>" size="10" maxlength="10" readonly="readonly"/>
+  						<br/>
+  						<br/>
+  						<label for="descripcion">Descripción</label><br />
+						<textarea id="descripcion" name="descripcion" cols="40" rows="5"><?php echo $amonestacion->descripcion; ?></textarea>
+						<br/>
+  						<br/>
+  						<?php if($amonestacion->imagen!=""){ ?>
+  						<div id="marco" style="text-align:center;">
+  						<img src="<?php echo $path ?>public/img/amonestaciones/<?php echo $amonestacion->imagen; ?>" title="imagen" 
+  							style="width:300px;border:1px solid #DDDDDD;"
+  						/>
+  						<br/>
+  						<div id="dbtn">
+  						<input type="button" id="cmbimg" name="cmbimg" value="Cambiar la imagen" />
+  						</div>
+  						</div>
+  						<?php } ?>
+  						<div id="cambio" <?php if($amonestacion->imagen!=""){ ?>style="display:none;"<?php } ?> >
+  						<label for="imagen">Imagen</label><br />
+						<input type="file" id="imagen" name="imagen" /><br/>
+						<span id="emsj" class="false" style="display:none">El formato no es válido, seleccione una imagen jpg,png o gif.</span>
+						</div>
+						<div id = "contenedor">
+							<?php if(count($infracciones) > 0){ ?>
+							<?php $i = 1 ?>
+							<?php foreach($infracciones as $infraccion){ ?>
+								<?php $reglamento = $reglamento->find($infraccion->reglamento_id); ?>
+								
+								<div>
+									<label>Reglamento</label><br />
+									<select name = "reglamentos[]" id = "regla_<?php echo $i ?>"class  = "regla">
+										<option></option>
+										<?php $r = new Reglamentos(); ?>
+										<?php foreach($reglamentos as $regla){ ?>
+											<?php $r = $r->find($regla->reglamentos_id); ?>
+											<option value = "<?php echo $r->id ?>" <?php echo ($r->id == $r->id ? 'selected' : '')?>><?php echo $r->nombre ?></option>
+										<?php }?>
+									</select>
+									<div id = "div_<?php echo $i?>">
+										<label>Articulos</label><br />
+										<select name = "articulos[]" id = "art_<?php echo $i ?>">
+											<option></option>
+											<?php $re= new Reglamentos() ?>
+											<?php foreach ($reglamentos as $regla){ 
+													$re = $re->find($regla->reglamentos_id);
+													if($re->id == $reglamento->reglamentos_id){ ?>
+												<?php 	$reg = new Reglamento();
+														$reg = $reg->find('reglamentos_id = '.$re->id);
+														foreach($reg as $r){
+															foreach($articulos as $articulo){ ?>
+															<?php if($articulo->id == $r->articulo_id){ ?>
+																<option value = "<?php echo $articulo->id ?>" <?php echo ($articulo->id == $reglamento->articulo_id ? 'selected' : '')?>><?php echo 'Articulo '.$articulo->numero ?></option>
+															<?php } ?>												
+											<?php }}} }?>
+										</select>
+									</div>
+								</div>
+							<?php $i++; } ?>
+							<input type="hidden" name="i" id="i" value="<?php echo $i; ?>"/>
+							<?php }else{ ?>
+								<div>
+									<label for = "reglamento">Reglamento</label><br >
+									<select name = "reglamentos[]" id = "regla_1" class = "regla">
+										<option></option>
+										<?php $r = new Reglamentos(); ?>
+										<?php foreach($reglamentos as $reglamento){ ?>
+											<?php $r = $r->find($reglamento->reglamentos_id) ?>
+											<option value = "<?php echo $r->id ?>"><?php echo $r->nombre?></option>
+										<?php } ?>
+									</select>
+									<div id = "div_1"></div>
+								</div>	
+								<input type="hidden" name="i" id="i" value="1"/>
+							<?php }?>
+						</div>
+						<img id="spinner1" src="<?php echo $path ?>/public/img/sp5/spinner.gif" style="display:none"/>
+						<div id="mas" style = "<?php echo (count($infracciones) < 1 ? 'display:none;' : '')?>">
+							<a href="" id = 'a_mas'>
+								<img src="<?php echo $path?>public/img/sp5/mas.png"/>
+							</a>
+						</div>
+					</fieldset>
+					
+					<div id = "vigencia" style="<?php echo ($categoria->nombre != "Suspensión" ? 'display:none' : '')?>">
+						<fieldset>
+							<legend>Vigencia</legend>
+							<label for="inicio">Inicio</label><br />
+							<input type="text" name="inicio" id="inicio" size="10" maxlength="10" value = "<?php echo ($amonestacion->inicio != '0000-00-00' && $amonestacion->inicio != '' ? str_replace('-','/', Utils :: fecha_convertir($amonestacion->inicio)) : '') ?>" readonly />
+							<a id="calendario"><img src="<?php echo $path ?>/public/img/sp5/calendario.png" /></a><br />
+							<label for="fin">Fin</label><br />
+							<input type="text" name="fin" id="fin" size="10" maxlength="10" value = "<?php echo ($amonestacion->fin != '0000-00-00' && $amonestacion->fin != '' ? str_replace('-','/', Utils :: fecha_convertir($amonestacion->fin)) : '') ?>" readonly />
+							<a id="calendario2"><img src="<?php echo $path ?>/public/img/sp5/calendario.png" /></a><br />
+						</fieldset>
+					</div>
+					
+					<div id="botones">
+
+						<input type="button" id="agregar" value="Editar">
+						<input type="button" id="cancelar" value="Cancelar">
+
+					</div>
+					</div>
+				</form>
+			<?php  break; ?>
+			<?php case 'exito': ?>
+				<p class="info"><br />La informaci&oacute;n de la amonestaci&oacute;n se edit&oacute; correctamente</p>
+			<?php  break; ?>
+			<?php case 'error':
+				  default:
+			?>
+				<p class="error"><br />Ha ocurrido un error al intentar editar la amonestaci&oacute;n
+					<br />
+					<?php echo $error ?>
+				</p>
+			<?php  break; ?>
+		<?php } ?>
+	</div>
+</div>

@@ -1,0 +1,8 @@
+div.content div.botones{
+margin: 15px auto 0 auto;
+text-align: right;
+width: 300px;
+}
+div.content .selected{
+background-color: #ffb;
+}

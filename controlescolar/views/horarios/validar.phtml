@@ -1,0 +1,16 @@
+<?php if($disponible){?>
+<span id="status<?php echo $n ?>" class="true">
+	Si
+</span>
+<input type="hidden" id="valido<?php echo $n ?>" value="1" class="status"/>
+<?php }else{?>
+<span id="status<?php echo $n ?>" class="false">
+	CONFLICTOS:
+	<ul style="color: black; font-weight:normal">
+	<?php foreach($conflictos as $conflicto){ ?>
+		<li><?php echo $conflicto ?></li>
+	<?php } ?>
+	</ul>
+</span>
+<input type="hidden" id="valido<?php echo $n ?>" value="-1" class="status"/>
+<?php }

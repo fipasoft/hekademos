@@ -1,0 +1,59 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>Agregar ciclo</h1>
+		<div id="options-bar">
+			<div id="options">
+				<a href="<?php echo $path ?>ciclos">Volver
+				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
+				</a>
+			</div>
+		</div>
+		<?php switch($option) {
+				case 'captura': ?>
+				<form action="<?php echo $path ?>ciclos/agregar" id="frm_agregar" method="post">
+					<fieldset>
+						<legend>Datos</legend>
+						<label for="numero">N&uacute;mero</label><br />
+						<input type="text" name="annio" id="annio" size="6" maxlength="4" />
+						<select name="letra" id="letra">
+							<option></option>
+							<option value="A">A</option>
+							<option value="B">B</option>
+						</select>
+						<input type="hidden" name="numero" id="numero"/>
+						<img id="spinner" src="<?php echo $path ?>public/img/sp5/spinner.gif" style="display:none"/>
+						<div id="check" class="check"></div>
+						<br />
+						<label for="inicio">Inicio</label><br />
+						<input type="text" name="inicio" id="inicio" size="10" maxlength="10" />
+						<img id="calendario" src="<?php echo $path ?>public/img/sp5/calendario.png" />
+						<br />
+						<label for="fin">Fin</label><br />
+						<input type="text" name="fin" id="fin" size="10" maxlength="10" />
+						<img id="calendario2" src="<?php echo $path ?>public/img/sp5/calendario.png" />
+						<br />
+						<label for="activo">Activo</label><br />
+						<input type="checkbox" name="activo" value="1" />
+					</fieldset>
+					<div></div>
+					<div id="botones">
+						<input type="button" id="aceptar" value="Agregar">
+						<input type="button" id="cancelar" value="Cancelar">
+
+					</div>
+				</form>
+			<?php  break; ?>
+			<?php case 'exito': ?>
+				<p class="info"><br />La informaci&oacute;n del ciclo se agreg&oacute; correctamente</p>
+			<?php  break; ?>
+			<?php case 'error':
+				  default:
+			?>
+				<p class="error"><br />Ha ocurrido un error al intentar agregar el ciclo
+					<?php echo $error ?>
+				</p>
+			<?php  break; ?>
+		<?php } ?>
+	</div>
+</div>

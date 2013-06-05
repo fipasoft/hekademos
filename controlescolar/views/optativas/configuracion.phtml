@@ -1,0 +1,100 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>Configurar selección de cursos</h1>
+		<?php if($option!="error"){ ?>
+		<h2>Inicia el <?php echo Utils::fecha_espanol(substr($periodo->inicio,0,10)); ?> a las <?php echo substr($periodo->inicio,10,6); ?></h2>
+		<h2>Finaliza el <?php echo Utils::fecha_espanol(substr($periodo->fin,0,10)); ?> a las <?php echo substr($periodo->fin,10,6); ?></h2>
+		<h2><?php echo ($periodo->activo==1? "Activo" : "Inactivo"); ?></h2>
+		<div id="options-bar">
+			<div id="options">
+				<a href="<?php echo $path ?>optativas/index/<?php echo $periodo->id; ?>">Volver a configuracion
+				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
+				</a>
+			</div>
+		</div>
+		<?php } //var_dump($diferente); var_dump($maximo); var_dump($config);?>
+
+		<?php switch($option) {
+				case 'vista': ?>
+				<?php
+					foreach($info as $o=>$oferta){
+						?>
+						<form action="<?php echo $path ?>optativas/configuracion" id="frm_agregar" method="post" enctype="multipart/form-data">
+						<input name="KUMBIA_PATH" id="KUMBIA_PATH" type="hidden" value="<?php echo $path; ?>"/>
+						<input name="periodo_id" id="periodo_id" type="hidden" value="<?php echo $periodo->id; ?>"/>
+						<table>
+						<tr>
+						<th colspan="6"><?php
+						$of=new Oferta();
+						$of=$of->find($o);
+						echo $of->nombre; ?></th></tr>
+						<tr><th>Turno</th><th>Grado</th><th>Tipo curso</th><th>Selección maxima</th><th>Diferente grupo</th><th>Diferente tipo</th></tr>
+						<?php
+						$i=0;
+						foreach($oferta as $t=>$turno){
+						?>
+
+						<?php
+							foreach($turno as $g=>$grado){
+						?>
+						<?php
+							foreach($grado as $tp=>$tipo){
+								 $conf=$config[$o][$t][$g][$tp];
+						?>
+						<tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>" >
+						<td style="text-align:center;">
+						<input name="oferta[<?php echo $i; ?>]" type="hidden" value="<?php echo $o; ?>"/>
+						<input name="turno[<?php echo $i; ?>]" type="hidden" value="<?php echo $t; ?>"/>
+						<span class="sub"><?php echo Utils::verTurno($t); ?></span>
+						</td>
+						<td style="text-align:center;">
+						<input name="grado[<?php echo $i; ?>]" type="hidden" value="<?php echo $g; ?>"/>
+						<span class="sub"><?php echo $g; ?></span>
+						</td>
+						<td style="text-align:center;">
+						<input name="tipo[<?php echo $i; ?>]" type="hidden" value="<?php echo $tp; ?>"/>
+						<span class="sub"><?php echo Utils::materiaTipo($tp); ?></span>
+						</td>
+						<td style="text-align:center;"><input value="<?php echo $conf->maximo; ?>" class="numerico" name="maximo[<?php echo $i; ?>]" id="numerico<?php echo $i; ?>" type="text" size="3" maxlength="2" /></td>
+						<td style="text-align:center;"><input type="checkbox" name="diferente[<?php echo $i; ?>]" value="1" <?php echo ($conf->diferente == '1' ? ' checked="checked" ' : ''); ?>/></td>
+						<td style="text-align:center;"><input type="checkbox" name="dtipo[<?php echo $i; ?>]" value="1" <?php echo ($conf->dtipo == '1' ? ' checked="checked" ' : ''); ?>/></td>
+						</tr>
+						<?php
+							$i++;
+							}
+							}
+							?>
+
+						<?php
+						}
+						?>
+				 </table>
+				 <br/>
+				 <div id="botones" style="margin-right:0px">
+						<input type="button" id="cancelar" value="Cancelar">
+						<input type="submit" id="agregar" value="Guardar">
+					</div>
+				</form>
+					<?php
+					}
+				 ?>
+				<?php  break; ?>
+				<?php case 'exito':
+			?>
+				<p class="info"><br />Configuración guardada con exito.<br />
+				</p>
+			<?php  break; ?>
+			<?php case 'warning': ?>
+			<p class="tip"><br/><?php echo $warning; ?></p>
+			<?php break; ?>
+			<?php case 'error':
+				  default:
+			?>
+				<p class="error"><br />Ha ocurrido un error en el modulo optativas.<br />
+				<?php echo $error ?>
+				</p>
+			<?php  break; ?>
+		<?php } ?>
+	</div>
+</div>

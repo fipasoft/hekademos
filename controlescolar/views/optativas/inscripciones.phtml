@@ -1,0 +1,46 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>Realizar inscripciones</h1>
+		<?php if($option!="error"){ ?>
+		<h2>Inicia el <?php echo Utils::fecha_espanol(substr($periodo->inicio,0,10)); ?> a las <?php echo substr($periodo->inicio,10,6); ?></h2>
+		<h2>Finaliza el <?php echo Utils::fecha_espanol(substr($periodo->fin,0,10)); ?> a las <?php echo substr($periodo->fin,10,6); ?></h2>
+		<h2><?php echo ($periodo->activo==1? "Activo" : "Inactivo"); ?></h2>
+		<div id="options-bar">
+			<div id="options">
+				<a href="<?php echo $path ?>optativas/index/<?php echo $periodo->id; ?>">Volver a optativas
+				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
+				</a>
+			</div>
+		</div>
+		<?php } ?>
+
+		<?php switch($option) {
+				case 'vista': ?>
+				Seleccione el tipo de inscripción que llevara a cabo.
+				<br/>
+				<br/>
+				<ul>
+					<li>
+						<a href="<?php echo $path ?>optativas/inscribir/<?php echo $periodo->id; ?>">
+							Inscripciones a cursos.
+						</a>
+					</li>
+					<li>
+						<a href="<?php echo $path ?>optativas/inscribirtrayectoria/<?php echo $periodo->id; ?>">
+							Inscripciones a trayectorias especializantes.
+						</a>
+					</li>
+				</ul>
+
+				<?php  break; ?>
+			<?php case 'error':
+				  default:
+			?>
+				<p class="error"><br />Ha ocurrido un error en el modulo optativas.<br />
+				<?php echo $error ?>
+				</p>
+			<?php  break; ?>
+		<?php } ?>
+	</div>
+</div>

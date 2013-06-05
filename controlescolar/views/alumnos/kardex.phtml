@@ -1,0 +1,145 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>Kárdex del alumno</h1>
+		<?php  if($option!='error'){?>
+		<h2 class="titulo"><?php echo $alumno->codigo; ?></h2>
+		<h2 class="titulo"><?php echo $alumno->nombre(); ?></h2>
+		<?php  } ?>
+		<div id="options-bar">
+			<div id="options">
+				<a href="<?php echo $path ?>alumnos">Volver a alumnos
+				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
+				</a>
+			</div>
+		</div>
+		<?php switch($option) {
+				case 'vista': ?>
+					<div>
+					<?php if(count($datos)>0){ ?>
+						<h2>Resumen</h2>
+						<table>
+						<tr><th>Materias aprobadas</th><th>Promedio General</th></tr>
+						<tr><td style="text-align:center;"><?php echo $resumen['aprobadas']; ?></td><td style="text-align:center;"><?php echo $resumen['promedio']; ?></td></tr>
+						</table>
+
+						<?php
+						foreach($datos as $c => $cursos){
+						?>
+						<h2>Ciclo <?php echo $c; ?></h2>
+
+						<table>
+						<tr><th>Grupo</th><th>Materia</th><th>Ordinario</th><?php if($resumen[$c]['extra']){ ?><th>Extraordinario</th><?php } ?><th>Profesor</th></tr>
+						<?php
+
+						$cont=1;
+						foreach($cursos as $crs_id => $calificacion){
+						?>
+							<tr <?php if($cont%2==0)echo 'class="odd"'; ?>>
+								<?php
+									$ordinario=$calificacion['1'];
+									$extra=$calificacion['2'];
+								?>
+
+								<td>
+								<?php if($acl_grupos['ver']){ ?>
+                            		<a href="<?php echo $path . 'grupos/ver/' . $ordinario['grupos_id'] ?>"
+                               			alt="Ver datos del curso" title="Ver datos del curso">
+                                		<?php echo $ordinario['grado'].$ordinario['letra'].$ordinario['turno']; ?>
+                            		</a>
+
+                        		<?php }else{ ?>
+									<?php echo $ordinario['grado'].$ordinario['letra'].$ordinario['turno']; ?>
+
+                        		<?php } ?>
+
+								</td>
+								<td>
+								<?php if($acl_grupos['curso']){ ?>
+                            		<a href="<?php echo $path . 'grupos/curso/' . $ordinario['cursos_id'] ?>"
+                               			alt="Ver datos del curso" title="Ver datos del curso">
+                                		<?php echo $ordinario['nombre_materia']; ?>
+                            		</a><br/>
+                            		<span class="sub"><?php
+                            		switch(strToLower( $ordinario['tipo'] )){
+                            			case 'obl': echo 'Obligatoria'; break;
+                            			case 'tlr': echo 'Taller'; break;
+                            			case 'opt': echo 'Optativa'; break;
+                            			case 'pro': echo 'Programa de extensión y difusión cultural'; break;
+                            		}
+                            		 ?></span>
+                        		<?php }else{ ?>
+									<?php echo $ordinario['nombre_materia']; ?>
+                        			<br/>
+                        			<span class="sub"><?php
+                            		switch(strToLower( $ordinario['tipo'] )){
+                            			case 'obl': echo 'Obligatoria'; break;
+                            			case 'tlr': echo 'Taller'; break;
+                            			case 'opt': echo 'Optativa'; break;
+                            			case 'pro': echo 'Programa de extensión y difusión cultural'; break;
+                            		}
+                            		 ?></span>
+                        		<?php } ?>
+
+								<td style="text-align:center;">
+								<?php if((strToUpper($ordinario['valor'])=="SD" || strToUpper($ordinario['valor'])=="NA" || $ordinario['valor']<60) && strToUpper($ordinario['valor'])!='A'){ ?>
+								<span class="reprobado"><?php echo $ordinario['valor']; ?></span>
+								<?php }else{ ?>
+								<?php echo $ordinario['valor']; ?>
+								<?php } ?>
+								</td>
+								<?php if($resumen[$c]['extra']){ ?>
+								<td style="text-align:center;">
+								<?php if((strToUpper($extra['valor'])=="SD" || strToUpper($extra['valor'])=="NA" || $extra['valor']<60) && strToUpper($extra['valor'])!='A' ){ ?>
+								<span class="reprobado"><?php
+										if(trim($extra['valor'])!="")
+											echo $extra['valor'];
+											else
+											echo "_";
+											?></span>
+								<?php }else{ ?>
+								<?php
+										if(trim($extra['valor'])!="")
+											echo $extra['valor'];
+											else
+											echo "_";
+											 ?>
+								<?php } ?>
+
+								</td><?php } ?>
+								<td><?php echo $ordinario['ap_profesor'].' '.$ordinario['am_profesor'].', '.$ordinario['nombre_profesor'];?></td></tr>
+						<?php
+							$cont++;
+							}
+						?>
+						</table>
+						<?php
+							}
+						?>
+						<?php }else{ ?>
+							<br />
+							<p class="error">
+								<br />
+				 			El kárdex no se encuentra disponible.
+							</p>
+						<?php } ?>
+					</div>
+				<?php break; ?>
+			<?php case 'error':
+			  		default:
+			?>
+				<div id="options-bar">
+					<div id="options">
+						<a href="<?php echo $path ?>alumnos">Volver a alumnos
+							<img src="<?php echo $path?>public/img/sp5/volver.png"/>
+						</a>
+					</div>
+				</div>
+				<p class="error">
+					<br />
+				 	<?php echo $error ?>
+				</p>
+		<?php break; ?>
+		<?php } ?>
+	</div>
+</div>

@@ -1,0 +1,110 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>Datos de la materia <?php echo $materia->clave?></h1>
+		<div id="options-bar">
+			<div id="options">
+				<a href="<?php echo $path ?>materias">Volver
+				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
+				</a>
+				<?php if($materia->id != ''){?>
+					<?php if($acl["enlazar"]){ ?>
+					/ <a href="<?php echo $path . 'materias/enlazar/' . $materia->id?>"
+					   alt="Establecer prerrequisitos de la materia" title="Establecer prerrequisitos de la materia">
+					   Prerrequisitos
+					   <img src="<?php echo $path?>public/img/sp5/ligar.png" />
+					</a>
+					<?php } ?>
+		 			<?php if($acl["editar"]){ ?>
+		 			 / <a href="<?php echo $path . 'materias/editar/' . $materia->id?>"
+					   alt="Editar datos del materia" title="Editar datos de la materia">
+					   Editar
+					   <img src="<?php echo $path?>public/img/sp5/editar.png" />
+					</a>
+					<?php } ?>
+					<?php if($acl["eliminar"]){ ?>
+					 / <a href="<?php echo $path . 'materias/eliminar/' . $materia->id?>"
+					   alt="Eliminar toda la informacion del materia" title="Eliminar toda la informacion de la materia">
+					   Eliminar
+					   <img src="<?php echo $path?>public/img/sp5/eliminar.png" />
+					</a>
+					<?php } ?>
+				<?php }?>
+			</div>
+		</div>
+		<?php if($materia->id != '') {?>
+		<table>
+			<tr>
+				<th>Nombre</th>
+				<td><?php echo  $materia->nombre ?></td>
+			</tr>
+			<tr>
+				<th>Descripci&oacute;n</th>
+				<td><?php echo  $materia->descripcion() ?></td>
+			</tr>
+			<tr>
+				<th>Semestre</th>
+				<td><?php echo  $materia->semestre ?></td>
+			</tr>
+			<tr>
+				<th>Tipo</th>
+				<td><?php echo  $materia->tipo() ?></td>
+			</tr>
+			<tr>
+				<th>Oferta</th>
+				<td>
+					<?php echo $materia->oferta('nombre'); ?>
+				</td>
+			</tr>
+			<?php if($materia->oferta('id')==2){ ?>
+			<tr>
+				<th>Creditos</th>
+				<td>
+					<?php echo $materia->creditos; ?>
+				</td>
+			</tr>
+			<tr>
+				<th>Duración semanas</th>
+				<td>
+					<?php echo $materia->duracion; ?>
+				</td>
+			</tr>
+			<tr>
+				<th>Horas por semana</th>
+				<td>
+					<?php echo $materia->horassemana; ?>
+				</td>
+			</tr>
+			<tr>
+				<th>Tipo competencia</th>
+				<td>
+				<?php if($materia->competencia=='esp'){ echo 'Trayectoria especializante'; }elseif($materia->competencia=='gen'){ echo 'Competencia genérica'; } ?>
+				</td>
+			</tr>
+			<tr>
+				<th><?php if($materia->competencia=='esp'){ echo 'Trayectoria'; }elseif($materia->competencia=='gen'){ echo 'Competencia'; } ?></th>
+				<td>
+					<?php echo $tp_competencia; ?>
+				</td>
+			</tr>
+
+			<?php } ?>
+			<tr>
+				<th>Prerrequisitos</th>
+				<td>
+					<ul>
+					<?php foreach($materia->prerrequisitos() as $p){ ?>
+						<li><?php echo '[' . $p->clave() . '] ' . $p->requisito() ?></li>
+					<?php } ?>
+					<ul>
+				</td>
+			</tr>
+		</table>
+		<?php } else {?>
+			<p class="error">
+				<br />
+			 	No existe informaci&oacute;n del materia seleccionado.
+			</p>
+		<?php } ?>
+	</div>
+</div>

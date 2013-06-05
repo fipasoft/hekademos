@@ -1,0 +1,112 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>Ver amonestación</h1>
+		<div id="options-bar">
+			<div id="options">
+				<a href="<?php echo $path ?>amonestaciones">Volver
+				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
+				</a>
+			</div>
+		</div>
+		<?php switch($option) {
+				case 'ver': ?>
+				<div id="tabla">
+<table>
+					
+					<tr>
+						<th>Fecha</th>
+						<td><?php echo Utils::fecha_espanol($amonestacion->fecha); ?></td>
+					</tr>
+					<tr>
+						<th>Código</th>
+						<td><?php echo  $alumno->codigo?>
+						<td rowspan="3" style="text-align:center;">
+							<?php if($alumno->foto != ''){ ?>
+								<img src="<?php echo $path . 'public/img/alumnos/' . $alumno->foto . '?d=' . time() ?>" class="ficha"/>
+							<?php }else{ ?>
+								<img src="<?php echo $path ?>public/img/sp5/persona.png" class="ficha"/>
+							<?php }?>
+						</td>
+						
+					</tr>
+					<tr>	
+						<th>Nombre</th>
+						<td><?php echo  $alumno->nombre('reversa')?>
+						</td>
+						
+					</tr>
+					<tr>
+						<th>Situaci&oacute;n</th>
+						<td><?php echo $alumno->situacion()?></td>
+					</tr>
+					<tr>
+						<th>Tipo</th>
+						<td colspan="2"><?php echo $categoria->nombre ?></td>
+					</tr>
+					<?php if($categoria->nombre == 'Suspensión'){ ?>
+						<tr>
+							<th>Vigencia</th>
+							<td colspan="2">
+								<?php if($amonestacion->inicio != '0000-00-00' && $amonestacion->fin != ''){ ?>
+									<span class = "true"><?php echo Utils :: fecha_mix($amonestacion->inicio) ?></span>
+								<?php }else{ ?>
+									<span class = "true"><?php echo '-' ?></span>
+								<?php } ?>
+								<br />
+								<?php if($amonestacion->fin != '0000-00-00' && $amonestacion->fin != ''){ ?>
+									<span class = "false"><?php echo Utils :: fecha_mix($amonestacion->fin) ?></span>
+								<?php }else{ ?>
+									<span class = "false"><?php echo '-' ?></span>
+								<?php } ?>
+								</td>
+						</tr>
+					<?php } ?>
+					<tr>
+						<th>Descripci&oacute;n</th>
+						<td colspan="2"><?php echo $amonestacion->descripcion?></td>
+					</tr>
+					
+					<?php if(count($infracciones) > 0){ ?>
+						<tr>
+							<th>Infracciones</th>
+							<td colspan="2">
+								<ul>
+									<?php foreach($infracciones as $infraccion){ ?>
+										<?php $reglamento = $reglamento->find($infraccion->reglamentos_id) ?>
+										<?php $articulo = $articulo->find($infraccion->articulo_id) ?>
+										<li><?php echo 'Articulo '.$articulo->numero.' del reglamento '.$reglamento->nombre ?></li>
+									<?php }?>
+								</ul>
+							</td>
+						</tr>	
+					<?php }?>
+					
+					
+				</table>	
+				</div>
+				<br/>
+				<br/>
+				<?php if($amonestacion->imagen!=""){ ?>
+				<div style="text-align:center">
+				<a id="btn_img">Ver el documento</a>	
+				<br/>
+				<div id="imagen" style="display:none;">
+				<img style="border:1px solid #DDDDDD;"
+				src="<?php echo $path ?>public/img/amonestaciones/<?php echo $amonestacion->imagen; ?>" />
+				</div>
+				</div>
+				<?php } ?>	
+				<?php  break; ?>
+			
+			<?php case 'error':
+				  default:
+			?>
+				<p class="error"><br />Ha ocurrido un error al intentar ver la amonestaci&oacute;n
+					<br />
+					<?php echo $error ?>
+				</p>
+			<?php  break; ?>
+		<?php } ?>
+	</div>
+</div>
