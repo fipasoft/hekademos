@@ -1,0 +1,85 @@
+<h1>Agenda</h1>
+<div id="options-bar">
+    <div id="options">
+    <a title="Volver a inicio." class="submenu" href="<?php echo KUMBIA_PATH?>escolar/inicio">Volver <img src="<?php  echo KUMBIA_PATH?>img/sp5/volver.png" alt="Volver a inicio"/></a>
+     
+
+    </div>
+</div>
+<br/>
+<div>
+<?php if($esAlumno){ ?>
+<?php if(count($periodos)>0){ ?>
+<table style="width:90%">
+<tr>
+<th>Inicia</th><th>Termina</th><th>Fecha Actual</th><th>Opciones</th></tr>
+<?php
+$i=0;
+foreach($periodos as $periodo){ ?>
+<tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+<td>
+<span class="sub" style="color:#000000;"><?php echo fecha_espanol(substr($periodo["bloque_inicio"],0,10));?> a las <?php echo substr($periodo["bloque_inicio"],10,6); ?></span>
+</td>
+<td>
+<span class="sub" style="color:#000000;"><?php echo fecha_espanol(substr($periodo["periodo_fin"],0,10));?> a las <?php echo substr($periodo["periodo_fin"],10,6); ?></span>
+</td>
+<td>
+<?php $now=new DateTime(); ?>
+<?php $estilo=''; if(!$periodo['abierto']){$estilo='style="color: rgb(204, 0, 0);"'; } ?>
+
+<span class="sub" <?php echo $estilo; ?> ><?php  echo fecha_espanol($now->format("Y-m-d")); ?></span>
+
+<span class="sub" <?php echo $estilo; ?> ><?php  echo $now->format("H:i"); ?></span>
+
+</td>
+<?php if($periodo['abierto']){ ?>
+<td style="background-color:#CCFF99;">
+<a id="btnVer" alt="Consulte las materias que ha registrado." title="Consulte las materias que ha registrado." href="<?php echo KUMBIA_PATH?>escolar/ver_registro/<?php echo $periodo['periodo_id']; ?>">
+<img src="<?php  echo KUMBIA_PATH?>img/sp5/ver.png" alt="Ver registro"/>
+</a>
+
+<?php if($escolar->ofertantrayectorias($periodo['periodo_id']) //se ofertan trayectorias
+            &&
+        !$escolar->alumnotienetrayectoria($alumno_id) // no tiene trayectoria
+        ){ ?>
+<a id="taes" href="<?php echo KUMBIA_PATH; ?>escolar/taes/<?php echo $periodo['periodo_id']; ?>" title="La agenda esta abierta. Presione en el boton para proceder con el registro de trayectoria especializante." >
+<img src="<?php echo KUMBIA_PATH; ?>sp5/public/img/sp5/trayectoria.png"/>
+</a>
+<?php } ?>
+
+<?php if($escolar->ofertancursos($periodo['periodo_id'])){ ?>
+<a id="td_status" href="<?php echo KUMBIA_PATH; ?>escolar/optativas/<?php echo $periodo['periodo_id']; ?>"  title="La agenda esta abierta. Presione en el boton para proceder con el registro de optativas.">
+<img src="<?php echo KUMBIA_PATH; ?>sp5/public/img/sp5/config.png"  />
+</a>
+<?php } ?>
+
+</td>
+<?php }else{ ?>
+<td id="td_status" style="background-color:#FFCC99;" title="La agenda no permite el registro de optativas.">
+<a id="btnVer" alt="Consulte las materias que ha registrado." title="Consulte las materias que ha registrado." href="<?php echo KUMBIA_PATH?>escolar/ver_registro/<?php echo $periodo['periodo_id']; ?>">
+<img src="<?php  echo KUMBIA_PATH?>img/sp5/ver.png" alt="Ver registro"/>
+</a>
+
+</td>
+<?php } ?>
+
+</tr>
+<?php
+$i++;
+ } ?>
+</table>
+</div>
+<br/>
+
+<?php }else{ ?>
+<p class="infoBox">
+<br/>
+El alumno no cuenta con ningun periodo para el registro de optativas.
+</p>
+<?php } ?>
+<?php }else{ ?>
+<p class="errorBox">
+<br/>
+No tiene permiso para entrar a la agenda.
+</p>
+<?php } ?>

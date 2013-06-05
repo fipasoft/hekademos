@@ -1,0 +1,5 @@
+.content tr.odd td.asistencia_0,.content tr.no_odd td.asistencia_0{background-color:#FFCC99;}
+.content tr.odd td.asistencia_1,.content tr.no_odd td.asistencia_1{background-color:#CCFF99;}
+.content tr.odd td.asistencia_{background:#f7fbff;}
+p.mes,p.resumen{background:#f7fbff;font-size:17px;border:solid #000 1px;padding:5px;}
+.content table.tabla_mes{width:30%;margin: 0 auto;text-align:center;}

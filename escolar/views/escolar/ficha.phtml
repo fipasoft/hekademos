@@ -1,0 +1,86 @@
+<h1>Ficha</h1>
+<div id="options-bar">
+    <div id="options">
+    <a title="Volver a inicio." class="submenu" href="<?php echo KUMBIA_PATH?>escolar/inicio">Volver <img src="<?php  echo KUMBIA_PATH?>img/sp5/volver.png" alt="Volver a inicio"/></a>
+    /
+    <a href="<?php echo KUMBIA_PATH; ?>escolar/pdf/ficha">Descargar <img src="<?php  echo KUMBIA_PATH?>img/sp5/pdf.gif" alt="Descargar pdf." /></a>
+    </div>
+</div>
+<h2 class="sub">Alumno</h2>
+<div>
+    <table summary="Datos Personales del Alumno." border="0" cellspacing="2" cellpadding="2">
+    <thead>
+    <tr><th colspan="5" scope="col">Personal.</th></tr>
+    </thead>
+    <tbody>
+    <tr class="odd"><th>Nombre</th><td><?php echo $alumno["nombre"]." ".$alumno["ap"]." ".$alumno["am"] ?>&nbsp;</td><td rowspan="3"><img height="100" src="<?php
+     $img_path=KUMBIA_PATH."img/sp5/persona.png";
+    if (strlen(trim($alumno["foto"])) > 0 && file_exists("C:\\xampp\\htdocs\\sp5\\public\\img\\alumnos\\".$alumno["foto"]))
+        $img_path="/sp5/img/alumnos/".$alumno["foto"];
+
+     echo $img_path;
+
+     ?>" alt="Foto del alumno <?php  if($alumno["nombre"]." ".$alumno["ap"]." ".$alumno["am"]=='') echo"_"; else echo $alumno["nombre"]." ".$alumno["ap"]." ".$alumno["am"]; ?>." /></td></tr>
+
+    <tr class="no_odd"><th>Domicilio</th><td><?php if($alumno["domicilio"]=='') echo"_"; else echo $alumno["domicilio"]; ?>&nbsp;</td></tr>
+    <tr class="odd"><th>Teléfono</th><td><?php if($alumno["tel"]=='') echo"_"; else echo $alumno["tel"] ?>&nbsp;</td></tr>
+    <tr class="no_odd"><th>Celular</th><td colspan="2"><?php if($alumno["cel"]=='') echo"_"; else echo $alumno["cel"] ?>&nbsp;</td></tr>
+    <tr class="odd"><th>Email</th><td colspan="2"><?php  if($alumno["mail"]=='') echo"_"; else echo $alumno["mail"] ?>&nbsp;</td></tr>
+    <tr class="no_odd"><th>CURP</th><td colspan="2"><?php if($alumno["curp"]=='') echo"_"; else echo $alumno["curp"] ?>&nbsp;</td></tr>
+    <tr class="odd"><th>Fecha de Nacimiento</th><td colspan="2"><?php if($alumno["fnacimiento"]=='') echo"_"; else echo fecha_espanol($alumno["fnacimiento"]) ?>&nbsp;</td></tr>
+    <tr class="no_odd"><th>Sexo</th><td colspan="2"><?php if($alumno["sexo"]=='') echo"_"; else echo $alumno["sexo"] ?>&nbsp;</td></tr>
+    </tbody>
+    </table>
+</div>
+<br/>
+<div>
+    <table summary="Datos Escolares del Alumno." border="0" cellspacing="2" cellpadding="2">
+    <thead>
+    <tr><th colspan="2">Escolar.</th></tr>
+    </thead>
+    <tbody>
+    <tr class="odd"><th>Codigo</th><td><?php if($alumno["codigo"]=='') echo"_"; else echo $alumno["codigo"] ?>&nbsp;</td></tr>
+    <tr class="no_odd"><th>Situación</th><td><?php if($alumno["situacion"]=='') echo"_"; else echo $alumno["situacion"] ?>&nbsp;</td></tr>
+    <tr class="odd"><th>Fecha de Admisión</th><td><?php if($alumno["admision"]=='') echo"_"; else echo fecha_espanol($alumno["admision"]) ?>&nbsp;</td></tr>
+    <?php if(trim($alumno["grado"])!="" && trim($alumno["letra"])!=""){?>
+    <tr><th class="no_odd">Grupo</th><td><?php echo $alumno["grado"]."&deg;".$alumno["letra"]; ?></td></tr>
+    <?php } ?>
+
+    <?php if(trim($alumno["turno"])!=""){?>
+    <tr><th class="odd">Turno</th><td><?php echo $escolar->regresaTurno($alumno["turno"]); ?></td></tr>
+    <?php } ?>
+
+    </tbody>
+    </table>
+</div>
+
+
+<?php if(sizeof($tutores)>0){ ?>
+<h2 class="sub">Tutores</h2>
+<?php foreach($tutores as $tutor){ ?>
+<div>
+    <table summary="Datos Personales del Tutor."  border="0" cellspacing="2" cellpadding="2">
+    <thead>
+    <tr><th colspan="5" scope="col">Personal.</th></tr>
+    </thead>
+    <tbody>
+    <tr class="odd"><th scope="row" >Nombre</th><td><?php if( $tutor["nombre"]." ".$tutor["ap"]." ".$tutor["am"]=='') echo"_"; else echo $tutor["nombre"]." ".$tutor["ap"]." ".$tutor["am"] ?>&nbsp;</td>    <td rowspan="3">
+    <img height="100" src="<?php
+      $img_path=KUMBIA_PATH."img/sp5/persona.png";
+     if(trim($tutor["foto"])!='' && file_exists("C:\\xampp\\htdocs\\sp5\\public\\img\\tutores\\".$tutor["foto"]))
+        $img_path="/sp5/img/tutores/".$tutor["foto"];
+
+     echo $img_path; ?>" alt="Foto del tutor <?php echo $tutor["nombre"]." ".$tutor["ap"]." ".$tutor["am"] ?>." /></td></tr>
+    <tr class="no_odd"><th scope="row" >Domicilio</th><td><?php if($tutor['domicilio']=='')echo "_"; else echo $tutor["domicilio"] ?>&nbsp;</td></tr>
+    <tr class="odd"><th scope="row" >Teléfono</th><td><?php  if($tutor['tel']=='')echo "_"; else echo $tutor["tel"] ?>&nbsp;</td></tr>
+    <tr class="no_odd"><th scope="row" >Celular</th><td colspan="2"><?php  if($tutor['cel']=='')echo "_"; else echo $tutor["cel"] ?>&nbsp;</td></tr>
+    <tr class="odd"><th scope="row">Email</th><td colspan="2"><?php  if($tutor['mail']=='')echo "_"; else echo $tutor["mail"] ?>&nbsp;</td></tr>
+    <tr class="no_odd"><th scope="row">Fecha de Nacimiento</th><td colspan="2"><?php  if($tutor['fnacimiento']=='')echo "_"; else echo fecha_espanol($tutor["fnacimiento"]) ?>&nbsp;</td></tr>
+    <tr class="odd"><th scope="row">Sexo</th><td colspan="2"><?php  if($tutor['sexo']=='')echo "_"; else echo $tutor["sexo"] ?>&nbsp;</td></tr>
+    </tbody>
+    </table>
+</div>
+<br/>
+<?php  }?>
+<?php } ?>
+

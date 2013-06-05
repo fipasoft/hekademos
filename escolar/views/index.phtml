@@ -1,0 +1,13 @@
+<?php
+session_start();
+
+//header('Content-Type: text/html; charset=UTF-8');
+iconv_set_encoding("internal_encoding","UTF-8");
+iconv_set_encoding("output_encoding","UTF-8");
+?><?php content(); ?><?php
+
+Session :: set_data('controlador_anterior', strtolower($controlador_global));
+Session :: set_data('vista_anterior', strtolower($accion_global));
+Session :: set_data('id_anterior', strtolower($id_global));
+
+ ?>
