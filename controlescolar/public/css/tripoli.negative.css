@@ -12,93 +12,93 @@
 
 html
 {
-	background:black;
-	color:white;
+    background:black;
+    color:white;
 }
 
 ins,dfn
 {
-	border-bottom-color:#555;
-	color:#fff;
+    border-bottom-color:#555;
+    color:#fff;
 }
 
 del
 {
-	color:#ccc;
+    color:#ccc;
 }
 
 kbd
 {
-	border-color:#333;
+    border-color:#333;
 }
 
 abbr,acronym,abbr[title],acronym[title]
 {
-	border-bottom-color:#555;
+    border-bottom-color:#555;
 }
 
 blockquote
 {
-	border-top-color:#555;
-	border-bottom-color:#555;
-	color:#bbb;
+    border-top-color:#555;
+    border-bottom-color:#555;
+    color:#bbb;
 }
 
 legend
 {
-	background-color:#000;
+    background-color:#000;
 }
 
 textarea,input[type='text'],select
 {
-	background:#000;
-	color:#fff;
-	border-color:#555;
+    background:#000;
+    color:#fff;
+    border-color:#555;
 }
 
 textarea:hover,input[type='text']:hover,select:hover
 {
-	border-color:#666;
+    border-color:#666;
 }
 
 textarea:focus,input[type='text']:focus,input[type='password']:focus,select:focus
 {
-	outline-color:#444;
-	border-color:#888;
+    outline-color:#444;
+    border-color:#888;
 }
 
 .content a:link
 {
-	color:#69f;
+    color:#69f;
 }
 
 .content a:visited
 {
-	color:#ccf;
+    color:#ccf;
 }
 
 .content hr
 {
-	color:#555;
-	background-color:#555;
+    color:#555;
+    background-color:#555;
 }
 
 * html option
 {
-	color:black;
+    color:black;
 }
 
 fieldset,.content table,.content th,.content td
 {
-	border-color:#555;
+    border-color:#555;
 }
 
 option,.content a:active,.content a:focus
 {
-	color:#fff;
+    color:#fff;
 }
 
 .content a:hover,.content code,.content pre
 {
-	color:#e66;
+    color:#e66;
 }

@@ -1,24 +1,24 @@
 var debugWindow = null;
 function debug(text, reverse) {
-	if (debugWindow == null)
- 		return;
+    if (debugWindow == null)
+         return;
 
-	time = "-"; //new Date();
-	if (reverse) {
-		$('debug').innerHTML = time + " " + text + "<br>"+ 	$('debug').innerHTML;
-		debugWindow.getContent().scrollTop=0;
-	}
-	else {
-		$('debug').innerHTML +=  time + " " + text + "<br>";
-		debugWindow.getContent().scrollTop=10000; // Far away 
-	}
+    time = "-"; //new Date();
+    if (reverse) {
+        $('debug').innerHTML = time + " " + text + "<br>"+     $('debug').innerHTML;
+        debugWindow.getContent().scrollTop=0;
+    }
+    else {
+        $('debug').innerHTML +=  time + " " + text + "<br>";
+        debugWindow.getContent().scrollTop=10000; // Far away 
+    }
 }
 
 function hideDebug() {
-	if (debugWindow) {
-		debugWindow.destroy();
-		debugWindow = null;
-	}
+    if (debugWindow) {
+        debugWindow.destroy();
+        debugWindow = null;
+    }
 }
 
 function showDebug(bShow) {
@@ -35,9 +35,9 @@ function showDebug(bShow) {
 
 
 function clearDebug() {
-	if (debugWindow == null)
- 		return;
-	$('debug').innerHTML = "";
+    if (debugWindow == null)
+         return;
+    $('debug').innerHTML = "";
 }
 
 /**
@@ -89,49 +89,49 @@ function $E(data) {
 
 // FROM Nick Hemsley
 var Debug = {
-	inspectOutput: function (container, within) {
-		within = within || debugWindow.getContent()
-		
-		if (debugWindow == null)
- 			return;
+    inspectOutput: function (container, within) {
+        within = within || debugWindow.getContent()
+        
+        if (debugWindow == null)
+             return;
 
-		within.appendChild(container)
-	},
-	
-	inspect: function(object) {
-		var cont = $E({tag: "div", className: "inspector"})
-		Debug.inspectObj(object, cont)
-		debugWindow.getContent().appendChild(cont)
-	},
-	
-	inspectObj: function (object, container) {
-		for (prop in object) {
-			Debug.inspectOutput(Debug.inspectable(object, prop), container)
-		}
-	},
-	
-	inspectable: function(object, prop) {
-		cont = $E({tag: 'div', className: 'inspectable', children: [prop + " value: " + object[prop] ]})
-		cont.toInspect = object[prop]
-		Event.observe(cont, 'click', Debug.inspectClicked, false)
-		return cont
-	},
-	
-	inspectClicked: function(e) {
-		Debug.inspectContained(Event.element(e))
-		Event.stop(e)
-	},
-	
-	inspectContained: function(container) {
-		if (container.opened) {
-			container.parentNode.removeChild(container.opened)
-			delete(container.opened)
-		} else {
-			sibling = container.parentNode.insertBefore($E({tag: "div", className: "child"}), container.nextSibling)
-			if (container.toInspect)
-				Debug.inspectObj(container.toInspect, sibling)
-			container.opened = sibling
-		}
-	}
+        within.appendChild(container)
+    },
+    
+    inspect: function(object) {
+        var cont = $E({tag: "div", className: "inspector"})
+        Debug.inspectObj(object, cont)
+        debugWindow.getContent().appendChild(cont)
+    },
+    
+    inspectObj: function (object, container) {
+        for (prop in object) {
+            Debug.inspectOutput(Debug.inspectable(object, prop), container)
+        }
+    },
+    
+    inspectable: function(object, prop) {
+        cont = $E({tag: 'div', className: 'inspectable', children: [prop + " value: " + object[prop] ]})
+        cont.toInspect = object[prop]
+        Event.observe(cont, 'click', Debug.inspectClicked, false)
+        return cont
+    },
+    
+    inspectClicked: function(e) {
+        Debug.inspectContained(Event.element(e))
+        Event.stop(e)
+    },
+    
+    inspectContained: function(container) {
+        if (container.opened) {
+            container.parentNode.removeChild(container.opened)
+            delete(container.opened)
+        } else {
+            sibling = container.parentNode.insertBefore($E({tag: "div", className: "child"}), container.nextSibling)
+            if (container.toInspect)
+                Debug.inspectObj(container.toInspect, sibling)
+            container.opened = sibling
+        }
+    }
 }
 var inspect = Debug.inspect;

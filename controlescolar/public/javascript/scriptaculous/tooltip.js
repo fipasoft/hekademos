@@ -223,19 +223,19 @@ TooltipManager = {
      }
    },
 
-	_getPageWidth: function(){
-		return window.innerWidth || document.documentElement.clientWidth || 0;
-	},
-	
-	_getPageHeight: function(){
-		return window.innerHeight || document.documentElement.clientHeight || 0;
-	},
+    _getPageWidth: function(){
+        return window.innerWidth || document.documentElement.clientWidth || 0;
+    },
+    
+    _getPageHeight: function(){
+        return window.innerHeight || document.documentElement.clientHeight || 0;
+    },
 
-	_getScrollTop: function(){
-		return document.documentElement.scrollTop || window.pageYOffset || 0;
-	},
+    _getScrollTop: function(){
+        return document.documentElement.scrollTop || window.pageYOffset || 0;
+    },
 
-	_getScrollLeft: function(){
-		return document.documentElement.scrollLeft || window.pageXOffset || 0;
-	}	
+    _getScrollLeft: function(){
+        return document.documentElement.scrollLeft || window.pageXOffset || 0;
+    }    
 };

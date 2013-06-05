@@ -12,8 +12,8 @@
 
   class Bloque extends ActiveRecord{
 
-		public function crear(){
+        public function crear(){
 
-		}
+        }
   }
 ?>

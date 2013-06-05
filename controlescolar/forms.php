@@ -1,9 +1,9 @@
 <?php
 
 /** KumbiaForms - PHP Rapid Development Framework *****************************
-*	
-* Copyright (C) 2005-2007 Andrés Felipe Gutiérrez (andresfelipe at vagoogle.net)
-* 	
+*    
+* Copyright (C) 2005-2007 Andrï¿½s Felipe Gutiï¿½rrez (andresfelipe at vagoogle.net)
+*     
 * This framework is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
 * License as published by the Free Software Foundation; either
@@ -19,16 +19,16 @@
 * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 * 
 * Este framework es software libre; puedes redistribuirlo y/o modificarlo
-* bajo los terminos de la licencia pública general GNU tal y como fue publicada
-* por la Fundación del Software Libre; desde la versión 2.1 o cualquier
-* versión superior.
+* bajo los terminos de la licencia pï¿½blica general GNU tal y como fue publicada
+* por la Fundaciï¿½n del Software Libre; desde la versiï¿½n 2.1 o cualquier
+* versiï¿½n superior.
 * 
 * Este framework es distribuido con la esperanza de ser util pero SIN NINGUN 
-* TIPO DE GARANTIA; sin dejar atrás su LADO MERCANTIL o PARA FAVORECER ALGUN
-* FIN EN PARTICULAR. Lee la licencia publica general para más detalles.
+* TIPO DE GARANTIA; sin dejar atrï¿½s su LADO MERCANTIL o PARA FAVORECER ALGUN
+* FIN EN PARTICULAR. Lee la licencia publica general para mï¿½s detalles.
 * 
-* Debes recibir una copia de la Licencia Pública General GNU junto con este
-* framework, si no es asi, escribe a Fundación del Software Libre Inc.,
+* Debes recibir una copia de la Licencia Pï¿½blica General GNU junto con este
+* framework, si no es asi, escribe a Fundaciï¿½n del Software Libre Inc.,
 * 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
 *****************************************************************************/
 
@@ -44,8 +44,8 @@ require_once "kumbia.php";
  * El driver de Kumbia es cargado segun lo que diga en config.ini
  */
 if(!dbBase::load_driver()){
-	Flash::warning('No se pudo cargar el driver de la base de datos definido en forms/config/config.ini');
-	return false;
+    Flash::warning('No se pudo cargar el driver de la base de datos definido en forms/config/config.ini');
+    return false;
 }
 
 /**
@@ -59,28 +59,28 @@ if(!dbBase::load_driver()){
  * Esta variable tambien puede ser utilizada para cargar modulos de
  * usuario y clases personalizadas
  * 
- * Chequee la función import() en este mismo archivo para encontrar una forma
+ * Chequee la funciï¿½n import() en este mismo archivo para encontrar una forma
  * alternativa para cargar modulos y clases de usuario en Kumbia
  * 
  */
 if(!isset($_SESSION['KUMBIA_MODULES'])){
-	$_SESSION['KUMBIA_MODULES'] = array();
+    $_SESSION['KUMBIA_MODULES'] = array();
 }
 if(!isset($_SESSION['KUMBIA_MODULES'][$_SESSION['KUMBIA_PATH']])){
-	$_SESSION['KUMBIA_MODULES'][$_SESSION['KUMBIA_PATH']] = array();
-	if($kumbia_config = Config::read('core.ini')){
-		$kumbia_config->modules->extensions = str_replace(" ", "", $kumbia_config->modules->extensions);
-		$extensions = explode(",", $kumbia_config->modules->extensions);
-		foreach($extensions as $extension){
-			$ex = explode(".", $extension);
-			$ex[0] = escapeshellcmd($ex[0]);
-			$ex[1] = escapeshellcmd($ex[1]);			
-			$_SESSION['KUMBIA_MODULES'][$_SESSION['KUMBIA_PATH']][] = "lib/{$ex[0]}/{$ex[1]}.php";
-		}
-	}
+    $_SESSION['KUMBIA_MODULES'][$_SESSION['KUMBIA_PATH']] = array();
+    if($kumbia_config = Config::read('core.ini')){
+        $kumbia_config->modules->extensions = str_replace(" ", "", $kumbia_config->modules->extensions);
+        $extensions = explode(",", $kumbia_config->modules->extensions);
+        foreach($extensions as $extension){
+            $ex = explode(".", $extension);
+            $ex[0] = escapeshellcmd($ex[0]);
+            $ex[1] = escapeshellcmd($ex[1]);            
+            $_SESSION['KUMBIA_MODULES'][$_SESSION['KUMBIA_PATH']][] = "lib/{$ex[0]}/{$ex[1]}.php";
+        }
+    }
 }
 foreach($_SESSION['KUMBIA_MODULES'][$_SESSION['KUMBIA_PATH']] as $kbmodule){
-	require_once $kbmodule;
+    require_once $kbmodule;
 }
 
 /**
@@ -89,7 +89,7 @@ foreach($_SESSION['KUMBIA_MODULES'][$_SESSION['KUMBIA_PATH']] as $kbmodule){
  *
  */
 function content(){
-	print Kumbia::$content;
+    print Kumbia::$content;
 }
 
 

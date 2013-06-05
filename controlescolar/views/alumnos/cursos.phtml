@@ -49,18 +49,18 @@
                                 <?php echo $curso->materia ?>
                             </a>
                         <?php }else{ ?>
-								<?php echo $curso->materia ?>
+                                <?php echo $curso->materia ?>
                         <?php } ?>
                         <?php
-                        		$articulo=$articulos[$curso->id];
-                        		if($articulo!=null){
-                        			echo '<span style="color: rgb(204, 0, 0);">{'.$articulo->clave.'}</span>';
-                        			?>
+                                $articulo=$articulos[$curso->id];
+                                if($articulo!=null){
+                                    echo '<span style="color: rgb(204, 0, 0);">{'.$articulo->clave.'}</span>';
+                                    ?>
 
                         <?php } ?>
                             <br />
                             <span class="sub"><?php echo $curso->verMateriaTipo() ?></span>
-                        	<?php $m=$curso->materia(); if($m->oferta('id')==2){ ?> <span class="sub" style="color:#777777"><?php echo Utils::convierteFecha($curso->inicio); ?></span><?php } ?>
+                            <?php $m=$curso->materia(); if($m->oferta('id')==2){ ?> <span class="sub" style="color:#777777"><?php echo Utils::convierteFecha($curso->inicio); ?></span><?php } ?>
                         </td>
                         <td><?php echo $curso->verProfesor() ?></td>
                         <?php for($d=1; $d<7; $d++){
@@ -90,7 +90,7 @@
                     <?php if($busqueda->condicion() != ''){?>
                         No hay registros que concidan con la b&uacute;squeda
                     <?php }else{?>
-                    	No existen cursos para el ciclo.
+                        No existen cursos para el ciclo.
                     <?php  }  ?>
                 </p>
         <?php } ?>

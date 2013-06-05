@@ -13,75 +13,75 @@
  $path = KUMBIA_PATH;
 ?>
 <div id="primary">
-	<div class="content">
-		<h1>Eliminar asistencias</h1>
-		<h2><?php echo 'Prof. ' . $curso->verProfesor() ?></h2>
-		<h2>
-			<?php echo $grupo->grado .'&deg;' .  $grupo->letra .  ' ' .
-				       $grupo->verTurno() . ', ' . $ciclo->numero?>
-		</h2>
-		<h2><?php echo  $grupo->verOferta(); ?></h2>
-		<h2 id="titulo"><?php echo $curso->verMateriaNombre()?></h2>
-		<?php switch($option) {
-			 case 'confirm':	?>
-				 <div id="options-bar">
-					<div id="options">
-						<a href="<?php echo $path . 'asistencias/ver/' . $curso->id ?>">Volver a asistencias
-						<img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
-					</div>
-				</div>
-				<form action="<?php echo $path . 'asistencias/eliminar/' ?>" id="frm_eliminar" method="post">
-					<input type="hidden" name="cursos_id" value="<?php echo $curso->id?>" />
-					<p class="error">
-						<?php echo $confirm ?>
-					</p>
-					<?php foreach($fechas as $fecha){ ?>
-						<input type="hidden" name="asistencias[]" value="<?php echo $fecha ?>" />
-					<?php } ?>
-					<div id="botones">
-						<input type="submit" id="aceptar" value="Aceptar">
-						<input type="button" id="cancelar" value="Cancelar">
-					</div>
-				</form>
-			<?php  break; ?>
-		    <?php case 'exito':
-			?>
-				<div id="options-bar">
-					<div id="options">
-						<a href="<?php echo $path . 'asistencias/ver/' . $curso->id ?>">Volver a asistencias
-						<img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
-					</div>
-				</div>
-				<p class="info">
-					<br />
-					<?php echo $exito ?>
+    <div class="content">
+        <h1>Eliminar asistencias</h1>
+        <h2><?php echo 'Prof. ' . $curso->verProfesor() ?></h2>
+        <h2>
+            <?php echo $grupo->grado .'&deg;' .  $grupo->letra .  ' ' .
+                       $grupo->verTurno() . ', ' . $ciclo->numero?>
+        </h2>
+        <h2><?php echo  $grupo->verOferta(); ?></h2>
+        <h2 id="titulo"><?php echo $curso->verMateriaNombre()?></h2>
+        <?php switch($option) {
+             case 'confirm':    ?>
+                 <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path . 'asistencias/ver/' . $curso->id ?>">Volver a asistencias
+                        <img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+                    </div>
+                </div>
+                <form action="<?php echo $path . 'asistencias/eliminar/' ?>" id="frm_eliminar" method="post">
+                    <input type="hidden" name="cursos_id" value="<?php echo $curso->id?>" />
+                    <p class="error">
+                        <?php echo $confirm ?>
+                    </p>
+                    <?php foreach($fechas as $fecha){ ?>
+                        <input type="hidden" name="asistencias[]" value="<?php echo $fecha ?>" />
+                    <?php } ?>
+                    <div id="botones">
+                        <input type="submit" id="aceptar" value="Aceptar">
+                        <input type="button" id="cancelar" value="Cancelar">
+                    </div>
+                </form>
+            <?php  break; ?>
+            <?php case 'exito':
+            ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path . 'asistencias/ver/' . $curso->id ?>">Volver a asistencias
+                        <img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+                    </div>
+                </div>
+                <p class="info">
+                    <br />
+                    <?php echo $exito ?>
 
-					<?php if(count($cambios)>0){ ?>
-					<br/>
-					<br/>
-					Se realizaron los siguientes cambios en las calificaciones para que fueran congruentes con los derechos por porcentaje de asistencias:
-					<br/>
-					<br/>
-					<?php foreach($cambios as $cambio){ ?>
-					<?php echo $cambio; ?><br/>
-					<?php } ?>
-					<?php } ?>
-				</p>
-			<?php  break; ?>
-			<?php case 'error':
-				  default:
-			?>
-				<div id="options-bar">
-					<div id="options">
-						<a href="<?php echo $path . 'grupos' ?>">Volver a grupos
-						<img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
-					</div>
-				</div>
-				<p class="error">
-					<br />
-					<?php echo $error ?>
-				</p>
-			<?php  break; ?>
-		<?php } ?>
-	</div>
+                    <?php if(count($cambios)>0){ ?>
+                    <br/>
+                    <br/>
+                    Se realizaron los siguientes cambios en las calificaciones para que fueran congruentes con los derechos por porcentaje de asistencias:
+                    <br/>
+                    <br/>
+                    <?php foreach($cambios as $cambio){ ?>
+                    <?php echo $cambio; ?><br/>
+                    <?php } ?>
+                    <?php } ?>
+                </p>
+            <?php  break; ?>
+            <?php case 'error':
+                  default:
+            ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path . 'grupos' ?>">Volver a grupos
+                        <img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+                    </div>
+                </div>
+                <p class="error">
+                    <br />
+                    <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
 </div>

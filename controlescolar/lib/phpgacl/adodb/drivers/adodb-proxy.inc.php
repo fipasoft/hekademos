@@ -13,21 +13,21 @@ V4.92a 29 Aug 2006  (c) 2000-2006 John Lim (jlim#natsoft.com.my). All rights res
 if (!defined('ADODB_DIR')) die();
 
 if (! defined("_ADODB_PROXY_LAYER")) {
-	 define("_ADODB_PROXY_LAYER", 1 );
-	 include(ADODB_DIR."/drivers/adodb-csv.inc.php");
-	 
-	class ADODB_proxy extends ADODB_csv {
-		var $databaseType = 'proxy';
-		var $databaseProvider = 'csv';
-	}
-	class ADORecordset_proxy extends ADORecordset_csv {
-	var $databaseType = "proxy";		
-	
-		function ADORecordset_proxy($id,$mode=false) 
-		{
-			$this->ADORecordset($id,$mode);
-		}
-	};
+     define("_ADODB_PROXY_LAYER", 1 );
+     include(ADODB_DIR."/drivers/adodb-csv.inc.php");
+     
+    class ADODB_proxy extends ADODB_csv {
+        var $databaseType = 'proxy';
+        var $databaseProvider = 'csv';
+    }
+    class ADORecordset_proxy extends ADORecordset_csv {
+    var $databaseType = "proxy";        
+    
+        function ADORecordset_proxy($id,$mode=false) 
+        {
+            $this->ADORecordset($id,$mode);
+        }
+    };
 } // define
-	
+    
 ?>

@@ -1,9 +1,9 @@
 /*****************************************************************************
 * KumbiaForms - PHP Rapid Development Framework                              *
 ******************************************************************************
-*	                                                                         *
-* Copyright (C) 2005 Andrés Felipe Gutiérrez (andresfelipe at vagoogle.net)  *
-* 	                                                                         *
+*                                                                             *
+* Copyright (C) 2005 Andrï¿½s Felipe Gutiï¿½rrez (andresfelipe at vagoogle.net)  *
+*                                                                              *
 * This framework is free software; you can redistribute it and/or            *
 * modify it under the terms of the GNU Lesser General Public                 *
 * License as published by the Free Software Foundation; either               *
@@ -22,5 +22,5 @@
 
 //Email Component
 function saveEmail(obj) {
-	document.getElementById("flid_"+obj).value = document.getElementById(obj+"_email1").value + "@" + document.getElementById(obj+"_email2").value 
+    document.getElementById("flid_"+obj).value = document.getElementById(obj+"_email1").value + "@" + document.getElementById(obj+"_email2").value 
 }

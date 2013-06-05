@@ -10,7 +10,7 @@
  *
  */
  class Faltas extends ActiveRecord{
- 	public $alumnos_id;
+     public $alumnos_id;
 
  }
 ?>

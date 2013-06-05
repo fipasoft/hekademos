@@ -12,15 +12,15 @@
 
  class Oportunidades extends ActiveRecord{
 
- 	public function ordinario(){
- 		$oportunidad=$this->find_first("nombre='ordinario'");
- 		return $oportunidad;
- 	}
+     public function ordinario(){
+         $oportunidad=$this->find_first("nombre='ordinario'");
+         return $oportunidad;
+     }
 
- 	public function extraordinario(){
- 		$oportunidad=$this->find_first("nombre='extraordinario'");
- 		return $oportunidad;
- 	}
+     public function extraordinario(){
+         $oportunidad=$this->find_first("nombre='extraordinario'");
+         return $oportunidad;
+     }
 
  }
 ?>

@@ -2,43 +2,43 @@
 
 ?>
 <div id="primary">
-	<div class="content">
-	<?php switch($option) {
-	 case "vista": ?>
-		<h1>
-		Importar credenciales
-		</h1>
-		<h2></h2>
-		<div id="options-bar">
-			<div id="options">
+    <div class="content">
+    <?php switch($option) {
+     case "vista": ?>
+        <h1>
+        Importar credenciales
+        </h1>
+        <h2></h2>
+        <div id="options-bar">
+            <div id="options">
 
-			</div>
-		<br/>
-		<br/>
+            </div>
+        <br/>
+        <br/>
 
 
-		<table>
-			<tr><th>#</th><th>Info</th></tr>
-			<?php
-				$i = 1;
-				foreach($datos as $dato){
-					?>
-			<tr><td><?php echo $i ?></td><td><?php echo $dato; ?></td></tr>
-				<?php
-				$i++;
-				}
-			?>
-		</table>
-		<?php break; ?>
-		<?php case "default": ?>
-		<?php case "error": ?>
-		<br/><br/>
-		<p class="error" >
-		<br/>
-		<?php echo $error;  ?>
-		</p>
-		<?php break; ?>
-		<?php } ?>
+        <table>
+            <tr><th>#</th><th>Info</th></tr>
+            <?php
+                $i = 1;
+                foreach($datos as $dato){
+                    ?>
+            <tr><td><?php echo $i ?></td><td><?php echo $dato; ?></td></tr>
+                <?php
+                $i++;
+                }
+            ?>
+        </table>
+        <?php break; ?>
+        <?php case "default": ?>
+        <?php case "error": ?>
+        <br/><br/>
+        <p class="error" >
+        <br/>
+        <?php echo $error;  ?>
+        </p>
+        <?php break; ?>
+        <?php } ?>
 
-	</div>
+    </div>
 </div>

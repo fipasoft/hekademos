@@ -1,9 +1,9 @@
 <?php
 
 /** KumbiaForms - PHP Rapid Development Framework *****************************
-*	
-* Copyright (C) 2005-2007 Andrés Felipe Gutiérrez (andresfelipe at vagoogle.net)
-* 	
+*    
+* Copyright (C) 2005-2007 Andrï¿½s Felipe Gutiï¿½rrez (andresfelipe at vagoogle.net)
+*     
 * This framework is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
 * License as published by the Free Software Foundation; either
@@ -19,16 +19,16 @@
 * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 * 
 * Este framework es software libre; puedes redistribuirlo y/o modificarlo
-* bajo los terminos de la licencia pública general GNU tal y como fue publicada
-* por la Fundación del Software Libre; desde la versión 2.1 o cualquier
-* versión superior.
+* bajo los terminos de la licencia pï¿½blica general GNU tal y como fue publicada
+* por la Fundaciï¿½n del Software Libre; desde la versiï¿½n 2.1 o cualquier
+* versiï¿½n superior.
 * 
 * Este framework es distribuido con la esperanza de ser util pero SIN NINGUN 
-* TIPO DE GARANTIA; sin dejar atrás su LADO MERCANTIL o PARA FAVORECER ALGUN
-* FIN EN PARTICULAR. Lee la licencia publica general para más detalles.
+* TIPO DE GARANTIA; sin dejar atrï¿½s su LADO MERCANTIL o PARA FAVORECER ALGUN
+* FIN EN PARTICULAR. Lee la licencia publica general para mï¿½s detalles.
 * 
-* Debes recibir una copia de la Licencia Pública General GNU junto con este
-* framework, si no es asi, escribe a Fundación del Software Libre Inc.,
+* Debes recibir una copia de la Licencia Pï¿½blica General GNU junto con este
+* framework, si no es asi, escribe a Fundaciï¿½n del Software Libre Inc.,
 * 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
 *****************************************************************************/
 
@@ -40,60 +40,60 @@ $workbook = new Spreadsheet_Excel_Writer("public/temp/$file.xls");
 $worksheet =& $workbook->addWorksheet();
 
 $titulo_verdana  =& $workbook->addFormat(array('fontfamily' => 'Verdana', 
-											  'size' => 20));
+                                              'size' => 20));
 $titulo_verdana2 =& $workbook->addFormat(array('fontfamily' => 'Verdana', 
-											  'size' => 18));
-											  
+                                              'size' => 18));
+                                              
 $workbook->setCustomColor(12, 0xF2, 0xF2, 0xF2);
 
 $column_title =& $workbook->addFormat(array('fontfamily' => 'Verdana', 
-											'size' => 12,
-											'fgcolor' => 12,
-											'border' => 1,
-											'bordercolor' => 'black',
-											"halign" => 'center'
-											));
-											
-$column =& $workbook->addFormat(array(	'fontfamily' => 'Verdana', 
-										'size' => 11,										
-										'border' => 1,
-										'bordercolor' => 'black',										
-										));
-										
-$column_centered =& $workbook->addFormat(array(	'fontfamily' => 'Verdana', 
-										'size' => 11,										
-										'border' => 1,
-										'bordercolor' => 'black',
-										"halign" => 'center'
-										));										
+                                            'size' => 12,
+                                            'fgcolor' => 12,
+                                            'border' => 1,
+                                            'bordercolor' => 'black',
+                                            "halign" => 'center'
+                                            ));
+                                            
+$column =& $workbook->addFormat(array(    'fontfamily' => 'Verdana', 
+                                        'size' => 11,                                        
+                                        'border' => 1,
+                                        'bordercolor' => 'black',                                        
+                                        ));
+                                        
+$column_centered =& $workbook->addFormat(array(    'fontfamily' => 'Verdana', 
+                                        'size' => 11,                                        
+                                        'border' => 1,
+                                        'bordercolor' => 'black',
+                                        "halign" => 'center'
+                                        ));                                        
 
 $worksheet->write(0, 0, strtoupper($config->project->name), $titulo_verdana);
 $worksheet->write(1, 0, "REPORTE DE ".strtoupper($title), $titulo_verdana2);
 $worksheet->write(2, 0, "FECHA ".date("Y-m-d"), $titulo_verdana2);
 
 for($i=0;$i<=count($headerArray)-1;$i++){
-	$worksheet->setColumn($i, $i, $weightArray[$i]);	
-	$worksheet->write(4, $i, $headerArray[$i], $column_title);
+    $worksheet->setColumn($i, $i, $weightArray[$i]);    
+    $worksheet->write(4, $i, $headerArray[$i], $column_title);
 }
 
 $l = 5;
 foreach($result as $row){
-	for($i=0;$i<=count($row)-1;$i++){		
-		if(!is_numeric($row[$i])){
-			$worksheet->writeString($l, $i, $row[$i], $column);
-		} else {
-			$worksheet->writeString($l, $i, $row[$i], $column_centered);
-		}
-	}
-	$l++;
+    for($i=0;$i<=count($row)-1;$i++){        
+        if(!is_numeric($row[$i])){
+            $worksheet->writeString($l, $i, $row[$i], $column);
+        } else {
+            $worksheet->writeString($l, $i, $row[$i], $column_centered);
+        }
+    }
+    $l++;
 }
 
 $workbook->close();
 
 if(isset($raw_output)){
-	print "<script type='text/javascript'> window.open('".KUMBIA_PATH."temp/".$file.".xls', null);  </script>";
+    print "<script type='text/javascript'> window.open('".KUMBIA_PATH."temp/".$file.".xls', null);  </script>";
 } else {
-	Generator::forms_print("<script type='text/javascript'> window.open('".KUMBIA_PATH."temp/".$file.".xls', null);  </script>");
+    Generator::forms_print("<script type='text/javascript'> window.open('".KUMBIA_PATH."temp/".$file.".xls', null);  </script>");
 }
 
 

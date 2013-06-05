@@ -1,83 +1,83 @@
 <?php $path = KUMBIA_PATH; ?>
 <div id="primary">
-	<div class="content">
-		<h1>Importar Fotos</h1>
-		<?php switch($option) {
-				case 'vista': ?>
-				<div id="options-bar">
-					<div id="options">
-						<a href="<?php echo $path ?>importar/index">Volver a importar
-							<img src="<?php echo $path?>public/img/sp5/volver.png"/>
-						</a>
-					</div>
-				</div>
-				<form action="<?php echo $path ?>importar/fotos/"  method="post">
+    <div class="content">
+        <h1>Importar Fotos</h1>
+        <?php switch($option) {
+                case 'vista': ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path ?>importar/index">Volver a importar
+                            <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                        </a>
+                    </div>
+                </div>
+                <form action="<?php echo $path ?>importar/fotos/"  method="post">
 
-				<?php
-				$imagenes=0;
-				while($elemento = readdir($dir)){
+                <?php
+                $imagenes=0;
+                while($elemento = readdir($dir)){
 
-				if( ( substr( $elemento, strlen( $elemento ) - strlen( '.jpg' ) ) == '.jpg' ) ||
-					( substr( $elemento, strlen( $elemento ) - strlen( '.gif' ) ) == '.gif' ) ||
-					( substr( $elemento, strlen( $elemento ) - strlen( '.jpeg' ) ) == '.jpeg' ) ||
-					( substr( $elemento, strlen( $elemento ) - strlen( '.png' ) ) == '.png' )
-					){
-					$imagenes++;
-					}
+                if( ( substr( $elemento, strlen( $elemento ) - strlen( '.jpg' ) ) == '.jpg' ) ||
+                    ( substr( $elemento, strlen( $elemento ) - strlen( '.gif' ) ) == '.gif' ) ||
+                    ( substr( $elemento, strlen( $elemento ) - strlen( '.jpeg' ) ) == '.jpeg' ) ||
+                    ( substr( $elemento, strlen( $elemento ) - strlen( '.png' ) ) == '.png' )
+                    ){
+                    $imagenes++;
+                    }
 
-				}
+                }
 
-				if($imagenes>0){ ?>
-				<p class="info">
-					El directorio <?php echo $directorio; ?> cuenta con <?php echo $imagenes; ?> imagen<?php if($imagenes>1)echo 'es'; ?>.
-					<br />
-				 	Se realizara la importacion de fotos de los alumnos.<br/>
-				 	<strong>&iquest;Desea continuar?</strong>
-				</p>
-				<input type="hidden" value="<?php echo $id; ?>" name="tipo" />
-				<div id="botones">
-						<input type="submit" id="aceptar_c" value="Aceptar">
-						<input type="button" id="cancelar_c" value="Cancelar">
+                if($imagenes>0){ ?>
+                <p class="info">
+                    El directorio <?php echo $directorio; ?> cuenta con <?php echo $imagenes; ?> imagen<?php if($imagenes>1)echo 'es'; ?>.
+                    <br />
+                     Se realizara la importacion de fotos de los alumnos.<br/>
+                     <strong>&iquest;Desea continuar?</strong>
+                </p>
+                <input type="hidden" value="<?php echo $id; ?>" name="tipo" />
+                <div id="botones">
+                        <input type="submit" id="aceptar_c" value="Aceptar">
+                        <input type="button" id="cancelar_c" value="Cancelar">
 
-					</div>
-				</form>
-				<?php }else{ ?>
-					<p class="error">
-					<br/>
-					No se ha colocado ninguna imagen en el directorio <?php echo $directorio; ?>.
-					</p>
+                    </div>
+                </form>
+                <?php }else{ ?>
+                    <p class="error">
+                    <br/>
+                    No se ha colocado ninguna imagen en el directorio <?php echo $directorio; ?>.
+                    </p>
 
-				<?php } ?>
-		<?php break; ?>
-		<?php case 'importa': ?>
-				<div id="options-bar">
-					<div id="options">
-						<a href="<?php echo $path ?>importar/index">Volver a importar
-							<img src="<?php echo $path?>public/img/sp5/volver.png"/>
-						</a>
-					</div>
-				</div>
-				<p class="info">
-					<br/>
-					Se <?php if($imagenes==0 || $imagenes>1) echo 'exportaron';else echo 'exporto' ?> <?php echo $imagenes ?> imagen<?php if($imagenes==0 || $imagenes>1) echo 'es'; ?> con exito.
-				</p>
-			<?php break; ?>
-			<?php case 'error':
-			  default:
-			?>
-				<div id="options-bar">
-					<div id="options">
-						<a href="<?php echo $path ?>importar/index">Volver a importar
-							<img src="<?php echo $path?>public/img/sp5/volver.png"/>
-						</a>
-					</div>
-				</div>
-				<p class="error">
-					<br />Ocurrio un error al realizar la importacion. No se realizo ningun cambio.
-					<br/>
-				 	<?php echo $error ?>
-				</p>
-		<?php break; ?>
-		<?php } ?>
-	</div>
+                <?php } ?>
+        <?php break; ?>
+        <?php case 'importa': ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path ?>importar/index">Volver a importar
+                            <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                        </a>
+                    </div>
+                </div>
+                <p class="info">
+                    <br/>
+                    Se <?php if($imagenes==0 || $imagenes>1) echo 'exportaron';else echo 'exporto' ?> <?php echo $imagenes ?> imagen<?php if($imagenes==0 || $imagenes>1) echo 'es'; ?> con exito.
+                </p>
+            <?php break; ?>
+            <?php case 'error':
+              default:
+            ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path ?>importar/index">Volver a importar
+                            <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                        </a>
+                    </div>
+                </div>
+                <p class="error">
+                    <br />Ocurrio un error al realizar la importacion. No se realizo ningun cambio.
+                    <br/>
+                     <?php echo $error ?>
+                </p>
+        <?php break; ?>
+        <?php } ?>
+    </div>
 </div>

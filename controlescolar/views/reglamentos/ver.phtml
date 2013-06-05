@@ -1,113 +1,113 @@
 <?php $path = KUMBIA_PATH; ?>
 <div id="primary">
-	<div class="content">
-		<h1>Datos del reglamento</h1>
-		<div id="options-bar">
-			<div id="options">
-				<a href="<?php echo $path ?>reglamentos">Volver
-				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
-				</a>
-					<?php if($acl['buscar']){ ?>
-					/
-		 			 	<a href="" id="aSearch" title="Buscar" alt="Buscar">
-							Buscar
-							<img src="<?php echo $path?>public/img/sp5/buscar.png"/>
-						</a>
-					<?php } ?>
-					<?php if($acl['buscar'] && $acl['agregar']){ ?>
-						/
-					<?php } ?>
-					<?php if($acl['agregar']){ ?>
-						<a href="<?php echo $path ?>articulos/agregar/<?php echo $reg->id?>" title="Agregar un articulo al reglamento" alt="Agregar un articulo al reglamento">
-							Agregar articulo
-							<img src="<?php echo $path?>public/img/sp5/nuevo.png"/>
-						</a>
-					<?php } ?>
-					<?php if($acl['importar']){ ?>
-					/
-						<a href="<?php echo $path ?>articulos/importar/<?php echo $reg->id?>" title="Importar articulos al reglamento." alt="Importar articulos al reglamento.">
-							Importar articulos
-							<img src="<?php echo $path?>public/img/sp5/vaciar.png"/>
-						</a>
-					<?php } ?>
-			</div>
-			<?php if($acl['buscar']){ ?>
-				<div id="search" <?php if($busqueda->condicion() == ''){?> style="display:none" <?php } ?>>
-					<form action="<?php echo $path ?>reglamentos/ver/<?php echo $reg->id ?>" method="post" id="frm_search">
-						<fieldset>
-							<label for="articulo">Articulo</label>
-							<input type="text" name="articulo" id="articulo" value="<?php echo $busqueda->campo('articulo') ?>" size="20" maxlength="255" />
-							<label for="descripcion">Descripci&oacute;n</label>
-							<input type="text" name="descripcion" id="descripcion" value="<?php echo $busqueda->campo('descripcion') ?>" size="20" maxlength="255" />
-							<input type="submit" id="btn_submit" value="Filtrar" />
-							<input type="reset" id="reset" value="Quitar filtros" />
-						</fieldset>
-					</form>
-				</div>
-			<?php } ?>
-		</div>
-		<div id = 'reglamento'>
-			<h2><?php echo $reg->nombre ?></h2>
-			<span><?php echo $reg->descripcion ?></span>
-			<br >
-			<span class = "inicio"><?php echo ($reg->inicio != '0000-00-00' && $reg->inicio != '' ? Utils :: fecha_mix($reg->inicio) : '-')?></span>
-			<br />
-			<span class = "fin"><?php echo ($reg->fin != '0000-00-00' && $reg->fin != '' ? Utils :: fecha_mix($reg->fin) : '-')?></span>
-		</div>
-		<?php if(count($articulos) > 0){ ?>
-		<div id = "articulos">
-		<table>
-			<tr>
-				<th>Numero</th>
-				<th>Descripci&oacute;n</th>
-				<?php if($acl['editar'] || $acl['eliminar']){ ?>
-				<th>Opciones</th>
-				<?php } ?>
-			</tr>
-			<?php 	$i = 0;
-					foreach($articulos as $articulo){ ?>
-					<tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
-					<td><?php echo "Articulo ".$articulo->numero ?></td>
-					<td >
-						<?php echo (strlen($articulo->descripcion) > 100 ? substr($articulo->descripcion,0,100).'...' : $articulo->descripcion) ?>
-					</td>
-					<td>
-						<a href="<?php echo $path . 'articulos/ver/' . $articulo->id?>"
-						   alt="Ver datos del articulo" title="Ver datos del articulo">
-						   <img src="<?php echo $path?>public/img/sp5/ver.png" />
-						</a>
-						<?php if($acl['editar']){ ?>
-							<a href="<?php echo $path . 'articulos/editar/'.$reg->id.'/'. $articulo->id?>"
-						   		alt="Editar datos del reglamento" title="Editar datos del reglamento">
-						   		<img src="<?php echo $path?>public/img/sp5/editar.png" />
-							</a> 
-						<?php } ?>
-						<?php if($acl['eliminar']){ ?>
-							<a href="<?php echo $path . 'articulos/eliminar/' .$reg->id.'/'. $articulo->id?>"
-						   		alt="Eliminar toda la informacion del reglamento" title="Eliminar toda la informacion del reglamento">
-						   		<img src="<?php echo $path?>public/img/sp5/eliminar.png" />
-							</a>
-						<?php } ?>
-					</td>
-					</tr>
-			<?php  $i++; 
-					} ?>
-		</table>
-		</div>
-		<?php } else {?>
-			<p class="error">
-				<br />
-			 	Este reglamento no tiene ningun articulo.
-			</p>
-		<?php } ?>
-		<div id="pages">
-			<?php foreach($paginador->botones() as $boton){ ?>
-				 <a  href="<?php echo $path . $boton->url() ?>"
-					title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
-					class="<?php echo $boton->estilo() ?>">
-					<?php echo $boton->etiqueta() ?>
-				</a>
-			<?php }?>
-		</div>
-	</div>
+    <div class="content">
+        <h1>Datos del reglamento</h1>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path ?>reglamentos">Volver
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+                    <?php if($acl['buscar']){ ?>
+                    /
+                          <a href="" id="aSearch" title="Buscar" alt="Buscar">
+                            Buscar
+                            <img src="<?php echo $path?>public/img/sp5/buscar.png"/>
+                        </a>
+                    <?php } ?>
+                    <?php if($acl['buscar'] && $acl['agregar']){ ?>
+                        /
+                    <?php } ?>
+                    <?php if($acl['agregar']){ ?>
+                        <a href="<?php echo $path ?>articulos/agregar/<?php echo $reg->id?>" title="Agregar un articulo al reglamento" alt="Agregar un articulo al reglamento">
+                            Agregar articulo
+                            <img src="<?php echo $path?>public/img/sp5/nuevo.png"/>
+                        </a>
+                    <?php } ?>
+                    <?php if($acl['importar']){ ?>
+                    /
+                        <a href="<?php echo $path ?>articulos/importar/<?php echo $reg->id?>" title="Importar articulos al reglamento." alt="Importar articulos al reglamento.">
+                            Importar articulos
+                            <img src="<?php echo $path?>public/img/sp5/vaciar.png"/>
+                        </a>
+                    <?php } ?>
+            </div>
+            <?php if($acl['buscar']){ ?>
+                <div id="search" <?php if($busqueda->condicion() == ''){?> style="display:none" <?php } ?>>
+                    <form action="<?php echo $path ?>reglamentos/ver/<?php echo $reg->id ?>" method="post" id="frm_search">
+                        <fieldset>
+                            <label for="articulo">Articulo</label>
+                            <input type="text" name="articulo" id="articulo" value="<?php echo $busqueda->campo('articulo') ?>" size="20" maxlength="255" />
+                            <label for="descripcion">Descripci&oacute;n</label>
+                            <input type="text" name="descripcion" id="descripcion" value="<?php echo $busqueda->campo('descripcion') ?>" size="20" maxlength="255" />
+                            <input type="submit" id="btn_submit" value="Filtrar" />
+                            <input type="reset" id="reset" value="Quitar filtros" />
+                        </fieldset>
+                    </form>
+                </div>
+            <?php } ?>
+        </div>
+        <div id = 'reglamento'>
+            <h2><?php echo $reg->nombre ?></h2>
+            <span><?php echo $reg->descripcion ?></span>
+            <br >
+            <span class = "inicio"><?php echo ($reg->inicio != '0000-00-00' && $reg->inicio != '' ? Utils :: fecha_mix($reg->inicio) : '-')?></span>
+            <br />
+            <span class = "fin"><?php echo ($reg->fin != '0000-00-00' && $reg->fin != '' ? Utils :: fecha_mix($reg->fin) : '-')?></span>
+        </div>
+        <?php if(count($articulos) > 0){ ?>
+        <div id = "articulos">
+        <table>
+            <tr>
+                <th>Numero</th>
+                <th>Descripci&oacute;n</th>
+                <?php if($acl['editar'] || $acl['eliminar']){ ?>
+                <th>Opciones</th>
+                <?php } ?>
+            </tr>
+            <?php     $i = 0;
+                    foreach($articulos as $articulo){ ?>
+                    <tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+                    <td><?php echo "Articulo ".$articulo->numero ?></td>
+                    <td >
+                        <?php echo (strlen($articulo->descripcion) > 100 ? substr($articulo->descripcion,0,100).'...' : $articulo->descripcion) ?>
+                    </td>
+                    <td>
+                        <a href="<?php echo $path . 'articulos/ver/' . $articulo->id?>"
+                           alt="Ver datos del articulo" title="Ver datos del articulo">
+                           <img src="<?php echo $path?>public/img/sp5/ver.png" />
+                        </a>
+                        <?php if($acl['editar']){ ?>
+                            <a href="<?php echo $path . 'articulos/editar/'.$reg->id.'/'. $articulo->id?>"
+                                   alt="Editar datos del reglamento" title="Editar datos del reglamento">
+                                   <img src="<?php echo $path?>public/img/sp5/editar.png" />
+                            </a> 
+                        <?php } ?>
+                        <?php if($acl['eliminar']){ ?>
+                            <a href="<?php echo $path . 'articulos/eliminar/' .$reg->id.'/'. $articulo->id?>"
+                                   alt="Eliminar toda la informacion del reglamento" title="Eliminar toda la informacion del reglamento">
+                                   <img src="<?php echo $path?>public/img/sp5/eliminar.png" />
+                            </a>
+                        <?php } ?>
+                    </td>
+                    </tr>
+            <?php  $i++; 
+                    } ?>
+        </table>
+        </div>
+        <?php } else {?>
+            <p class="error">
+                <br />
+                 Este reglamento no tiene ningun articulo.
+            </p>
+        <?php } ?>
+        <div id="pages">
+            <?php foreach($paginador->botones() as $boton){ ?>
+                 <a  href="<?php echo $path . $boton->url() ?>"
+                    title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
+                    class="<?php echo $boton->estilo() ?>">
+                    <?php echo $boton->etiqueta() ?>
+                </a>
+            <?php }?>
+        </div>
+    </div>
 </div>

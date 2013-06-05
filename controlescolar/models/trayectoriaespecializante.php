@@ -12,10 +12,10 @@
  Kumbia :: import('lib.kumbia.utils');
 
  class Trayectoriaespecializante extends ActiveRecord{
- 	public $cupos=0;
-	public function todas(){
-		$trayectorias=new Trayectoriaespecializante();
-		return $trayectorias->find();
-	}
+     public $cupos=0;
+    public function todas(){
+        $trayectorias=new Trayectoriaespecializante();
+        return $trayectorias->find();
+    }
  }
 ?>

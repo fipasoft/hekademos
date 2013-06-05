@@ -346,11 +346,11 @@ Object.extend(Object.extend(Ajax.Autocompleter.prototype, Autocompleter.Base.pro
       this.options.callback(this.element, entry) : entry;
 
     if(this.options.defaultParams) 
-      this.options.parameters += '&' + this.options.defaultParams;	
+      this.options.parameters += '&' + this.options.defaultParams;    
     new Ajax.Request(this.url, this.options);
   },
 
-  onComplete: function(request) {  	
+  onComplete: function(request) {      
     this.updateChoices(request.responseText);
   }
 

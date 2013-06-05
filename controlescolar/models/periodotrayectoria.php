@@ -11,27 +11,27 @@
  */
 
   class Periodotrayectoria extends ActiveRecord{
-		public $nombre;
-		public function trayectoriasporperiodo($periodo_id,$order = ""){
-			$consulta = "SELECT periodotrayectoria.*,trayectoriaespecializante.nombre
-						FROM
-						periodotrayectoria
-						INNER JOIN trayectoriaespecializante ON periodotrayectoria.trayectoriaespecializante_id = trayectoriaespecializante.id
-						WHERE periodotrayectoria.periodo_id=".$periodo_id." ".$order;
-			$trayectorias = new Periodotrayectoria();
-			$trayectorias = $trayectorias->find_all_by_sql($consulta);
-			return $trayectorias;
-		}
+        public $nombre;
+        public function trayectoriasporperiodo($periodo_id,$order = ""){
+            $consulta = "SELECT periodotrayectoria.*,trayectoriaespecializante.nombre
+                        FROM
+                        periodotrayectoria
+                        INNER JOIN trayectoriaespecializante ON periodotrayectoria.trayectoriaespecializante_id = trayectoriaespecializante.id
+                        WHERE periodotrayectoria.periodo_id=".$periodo_id." ".$order;
+            $trayectorias = new Periodotrayectoria();
+            $trayectorias = $trayectorias->find_all_by_sql($consulta);
+            return $trayectorias;
+        }
 
-		public function verTurno(){
-			switch($this->turno){
-				case "M": return "Matutino";
-				case "V": return "Vespertino";
-				default: return "";
+        public function verTurno(){
+            switch($this->turno){
+                case "M": return "Matutino";
+                case "V": return "Vespertino";
+                default: return "";
 
 
-			}
-		}
+            }
+        }
 
-	  }
+      }
 ?>

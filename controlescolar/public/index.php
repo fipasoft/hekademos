@@ -64,18 +64,18 @@ chdir('..');
 $delete_session_cache = false;
 $path = join(array_slice(split( "/" ,dirname($_SERVER['PHP_SELF'])),1,-1),"/");
 if($path!=$_SESSION['KUMBIA_PATH']){
-	$delete_session_cache = true;
+    $delete_session_cache = true;
 }
 $_SESSION['KUMBIA_PATH'] = $path;
 if($_SESSION['KUMBIA_PATH']){
-	define('KUMBIA_PATH', "/".$_SESSION['KUMBIA_PATH']."/");
+    define('KUMBIA_PATH', "/".$_SESSION['KUMBIA_PATH']."/");
 } else {
-	define('KUMBIA_PATH', "/");
+    define('KUMBIA_PATH', "/");
 }
 require "forms.php";
 if($delete_session_cache){
-	Kumbia::$models = array();
-	Kumbia::$controller = null;
+    Kumbia::$models = array();
+    Kumbia::$controller = null;
 }
 Kumbia::main();
 

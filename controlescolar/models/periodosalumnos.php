@@ -11,6 +11,6 @@
  */
 
   class Periodosalumnos extends ActiveRecord{
-  	protected $grupos_id;
+      protected $grupos_id;
   }
 ?>

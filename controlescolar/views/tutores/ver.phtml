@@ -1,106 +1,106 @@
 <?php $path = KUMBIA_PATH; ?>
 <div id="primary">
-	<div class="content">
-		<h1>Datos del tutor</h1>
-		<div id="options-bar">
-			<div id="options">
-				<a href="<?php echo $path ?>tutores">Volver
-				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
-				</a>
-				<?php if($tutor->id != ''){?>
-					<?php if($acl['editar'] ){ ?>
-		 			 / <a href="<?php echo $path . 'tutores/editar/' . $tutor->id?>"
-					   alt="Editar datos del tutor" title="Editar datos del tutor">
-					   Editar
-					   <img src="<?php echo $path?>public/img/sp5/editar.png" />
-					</a>
-					<?php } ?>
-					<?php if($acl['eliminar'] ){ ?>
-					 / <a href="<?php echo $path . 'tutores/eliminar/' . $tutor->id?>"
-					   alt="Eliminar toda la informacion del tutor" title="Eliminar toda la informacion del tutor">
-					   Eliminar
-					   <img src="<?php echo $path?>public/img/sp5/eliminar.png" />
-					</a>
-					<?php } ?>
-				<?php }?>
-			</div>
-		</div>
-		<?php if($tutor->id != '') {?>
-		<table>
-			<tr>
-				<th>Nombre</th>
-				<td>
-					<?php echo  $tutor->ap . ' ' .
-								$tutor->am . ', ' .
-								$tutor->nombre ?>
-				</td>
-				<td rowspan="5">
-					<?php if($tutor->foto != ''){ ?>
-						<img src="<?php echo $path . 'public/img/tutores/' . $tutor->foto . '?d=' . time() ?>" class="ficha"/>
-					<?php }else{ ?>
-						<img src="<?php echo $path ?>public/img/sp5/persona.png" class="ficha"/>
-					<?php }?>
-				</td>
-			</tr>
-			<tr>
-				<th>Alumno</th>
-				<td>
-					<ul>
-						<?php foreach($tutor->tutorados() as $alu){ ?>
-							<li>
-								<a href="<?php echo $path . 'alumnos/ver/' . $alu->id ?>"
-								   alt="Ver datos del alumno"
-								   title="Ver datos del alumno">
-									<?php echo $alu->nombre() ?>
-								</a>
-							</li>
-						<?php }?>
-					<ul>
-				</td>
-			</tr>
-			</tr>
-			<tr>
-				<th>Sexo</th>
-				<td><?php echo $tutor->sexo()?></td>
-			</tr>
-			<tr>
-				<th>Fecha de nacimiento</th>
-				<td><?php echo $tutor->fnacimiento()?></td>
-			</tr>
-			<tr>
-				<th>Domicilio</th>
-				<td><?php echo ($tutor->domicilio == '' ? '-' : $tutor->domicilio) ?></td>
-			</tr>
-			<tr>
-				<th>Tel&eacute;fono</th>
-				<td colspan="2">
-					<?php echo ($tutor->tel == '' ? '-' : $tutor->tel)?>
-				</td>
-			</tr>
-			<tr>
-				<th>Tel&eacute;fono m&oacute;vil</th>
-				<td colspan="2">
-					<?php echo ($tutor->cel == '' ? '-' : $tutor->cel)?>
-				</td>
-			</tr>
-			<tr>
-				<th>Correo Electr&oacute;nico</th>
-				<td colspan="2">
-					<?php if($tutor->mail != ''){ ?>
-						<a href="mailto:<?php echo $tutor->mail?>" />
-							<?php echo $tutor->mail?>
-						</a>
-					<?php }else{ ?>
-						-
-					<?php } ?>
-				</td>
-			</tr>
-		</table>
-		<?php } else {?>
-			<p class="error">
-				<br />
-			 	No existe informaci&oacute;n del tutor seleccionado.
-			</p>
-		<?php } ?>
-	</div>
+    <div class="content">
+        <h1>Datos del tutor</h1>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path ?>tutores">Volver
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+                <?php if($tutor->id != ''){?>
+                    <?php if($acl['editar'] ){ ?>
+                      / <a href="<?php echo $path . 'tutores/editar/' . $tutor->id?>"
+                       alt="Editar datos del tutor" title="Editar datos del tutor">
+                       Editar
+                       <img src="<?php echo $path?>public/img/sp5/editar.png" />
+                    </a>
+                    <?php } ?>
+                    <?php if($acl['eliminar'] ){ ?>
+                     / <a href="<?php echo $path . 'tutores/eliminar/' . $tutor->id?>"
+                       alt="Eliminar toda la informacion del tutor" title="Eliminar toda la informacion del tutor">
+                       Eliminar
+                       <img src="<?php echo $path?>public/img/sp5/eliminar.png" />
+                    </a>
+                    <?php } ?>
+                <?php }?>
+            </div>
+        </div>
+        <?php if($tutor->id != '') {?>
+        <table>
+            <tr>
+                <th>Nombre</th>
+                <td>
+                    <?php echo  $tutor->ap . ' ' .
+                                $tutor->am . ', ' .
+                                $tutor->nombre ?>
+                </td>
+                <td rowspan="5">
+                    <?php if($tutor->foto != ''){ ?>
+                        <img src="<?php echo $path . 'public/img/tutores/' . $tutor->foto . '?d=' . time() ?>" class="ficha"/>
+                    <?php }else{ ?>
+                        <img src="<?php echo $path ?>public/img/sp5/persona.png" class="ficha"/>
+                    <?php }?>
+                </td>
+            </tr>
+            <tr>
+                <th>Alumno</th>
+                <td>
+                    <ul>
+                        <?php foreach($tutor->tutorados() as $alu){ ?>
+                            <li>
+                                <a href="<?php echo $path . 'alumnos/ver/' . $alu->id ?>"
+                                   alt="Ver datos del alumno"
+                                   title="Ver datos del alumno">
+                                    <?php echo $alu->nombre() ?>
+                                </a>
+                            </li>
+                        <?php }?>
+                    <ul>
+                </td>
+            </tr>
+            </tr>
+            <tr>
+                <th>Sexo</th>
+                <td><?php echo $tutor->sexo()?></td>
+            </tr>
+            <tr>
+                <th>Fecha de nacimiento</th>
+                <td><?php echo $tutor->fnacimiento()?></td>
+            </tr>
+            <tr>
+                <th>Domicilio</th>
+                <td><?php echo ($tutor->domicilio == '' ? '-' : $tutor->domicilio) ?></td>
+            </tr>
+            <tr>
+                <th>Tel&eacute;fono</th>
+                <td colspan="2">
+                    <?php echo ($tutor->tel == '' ? '-' : $tutor->tel)?>
+                </td>
+            </tr>
+            <tr>
+                <th>Tel&eacute;fono m&oacute;vil</th>
+                <td colspan="2">
+                    <?php echo ($tutor->cel == '' ? '-' : $tutor->cel)?>
+                </td>
+            </tr>
+            <tr>
+                <th>Correo Electr&oacute;nico</th>
+                <td colspan="2">
+                    <?php if($tutor->mail != ''){ ?>
+                        <a href="mailto:<?php echo $tutor->mail?>" />
+                            <?php echo $tutor->mail?>
+                        </a>
+                    <?php }else{ ?>
+                        -
+                    <?php } ?>
+                </td>
+            </tr>
+        </table>
+        <?php } else {?>
+            <p class="error">
+                <br />
+                 No existe informaci&oacute;n del tutor seleccionado.
+            </p>
+        <?php } ?>
+    </div>
 </div>

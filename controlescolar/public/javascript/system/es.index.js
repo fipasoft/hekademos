@@ -2,100 +2,100 @@ function opciones(){
 tipo=$('tipo');
 div=$("opciones_alumno");
 switch(tipo.value){
-	case "A":
-			div.show();
-		break;
-	case "":
-			div.hide();
-		break;
-	default:
-			div.hide();
-		break;
+    case "A":
+            div.show();
+        break;
+    case "":
+            div.hide();
+        break;
+    default:
+            div.hide();
+        break;
 }
 }
 
 function init(){
-	frm_search=$('frm_search');
-	if(frm_search){
-	frm_search.onsubmit = function(){
-				if(ValidateDateTime('inicio') && ValidateDateTime('fin')){
-					if(!validaFecha($('inicio').value,$('fin').value)){
-						alert("La fecha de inicio tiene que ser menor a la fecha final.");
-						return false;
-					}
-					}else
-						return false;
+    frm_search=$('frm_search');
+    if(frm_search){
+    frm_search.onsubmit = function(){
+                if(ValidateDateTime('inicio') && ValidateDateTime('fin')){
+                    if(!validaFecha($('inicio').value,$('fin').value)){
+                        alert("La fecha de inicio tiene que ser menor a la fecha final.");
+                        return false;
+                    }
+                    }else
+                        return false;
 
-				}
+                }
 
-	}
+    }
 
-	a = $('aSearch');
-	if(a){
-	a.href = 'javascript:;';
-	a.onclick = function(){
-					div_sw('search');
+    a = $('aSearch');
+    if(a){
+    a.href = 'javascript:;';
+    a.onclick = function(){
+                    div_sw('search');
 
-				}
-	}
-	reset = $('reset');
-	if(reset){
-	reset.onclick = function(){
-		Effect.DropOut($('search'));
-		frm_reset('frm_search');
-	}
-	}
-	fecha = $('inicio');
-	if(fecha){
-			Calendar.setup({
-				button: 'inicio',
-				electric : false,
-				inputField : 'inicio',
-				showsTime: true,
-				timeFormat: '24',
-				ifFormat : '%d/%m/%Y %H:%M'
-			});
+                }
+    }
+    reset = $('reset');
+    if(reset){
+    reset.onclick = function(){
+        Effect.DropOut($('search'));
+        frm_reset('frm_search');
+    }
+    }
+    fecha = $('inicio');
+    if(fecha){
+            Calendar.setup({
+                button: 'inicio',
+                electric : false,
+                inputField : 'inicio',
+                showsTime: true,
+                timeFormat: '24',
+                ifFormat : '%d/%m/%Y %H:%M'
+            });
 
-	}
+    }
 
-	fecha = $('fin');
-	if(fecha){
-			Calendar.setup({
-				button: 'fin',
-				electric : false,
-				inputField : 'fin',
-				showsTime: true,
-				timeFormat: '24',
-				ifFormat : '%d/%m/%Y %H:%M'
-			});
+    fecha = $('fin');
+    if(fecha){
+            Calendar.setup({
+                button: 'fin',
+                electric : false,
+                inputField : 'fin',
+                showsTime: true,
+                timeFormat: '24',
+                ifFormat : '%d/%m/%Y %H:%M'
+            });
 
-	}
+    }
 
-		tipo=$('tipo');
-		if(tipo){
-		tipo.onchange=function(){
-		opciones();
-		}
-		opciones();
-		}
+        tipo=$('tipo');
+        if(tipo){
+        tipo.onchange=function(){
+        opciones();
+        }
+        opciones();
+        }
 
 
-	c = $('cicloBtn');
-	if(c){
-		c.onclick = function(){
-			if($('cicloActual').style.display == 'none'){
-				$('cicloSel').style.display = 'none';
-				Effect.Appear('cicloActual');
-			}else{
-				$('cicloActual').style.display = 'none';
-				Effect.Appear('cicloSel');
-			}
-		}
-	}
-	cS = $('cicloSelect');
-	if(cS){
-		cS.onchange = function (){$('frm_ciclo').submit();}
-	}
+    c = $('cicloBtn');
+    if(c){
+        c.onclick = function(){
+            if($('cicloActual').style.display == 'none'){
+                $('cicloSel').style.display = 'none';
+                Effect.Appear('cicloActual');
+            }else{
+                $('cicloActual').style.display = 'none';
+                Effect.Appear('cicloSel');
+            }
+        }
+    }
+    cS = $('cicloSelect');
+    if(cS){
+        cS.onchange = function (){$('frm_ciclo').submit();}
+    }
 
 }
 

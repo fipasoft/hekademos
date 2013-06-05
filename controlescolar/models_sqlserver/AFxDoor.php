@@ -19,58 +19,58 @@
   Kumbia :: import('lib.kumbia.utils');
  class AFxDoor extends SqlserverRecord {
 
-	private $entradas;
-	private	$salidas;
+    private $entradas;
+    private    $salidas;
 
- 	public function esEntrada($id){
-	if($this->entradas!=null){
-			return in_array($id,$this->entradas);
-		}else{
-			return false;
-		}
- 	}
-
-
- 	public function esSalida($id){
-	if($this->salidas!=null){
-			return in_array($id,$this->salidas);
-		}else{
-			return false;
-		}
-
- 	}
-
- 	public function Entradas(){
-		if($this->entradas!=null){
-			$entradas=new AfxDoor();
-			$entradas=$entradas->find("PodDoorIndex='1'");
-
-			if(is_array($entradas))
-			$this->entradas=$entradas;
-			else
-			$this->entradas=array();
-
-		}
-
-		return $this->entradas;
-
- 	}
+     public function esEntrada($id){
+    if($this->entradas!=null){
+            return in_array($id,$this->entradas);
+        }else{
+            return false;
+        }
+     }
 
 
- 	public function salidas(){
-		if($this->salidas!=null){
-			$salidas=new AfxDoor();
-			$salidas=$salidas->find("PodDoorIndex='2'");
+     public function esSalida($id){
+    if($this->salidas!=null){
+            return in_array($id,$this->salidas);
+        }else{
+            return false;
+        }
 
-			if(is_array($salidas))
-			$this->salidas=$salidas;
-			else
-			$this->salidas=array();
-		}
+     }
 
-		return $this->salidas;
+     public function Entradas(){
+        if($this->entradas!=null){
+            $entradas=new AfxDoor();
+            $entradas=$entradas->find("PodDoorIndex='1'");
 
- 	}
+            if(is_array($entradas))
+            $this->entradas=$entradas;
+            else
+            $this->entradas=array();
+
+        }
+
+        return $this->entradas;
+
+     }
+
+
+     public function salidas(){
+        if($this->salidas!=null){
+            $salidas=new AfxDoor();
+            $salidas=$salidas->find("PodDoorIndex='2'");
+
+            if(is_array($salidas))
+            $this->salidas=$salidas;
+            else
+            $this->salidas=array();
+        }
+
+        return $this->salidas;
+
+     }
 
  }
 ?>

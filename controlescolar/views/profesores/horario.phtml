@@ -1,177 +1,177 @@
 <?php $path = KUMBIA_PATH; ?>
 <div id="primary">
-	<div class="content">
-	<?php if($profesor->id != ''){?>
-		<h1>Horario del profesor <?php echo $profesor->nombre(); ?></h1>
-		<h2 class="subtitulo"><?php echo $profesor->codigo; ?></h2>
-		<h2 class="subtitulo"><?php echo $ciclo->numero; ?></h2>
-	<?php }else{?>
-		<h1>Horario del profesor</h1>
-	<?php }?>
-		<div id="options-bar">
-			<div id="options">
-				<a href="<?php echo $path ?>profesores">Volver
-				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
-				</a>
-				<?php if($profesor->id != ''){?>
-					 / <a href="<?php echo $path . 'profesores/horarioexcel/' . $profesor->id; ?>"
-					   alt="Exportar el horario del profesor" title="Exportar el horario del profesor">
-					   Exportar
-					   <img src="<?php echo $path?>public/img/sp5/excel.png" />
-					</a>
-				<?php }  ?>
-			</div>
-		</div>
-		<?php if($option!="error") {
-			$inicio=7;
-			$fin=13;
-			?>
-			<h2>Turno Matutino</h2>
-			<table>
-			<tr>
-			<th>Hora</th>
-			<?php
-			foreach($dias as $d){
-			?>
-			<th><?php echo $d->nombre; ?></th>
-			<?php
-			}
-			?>
+    <div class="content">
+    <?php if($profesor->id != ''){?>
+        <h1>Horario del profesor <?php echo $profesor->nombre(); ?></h1>
+        <h2 class="subtitulo"><?php echo $profesor->codigo; ?></h2>
+        <h2 class="subtitulo"><?php echo $ciclo->numero; ?></h2>
+    <?php }else{?>
+        <h1>Horario del profesor</h1>
+    <?php }?>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path ?>profesores">Volver
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+                <?php if($profesor->id != ''){?>
+                     / <a href="<?php echo $path . 'profesores/horarioexcel/' . $profesor->id; ?>"
+                       alt="Exportar el horario del profesor" title="Exportar el horario del profesor">
+                       Exportar
+                       <img src="<?php echo $path?>public/img/sp5/excel.png" />
+                    </a>
+                <?php }  ?>
+            </div>
+        </div>
+        <?php if($option!="error") {
+            $inicio=7;
+            $fin=13;
+            ?>
+            <h2>Turno Matutino</h2>
+            <table>
+            <tr>
+            <th>Hora</th>
+            <?php
+            foreach($dias as $d){
+            ?>
+            <th><?php echo $d->nombre; ?></th>
+            <?php
+            }
+            ?>
 
-			</tr>
+            </tr>
 
-			<?php
-			$inicio=7;
-			$fin=13;
-			for($ini=$inicio;$ini<$fin;$ini++){
-			?>
-			<tr>
-			<th><?php echo '<span class="sub">'.$ini.":00-".($ini+1).":00</span>"; ?></th>
-			<?php
-			foreach($dias as $d){
-				$b=false;
-				$crs="";
-				foreach($cursos as $c){
-				$horarios=$c['h'];
-				foreach($horarios as $h){
-					$i=substr($h->inicio,0,2);
-					$f=substr($h->fin,0,2);
-					if($h->dias_id==$d->id
-					&&
-					(
-					($i<=$ini)
-					&&
-					($f>=($ini+1))
-					)
-					){
-					$curso=$c['c'];
-					$grupo=$curso->grupo();
-					$b=true;
-			?>
-			<?php $materia=$curso->materia(); $crs.= '<div ><span style="color: rgb(119, 119, 119);" class="sub">'.Utils::convierteFecha($curso->inicio).'</span><br/><span class="sub">'.$materia->nombre."<br/>".$grupo->verReducido()."<br/>".$h->aulaNombre()."</span></div><br/>"; ?>
-			<?php
-					//break 2;
-					}
+            <?php
+            $inicio=7;
+            $fin=13;
+            for($ini=$inicio;$ini<$fin;$ini++){
+            ?>
+            <tr>
+            <th><?php echo '<span class="sub">'.$ini.":00-".($ini+1).":00</span>"; ?></th>
+            <?php
+            foreach($dias as $d){
+                $b=false;
+                $crs="";
+                foreach($cursos as $c){
+                $horarios=$c['h'];
+                foreach($horarios as $h){
+                    $i=substr($h->inicio,0,2);
+                    $f=substr($h->fin,0,2);
+                    if($h->dias_id==$d->id
+                    &&
+                    (
+                    ($i<=$ini)
+                    &&
+                    ($f>=($ini+1))
+                    )
+                    ){
+                    $curso=$c['c'];
+                    $grupo=$curso->grupo();
+                    $b=true;
+            ?>
+            <?php $materia=$curso->materia(); $crs.= '<div ><span style="color: rgb(119, 119, 119);" class="sub">'.Utils::convierteFecha($curso->inicio).'</span><br/><span class="sub">'.$materia->nombre."<br/>".$grupo->verReducido()."<br/>".$h->aulaNombre()."</span></div><br/>"; ?>
+            <?php
+                    //break 2;
+                    }
 
-				}
-				}
-				if(!$b){
-				?>
-				<td style="text-align:center"><span class="main"> - </span></td>
-				<?php
-				}else{
-					?>
-					<td class="odd" style="text-align:center"><?php echo $crs; ?></td>
-				<?php
-				}
-			}
-			?>
-			</tr>
-			<?php
-			}
+                }
+                }
+                if(!$b){
+                ?>
+                <td style="text-align:center"><span class="main"> - </span></td>
+                <?php
+                }else{
+                    ?>
+                    <td class="odd" style="text-align:center"><?php echo $crs; ?></td>
+                <?php
+                }
+            }
+            ?>
+            </tr>
+            <?php
+            }
 
-			?>
-			</table>
+            ?>
+            </table>
 
-			<?php
-			$inicio=13;
-			$fin=21;
-			?>
-			<h2>Turno Vespertino</h2>
-			<table>
-			<tr>
-			<th>Hora</th>
-			<?php
-			foreach($dias as $d){
-			?>
-			<th><?php echo $d->nombre; ?></th>
-			<?php
-			}
-			?>
+            <?php
+            $inicio=13;
+            $fin=21;
+            ?>
+            <h2>Turno Vespertino</h2>
+            <table>
+            <tr>
+            <th>Hora</th>
+            <?php
+            foreach($dias as $d){
+            ?>
+            <th><?php echo $d->nombre; ?></th>
+            <?php
+            }
+            ?>
 
-			</tr>
+            </tr>
 
-			<?php
-			$inicio=13;
-			$fin=21;
-			for($ini=$inicio;$ini<$fin;$ini++){
-			?>
-			<tr>
-			<th><?php echo '<span class="sub">'.$ini.":00-".($ini+1).":00</span>"; ?></th>
-			<?php
-			foreach($dias as $d){
-				$b=false;
-				$crs="";
-				foreach($cursos as $c){
-				$horarios=$c['h'];
-				foreach($horarios as $h){
-					$i=substr($h->inicio,0,2);
-					$f=substr($h->fin,0,2);
-					if($h->dias_id==$d->id
-					&&
-					(
-					($i<=$ini)
-					&&
-					($f>=($ini+1))
-					)
-					){
-					$curso=$c['c'];
-					$grupo=$curso->grupo();
-					$b=true;
-			?>
-				<?php $materia=$curso->materia(); $crs.= '<div ><span style="color: rgb(119, 119, 119);" class="sub">'.Utils::convierteFecha($curso->inicio).'</span><br/><span class="sub">'.$materia->nombre."<br/>".$grupo->verReducido()."<br/>".$h->aulaNombre()."</span></div><br/>"; ?>
-			<?php
-					//break 2;
-					}
+            <?php
+            $inicio=13;
+            $fin=21;
+            for($ini=$inicio;$ini<$fin;$ini++){
+            ?>
+            <tr>
+            <th><?php echo '<span class="sub">'.$ini.":00-".($ini+1).":00</span>"; ?></th>
+            <?php
+            foreach($dias as $d){
+                $b=false;
+                $crs="";
+                foreach($cursos as $c){
+                $horarios=$c['h'];
+                foreach($horarios as $h){
+                    $i=substr($h->inicio,0,2);
+                    $f=substr($h->fin,0,2);
+                    if($h->dias_id==$d->id
+                    &&
+                    (
+                    ($i<=$ini)
+                    &&
+                    ($f>=($ini+1))
+                    )
+                    ){
+                    $curso=$c['c'];
+                    $grupo=$curso->grupo();
+                    $b=true;
+            ?>
+                <?php $materia=$curso->materia(); $crs.= '<div ><span style="color: rgb(119, 119, 119);" class="sub">'.Utils::convierteFecha($curso->inicio).'</span><br/><span class="sub">'.$materia->nombre."<br/>".$grupo->verReducido()."<br/>".$h->aulaNombre()."</span></div><br/>"; ?>
+            <?php
+                    //break 2;
+                    }
 
-				}
-				}
-				if(!$b){
-				?>
-				<td style="text-align:center"><span class="main"> - </span></td>
-				<?php
-				}else{
-					?>
-					<td class="odd"  style="text-align:center"><?php echo $crs; ?></td>
-				<?php
-				}
-			}
-			?>
-			</tr>
-			<?php
-			}
+                }
+                }
+                if(!$b){
+                ?>
+                <td style="text-align:center"><span class="main"> - </span></td>
+                <?php
+                }else{
+                    ?>
+                    <td class="odd"  style="text-align:center"><?php echo $crs; ?></td>
+                <?php
+                }
+            }
+            ?>
+            </tr>
+            <?php
+            }
 
-			?>
-			</table>
+            ?>
+            </table>
 
 
-		<?php
-		 } else {?>
-			<p class="error">
-				<br />
-			 	No existe informaci&oacute;n del profesor seleccionado.<br/>
-			 	<?php echo $error; ?>
-			</p>
-		<?php } ?>
-	</div>
+        <?php
+         } else {?>
+            <p class="error">
+                <br />
+                 No existe informaci&oacute;n del profesor seleccionado.<br/>
+                 <?php echo $error; ?>
+            </p>
+        <?php } ?>
+    </div>
 </div>

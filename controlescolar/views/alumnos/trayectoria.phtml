@@ -1,106 +1,106 @@
 <?php $path = KUMBIA_PATH; ?>
 <div id="primary">
-	<div class="content">
-		<h1>Trayectoria especializante del alumno</h1>
-		<div id="options-bar">
-			<div id="options">
-				<a href="<?php echo $path ?>alumnos">Volver a alumnos
-				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
-				</a>
-			</div>
-		</div>
+    <div class="content">
+        <h1>Trayectoria especializante del alumno</h1>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path ?>alumnos">Volver a alumnos
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+            </div>
+        </div>
 <?php switch($option){
-	case 'vista':
+    case 'vista':
 ?>
-		<h2>Datos del alumno</h2>
-				<table>
-					<tr>
-						<th>Codigo</th>
-						<td><?php echo $alumno->codigo?></td>
-					<tr>
-						<th>Nombre</th>
-						<td><?php echo  $alumno->nombre('reversa')?>
-						</td>
-					</tr>
-					</tr>
-					<tr>
-						<th>Fecha de admisi&oacute;n</th>
-						<td colspan="2"><?php echo $alumno->admision()?></td>
-					</tr>
-					<tr>
-						<th>Situaci&oacute;n</th>
-						<td colspan="2"><?php echo $alumno->situacion()?></td>
-					</tr>
-					<tr>
-						<th>Grupo</th>
-						<td colspan="2"><?php echo $grupo->ver('html');?></td>
-					</tr>
-					</table>
+        <h2>Datos del alumno</h2>
+                <table>
+                    <tr>
+                        <th>Codigo</th>
+                        <td><?php echo $alumno->codigo?></td>
+                    <tr>
+                        <th>Nombre</th>
+                        <td><?php echo  $alumno->nombre('reversa')?>
+                        </td>
+                    </tr>
+                    </tr>
+                    <tr>
+                        <th>Fecha de admisi&oacute;n</th>
+                        <td colspan="2"><?php echo $alumno->admision()?></td>
+                    </tr>
+                    <tr>
+                        <th>Situaci&oacute;n</th>
+                        <td colspan="2"><?php echo $alumno->situacion()?></td>
+                    </tr>
+                    <tr>
+                        <th>Grupo</th>
+                        <td colspan="2"><?php echo $grupo->ver('html');?></td>
+                    </tr>
+                    </table>
 
 <br/>
 <br/>
-					<form action="<?php echo $path ?>alumnos/trayectoria" id="frm_ubicar" method="post" enctype="multipart/form-data">
-					<fieldset>
-						<legend>Elija la trayectoria</legend>
-					
-					<select id="trayectoria" name="trayectoria">
-					<option></option>
-					<?php  foreach($accesibles as $accesible){ ?>
-					<option value="<?php echo $accesible->id ?>" <?php if($alumnotrayectoria->trayectoriaespecializante_id==$accesible->id){ ?>selected="selected" <?php } ?>><?php echo $accesible->nombre; ?></option>
-					<?php }?>
-					</select>
-					<input type="hidden" value="<?php echo $alumno->id;  ?>" name="alumno" id="alumno" />
-					</fieldset>
-					<div class="divisor"></div>
-					<div id="botones">
-						<input type="button" id="aceptar" value="Aceptar">
-						<input type="button" id="cancelar" value="Cancelar">
+                    <form action="<?php echo $path ?>alumnos/trayectoria" id="frm_ubicar" method="post" enctype="multipart/form-data">
+                    <fieldset>
+                        <legend>Elija la trayectoria</legend>
+                    
+                    <select id="trayectoria" name="trayectoria">
+                    <option></option>
+                    <?php  foreach($accesibles as $accesible){ ?>
+                    <option value="<?php echo $accesible->id ?>" <?php if($alumnotrayectoria->trayectoriaespecializante_id==$accesible->id){ ?>selected="selected" <?php } ?>><?php echo $accesible->nombre; ?></option>
+                    <?php }?>
+                    </select>
+                    <input type="hidden" value="<?php echo $alumno->id;  ?>" name="alumno" id="alumno" />
+                    </fieldset>
+                    <div class="divisor"></div>
+                    <div id="botones">
+                        <input type="button" id="aceptar" value="Aceptar">
+                        <input type="button" id="cancelar" value="Cancelar">
 
-					</div>
-					</form>
+                    </div>
+                    </form>
 <?php break;
-		case 'exito':
+        case 'exito':
  ?>
 <p class="info"><br />El alumno <strong><?php echo $alumno->codigo ?> <?php echo $alumno->nombre(); ?></strong> se ligo a la trayectoria especializante <strong> <?php echo $trayectoria->nombre; ?></strong></p>
 
 
 
  <?php break;
- 		case 'confirmar':
- 		?>
- 			<form action="<?php echo $path ?>alumnos/trayectoria/" id="frm_ubicar" method="post">
-					<input type="hidden" name="id" id="id" value="<?php echo $alumno->id ?>" />
-					<p class="error" style="text-align:left;padding-left:100px">
+         case 'confirmar':
+         ?>
+             <form action="<?php echo $path ?>alumnos/trayectoria/" id="frm_ubicar" method="post">
+                    <input type="hidden" name="id" id="id" value="<?php echo $alumno->id ?>" />
+                    <p class="error" style="text-align:left;padding-left:100px">
 
-						Se dispone a ligar al alumno<br/>
-						<strong>Codigo:</strong> <?php echo $alumno->codigo; ?><br/>
-						<strong>Nombre:</strong> <?php echo $alumno->nombre .' ' . $alumno->ap . ' ' . $alumno->am?>
-						<br/>
-						con la trayectoria especializante
-						<strong><?php echo $trayectoria->nombre; ?></strong>
-						<br />
-						<strong>&iquest;Desea continuar?</strong>
-					</p>
-					<input type="hidden" name="alumno_id" value="<?php echo $alumno->id; ?>" />
-  					<input type="hidden" name="trayectoria_id" value="<?php echo $trayectoria->id; ?>" />
-					<div id="botones">
-						<input type="submit" id="aceptar_c" value="Aceptar">
-						<input type="button" id="cancelar_c" value="Cancelar">
-					</div>
-				</form>
+                        Se dispone a ligar al alumno<br/>
+                        <strong>Codigo:</strong> <?php echo $alumno->codigo; ?><br/>
+                        <strong>Nombre:</strong> <?php echo $alumno->nombre .' ' . $alumno->ap . ' ' . $alumno->am?>
+                        <br/>
+                        con la trayectoria especializante
+                        <strong><?php echo $trayectoria->nombre; ?></strong>
+                        <br />
+                        <strong>&iquest;Desea continuar?</strong>
+                    </p>
+                    <input type="hidden" name="alumno_id" value="<?php echo $alumno->id; ?>" />
+                      <input type="hidden" name="trayectoria_id" value="<?php echo $trayectoria->id; ?>" />
+                    <div id="botones">
+                        <input type="submit" id="aceptar_c" value="Aceptar">
+                        <input type="button" id="cancelar_c" value="Cancelar">
+                    </div>
+                </form>
 
 
- 		<?php
-		break;
-		case 'error':
-		default:
+         <?php
+        break;
+        case 'error':
+        default:
  ?>
-		<p class="error">
-					<br />
-				 	<?php echo $error ?>
-				</p>
+        <p class="error">
+                    <br />
+                     <?php echo $error ?>
+                </p>
  <?php break;
-	}
+    }
  ?>
 </div>
 </div>

@@ -1,40 +1,40 @@
 <?php $path = KUMBIA_PATH; ?>
 <div id="primary">
-	<div class="content">
-		<h1>Reportes</h1>
-		<div id="options-bar">
-			<div id="options">
-				<a href="<?php echo $path ?>inicio">Volver
-					<img src="<?php echo $path?>public/img/sp5/volver.png"/>
-				</a>
-			</div>
-		</div>
-		<form action="<?php echo $path ?>reportes" method="post" id="frm_reportes">
-			<fieldset>
-				<legend>Selector</legend>
-				<input type="hidden" name="ciclo_id" id="ciclo_id" value="<?php echo $ciclo->id ?>" >
-				<select name="tipo" id="tipo">
-					<option />
-					<?php $i = 1 ?>
-					<?php foreach( $reportes as $clave => $r){ ?>
-						<option value="<?php echo $clave?>">
-							<?php echo $i ?> - <?php echo $r->nombre ?>
-						</option>
-						<?php $i++ ?>
-					<?php } ?>
-				</select>
-			</fieldset>
-			<?php
-				foreach( $reportes as $clave => $r){
-					if( file_exists( getcwd() . '/views/reportes/_index_' . $clave . '.phtml' ) ){
-						echo render_partial('index_' . $clave);
-					}
-				}
-			?>
-		</form>
-		<div id="botones">
-			<input type="button" id="aceptar" value="Generar">
-			<input type="button" id="cancelar" value="Cancelar">
-		</div>
-	</div>
+    <div class="content">
+        <h1>Reportes</h1>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path ?>inicio">Volver
+                    <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+            </div>
+        </div>
+        <form action="<?php echo $path ?>reportes" method="post" id="frm_reportes">
+            <fieldset>
+                <legend>Selector</legend>
+                <input type="hidden" name="ciclo_id" id="ciclo_id" value="<?php echo $ciclo->id ?>" >
+                <select name="tipo" id="tipo">
+                    <option />
+                    <?php $i = 1 ?>
+                    <?php foreach( $reportes as $clave => $r){ ?>
+                        <option value="<?php echo $clave?>">
+                            <?php echo $i ?> - <?php echo $r->nombre ?>
+                        </option>
+                        <?php $i++ ?>
+                    <?php } ?>
+                </select>
+            </fieldset>
+            <?php
+                foreach( $reportes as $clave => $r){
+                    if( file_exists( getcwd() . '/views/reportes/_index_' . $clave . '.phtml' ) ){
+                        echo render_partial('index_' . $clave);
+                    }
+                }
+            ?>
+        </form>
+        <div id="botones">
+            <input type="button" id="aceptar" value="Generar">
+            <input type="button" id="cancelar" value="Cancelar">
+        </div>
+    </div>
 </div>

@@ -39,7 +39,7 @@ div.calendar { position: relative; border: 0}
 .calendar .combo .label, .calendar .combo .label-IEfix {text-align: center; padding: 1px;}
 .calendar .combo .label-IEfix {width: 4em;}
 .calendar .combo .hilite {background-color: #6691FF;}
-.calendar .combo .active {font-weight: bold;background-color: #7994FD;border-top-width: 1px;border-bottom-width: 1px;	border-top-style: solid;border-bottom-style: solid;border-top-color: #1D00BF;border-bottom-color: #2200BF;}
+.calendar .combo .active {font-weight: bold;background-color: #7994FD;border-top-width: 1px;border-bottom-width: 1px;    border-top-style: solid;border-bottom-style: solid;border-top-color: #1D00BF;border-bottom-color: #2200BF;}
 .calendar td.time {border-top: 1px solid #000;  padding: 1px 0px;text-align: center;background-color: #f4f0e8;}
 .calendar td.time .hour, .calendar td.time .minute, .calendar td.time .ampm{padding: 0px 3px 0px 4px;border: 1px solid #889;
 font-weight: bold;background-color: #fff;}

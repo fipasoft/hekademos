@@ -13,99 +13,99 @@
  $path = KUMBIA_PATH;
 ?>
 <div id="primary">
-	<div class="content">
-		<h1><?php echo $accion_hdr ?> calificaciones</h1>
-		<h2><?php echo $curso->verMateriaNombre()?></h2>
-		<h2><?php echo 'Prof. ' . $curso->verProfesor() ?></h2>
-		<h2>
-			<?php echo $grupo->grado .'&deg;' .  $grupo->letra .  ' ' .
-				       $grupo->verTurno() . ', ' . $ciclo->numero?>
-		</h2>
-		<h2><?php echo  $grupo->verOferta(); ?></h2>
-		<?php switch($option) {
-				case 'selector': ?>
-				<div id="options-bar">
-					<div id="options">
-						<a href="<?php echo $path . 'calificaciones/ver/' . $curso->id ?>">Volver a calificaciones
-						<img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
-					</div>
-				</div>
-				<div id="calificaciones" class="contenedor">
-					<form name="frm_selector" id="frm_selector" method="post" action="<?php echo $path . 'calificaciones/' . $accion2?>">
-						<fieldset>
-						<legend>Seleccionar</legend>
-							<?php $i = 1 ?>
-							<?php $j = 1 ?>
-							<?php  foreach($eventos as $tipo => $calificaciones){ ?>
-								<?php $tipoHdr = ($tipo == 'CAL' || $tipo == 'CCA' ? 'finales' : 'parciales') ?>
-								<h4>
-									<a  id="a_<?php echo $j ?>"
-										title="Seleccionar todas las calificaciones <?php echo $tipoHdr ?>"
-										class="select_all"
-										href="#">
-										<?php echo ucfirst($tipoHdr) ?>
-									</a>
-								</h4>
-								<table id="tbl_<?php echo $j ?>">
-								<?php foreach($calificaciones as $n => $calificacion){?>
-										<tr id="row_<?php echo $i ?>">
-											<td>
-												<?php echo $calificacion->nombre . ' ' ?>
-												<br />
-												<em>
-													 <?php echo '(Inicia el ' . $calificacion->verInicio() .
- 																' y termina el ' . $calificacion->verFin() . ')' ?>
-												</em>
-											</td>
-											<td>
-												<input type="checkbox" name="eventos[<?php echo $tipo ?>][]"
-													   class="chk_cal"
-													   id="chk_<?php echo $i?>"
-													   value="<?php echo $calificacion->clave ?>"
-												/>
-											</td>
-										<?php $i ++; ?>
-										</tr>
-								<?php } ?>
-								</table>
-								<?php $j ++; ?>
-							<?php } ?>
-						</fieldset>
-						<input type="hidden" name="cursos_id" value="<?php echo $curso->id?>" />
-						<div class="botones">
-								<input type="submit" value="<?php echo $accion_hdr ?>" />
-						</div>
-					</form>
-				</div>
-				<?php  break; ?>
-				<?php case 'alert':
-					  default:
-				?>
-				<div id="options-bar">
-					<div id="options">
-						<a href="<?php echo $path . 'calificaciones/ver/' . $curso->id ?>">Volver a calificaciones
-						<img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
-					</div>
-				</div>
-				<p class="info">
-					<br />
-					<?php echo $alert ?>
-				</p>
-				<?php  break; ?>
-				<?php case 'error':
-					  default:
-				?>
-				<div id="options-bar">
-					<div id="options">
-						<a href="<?php echo $path . 'grupos' ?>">Volver a grupos
-						<img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
-					</div>
-				</div>
-				<p class="error">
-					<br />
-					<?php echo $error ?>
-				</p>
-				<?php  break; ?>
-		<?php } ?>
-	</div>
+    <div class="content">
+        <h1><?php echo $accion_hdr ?> calificaciones</h1>
+        <h2><?php echo $curso->verMateriaNombre()?></h2>
+        <h2><?php echo 'Prof. ' . $curso->verProfesor() ?></h2>
+        <h2>
+            <?php echo $grupo->grado .'&deg;' .  $grupo->letra .  ' ' .
+                       $grupo->verTurno() . ', ' . $ciclo->numero?>
+        </h2>
+        <h2><?php echo  $grupo->verOferta(); ?></h2>
+        <?php switch($option) {
+                case 'selector': ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path . 'calificaciones/ver/' . $curso->id ?>">Volver a calificaciones
+                        <img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+                    </div>
+                </div>
+                <div id="calificaciones" class="contenedor">
+                    <form name="frm_selector" id="frm_selector" method="post" action="<?php echo $path . 'calificaciones/' . $accion2?>">
+                        <fieldset>
+                        <legend>Seleccionar</legend>
+                            <?php $i = 1 ?>
+                            <?php $j = 1 ?>
+                            <?php  foreach($eventos as $tipo => $calificaciones){ ?>
+                                <?php $tipoHdr = ($tipo == 'CAL' || $tipo == 'CCA' ? 'finales' : 'parciales') ?>
+                                <h4>
+                                    <a  id="a_<?php echo $j ?>"
+                                        title="Seleccionar todas las calificaciones <?php echo $tipoHdr ?>"
+                                        class="select_all"
+                                        href="#">
+                                        <?php echo ucfirst($tipoHdr) ?>
+                                    </a>
+                                </h4>
+                                <table id="tbl_<?php echo $j ?>">
+                                <?php foreach($calificaciones as $n => $calificacion){?>
+                                        <tr id="row_<?php echo $i ?>">
+                                            <td>
+                                                <?php echo $calificacion->nombre . ' ' ?>
+                                                <br />
+                                                <em>
+                                                     <?php echo '(Inicia el ' . $calificacion->verInicio() .
+                                                                 ' y termina el ' . $calificacion->verFin() . ')' ?>
+                                                </em>
+                                            </td>
+                                            <td>
+                                                <input type="checkbox" name="eventos[<?php echo $tipo ?>][]"
+                                                       class="chk_cal"
+                                                       id="chk_<?php echo $i?>"
+                                                       value="<?php echo $calificacion->clave ?>"
+                                                />
+                                            </td>
+                                        <?php $i ++; ?>
+                                        </tr>
+                                <?php } ?>
+                                </table>
+                                <?php $j ++; ?>
+                            <?php } ?>
+                        </fieldset>
+                        <input type="hidden" name="cursos_id" value="<?php echo $curso->id?>" />
+                        <div class="botones">
+                                <input type="submit" value="<?php echo $accion_hdr ?>" />
+                        </div>
+                    </form>
+                </div>
+                <?php  break; ?>
+                <?php case 'alert':
+                      default:
+                ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path . 'calificaciones/ver/' . $curso->id ?>">Volver a calificaciones
+                        <img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+                    </div>
+                </div>
+                <p class="info">
+                    <br />
+                    <?php echo $alert ?>
+                </p>
+                <?php  break; ?>
+                <?php case 'error':
+                      default:
+                ?>
+                <div id="options-bar">
+                    <div id="options">
+                        <a href="<?php echo $path . 'grupos' ?>">Volver a grupos
+                        <img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+                    </div>
+                </div>
+                <p class="error">
+                    <br />
+                    <?php echo $error ?>
+                </p>
+                <?php  break; ?>
+        <?php } ?>
+    </div>
 </div>

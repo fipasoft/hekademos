@@ -1,29 +1,29 @@
 <?php $path = KUMBIA_PATH; ?>
 <div id="primary">
-	<div class="content">
-		<h1>Cursos <?php if($option!="error"){ ?>del ciclo <?php echo $ciclo->numero; ?><?php } ?> para el periodo </h1>
-		<?php if($option!="error"){ ?>
-		<h2>Inicia el <?php echo Utils::fecha_espanol(substr($periodo->inicio,0,10)); ?> a las <?php echo substr($periodo->inicio,10,6); ?></h2>
-		<h2>Finaliza el <?php echo Utils::fecha_espanol(substr($periodo->fin,0,10)); ?> a las <?php echo substr($periodo->fin,10,6); ?></h2>
-		<h2><?php echo ($periodo->activo==1? "Activo" : "Inactivo"); ?></h2>
+    <div class="content">
+        <h1>Cursos <?php if($option!="error"){ ?>del ciclo <?php echo $ciclo->numero; ?><?php } ?> para el periodo </h1>
+        <?php if($option!="error"){ ?>
+        <h2>Inicia el <?php echo Utils::fecha_espanol(substr($periodo->inicio,0,10)); ?> a las <?php echo substr($periodo->inicio,10,6); ?></h2>
+        <h2>Finaliza el <?php echo Utils::fecha_espanol(substr($periodo->fin,0,10)); ?> a las <?php echo substr($periodo->fin,10,6); ?></h2>
+        <h2><?php echo ($periodo->activo==1? "Activo" : "Inactivo"); ?></h2>
 
-		<div id="options-bar">
-			<div id="options">
-				<?php if($option!="agregar"){ ?>
-				<a href="<?php echo $path ?>optativas/index/<?php echo $periodo->id; ?>">Volver a configuración
-				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
-				</a>
-				<?php }else{ ?>
-				<a href="<?php echo $path ?>optativas/cursos/<?php echo $periodo->id; ?>">Volver a cursos
-				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
-				</a>
-				<?php } ?>
-			</div>
-		</div>
-		<?php } ?>
-		<?php switch($option) {
-				case 'captura': ?>
-			<div id="tabs">
+        <div id="options-bar">
+            <div id="options">
+                <?php if($option!="agregar"){ ?>
+                <a href="<?php echo $path ?>optativas/index/<?php echo $periodo->id; ?>">Volver a configuración
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+                <?php }else{ ?>
+                <a href="<?php echo $path ?>optativas/cursos/<?php echo $periodo->id; ?>">Volver a cursos
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+                <?php } ?>
+            </div>
+        </div>
+        <?php } ?>
+        <?php switch($option) {
+                case 'captura': ?>
+            <div id="tabs">
     <ul>
         <li style="margin-left: 1px" id="tabHeaderActive" class="currenttab"><a href="javascript:void(0)" onClick="toggleTab(1,2)"><span>Selección de Cursos</span></a></li>
         <li id="tabHeader2"><a href="javascript:void(0)" onClick="toggleTab(2,2)" ><span>Administración de Cursos</span></a></li>
@@ -33,7 +33,7 @@
         <div id="tabContent1" class="tabContent" >
             <br />
             <div>
-				<div id="search">
+                <div id="search">
                 <form action="<?php echo $path ?>optativas/cursos/<?php echo $periodo->id; ?>" method="post" id="frm_search">
                     <fieldset>
                         <label for="grado">Grado</label>
@@ -57,115 +57,115 @@
                         </select>
 
                         <label for="oferta_id">Oferta</label>
-						<select name="oferta_id" id="oferta_id">
-							<option></option>
-							<?php foreach($ofertas as $oferta){ ?>
-							<option value="<?php echo $oferta->id; ?>" <?php if($busqueda->campo('oferta_id') == $oferta->id){ ?>selected="selected"<?php } ?>><?php echo $oferta->nombre; ?></option>
-							<?php } ?>
-						</select>
+                        <select name="oferta_id" id="oferta_id">
+                            <option></option>
+                            <?php foreach($ofertas as $oferta){ ?>
+                            <option value="<?php echo $oferta->id; ?>" <?php if($busqueda->campo('oferta_id') == $oferta->id){ ?>selected="selected"<?php } ?>><?php echo $oferta->nombre; ?></option>
+                            <?php } ?>
+                        </select>
 
-						<label for="tipo">Tipo</label>
-						<select name="tipo" id="tipo">
+                        <label for="tipo">Tipo</label>
+                        <select name="tipo" id="tipo">
                             <option></option>
                             <?php foreach($tipos as $t){ ?>
-                        	<option value="<?php echo $t->tipo; ?>" <?php if($t->tipo==$busqueda->campo('tipo')){ ?>selected="selected"<?php } ?>><?php echo $t->tipo; ?></option>
-                        	<?php } ?>
+                            <option value="<?php echo $t->tipo; ?>" <?php if($t->tipo==$busqueda->campo('tipo')){ ?>selected="selected"<?php } ?>><?php echo $t->tipo; ?></option>
+                            <?php } ?>
                         </select>
-						<br/>
+                        <br/>
                         <br/>
                         <input type="submit" id="btn_submit" value="Filtrar" />
-						<input type="reset" id="reset" value="Quitar filtros" />
+                        <input type="reset" id="reset" value="Quitar filtros" />
 
                     </fieldset>
                 </form>
             </div>
-			<div id="cursos">
-				<?php switch($option_cursos){
-					case "cursos": ?>
-					<?php if($registros>0){ ?>
-					<br/>
-					<form name="frm_agregar" id="frm_agregar" method="post" action="<?php echo $path ?>optativas/cursos/">
-						<input type="hidden" name="periodo_id" id="periodo_id" value="<?php echo $periodo->id ?>" />
-						<div class="divisor"></div>
-						<fieldset>
-						<legend><?php echo $registros; ?> cursos</legend>
-							<?php $i = 1 ?>
-							<?php $j = 1 ?>
-							<?php $j++ ?>
-							<table id="tbl_<?php echo $j ?>">
-							<tr>
-							<th>#</th>
-							<th>Grupo</th>
-							<th>Materia</th>
-							<th>
-									<a  id="a_<?php echo $j ?>"
-										title="Seleccionar todos los cursos"
-										class="select_all"
-										href="#">
-										<img src="<?php echo $path?>public/img/sp5/ver.png"/>
-									</a>
-								</th>
-							</tr>
-							<?php foreach($cursos as $c){
-									$g=$c->grupo();
-									$cc=$g->ciclo();
-									?>
+            <div id="cursos">
+                <?php switch($option_cursos){
+                    case "cursos": ?>
+                    <?php if($registros>0){ ?>
+                    <br/>
+                    <form name="frm_agregar" id="frm_agregar" method="post" action="<?php echo $path ?>optativas/cursos/">
+                        <input type="hidden" name="periodo_id" id="periodo_id" value="<?php echo $periodo->id ?>" />
+                        <div class="divisor"></div>
+                        <fieldset>
+                        <legend><?php echo $registros; ?> cursos</legend>
+                            <?php $i = 1 ?>
+                            <?php $j = 1 ?>
+                            <?php $j++ ?>
+                            <table id="tbl_<?php echo $j ?>">
+                            <tr>
+                            <th>#</th>
+                            <th>Grupo</th>
+                            <th>Materia</th>
+                            <th>
+                                    <a  id="a_<?php echo $j ?>"
+                                        title="Seleccionar todos los cursos"
+                                        class="select_all"
+                                        href="#">
+                                        <img src="<?php echo $path?>public/img/sp5/ver.png"/>
+                                    </a>
+                                </th>
+                            </tr>
+                            <?php foreach($cursos as $c){
+                                    $g=$c->grupo();
+                                    $cc=$g->ciclo();
+                                    ?>
 
-									<?php if(!in_array($c->id,$existentes)){ ?>
-									<tr id="row_<?php echo $i ?>">
-									<td style="text-align: center"><span class="sub"><?php echo $i ?></span></td>
-									<td style="text-align: center"><span class="sub" style="color: rgb(119, 119, 119);"><?php echo $g->ver(); ?></span><br/><span class="sub"><?php echo $cc->numero; ?></span></td>
-									<td style="text-align: center"><span class="sub" style="color: rgb(119, 119, 119);"><?php echo $c->materia; ?></span><br/><span class="sub"><?php echo $c->verMateriaTipo() ?></span><br/></td>
-									<td>
-										<input type="checkbox" name="cursos[]"
-											   class="chk_alu"
-											   id="chk_<?php echo $i?>"
-											   value="<?php echo $c->id ?>"
-										/>
-									</td>
-									</tr>
-									<?php }else{ ?>
-									<tr id="row_<?php echo $i ?>" class="agregado" >
-									<td style="text-align: center" class="agregado"><span class="sub"><?php echo $i ?></span></td>
-									<td style="text-align: center" class="agregado"><span class="sub" style="color: rgb(119, 119, 119);"><?php echo $g->ver(); ?></span><br/><span class="sub"><?php echo $cc->numero; ?></span></td>
-									<td style="text-align: center" class="agregado"><span class="sub" style="color: rgb(119, 119, 119);"><?php echo $c->materia; ?></span><br/><span class="sub"><?php echo $c->verMateriaTipo() ?></span><br/></td>
-									<td class="agregado">
-										<span class="sub" >Agregado</span>
-									</td>
-									</tr>
+                                    <?php if(!in_array($c->id,$existentes)){ ?>
+                                    <tr id="row_<?php echo $i ?>">
+                                    <td style="text-align: center"><span class="sub"><?php echo $i ?></span></td>
+                                    <td style="text-align: center"><span class="sub" style="color: rgb(119, 119, 119);"><?php echo $g->ver(); ?></span><br/><span class="sub"><?php echo $cc->numero; ?></span></td>
+                                    <td style="text-align: center"><span class="sub" style="color: rgb(119, 119, 119);"><?php echo $c->materia; ?></span><br/><span class="sub"><?php echo $c->verMateriaTipo() ?></span><br/></td>
+                                    <td>
+                                        <input type="checkbox" name="cursos[]"
+                                               class="chk_alu"
+                                               id="chk_<?php echo $i?>"
+                                               value="<?php echo $c->id ?>"
+                                        />
+                                    </td>
+                                    </tr>
+                                    <?php }else{ ?>
+                                    <tr id="row_<?php echo $i ?>" class="agregado" >
+                                    <td style="text-align: center" class="agregado"><span class="sub"><?php echo $i ?></span></td>
+                                    <td style="text-align: center" class="agregado"><span class="sub" style="color: rgb(119, 119, 119);"><?php echo $g->ver(); ?></span><br/><span class="sub"><?php echo $cc->numero; ?></span></td>
+                                    <td style="text-align: center" class="agregado"><span class="sub" style="color: rgb(119, 119, 119);"><?php echo $c->materia; ?></span><br/><span class="sub"><?php echo $c->verMateriaTipo() ?></span><br/></td>
+                                    <td class="agregado">
+                                        <span class="sub" >Agregado</span>
+                                    </td>
+                                    </tr>
 
-									<?php } ?>
+                                    <?php } ?>
 
-									<?php $i ++;?>
+                                    <?php $i ++;?>
 
-							<?php } ?>
-							</table>
+                            <?php } ?>
+                            </table>
 
-						</fieldset>
-						<br/>
-						<div class="botones">
-							<input type="submit" id="seleccionar" value="Seleccionar">
-						</div>
-						</form>
-					<br/>
-					<?php }else{ ?>
-						<p class="info"><br/>No se encontro ningun curso con los filtros establecidos. </p>
-					<?php } ?>
-					<br/>
-				<?php break; ?>
+                        </fieldset>
+                        <br/>
+                        <div class="botones">
+                            <input type="submit" id="seleccionar" value="Seleccionar">
+                        </div>
+                        </form>
+                    <br/>
+                    <?php }else{ ?>
+                        <p class="info"><br/>No se encontro ningun curso con los filtros establecidos. </p>
+                    <?php } ?>
+                    <br/>
+                <?php break; ?>
 
-				<?php case "info": ?>
-				<p class="info"><br/><?php echo $info_cursos; ?> </p>
-				<?php break; ?>
-				<?php } ?>
-			</div>
+                <?php case "info": ?>
+                <p class="info"><br/><?php echo $info_cursos; ?> </p>
+                <?php break; ?>
+                <?php } ?>
+            </div>
             </div>
         </div>
 
         <div id="tabContent2" class="tabContent" style="display:none;">
             <br />
             <div>
-            	<div id="search1">
+                <div id="search1">
                 <form action="<?php echo $path ?>optativas/cursos/<?php echo $periodo->id; ?>" method="post" id="frm_search1">
                     <fieldset>
                         <label for="grado1">Grado</label>
@@ -189,22 +189,22 @@
                         </select>
 
                         <label for="oferta_id1">Oferta</label>
-						<select name="oferta_id1" id="oferta_id1">
-							<option></option>
-							<?php foreach($ofertas as $oferta){ ?>
-							<option value="<?php echo $oferta->id; ?>" <?php if($busqueda1->campo('oferta_id1') == $oferta->id){ ?>selected="selected"<?php } ?>><?php echo $oferta->nombre; ?></option>
-							<?php } ?>
-						</select>
+                        <select name="oferta_id1" id="oferta_id1">
+                            <option></option>
+                            <?php foreach($ofertas as $oferta){ ?>
+                            <option value="<?php echo $oferta->id; ?>" <?php if($busqueda1->campo('oferta_id1') == $oferta->id){ ?>selected="selected"<?php } ?>><?php echo $oferta->nombre; ?></option>
+                            <?php } ?>
+                        </select>
 
-						<label for="tipo1">Tipo</label>
-						<select name="tipo1" id="tipo1">
+                        <label for="tipo1">Tipo</label>
+                        <select name="tipo1" id="tipo1">
                             <option></option>
                             <?php foreach($tipos as $t){ ?>
-                        	<option value="<?php echo $t->tipo; ?>" <?php if($t->tipo==$busqueda1->campo('tipo1')){ ?>selected="selected"<?php } ?>><?php echo $t->tipo; ?></option>
-                        	<?php } ?>
+                            <option value="<?php echo $t->tipo; ?>" <?php if($t->tipo==$busqueda1->campo('tipo1')){ ?>selected="selected"<?php } ?>><?php echo $t->tipo; ?></option>
+                            <?php } ?>
                         </select>
-						<br/>
-						<br/>
+                        <br/>
+                        <br/>
                         <input type="submit" id="btn_submit1" value="Filtrar" />
                         <input type="reset" id="reset1" value="Quitar filtros" />
                     </fieldset>
@@ -212,186 +212,186 @@
             </div>
 
 
-            	<?php if($registrados>0){ ?>
-									<br/>
-					<form name="frm_eliminar" id="frm_eliminar" method="post" action="<?php echo $path ?>optativas/eliminar/cursos">
-						<input type="hidden" name="periodo_id" id="periodo_id" value="<?php echo $periodo->id ?>" />
-						<input type="hidden" name="KUMBIA_PATH" id="KUMBIA_PATH" value="<?php echo $path; ?>" />
-						<div class="divisor"></div>
-						<fieldset>
-						<legend><?php echo $registrados; ?> cursos registrados</legend>
-							<?php $i = 1 ?>
-							<?php $j = 1 ?>
-							<?php $j++ ?>
-							<table id="crs_tbl_<?php echo $j ?>">
-							<tr>
-							<th>#</th>
-							<th>Grupo</th>
-							<th>Materia</th>
-							<th>Cupos</th>
-							<th>Tipo</th>
-							<th>Inscritos</th>
-							<?php if($acl['optativas']['eliminar']){ ?>
-							<th>
-									<a  id="a_<?php echo $j ?>"
-										title="Seleccionar todos los cursos"
-										class="select_all_crs"
-										href="#">
-										<img src="<?php echo $path?>public/img/sp5/ver.png"/>
-									</a>
-								</th>
-							<?php } ?>
-							</tr>
-							<?php foreach($cursos_admin as $c){
-									$g=$c->grupo();
-									$cc=$g->ciclo();
-									?>
+                <?php if($registrados>0){ ?>
+                                    <br/>
+                    <form name="frm_eliminar" id="frm_eliminar" method="post" action="<?php echo $path ?>optativas/eliminar/cursos">
+                        <input type="hidden" name="periodo_id" id="periodo_id" value="<?php echo $periodo->id ?>" />
+                        <input type="hidden" name="KUMBIA_PATH" id="KUMBIA_PATH" value="<?php echo $path; ?>" />
+                        <div class="divisor"></div>
+                        <fieldset>
+                        <legend><?php echo $registrados; ?> cursos registrados</legend>
+                            <?php $i = 1 ?>
+                            <?php $j = 1 ?>
+                            <?php $j++ ?>
+                            <table id="crs_tbl_<?php echo $j ?>">
+                            <tr>
+                            <th>#</th>
+                            <th>Grupo</th>
+                            <th>Materia</th>
+                            <th>Cupos</th>
+                            <th>Tipo</th>
+                            <th>Inscritos</th>
+                            <?php if($acl['optativas']['eliminar']){ ?>
+                            <th>
+                                    <a  id="a_<?php echo $j ?>"
+                                        title="Seleccionar todos los cursos"
+                                        class="select_all_crs"
+                                        href="#">
+                                        <img src="<?php echo $path?>public/img/sp5/ver.png"/>
+                                    </a>
+                                </th>
+                            <?php } ?>
+                            </tr>
+                            <?php foreach($cursos_admin as $c){
+                                    $g=$c->grupo();
+                                    $cc=$g->ciclo();
+                                    ?>
 
-									<?php if(in_array($c->id,$existentes)){ ?>
-									<tr id="crs_row_<?php echo $i ?>">
-									<td style="text-align: center"><span class="sub"><?php echo $i ?></span></td>
-									<td style="text-align: center"><span class="sub" style="color: rgb(119, 119, 119);"><?php echo $g->ver(); ?></span><br/><span class="sub"><?php echo $cc->numero; ?></span></td>
-									<td style="text-align: center">
-									<?php if($acl['optativas']['inscritos']){ ?>
-									<a class="sub" style="color: rgb(119, 119, 119);" href="<?php echo $path; ?>optativas/inscritos/<?php echo $c->periodoscursos_id; ?>" title="Ver inscritos" alt="Ver inscritos" >
-									<?php echo $c->materia; ?>
-									</a>
-									<?php }else{ ?>
-										<span class="sub" style="color: rgb(119, 119, 119);">
-										<?php echo $c->materia; ?>
-										</span>
-									<?php } ?>
-										<br/>
-									<span class="sub"><?php echo $c->verMateriaTipo() ?>
-									</span><br/></td>
+                                    <?php if(in_array($c->id,$existentes)){ ?>
+                                    <tr id="crs_row_<?php echo $i ?>">
+                                    <td style="text-align: center"><span class="sub"><?php echo $i ?></span></td>
+                                    <td style="text-align: center"><span class="sub" style="color: rgb(119, 119, 119);"><?php echo $g->ver(); ?></span><br/><span class="sub"><?php echo $cc->numero; ?></span></td>
+                                    <td style="text-align: center">
+                                    <?php if($acl['optativas']['inscritos']){ ?>
+                                    <a class="sub" style="color: rgb(119, 119, 119);" href="<?php echo $path; ?>optativas/inscritos/<?php echo $c->periodoscursos_id; ?>" title="Ver inscritos" alt="Ver inscritos" >
+                                    <?php echo $c->materia; ?>
+                                    </a>
+                                    <?php }else{ ?>
+                                        <span class="sub" style="color: rgb(119, 119, 119);">
+                                        <?php echo $c->materia; ?>
+                                        </span>
+                                    <?php } ?>
+                                        <br/>
+                                    <span class="sub"><?php echo $c->verMateriaTipo() ?>
+                                    </span><br/></td>
 
-									<td  id="td_<?php echo $i ?>" style="text-align: center"  class="<?php echo ($c->cupos >= 0 ? 'TRUE' : 'FALSE')?> switch">
-									<?php if($acl['optativas']['cupos']){ ?>
-									<a href="javascript:;" id="ancla_<?php echo $i ?>" class="switch" alt="Presione para editar" title="Presione para editar">
-									   		<?php echo $c->cupos; ?>
-									</a>
-									   	<img id="spinner_<?php echo $i ?>" src="<?php echo $path ?>/public/img/sp5/spinner.gif" style="display:none"/>
-										<input type="text"
-											   name="cupos[]"
-											   class="cupos"
-											   size="3"
-											   maxlength="3"
-											   id="cupos_<?php echo $i ?>"
-											   value="<?php echo $c->cupos ?>"
-											   disabled="disabled"
-											   style="display:none" />
+                                    <td  id="td_<?php echo $i ?>" style="text-align: center"  class="<?php echo ($c->cupos >= 0 ? 'TRUE' : 'FALSE')?> switch">
+                                    <?php if($acl['optativas']['cupos']){ ?>
+                                    <a href="javascript:;" id="ancla_<?php echo $i ?>" class="switch" alt="Presione para editar" title="Presione para editar">
+                                               <?php echo $c->cupos; ?>
+                                    </a>
+                                           <img id="spinner_<?php echo $i ?>" src="<?php echo $path ?>/public/img/sp5/spinner.gif" style="display:none"/>
+                                        <input type="text"
+                                               name="cupos[]"
+                                               class="cupos"
+                                               size="3"
+                                               maxlength="3"
+                                               id="cupos_<?php echo $i ?>"
+                                               value="<?php echo $c->cupos ?>"
+                                               disabled="disabled"
+                                               style="display:none" />
 
-									<?php }else{ ?>
-										<span class="sub">
-											<?php echo $c->cupos; ?>
-										</span>
-									<?php } ?>
-									</td>
-									<td class="TRUE" style="text-align: center">
-										<a href="javascript:;" id="tancla_<?php echo $i ?>" class="tswitch" alt="Presione para editar" title="Presione para editar">
-									   		<?php if($c->tipos_id==''){ ?>
-									   				N
-									   		<?php }else{ ?>
-									   		<?php echo $c->tipos_id;
-									   			}
-									   		?>
-									   	</a>
-									   	<img id="tspinner_<?php echo $i ?>" src="<?php echo $path ?>/public/img/sp5/spinner.gif" style="display:none"/>
-										<select
-											name="tipos[]"
-										   	class="tipos"
-										   id="tipos_<?php echo $i ?>"
-										   disabled="disabled"
-										   style="display:none">
-										<option value="" <?php echo ($c->tipos_id =="" ? ' selected="selected" ' : ''); ?> >Ninguno</option>
-										<option value="1" <?php echo ($c->tipos_id =="1" ? ' selected="selected" ' : ''); ?> >1</option>
-										<option value="2" <?php echo ($c->tipos_id =="2" ? ' selected="selected" ' : ''); ?> >2</option>
-										</select>
-									
-									</td>
-									<td>
-									<span class="sub" style="color: rgb(119, 119, 119);">
-										<?php echo $c->inscritos; ?>
-									</span>
-									</td>
+                                    <?php }else{ ?>
+                                        <span class="sub">
+                                            <?php echo $c->cupos; ?>
+                                        </span>
+                                    <?php } ?>
+                                    </td>
+                                    <td class="TRUE" style="text-align: center">
+                                        <a href="javascript:;" id="tancla_<?php echo $i ?>" class="tswitch" alt="Presione para editar" title="Presione para editar">
+                                               <?php if($c->tipos_id==''){ ?>
+                                                       N
+                                               <?php }else{ ?>
+                                               <?php echo $c->tipos_id;
+                                                   }
+                                               ?>
+                                           </a>
+                                           <img id="tspinner_<?php echo $i ?>" src="<?php echo $path ?>/public/img/sp5/spinner.gif" style="display:none"/>
+                                        <select
+                                            name="tipos[]"
+                                               class="tipos"
+                                           id="tipos_<?php echo $i ?>"
+                                           disabled="disabled"
+                                           style="display:none">
+                                        <option value="" <?php echo ($c->tipos_id =="" ? ' selected="selected" ' : ''); ?> >Ninguno</option>
+                                        <option value="1" <?php echo ($c->tipos_id =="1" ? ' selected="selected" ' : ''); ?> >1</option>
+                                        <option value="2" <?php echo ($c->tipos_id =="2" ? ' selected="selected" ' : ''); ?> >2</option>
+                                        </select>
+                                    
+                                    </td>
+                                    <td>
+                                    <span class="sub" style="color: rgb(119, 119, 119);">
+                                        <?php echo $c->inscritos; ?>
+                                    </span>
+                                    </td>
 
-									<?php if($acl['optativas']['eliminar']){ ?>
-									<td>
-										<input type="checkbox" name="elimina[]"
-											   class="chk_eli"
-											   id="eli_chk_<?php echo $i?>"
-											   value="<?php echo $c->periodoscursos_id ?>"
-										/>
-									</td>
-									<?php } ?>
-									</tr>
-									<?php } ?>
+                                    <?php if($acl['optativas']['eliminar']){ ?>
+                                    <td>
+                                        <input type="checkbox" name="elimina[]"
+                                               class="chk_eli"
+                                               id="eli_chk_<?php echo $i?>"
+                                               value="<?php echo $c->periodoscursos_id ?>"
+                                        />
+                                    </td>
+                                    <?php } ?>
+                                    </tr>
+                                    <?php } ?>
 
-									<?php $i ++;?>
+                                    <?php $i ++;?>
 
-							<?php } ?>
-							</table>
+                            <?php } ?>
+                            </table>
 
-						</fieldset>
-						<?php if($acl['optativas']['eliminar']){ ?>
-						<br/>
-						<div class="botones">
-							<input type="submit" id="quitar" value="Quitar">
-						</div>
-						<?php } ?>
-						</form>
-					<br/>
-					<?php }else{ ?>
-						<p class="info"><br/>No se ha agregado ningun curso. </p>
-					<?php } ?>
-					<br/>
+                        </fieldset>
+                        <?php if($acl['optativas']['eliminar']){ ?>
+                        <br/>
+                        <div class="botones">
+                            <input type="submit" id="quitar" value="Quitar">
+                        </div>
+                        <?php } ?>
+                        </form>
+                    <br/>
+                    <?php }else{ ?>
+                        <p class="info"><br/>No se ha agregado ningun curso. </p>
+                    <?php } ?>
+                    <br/>
             </div>
         </div>
 
     </div><!--End of tabscontent-->
 </div><!--End of tabs-->
 
-				<script language="JavaScript">
-						addDOMLoadEvent(function(){toggleTab(<?php echo $tab; ?>,2);});
-					</script>
+                <script language="JavaScript">
+                        addDOMLoadEvent(function(){toggleTab(<?php echo $tab; ?>,2);});
+                    </script>
 
-			<?php  break; ?>
-			<?php case 'agregar':
-			?>
+            <?php  break; ?>
+            <?php case 'agregar':
+            ?>
 
-				<?php if(count($agregados)>0){ ?>
-				<table>
-				<tr><th colspan="3">Información de los cursos que se agregarón.</th></tr>
-				<tr><th>Grupo</th><th>Curso</th><th>Mensaje</th></tr>
-				<?php foreach($agregados as $c){
-					$curso=$c['curso'];
-					$msj=$c['msj'];
-					$clase=$c['clase'];
-					$grupo=$curso->grupo();
-					?>
-				<tr class="<?php echo $clase; ?>" >
-				<td class="<?php echo $clase; ?>" ><span class="sub" style="color: rgb(119, 119, 119);"><?php echo $grupo->ver(); ?></span></td>
-				<td class="<?php echo $clase; ?>" ><span class="sub" style="color: rgb(119, 119, 119);"><?php echo $curso->verMateriaNombre(); ?></span><br/>
-					<span class="sub" ><?php echo $curso->verMateriaTipo(); ?></span></td>
-				<td class="<?php echo $clase; ?>" ><span class="sub" ><?php echo $msj; ?></span></td>
-				</tr>
-				<?php } ?>
-				</table>
-				<?php } ?>
+                <?php if(count($agregados)>0){ ?>
+                <table>
+                <tr><th colspan="3">Información de los cursos que se agregarón.</th></tr>
+                <tr><th>Grupo</th><th>Curso</th><th>Mensaje</th></tr>
+                <?php foreach($agregados as $c){
+                    $curso=$c['curso'];
+                    $msj=$c['msj'];
+                    $clase=$c['clase'];
+                    $grupo=$curso->grupo();
+                    ?>
+                <tr class="<?php echo $clase; ?>" >
+                <td class="<?php echo $clase; ?>" ><span class="sub" style="color: rgb(119, 119, 119);"><?php echo $grupo->ver(); ?></span></td>
+                <td class="<?php echo $clase; ?>" ><span class="sub" style="color: rgb(119, 119, 119);"><?php echo $curso->verMateriaNombre(); ?></span><br/>
+                    <span class="sub" ><?php echo $curso->verMateriaTipo(); ?></span></td>
+                <td class="<?php echo $clase; ?>" ><span class="sub" ><?php echo $msj; ?></span></td>
+                </tr>
+                <?php } ?>
+                </table>
+                <?php } ?>
 
-			<?php  break; ?>
+            <?php  break; ?>
 
-			<?php case 'exito':
-			?>
-				<p class="info"><br />El periodo se edito correctamente.</p>
-			<?php  break; ?>
-			<?php case 'error':
-				  default:
-			?>
-				<p class="error"><br />Ha ocurrido al intentar editar el periodo.<br />
-				<?php echo $error ?>
-				</p>
-			<?php  break; ?>
-		<?php } ?>
-	</div>
+            <?php case 'exito':
+            ?>
+                <p class="info"><br />El periodo se edito correctamente.</p>
+            <?php  break; ?>
+            <?php case 'error':
+                  default:
+            ?>
+                <p class="error"><br />Ha ocurrido al intentar editar el periodo.<br />
+                <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
 </div>

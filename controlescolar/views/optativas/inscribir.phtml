@@ -1,109 +1,109 @@
 <?php $path = KUMBIA_PATH; ?>
 <div id="primary">
-	<div class="content">
-		<h1>Incribir a cursos</h1>
-		<?php if($option!="error"){ ?>
-		<h2>Inicia el <?php echo Utils::fecha_espanol(substr($periodo->inicio,0,10)); ?> a las <?php echo substr($periodo->inicio,10,6); ?></h2>
-		<h2>Finaliza el <?php echo Utils::fecha_espanol(substr($periodo->fin,0,10)); ?> a las <?php echo substr($periodo->fin,10,6); ?></h2>
-		<h2><?php echo ($periodo->activo==1? "Activo" : "Inactivo"); ?></h2>
-		<div id="options-bar">
-			<div id="options">
-				<a href="<?php echo $path ?>optativas/index/<?php echo $periodo->id; ?>">Volver a optativas
-				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
-				</a>
-			</div>
-		</div>
-		<?php } ?>
+    <div class="content">
+        <h1>Incribir a cursos</h1>
+        <?php if($option!="error"){ ?>
+        <h2>Inicia el <?php echo Utils::fecha_espanol(substr($periodo->inicio,0,10)); ?> a las <?php echo substr($periodo->inicio,10,6); ?></h2>
+        <h2>Finaliza el <?php echo Utils::fecha_espanol(substr($periodo->fin,0,10)); ?> a las <?php echo substr($periodo->fin,10,6); ?></h2>
+        <h2><?php echo ($periodo->activo==1? "Activo" : "Inactivo"); ?></h2>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path ?>optativas/index/<?php echo $periodo->id; ?>">Volver a optativas
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+            </div>
+        </div>
+        <?php } ?>
 
-		<?php switch($option) {
-				case 'vista': ?>
-				<form action="<?php echo $path ?>optativas/inscribir/" id="frm_inscribir" method="post">
-					<input type="hidden" name="id" id="id" value="<?php echo $periodo->id ?>" />
-					<p class="error">
-						Se dispone a realizar las inscripciones a los cursos.
-						<br />
-						<strong>&iquest;Desea continuar?</strong>
-					</p>
-					<div id="botones">
-						<input type="submit" id="aceptar" value="Aceptar">
-						<input type="button" id="cancelar" value="Cancelar">
-					</div>
-				</form>
-			<?php  break; ?>
-			<?php case 'exito': ?>
-				<p class="info"><br />Se realizaron con exito las inscripciones.<br />
-				</p>
+        <?php switch($option) {
+                case 'vista': ?>
+                <form action="<?php echo $path ?>optativas/inscribir/" id="frm_inscribir" method="post">
+                    <input type="hidden" name="id" id="id" value="<?php echo $periodo->id ?>" />
+                    <p class="error">
+                        Se dispone a realizar las inscripciones a los cursos.
+                        <br />
+                        <strong>&iquest;Desea continuar?</strong>
+                    </p>
+                    <div id="botones">
+                        <input type="submit" id="aceptar" value="Aceptar">
+                        <input type="button" id="cancelar" value="Cancelar">
+                    </div>
+                </form>
+            <?php  break; ?>
+            <?php case 'exito': ?>
+                <p class="info"><br />Se realizaron con exito las inscripciones.<br />
+                </p>
 
-				<br/>
-				<h3>Inscripciones realizadas.</h3>
-				<br/>
+                <br/>
+                <h3>Inscripciones realizadas.</h3>
+                <br/>
 
-				<table>
-				<tr><th>#</th><th>Curso</th><th>Inscripciones</th><th>Invalidas</th></tr>
-				<?php
-					$i=0;
-					foreach($datos as $k => $ins){ ?>
-				<?php
+                <table>
+                <tr><th>#</th><th>Curso</th><th>Inscripciones</th><th>Invalidas</th></tr>
+                <?php
+                    $i=0;
+                    foreach($datos as $k => $ins){ ?>
+                <?php
 
-					$curso=new Cursos(); $curso->find($k);
-					$materia=$curso->materia();
-					$grupo=$curso->grupo();
-					$ciclo=$grupo->ciclo();
-				?>
-				<tr  class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
-					<td style="text-align:center;">
-					<?php echo $i+1; ?>
-					</td>
-					<td>
-						<span class="sub">
-						<?php echo $materia->tipo(); ?>
-						</span>
-						<br/>
-						<span class="sub">
-						<?php echo $materia->nombre; ?>
-						</span>
-						<br/>
-						<span class="sub" style="color: rgb(119, 119, 119);">
-						<?php echo $grupo->ver(); ?>
-						</span>
-						<br/>
-						<span class="sub" style="color: rgb(119, 119, 119);">
-						<?php echo $ciclo->numero; ?>
-						</span>
-					</td>
-					<td style="text-align:center;">
-						<span class="sub" style="color: rgb(119, 119, 119);">
-						<?php echo count($ins); ?>
-						</span>
-					</td>
-					<td>
-					<span class="sub" style="color: rgb(119, 119, 119);">
-						<?php echo count($invalidos[$k]); ?>
-					</span>
-					</td>
-				</tr>
-				<?php
-					$i++;
-				 } ?>
-				</table>
+                    $curso=new Cursos(); $curso->find($k);
+                    $materia=$curso->materia();
+                    $grupo=$curso->grupo();
+                    $ciclo=$grupo->ciclo();
+                ?>
+                <tr  class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+                    <td style="text-align:center;">
+                    <?php echo $i+1; ?>
+                    </td>
+                    <td>
+                        <span class="sub">
+                        <?php echo $materia->tipo(); ?>
+                        </span>
+                        <br/>
+                        <span class="sub">
+                        <?php echo $materia->nombre; ?>
+                        </span>
+                        <br/>
+                        <span class="sub" style="color: rgb(119, 119, 119);">
+                        <?php echo $grupo->ver(); ?>
+                        </span>
+                        <br/>
+                        <span class="sub" style="color: rgb(119, 119, 119);">
+                        <?php echo $ciclo->numero; ?>
+                        </span>
+                    </td>
+                    <td style="text-align:center;">
+                        <span class="sub" style="color: rgb(119, 119, 119);">
+                        <?php echo count($ins); ?>
+                        </span>
+                    </td>
+                    <td>
+                    <span class="sub" style="color: rgb(119, 119, 119);">
+                        <?php echo count($invalidos[$k]); ?>
+                    </span>
+                    </td>
+                </tr>
+                <?php
+                    $i++;
+                 } ?>
+                </table>
 
-			<?php  break; ?>
-			<?php case 'warning':
-				  default:
-			?>
-				<p class="tip">
-				<br />
-				<?php echo $warning ?>
-				<br />
-				</p>
-			<?php  break; ?>
-			<?php case 'error':
-				  default:
-			?>
-				<p class="error"><br />Ha ocurrido un error en el modulo optativas.<br />
-				<?php echo $error ?>
-				</p>
-			<?php  break; ?>
-		<?php } ?>
-	</div>
+            <?php  break; ?>
+            <?php case 'warning':
+                  default:
+            ?>
+                <p class="tip">
+                <br />
+                <?php echo $warning ?>
+                <br />
+                </p>
+            <?php  break; ?>
+            <?php case 'error':
+                  default:
+            ?>
+                <p class="error"><br />Ha ocurrido un error en el modulo optativas.<br />
+                <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
 </div>

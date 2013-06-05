@@ -1,9 +1,9 @@
 <?php
 
 /** KumbiaForms - PHP Rapid Development Framework *****************************
-*	
-* Copyright (C) 2005-2007 Andrés Felipe Gutiérrez (andresfelipe at vagoogle.net)
-* 	
+*    
+* Copyright (C) 2005-2007 Andrï¿½s Felipe Gutiï¿½rrez (andresfelipe at vagoogle.net)
+*     
 * This framework is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
 * License as published by the Free Software Foundation; either
@@ -19,47 +19,47 @@
 * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 * 
 * Este framework es software libre; puedes redistribuirlo y/o modificarlo
-* bajo los terminos de la licencia pública general GNU tal y como fue publicada
-* por la Fundación del Software Libre; desde la versión 2.1 o cualquier
-* versión superior.
+* bajo los terminos de la licencia pï¿½blica general GNU tal y como fue publicada
+* por la Fundaciï¿½n del Software Libre; desde la versiï¿½n 2.1 o cualquier
+* versiï¿½n superior.
 * 
 * Este framework es distribuido con la esperanza de ser util pero SIN NINGUN 
-* TIPO DE GARANTIA; sin dejar atrás su LADO MERCANTIL o PARA FAVORECER ALGUN
-* FIN EN PARTICULAR. Lee la licencia publica general para más detalles.
+* TIPO DE GARANTIA; sin dejar atrï¿½s su LADO MERCANTIL o PARA FAVORECER ALGUN
+* FIN EN PARTICULAR. Lee la licencia publica general para mï¿½s detalles.
 * 
-* Debes recibir una copia de la Licencia Pública General GNU junto con este
-* framework, si no es asi, escribe a Fundación del Software Libre Inc.,
+* Debes recibir una copia de la Licencia Pï¿½blica General GNU junto con este
+* framework, si no es asi, escribe a Fundaciï¿½n del Software Libre Inc.,
 * 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
 *****************************************************************************/
 
-	class simpleXMLResponse {
-	  	
-	  	private $code;
-	  	
-	  	function simpleXMLResponse(){
-		    $this->code.="<?xml version='1.0' encoding='iso8859-1'?>\r\n<response>\r\n";
-		}
-	  	  
-	  	function addNode($arr){
-		    $this->code.="\t<row ";
-		    foreach($arr as $k => $v){
-				$this->code.="$k='".$v."' ";	
-			}
-			$this->code.="/>\r\n";
-			
-		}
-		
-		function addData($val){
-		   $this->code.="\t<data><![CDATA[$val]]></data>\n";	
-		}
-		
-		function outResponse(){
-		  	$this->code.="</response>";
-		  	header('Content-Type: text/xml');
-		  	header("Pragma: no-cache");
-			header("Expires: 0");
-		  	print $this->code;		  	
-		}
-	}
+    class simpleXMLResponse {
+          
+          private $code;
+          
+          function simpleXMLResponse(){
+            $this->code.="<?xml version='1.0' encoding='iso8859-1'?>\r\n<response>\r\n";
+        }
+            
+          function addNode($arr){
+            $this->code.="\t<row ";
+            foreach($arr as $k => $v){
+                $this->code.="$k='".$v."' ";    
+            }
+            $this->code.="/>\r\n";
+            
+        }
+        
+        function addData($val){
+           $this->code.="\t<data><![CDATA[$val]]></data>\n";    
+        }
+        
+        function outResponse(){
+              $this->code.="</response>";
+              header('Content-Type: text/xml');
+              header("Pragma: no-cache");
+            header("Expires: 0");
+              print $this->code;              
+        }
+    }
 
 ?>

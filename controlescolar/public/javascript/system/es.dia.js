@@ -9,25 +9,25 @@
 
 
 function init(){
-	fecha = $('fecha');
-	if(fecha){
-	var f=$("date");
-	fch=f.value.split("-");
+    fecha = $('fecha');
+    if(fecha){
+    var f=$("date");
+    fch=f.value.split("-");
 
- 	date=new Date(fch[0],fch[1]-1,fch[2]);
-		//fecha.onblur = function(){ valFecha($('inicio')) };
-			Calendar.setup({
-				button: 'fecha',
-				electric : false,
-				 onUpdate : catcalc,
-				 date: date,
-				ifFormat : '%d/%m/%Y'
-			});
-
-
+     date=new Date(fch[0],fch[1]-1,fch[2]);
+        //fecha.onblur = function(){ valFecha($('inicio')) };
+            Calendar.setup({
+                button: 'fecha',
+                electric : false,
+                 onUpdate : catcalc,
+                 date: date,
+                ifFormat : '%d/%m/%Y'
+            });
 
 
-	}
+
+
+    }
 
 
 }

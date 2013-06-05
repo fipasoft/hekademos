@@ -1,151 +1,151 @@
 <div id="primary">
-	<div class="content">
-		<h1>
-			<?php echo $registros;?>
-			Ciclo<?php echo ($registros == 1 ? '' : 's') ?> escolar<?php echo ($registros == 1 ? '' : 'es') ?>
-			<?php if($busqueda->condicion() != '') {?><div class="filter-lab">Contenido filtrado</div><?php }?>
-		</h1>
-		<div id="options-bar">
-			<div id="options">
-			<?php if($acl_ciclos['buscar']){ ?>
-				<a href="" id="aSearch" title="Buscar" alt="Buscar">
-					Buscar
-					<img src="<?php echo $path?>public/img/sp5/buscar.png"/>
-				</a>/
-				<?php } ?>
-				<?php if($acl_ciclos['agregar']){ ?>
-				<a href="<?php echo $path ?>ciclos/agregar" title="Agregar ciclo" alt="Agregar ciclo">
-					Agregar ciclo
-					<img src="<?php echo $path?>public/img/sp5/nuevo.png"/>
-				</a>
-				<?php } ?>
-			</div>
-			<?php if($acl_ciclos['buscar']){ ?>
-			<div id="search" <?php if($busqueda->condicion() == ''){?> style="display:none" <?php } ?>>
-				<form action="<?php echo $path ?>ciclos" method="post" id="frm_search">
-					<fieldset>
-						<label for="numero">Numero</label>
-						<input type="text" name="numero" id="numero" value="<?php echo $busqueda->campo('numero') ?>" size="10" maxlength="6" />
-						<input type="submit" id="btn_submit" value="Filtrar" />
-						<input type="reset" id="reset" value="Quitar filtros" />
-					</fieldset>
-				</form>
-			</div>
-			<?php } ?>
-		</div>
-		<?php if($registros > 0){ ?>
-				<table>
-					<tr>
-						<th>N&uacute;mero</th>
-						<th>Inicio</th>
-						<th>Fin</th>
-						<?php if($acl_ciclos['status']){ ?>
-						<th>Activo</th>
-						<?php } ?>
-						<?php if($acl_ciclos['abrir']){ ?>
-						<th>Abierto</th>
-						<?php } ?>
+    <div class="content">
+        <h1>
+            <?php echo $registros;?>
+            Ciclo<?php echo ($registros == 1 ? '' : 's') ?> escolar<?php echo ($registros == 1 ? '' : 'es') ?>
+            <?php if($busqueda->condicion() != '') {?><div class="filter-lab">Contenido filtrado</div><?php }?>
+        </h1>
+        <div id="options-bar">
+            <div id="options">
+            <?php if($acl_ciclos['buscar']){ ?>
+                <a href="" id="aSearch" title="Buscar" alt="Buscar">
+                    Buscar
+                    <img src="<?php echo $path?>public/img/sp5/buscar.png"/>
+                </a>/
+                <?php } ?>
+                <?php if($acl_ciclos['agregar']){ ?>
+                <a href="<?php echo $path ?>ciclos/agregar" title="Agregar ciclo" alt="Agregar ciclo">
+                    Agregar ciclo
+                    <img src="<?php echo $path?>public/img/sp5/nuevo.png"/>
+                </a>
+                <?php } ?>
+            </div>
+            <?php if($acl_ciclos['buscar']){ ?>
+            <div id="search" <?php if($busqueda->condicion() == ''){?> style="display:none" <?php } ?>>
+                <form action="<?php echo $path ?>ciclos" method="post" id="frm_search">
+                    <fieldset>
+                        <label for="numero">Numero</label>
+                        <input type="text" name="numero" id="numero" value="<?php echo $busqueda->campo('numero') ?>" size="10" maxlength="6" />
+                        <input type="submit" id="btn_submit" value="Filtrar" />
+                        <input type="reset" id="reset" value="Quitar filtros" />
+                    </fieldset>
+                </form>
+            </div>
+            <?php } ?>
+        </div>
+        <?php if($registros > 0){ ?>
+                <table>
+                    <tr>
+                        <th>N&uacute;mero</th>
+                        <th>Inicio</th>
+                        <th>Fin</th>
+                        <?php if($acl_ciclos['status']){ ?>
+                        <th>Activo</th>
+                        <?php } ?>
+                        <?php if($acl_ciclos['abrir']){ ?>
+                        <th>Abierto</th>
+                        <?php } ?>
 
-						<th>Agenda</th>
+                        <th>Agenda</th>
 
-						<?php if($acl_ciclos['editar'] || $acl_ciclos['eliminar'] || $acl_ciclos['avance']){ ?>
-						<th>Opciones</th>
-						<?php } ?>
+                        <?php if($acl_ciclos['editar'] || $acl_ciclos['eliminar'] || $acl_ciclos['avance']){ ?>
+                        <th>Opciones</th>
+                        <?php } ?>
 
-					</tr>
-					<?php
-						$i = 0;
-						foreach($ciclos as $ciclo){
-					?>
-					<tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
-						<td><?php echo $ciclo->numero ?></td>
-						<td><?php echo Utils :: fecha_espanol($ciclo->inicio) ?></td>
-						<td><?php echo Utils :: fecha_espanol($ciclo->fin) ?></td>
-						<?php if($acl_ciclos['status']){ ?>
-						<td style="text-align:center">
-						<?php if($ciclo->activo==0){ ?>
-							<a href="<?php echo $path . 'ciclos/status/' . $ciclo->id?>"
-							   alt="Cambiar el status activo del ciclo" title="Cambiar el status activo del ciclo">
-								<img src="<?php echo $path . 'public/img/sp5/' . ($ciclo->activo == 1 ? 'si' : 'no') ?>.png"/>
-							</a>
-						<?php }else{ ?>
-								<img title="El ciclo se encuentra activo." src="<?php echo $path . 'public/img/sp5/' . ($ciclo->activo == 1 ? 'si' : 'no') ?>.png"/>
-						<?php } ?>
-						</td>
-						<?php } ?>
-						<?php if($acl_ciclos['abrir']){ ?>
-						<td style="text-align:center">
-							<a href="<?php echo $path . 'ciclos/abrir/' . $ciclo->id?>"
-							   alt="Cambiar el status abierto del ciclo" title="Cambiar el status abierto del ciclo">
-								<img src="<?php echo $path . 'public/img/sp5/' . ($ciclo->abierto == 1 ? 'si' : 'no') ?>.png"/>
-							</a>
-						</td>
-						<?php } ?>
+                    </tr>
+                    <?php
+                        $i = 0;
+                        foreach($ciclos as $ciclo){
+                    ?>
+                    <tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+                        <td><?php echo $ciclo->numero ?></td>
+                        <td><?php echo Utils :: fecha_espanol($ciclo->inicio) ?></td>
+                        <td><?php echo Utils :: fecha_espanol($ciclo->fin) ?></td>
+                        <?php if($acl_ciclos['status']){ ?>
+                        <td style="text-align:center">
+                        <?php if($ciclo->activo==0){ ?>
+                            <a href="<?php echo $path . 'ciclos/status/' . $ciclo->id?>"
+                               alt="Cambiar el status activo del ciclo" title="Cambiar el status activo del ciclo">
+                                <img src="<?php echo $path . 'public/img/sp5/' . ($ciclo->activo == 1 ? 'si' : 'no') ?>.png"/>
+                            </a>
+                        <?php }else{ ?>
+                                <img title="El ciclo se encuentra activo." src="<?php echo $path . 'public/img/sp5/' . ($ciclo->activo == 1 ? 'si' : 'no') ?>.png"/>
+                        <?php } ?>
+                        </td>
+                        <?php } ?>
+                        <?php if($acl_ciclos['abrir']){ ?>
+                        <td style="text-align:center">
+                            <a href="<?php echo $path . 'ciclos/abrir/' . $ciclo->id?>"
+                               alt="Cambiar el status abierto del ciclo" title="Cambiar el status abierto del ciclo">
+                                <img src="<?php echo $path . 'public/img/sp5/' . ($ciclo->abierto == 1 ? 'si' : 'no') ?>.png"/>
+                            </a>
+                        </td>
+                        <?php } ?>
 
-						<td style="text-align:center">
-						<a href="<?php echo $path . 'agenda/agregar/' . $ciclo->id?>"
-							   alt="Agenda del ciclo" title="Agenda del ciclo">
-							   <img src="<?php echo $path?>public/img/sp5/calendario.png" />
-						</a>
-						</td>
+                        <td style="text-align:center">
+                        <a href="<?php echo $path . 'agenda/agregar/' . $ciclo->id?>"
+                               alt="Agenda del ciclo" title="Agenda del ciclo">
+                               <img src="<?php echo $path?>public/img/sp5/calendario.png" />
+                        </a>
+                        </td>
 
-						<?php if($acl_ciclos['editar'] || $acl_ciclos['eliminar'] || $acl_ciclos['avance']){ ?>
-						<td style="text-align:center">
-						<?php if($acl_ciclos['editar']){ ?>
-							<a href="<?php echo $path . 'ciclos/editar/' . $ciclo->id?>"
-							   alt="Editar datos del ciclo" title="Editar datos del ciclo">
-							   <img src="<?php echo $path?>public/img/sp5/editar.png" />
-							</a>
-						<?php } ?>
-						<?php if($acl_ciclos['eliminar']){ ?>
-							<a href="<?php echo $path . 'ciclos/eliminar/' . $ciclo->id?>"
-							   alt="Eliminar toda la informacion del ciclo" title="Eliminar toda la informacion del ciclo">
-							   <img src="<?php echo $path?>public/img/sp5/eliminar.png" />
-							</a>
-						<?php } ?>
-						<?php if($acl_ciclos['avance']){ ?>
-							<?php
-							if($ciclo->avance==0 && $ciclo->activo==1){
-							?>
-							<a href="<?php echo $path . 'ciclos/faltantes/' . $ciclo->id?>"
-							   alt="Calificaciones faltantes del ciclo" title="Calificaciones faltantes del ciclo">
-							   <img src="<?php echo $path?>public/img/sp5/faltas.png" />
-							</a>
-							<a href="<?php echo $path . 'ciclos/simulaavance/' . $ciclo->id?>"
-							   alt="Simula el avance al siguiente ciclo" title="Simula el avance al siguiente ciclo">
-							   <img src="<?php echo $path?>public/img/sp5/config.png" />
-							</a>
-							<a href="<?php echo $path . 'ciclos/avance/' . $ciclo->id?>"
-							   alt="Avanzar al siguiente ciclo" title="Avanzar al siguiente ciclo">
-							   <img src="<?php echo $path?>public/img/sp5/inscribir.png" />
-							</a>
-							<?php
-							}
-							?>
-						<?php
-						}
-						?>
-						</td>
-					<?php
-						}
-						?>
-					</tr>
-					<?php
-						$i++;
-					}
-					?>
-				</table>
-		<?php } else { ?>
-				<p class="info"><br />No hay registros que mostrar...</p>
-		<?php } ?>
-		<div id="pages">
-			<?php foreach($paginador->botones() as $boton){ ?>
-				 <a  href="<?php echo $path . $boton->url() ?>"
-					title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
-					class="<?php echo $boton->estilo() ?>">
-					<?php echo $boton->etiqueta() ?>
-				</a>
-			<?php }?>
-		</div>
-	</div>
+                        <?php if($acl_ciclos['editar'] || $acl_ciclos['eliminar'] || $acl_ciclos['avance']){ ?>
+                        <td style="text-align:center">
+                        <?php if($acl_ciclos['editar']){ ?>
+                            <a href="<?php echo $path . 'ciclos/editar/' . $ciclo->id?>"
+                               alt="Editar datos del ciclo" title="Editar datos del ciclo">
+                               <img src="<?php echo $path?>public/img/sp5/editar.png" />
+                            </a>
+                        <?php } ?>
+                        <?php if($acl_ciclos['eliminar']){ ?>
+                            <a href="<?php echo $path . 'ciclos/eliminar/' . $ciclo->id?>"
+                               alt="Eliminar toda la informacion del ciclo" title="Eliminar toda la informacion del ciclo">
+                               <img src="<?php echo $path?>public/img/sp5/eliminar.png" />
+                            </a>
+                        <?php } ?>
+                        <?php if($acl_ciclos['avance']){ ?>
+                            <?php
+                            if($ciclo->avance==0 && $ciclo->activo==1){
+                            ?>
+                            <a href="<?php echo $path . 'ciclos/faltantes/' . $ciclo->id?>"
+                               alt="Calificaciones faltantes del ciclo" title="Calificaciones faltantes del ciclo">
+                               <img src="<?php echo $path?>public/img/sp5/faltas.png" />
+                            </a>
+                            <a href="<?php echo $path . 'ciclos/simulaavance/' . $ciclo->id?>"
+                               alt="Simula el avance al siguiente ciclo" title="Simula el avance al siguiente ciclo">
+                               <img src="<?php echo $path?>public/img/sp5/config.png" />
+                            </a>
+                            <a href="<?php echo $path . 'ciclos/avance/' . $ciclo->id?>"
+                               alt="Avanzar al siguiente ciclo" title="Avanzar al siguiente ciclo">
+                               <img src="<?php echo $path?>public/img/sp5/inscribir.png" />
+                            </a>
+                            <?php
+                            }
+                            ?>
+                        <?php
+                        }
+                        ?>
+                        </td>
+                    <?php
+                        }
+                        ?>
+                    </tr>
+                    <?php
+                        $i++;
+                    }
+                    ?>
+                </table>
+        <?php } else { ?>
+                <p class="info"><br />No hay registros que mostrar...</p>
+        <?php } ?>
+        <div id="pages">
+            <?php foreach($paginador->botones() as $boton){ ?>
+                 <a  href="<?php echo $path . $boton->url() ?>"
+                    title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
+                    class="<?php echo $boton->estilo() ?>">
+                    <?php echo $boton->etiqueta() ?>
+                </a>
+            <?php }?>
+        </div>
+    </div>
 </div>

@@ -1,50 +1,50 @@
 <?php $path = KUMBIA_PATH; ?>
 <div id="primary">
-	<div class="content">
-	<?php if($option!="error"){ ?>
-		<h1>Eliminar alumno del bloque</h1>
-		<h2><?php echo $ciclo->numero; ?></h2>
-		<h2>Bloque <?php echo $bloque->id; ?></h2>
-		<h2>Inicia el <?php echo Utils::fecha_espanol(substr($bloque->inicio,0,10)); ?> a las <?php echo substr($bloque->inicio,10,6); ?></h2>
-		<h2>Finaliza el <?php echo Utils::fecha_espanol(substr($bloque->fin,0,10)); ?> a las <?php echo substr($bloque->fin,10,6); ?></h2>
+    <div class="content">
+    <?php if($option!="error"){ ?>
+        <h1>Eliminar alumno del bloque</h1>
+        <h2><?php echo $ciclo->numero; ?></h2>
+        <h2>Bloque <?php echo $bloque->id; ?></h2>
+        <h2>Inicia el <?php echo Utils::fecha_espanol(substr($bloque->inicio,0,10)); ?> a las <?php echo substr($bloque->inicio,10,6); ?></h2>
+        <h2>Finaliza el <?php echo Utils::fecha_espanol(substr($bloque->fin,0,10)); ?> a las <?php echo substr($bloque->fin,10,6); ?></h2>
 
-		<div id="options-bar">
-			<div id="options">
-				<a href="<?php echo $path ?>bloquesalumnos/index/<?php echo $bloquealumno->bloque_id; ?>">Volver a bloque<?php echo $bloquealumno->bloque_id ?>
-				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
-				</a>
-			</div>
-		</div>
-		<?php } ?>
-		<?php switch($option) {
-				case 'captura': ?>
-				<form action="<?php echo $path ?>bloquesalumnos/eliminar/" id="frm_eliminar" method="post">
-					<input type="hidden" name="id" id="id" value="<?php echo $bloquealumno->id ?>" />
-					<input type="hidden" name="bloque_id" id="bloque_id" value="<?php echo $bloquealumno->bloque_id ?>" />
-					<input type="hidden" name="KUMBIA_PATH" id="KUMBIA_PATH" value="<?php echo $path ?>" />
-					<p class="error">
-						Se dispone a eliminar al alumno del bloque. El alumno no podra dar de alta optativas.<br/>
-						<?php echo $alumno->codigo?>,
-						<?php echo $alumno->nombre .' ' . $alumno->ap . ' ' . $alumno->am?>
-						<br />
-						<strong>&iquest;Desea continuar?</strong>
-					</p>
-					<div id="botones">
-						<input type="submit" id="aceptar" value="Aceptar">
-						<input type="button" id="cancelar" value="Cancelar">
-					</div>
-				</form>
-			<?php  break; ?>
-			<?php case 'exito': ?>
-				<p class="info"><br />El alumno se elimin&oacute; correctamente.</p>
-			<?php  break; ?>
-			<?php case 'error':
-				  default:
-			?><br/>
-				<p class="error"><br />Ha ocurrido un error al intentar eliminar el alumno.<br />
-				<?php echo $error ?>
-				</p>
-			<?php  break; ?>
-		<?php } ?>
-	</div>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path ?>bloquesalumnos/index/<?php echo $bloquealumno->bloque_id; ?>">Volver a bloque<?php echo $bloquealumno->bloque_id ?>
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+            </div>
+        </div>
+        <?php } ?>
+        <?php switch($option) {
+                case 'captura': ?>
+                <form action="<?php echo $path ?>bloquesalumnos/eliminar/" id="frm_eliminar" method="post">
+                    <input type="hidden" name="id" id="id" value="<?php echo $bloquealumno->id ?>" />
+                    <input type="hidden" name="bloque_id" id="bloque_id" value="<?php echo $bloquealumno->bloque_id ?>" />
+                    <input type="hidden" name="KUMBIA_PATH" id="KUMBIA_PATH" value="<?php echo $path ?>" />
+                    <p class="error">
+                        Se dispone a eliminar al alumno del bloque. El alumno no podra dar de alta optativas.<br/>
+                        <?php echo $alumno->codigo?>,
+                        <?php echo $alumno->nombre .' ' . $alumno->ap . ' ' . $alumno->am?>
+                        <br />
+                        <strong>&iquest;Desea continuar?</strong>
+                    </p>
+                    <div id="botones">
+                        <input type="submit" id="aceptar" value="Aceptar">
+                        <input type="button" id="cancelar" value="Cancelar">
+                    </div>
+                </form>
+            <?php  break; ?>
+            <?php case 'exito': ?>
+                <p class="info"><br />El alumno se elimin&oacute; correctamente.</p>
+            <?php  break; ?>
+            <?php case 'error':
+                  default:
+            ?><br/>
+                <p class="error"><br />Ha ocurrido un error al intentar eliminar el alumno.<br />
+                <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
 </div>

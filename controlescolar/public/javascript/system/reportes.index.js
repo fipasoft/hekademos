@@ -18,18 +18,18 @@ function actualizar(modo){
 var id='';
  switch (modo){
         case 'resumen':
-			id='tblRes';
+            id='tblRes';
             break;
         case 'derechos':
-        	id='tblDer';
+            id='tblDer';
             break;
                default:
 
     }
-			if(id!=''){
+            if(id!=''){
             $$( '#' + id + ' .chk').each( function( campo ){
                 var trId = campo.id.sub('chk', 'tr');
-					var td=$$('#'+trId+' td')[0];
+                    var td=$$('#'+trId+' td')[0];
                     if(td.className=='selected'){
 
                     campo.checked = true;
@@ -95,14 +95,14 @@ function init(){
                     campo.checked = false;
                     $(trId).removeClassName('selected');
                     $$('#'+trId+' td').each(function( td){
-						td.removeClassName('selected');
+                        td.removeClassName('selected');
                     });
                 }else{
                     campo.checked = true;
                     $(trId).addClassName('selected');
 
                     $$('#'+trId+' td').each(function( td){
-						td.addClassName('selected');
+                        td.addClassName('selected');
                     });
 
                 }
@@ -118,13 +118,13 @@ function init(){
             if($(campo).checked){
                 $(trId).addClassName('selected');
                 $$('#'+trId+' td').each(function( td){
-						td.addClassName('selected');
+                        td.addClassName('selected');
                     });
 
             }else{
                 $(trId).removeClassName('selected');
-            	$$('#'+trId+' td').each(function( td){
-						td.removeClassName('selected');
+                $$('#'+trId+' td').each(function( td){
+                        td.removeClassName('selected');
                     });
 
             }

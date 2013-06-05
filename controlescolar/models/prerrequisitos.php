@@ -11,16 +11,16 @@
  */
 class Prerrequisitos extends ActiveRecord{
 
-	public function requisito(){
-		$materias = new Materias();
-		$materias->find($this->requisito);
-		return $materias->nombre;
-	}
+    public function requisito(){
+        $materias = new Materias();
+        $materias->find($this->requisito);
+        return $materias->nombre;
+    }
 
-	public function clave(){
-		$materias = new Materias();
-		$materias->find($this->requisito);
-		return $materias->clave;
-	}
+    public function clave(){
+        $materias = new Materias();
+        $materias->find($this->requisito);
+        return $materias->clave;
+    }
 }
 ?>

@@ -28,17 +28,17 @@ WindowStore = {
 
     // Create observer on show/hide events
     var myObserver = {
-    	onShow: function(eventName, win) {
-    	  WindowStore._saveCookie();
-    	},
-    	
-    	onClose: function(eventName, win) {
-    	  WindowStore._saveCookie();
-  	  },
-  	  
-    	onHide: function(eventName, win) {
-    	  WindowStore._saveCookie();
-    	}
+        onShow: function(eventName, win) {
+          WindowStore._saveCookie();
+        },
+        
+        onClose: function(eventName, win) {
+          WindowStore._saveCookie();
+        },
+        
+        onHide: function(eventName, win) {
+          WindowStore._saveCookie();
+        }
     }
     Windows.addObserver(myObserver);
 
@@ -99,10 +99,10 @@ WindowCloseKey = {
   
   _closeCurrentWindow: function(event) {
     var e = event || window.event
-  	var characterCode = e.which || e.keyCode;
-  	
-  	// Check if there is a top window (it means it's an URL content)
-  	var win = top.Windows.focusedWindow;
+      var characterCode = e.which || e.keyCode;
+      
+      // Check if there is a top window (it means it's an URL content)
+      var win = top.Windows.focusedWindow;
     if (characterCode == WindowCloseKey.keyCode && win) {
       if (win.cancelCallback) 
         top.Dialog.cancelCallback();      

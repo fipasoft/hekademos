@@ -2,8 +2,8 @@
 
 /** Kumbia - PHP Rapid Development Framework *****************************
 *
-* Copyright (C) 2005-2007 Andrés Felipe Gutiérrez (andresfelipe at vagoogle.net)
-* Revised by César Caballero Gállego (phillipo at ccaballero.com)
+* Copyright (C) 2005-2007 Andrï¿½s Felipe Gutiï¿½rrez (andresfelipe at vagoogle.net)
+* Revised by Cï¿½sar Caballero Gï¿½llego (phillipo at ccaballero.com)
 * Revised by Roger Jose Padilla Camacho (rogerjose81 at gmail.com)
 *
 * This framework is free software; you can redistribute it and/or
@@ -21,16 +21,16 @@
 * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 *
 * Este framework es software libre; puedes redistribuirlo y/o modificarlo
-* bajo los terminos de la licencia pública general GNU tal y como fue publicada
-* por la Fundación del Software Libre; desde la versión 2.1 o cualquier
-* versión superior.
+* bajo los terminos de la licencia pï¿½blica general GNU tal y como fue publicada
+* por la Fundaciï¿½n del Software Libre; desde la versiï¿½n 2.1 o cualquier
+* versiï¿½n superior.
 *
 * Este framework es distribuido con la esperanza de ser util pero SIN NINGUN
-* TIPO DE GARANTIA; sin dejar atrás su LADO MERCANTIL o PARA FAVORECER ALGUN
-* FIN EN PARTICULAR. Lee la licencia publica general para más detalles.
+* TIPO DE GARANTIA; sin dejar atrï¿½s su LADO MERCANTIL o PARA FAVORECER ALGUN
+* FIN EN PARTICULAR. Lee la licencia publica general para mï¿½s detalles.
 *
-* Debes recibir una copia de la Licencia Pública General GNU junto con este
-* framework, si no es asi, escribe a Fundación del Software Libre Inc.,
+* Debes recibir una copia de la Licencia Pï¿½blica General GNU junto con este
+* framework, si no es asi, escribe a Fundaciï¿½n del Software Libre Inc.,
 * 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 ********************************************************************************/
 
@@ -41,107 +41,107 @@
  */
 class Flash {
 
-	/**
-	 * Visualiza un mensaje de error
-	 *
-	 * @param string $err
-	 */
-	public static function error($err, $include_style=false){
-		if(isset($_SERVER['SERVER_SOFTWARE'])){
-			if($include_style){
-				stylesheet_link_tag('style');
-			}
-    		print '<div id="kumbiaDisplay" class="error_message">'.$err.'</div>'."\n";    		
-	    } else {
-			print strip_tags($err)."\n";
-		}
-	}
+    /**
+     * Visualiza un mensaje de error
+     *
+     * @param string $err
+     */
+    public static function error($err, $include_style=false){
+        if(isset($_SERVER['SERVER_SOFTWARE'])){
+            if($include_style){
+                stylesheet_link_tag('style');
+            }
+            print '<div id="kumbiaDisplay" class="error_message">'.$err.'</div>'."\n";            
+        } else {
+            print strip_tags($err)."\n";
+        }
+    }
 
-	/**
-	 * Visualiza una alerta de Error JavaScript
-	 *
-	 * @param string $err
-	 */
-	public static function jerror($err){
-        	formsPrint("\r\nalert(\"$err\")\r\n");
-	}
+    /**
+     * Visualiza una alerta de Error JavaScript
+     *
+     * @param string $err
+     */
+    public static function jerror($err){
+            formsPrint("\r\nalert(\"$err\")\r\n");
+    }
 
-	/**
-	 * Visualiza informacion en pantalla
-	 *
-	 * @param string $msg
-	 */
-	public static function notice($msg){
-		if(isset($_SERVER['SERVER_SOFTWARE'])){
-    			print '<div id="kumbiaDisplay" class="notice_message">'.$msg.'</div>'."\n";    		
-		} else {
-			print strip_tags($msg)."\n";
-		}
-	}
+    /**
+     * Visualiza informacion en pantalla
+     *
+     * @param string $msg
+     */
+    public static function notice($msg){
+        if(isset($_SERVER['SERVER_SOFTWARE'])){
+                print '<div id="kumbiaDisplay" class="notice_message">'.$msg.'</div>'."\n";            
+        } else {
+            print strip_tags($msg)."\n";
+        }
+    }
 
-	/**
-	 * Visualiza informacion de Suceso en pantalla
-	 *
-	 * @param string $msg
-	 */
-	public static function success($msg){
-		if(isset($_SERVER['SERVER_SOFTWARE'])){
-    			print '<div id="kumbiaDisplay" class="sucess_message">'.$msg.'</div>'."\n";    		
-		} else {
-			print strip_tags($msg)."\n";
-		}
-	}
+    /**
+     * Visualiza informacion de Suceso en pantalla
+     *
+     * @param string $msg
+     */
+    public static function success($msg){
+        if(isset($_SERVER['SERVER_SOFTWARE'])){
+                print '<div id="kumbiaDisplay" class="sucess_message">'.$msg.'</div>'."\n";            
+        } else {
+            print strip_tags($msg)."\n";
+        }
+    }
 
-	/**
-	 * Visualiza un mensaje de advertencia en pantalla
-	 *
-	 * @param string $msg
-	 */
-	public static function warning($msg){
-		if(isset($_SERVER['SERVER_SOFTWARE'])){
-    			print '<div id="kumbiaDisplay" class="warning_message">'.$msg.'</div>'."\n";    		
-		} else {
-			print strip_tags($msg)."\n";
-		}
-	}
+    /**
+     * Visualiza un mensaje de advertencia en pantalla
+     *
+     * @param string $msg
+     */
+    public static function warning($msg){
+        if(isset($_SERVER['SERVER_SOFTWARE'])){
+                print '<div id="kumbiaDisplay" class="warning_message">'.$msg.'</div>'."\n";            
+        } else {
+            print strip_tags($msg)."\n";
+        }
+    }
 
-	public static function interactive($msg){
-		if(isset($_SERVER['SERVER_SOFTWARE'])){
-    			print '<div id="kumbiaDisplay" class="interactive_message">'.$msg.'</div>'."\n";    		
-		} else {
-			print strip_tags($msg)."\n";
-		}
-	}
+    public static function interactive($msg){
+        if(isset($_SERVER['SERVER_SOFTWARE'])){
+                print '<div id="kumbiaDisplay" class="interactive_message">'.$msg.'</div>'."\n";            
+        } else {
+            print strip_tags($msg)."\n";
+        }
+    }
 
-	public static function kumbia_error($what){
-		self::error('<u>KumbiaError:</u> '.$what);
-	}
+    public static function kumbia_error($what){
+        self::error('<u>KumbiaError:</u> '.$what);
+    }
 }
 
 class kumbiaException extends Exception {
 
-	public $message;
-	public $extended_message;
+    public $message;
+    public $extended_message;
 
-	/**
-	 * Constructor de la clase;
-	 *
-	 */
-	public function __construct($message, $extended_message=''){
-		$this->message = $message;
-		$this->extended_message = $extended_message;
-		parent::__construct($message);
-	}
+    /**
+     * Constructor de la clase;
+     *
+     */
+    public function __construct($message, $extended_message=''){
+        $this->message = $message;
+        $this->extended_message = $extended_message;
+        parent::__construct($message);
+    }
 
-	public function show_message(){
-		Flash::error("
-		<span style='font-size:24px'>KumbiaException: $this->message</span><br/>
-		<div>$this->extended_message<br>
-		<span style='font-size:12px'>En el archivo <i>{$this->getFile()}</i> en la l&iacute;nea: <i>{$this->getLine()}</i></span></div>", true);
-		print "<pre style='border:1px solid #969696; background: #FFFFE8'>";
-		print $this->getTraceAsString()."\n";
-		print "</pre>";
-	}
+    public function show_message(){
+        Flash::error("
+        <span style='font-size:24px'>KumbiaException: $this->message</span><br/>
+        <div>$this->extended_message<br>
+        <span style='font-size:12px'>En el archivo <i>{$this->getFile()}</i> en la l&iacute;nea: <i>{$this->getLine()}</i></span></div>", true);
+        print "<pre style='border:1px solid #969696; background: #FFFFE8'>";
+        print $this->getTraceAsString()."\n";
+        print "</pre>";
+    }
 
 }
 

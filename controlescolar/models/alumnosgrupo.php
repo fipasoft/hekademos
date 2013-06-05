@@ -11,55 +11,55 @@
  */
  class Alumnosgrupo extends ActiveRecord{
 
- 	public function baja(){
-		$cursos=new Cursos();
-		$cursos=$cursos->find("grupos_id=".$this->grupos_id);
+     public function baja(){
+        $cursos=new Cursos();
+        $cursos=$cursos->find("grupos_id=".$this->grupos_id);
 
-		foreach($cursos as $curso){
-			$alumnosCurso=new Alumnoscursos();
-			if($alumnosCurso->exists('alumnos_id='.$this->alumnos_id.' AND cursos_id='.$curso->id)){
-				$alumnosCurso=$alumnosCurso->find_first('alumnos_id='.$this->alumnos_id.' AND cursos_id='.$curso->id);
-				$alumnosCurso->baja();
-			}
-		}
+        foreach($cursos as $curso){
+            $alumnosCurso=new Alumnoscursos();
+            if($alumnosCurso->exists('alumnos_id='.$this->alumnos_id.' AND cursos_id='.$curso->id)){
+                $alumnosCurso=$alumnosCurso->find_first('alumnos_id='.$this->alumnos_id.' AND cursos_id='.$curso->id);
+                $alumnosCurso->baja();
+            }
+        }
 
- 		$this->delete();
-
-
- 	}
-
- 	public function alta($alumno,$grupo){
- 		$this->alumnos_id=$alumno;
-		$this->grupos_id=$grupo;
-		$this->save();
-
-		$grupos=new Grupos();
-		$grupos=$grupos->find_first($grupo);
-		$cursos=$grupos->cursosInfo();
-
-		foreach($cursos as $curso){
-
-			if($grupos->grado>4){
-			$tipo=$curso->materiaTipo();
-				if(strToUpper($tipo)=="OBL"){
-					$alumnosCurso=new Alumnoscursos();
-					$alumnosCurso->alta($alumno,$curso->id);
-				}
-			}else{
-			$alumnosCurso=new Alumnoscursos();
-			$alumnosCurso->alta($alumno,$curso->id);
-			}
-		}
-
- 	}
+         $this->delete();
 
 
+     }
 
-		public function inscribe($alumno,$grupo){
-			$this->alumnos_id=$alumno;
-			$this->grupos_id=$grupo;
-			$this->save();
-		}
+     public function alta($alumno,$grupo){
+         $this->alumnos_id=$alumno;
+        $this->grupos_id=$grupo;
+        $this->save();
+
+        $grupos=new Grupos();
+        $grupos=$grupos->find_first($grupo);
+        $cursos=$grupos->cursosInfo();
+
+        foreach($cursos as $curso){
+
+            if($grupos->grado>4){
+            $tipo=$curso->materiaTipo();
+                if(strToUpper($tipo)=="OBL"){
+                    $alumnosCurso=new Alumnoscursos();
+                    $alumnosCurso->alta($alumno,$curso->id);
+                }
+            }else{
+            $alumnosCurso=new Alumnoscursos();
+            $alumnosCurso->alta($alumno,$curso->id);
+            }
+        }
+
+     }
+
+
+
+        public function inscribe($alumno,$grupo){
+            $this->alumnos_id=$alumno;
+            $this->grupos_id=$grupo;
+            $this->save();
+        }
 
  }
 ?>

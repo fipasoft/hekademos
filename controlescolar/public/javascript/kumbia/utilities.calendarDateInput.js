@@ -1,9 +1,9 @@
 /** KumbiaForms - PHP Rapid Development Framework *****************************
-*	
-* Copyright (C) 2005 Andrés Felipe Gutiérrez (andresfelipe at vagoogle.net)
+*    
+* Copyright (C) 2005 Andrï¿½s Felipe Gutiï¿½rrez (andresfelipe at vagoogle.net)
 * Fool-Proof Date Input Script with DHTML Calendar by 
 * Jason Moon - calendar at moonscript.com
-* 	
+*     
 * This framework is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
 * License as published by the Free Software Foundation; either
@@ -604,12 +604,12 @@ function DateInput(DateName, Required, DateFormat, DefaultDate) {
             writeln('<option'+DaySelected+'>'+j+'</option>');
          }
          writeln('</select>'+String.fromCharCode(13)+'</td>'+String.fromCharCode(13)+'<td valign="middle">');
-         writeln('<input'+InitialStatus+' class="calendarDateInput" disabled type="text" id="x'+DateName+'_Year_ID" size="'+eval(DateName+'_Object.picked.yearPad.length')+'" maxlength="'+eval(DateName+'_Object.picked.yearPad.length')+'" title="Año" value="'+eval(DateName+'_Object.picked.yearPad')+'" onKeyPress="return YearDigitsOnly(window.event)" onKeyUp="'+DateName+'_Object.checkYear(this)" onBlur="'+DateName+'_Object.fixYear(this)">');
+         writeln('<input'+InitialStatus+' class="calendarDateInput" disabled type="text" id="x'+DateName+'_Year_ID" size="'+eval(DateName+'_Object.picked.yearPad.length')+'" maxlength="'+eval(DateName+'_Object.picked.yearPad.length')+'" title="Aï¿½o" value="'+eval(DateName+'_Object.picked.yearPad')+'" onKeyPress="return YearDigitsOnly(window.event)" onKeyUp="'+DateName+'_Object.checkYear(this)" onBlur="'+DateName+'_Object.fixYear(this)">');
          write('<td valign="middle">'+String.fromCharCode(13)+'<a'+InitialStatus+' id="'+DateName+'_ID_Link" '+ 
-		 'href="javascript:if(document.getElementById(\'x'+DateName+'_Month_ID\').disabled==false) {'+DateName+'_Object.show()}" '+ 
-		 'onMouseOver="return '+DateName+'_Object.iconHover(true)" '+
-		 'onMouseOut="return '+DateName+'_Object.iconHover(false)">' +
-		 '<img src="'+ImageURL+'" align="baseline" title="Calendario" border="0"></a>&nbsp;');
+         'href="javascript:if(document.getElementById(\'x'+DateName+'_Month_ID\').disabled==false) {'+DateName+'_Object.show()}" '+ 
+         'onMouseOver="return '+DateName+'_Object.iconHover(true)" '+
+         'onMouseOut="return '+DateName+'_Object.iconHover(false)">' +
+         '<img src="'+ImageURL+'" align="baseline" title="Calendario" border="0"></a>&nbsp;');
          writeln('<span id="'+DateName+'_ID" style="position:absolute;visibility:hidden;width:'+(CellWidth * 7)+'px;background-color:'+CalBGColor+';border:1px solid dimgray;" onMouseOver="'+DateName+'_Object.handleTimer(true)" onMouseOut="'+DateName+'_Object.handleTimer(false)">');
          writeln('<table width="'+(CellWidth * 7)+'" cellspacing="0" cellpadding="1">'+String.fromCharCode(13)+'<tr style="background-color:'+TopRowBGColor+';">');
          writeln('<td id="'+DateName+'_Previous_ID" style="cursor:default" align="center" class="calendarDateInput" style="height:'+CellHeight+'" onClick="'+DateName+'_Object.previous.go()" onMouseDown="VirtualButton(this,true)" onMouseUp="VirtualButton(this,false)" onMouseOver="return '+DateName+'_Object.previous.hover(this,true)" onMouseOut="return '+DateName+'_Object.previous.hover(this,false)" title="'+eval(DateName+'_Object.previous.monthName')+'"><img src="'+PrevURL+'"></td>');
@@ -625,23 +625,23 @@ function DateInput(DateName, Required, DateFormat, DefaultDate) {
 function calendarValueChanged(){ alert(event.propertyName) }
 
 function enableDateInput(name){
-  	document.getElementById("x"+name+"_Month_ID").disabled = false
-	document.getElementById("x"+name+"_Day_ID").disabled = false
-	document.getElementById("x"+name+"_Year_ID").disabled = false
-	//document.getElementById("id_"+name).attachEvent("onpropertychange", calendarValueChanged)
+      document.getElementById("x"+name+"_Month_ID").disabled = false
+    document.getElementById("x"+name+"_Day_ID").disabled = false
+    document.getElementById("x"+name+"_Year_ID").disabled = false
+    //document.getElementById("id_"+name).attachEvent("onpropertychange", calendarValueChanged)
 }
 
 
 function setDateValue(cname, dvalue){
-	document.getElementById("xfl_"+cname+'_Month_ID').selectedIndex = parseInt(dvalue.substr(5, 2)) - 1 
-	document.getElementById("xfl_"+cname+'_Day_ID').style.visibility = 'visible'
-	document.getElementById("xfl_"+cname+'_Day_ID').selectedIndex = parseInt(dvalue.substr(8, 2)) - 1
-	document.getElementById("xfl_"+cname+'_Year_ID').value = parseInt(dvalue.substr(0, 4))
-	document.getElementById("xfl_"+cname+'_Year_ID').style.visibility = 'visible'
-	document.getElementById("fl_"+cname+'_ID_Link').style.visibility = 'visible'	
+    document.getElementById("xfl_"+cname+'_Month_ID').selectedIndex = parseInt(dvalue.substr(5, 2)) - 1 
+    document.getElementById("xfl_"+cname+'_Day_ID').style.visibility = 'visible'
+    document.getElementById("xfl_"+cname+'_Day_ID').selectedIndex = parseInt(dvalue.substr(8, 2)) - 1
+    document.getElementById("xfl_"+cname+'_Year_ID').value = parseInt(dvalue.substr(0, 4))
+    document.getElementById("xfl_"+cname+'_Year_ID').style.visibility = 'visible'
+    document.getElementById("fl_"+cname+'_ID_Link').style.visibility = 'visible'    
 
-	eval('fl_'+cname+'_Object').picked = new storedMonthObject(eval('fl_'+cname+'_Object').format, parseInt(dvalue.substr(0, 4)), 
-	parseInt(dvalue.substr(5, 2)) - 1 , 
-	parseInt(dvalue.substr(8, 2)) - 1);
-	eval('fl_'+cname+'_Object').setDisplayed(parseInt(dvalue.substr(0, 4)), parseInt(dvalue.substr(5, 2)) - 1);	
+    eval('fl_'+cname+'_Object').picked = new storedMonthObject(eval('fl_'+cname+'_Object').format, parseInt(dvalue.substr(0, 4)), 
+    parseInt(dvalue.substr(5, 2)) - 1 , 
+    parseInt(dvalue.substr(8, 2)) - 1);
+    eval('fl_'+cname+'_Object').setDisplayed(parseInt(dvalue.substr(0, 4)), parseInt(dvalue.substr(5, 2)) - 1);    
 }

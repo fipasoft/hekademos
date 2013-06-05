@@ -1,80 +1,80 @@
 <?php $path = KUMBIA_PATH; ?>
 <div id="primary">
-	<div class="content">
-		<h1>Editar grupo del ciclo <?php echo $ciclo->numero ?></h1>
-		<div id="options-bar">
-			<div id="options">
-				<a href="<?php echo $path ?>grupos">Volver
-				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
-				</a>
-			</div>
-		</div>
-		<?php switch($option) {
-				case 'captura': ?>
-				<form action="<?php echo $path ?>grupos/editar" id="frm_editar" method="post">
-					<fieldset>
-						<legend>Datos</legend>
-						<input type="hidden" name="id" id="id" value="<?php echo $grupo->id ?>"/>
-						<input type="hidden" name="ciclos_id" id="ciclos_id" value="<?php echo $ciclo->id ?>"/>
-						<label for="grado">Grado</label><br />
-						<select name="grado" id="grado">
-							<option></option>
-							<option value="1" <?php if($grupo->grado == '1'){?>selected="selected"<?php }?>>1</option>
-							<option value="2" <?php if($grupo->grado == '2'){?>selected="selected"<?php }?>>2</option>
-							<option value="3" <?php if($grupo->grado == '3'){?>selected="selected"<?php }?>>3</option>
-							<option value="4" <?php if($grupo->grado == '4'){?>selected="selected"<?php }?>>4</option>
-							<option value="5" <?php if($grupo->grado == '5'){?>selected="selected"<?php }?>>5</option>
-							<option value="6" <?php if($grupo->grado == '6'){?>selected="selected"<?php }?>>6</option>
-						</select>
-						<img id="spinner" src="<?php echo $path ?>/public/img/sp5/spinner.gif" style="display:none"/>
-						<div id="check" class="check"></div>
-						<br />
-						<label for="letra">Letra</label><br />
-						<select name="letra" id="letra">
-							<option></option>
-							<option value="A" <?php if($grupo->letra == 'A'){?>selected="selected"<?php }?>>A</option>
-							<option value="B" <?php if($grupo->letra == 'B'){?>selected="selected"<?php }?>>B</option>
-							<option value="C" <?php if($grupo->letra == 'C'){?>selected="selected"<?php }?>>C</option>
-							<option value="D" <?php if($grupo->letra == 'D'){?>selected="selected"<?php }?>>D</option>
-							<option value="E" <?php if($grupo->letra == 'E'){?>selected="selected"<?php }?>>E</option>
-							<option value="F" <?php if($grupo->letra == 'F'){?>selected="selected"<?php }?>>F</option>
-							<option value="G" <?php if($grupo->letra == 'G'){?>selected="selected"<?php }?>>G</option>
-						</select>
-						<br />
-						<label for="turno">Turno</label><br />
-						<select name="turno" id="turno">
-							<option></option>
-							<option value="M" <?php if($grupo->turno == 'M'){?>selected="selected"<?php }?>>Matutino</option>
-							<option value="V" <?php if($grupo->turno == 'V'){?>selected="selected"<?php }?>>Vespertino</option>
-							<option value="N" <?php if($grupo->turno == 'N'){?>selected="selected"<?php }?>>Nocturno</option>
-						</select>
-						<br />
-						<label for="oferta">Oferta</label><br />
-						<p>
-						<?php echo $grupo->verOferta();  ?>
-							<input type="hidden" name="oferta" id="oferta" value="<?php echo $grupo->oferta_id; ?>"/>
-  						</p>
-						<br />
-					</fieldset>
-					<div></div>
-					<div id="botones">
+    <div class="content">
+        <h1>Editar grupo del ciclo <?php echo $ciclo->numero ?></h1>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path ?>grupos">Volver
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+            </div>
+        </div>
+        <?php switch($option) {
+                case 'captura': ?>
+                <form action="<?php echo $path ?>grupos/editar" id="frm_editar" method="post">
+                    <fieldset>
+                        <legend>Datos</legend>
+                        <input type="hidden" name="id" id="id" value="<?php echo $grupo->id ?>"/>
+                        <input type="hidden" name="ciclos_id" id="ciclos_id" value="<?php echo $ciclo->id ?>"/>
+                        <label for="grado">Grado</label><br />
+                        <select name="grado" id="grado">
+                            <option></option>
+                            <option value="1" <?php if($grupo->grado == '1'){?>selected="selected"<?php }?>>1</option>
+                            <option value="2" <?php if($grupo->grado == '2'){?>selected="selected"<?php }?>>2</option>
+                            <option value="3" <?php if($grupo->grado == '3'){?>selected="selected"<?php }?>>3</option>
+                            <option value="4" <?php if($grupo->grado == '4'){?>selected="selected"<?php }?>>4</option>
+                            <option value="5" <?php if($grupo->grado == '5'){?>selected="selected"<?php }?>>5</option>
+                            <option value="6" <?php if($grupo->grado == '6'){?>selected="selected"<?php }?>>6</option>
+                        </select>
+                        <img id="spinner" src="<?php echo $path ?>/public/img/sp5/spinner.gif" style="display:none"/>
+                        <div id="check" class="check"></div>
+                        <br />
+                        <label for="letra">Letra</label><br />
+                        <select name="letra" id="letra">
+                            <option></option>
+                            <option value="A" <?php if($grupo->letra == 'A'){?>selected="selected"<?php }?>>A</option>
+                            <option value="B" <?php if($grupo->letra == 'B'){?>selected="selected"<?php }?>>B</option>
+                            <option value="C" <?php if($grupo->letra == 'C'){?>selected="selected"<?php }?>>C</option>
+                            <option value="D" <?php if($grupo->letra == 'D'){?>selected="selected"<?php }?>>D</option>
+                            <option value="E" <?php if($grupo->letra == 'E'){?>selected="selected"<?php }?>>E</option>
+                            <option value="F" <?php if($grupo->letra == 'F'){?>selected="selected"<?php }?>>F</option>
+                            <option value="G" <?php if($grupo->letra == 'G'){?>selected="selected"<?php }?>>G</option>
+                        </select>
+                        <br />
+                        <label for="turno">Turno</label><br />
+                        <select name="turno" id="turno">
+                            <option></option>
+                            <option value="M" <?php if($grupo->turno == 'M'){?>selected="selected"<?php }?>>Matutino</option>
+                            <option value="V" <?php if($grupo->turno == 'V'){?>selected="selected"<?php }?>>Vespertino</option>
+                            <option value="N" <?php if($grupo->turno == 'N'){?>selected="selected"<?php }?>>Nocturno</option>
+                        </select>
+                        <br />
+                        <label for="oferta">Oferta</label><br />
+                        <p>
+                        <?php echo $grupo->verOferta();  ?>
+                            <input type="hidden" name="oferta" id="oferta" value="<?php echo $grupo->oferta_id; ?>"/>
+                          </p>
+                        <br />
+                    </fieldset>
+                    <div></div>
+                    <div id="botones">
 
-						<input type="button" id="aceptar" value="Editar">
-						<input type="button" id="cancelar" value="Cancelar">
+                        <input type="button" id="aceptar" value="Editar">
+                        <input type="button" id="cancelar" value="Cancelar">
 
-					</div>
-				</form>
-			<?php  break; ?>
-			<?php case 'exito': ?>
-				<p class="info"><br />La informaci&oacute;n del grupo se edit&oacute; correctamente</p>
-			<?php  break; ?>
-			<?php case 'error':
-				  default:
-			?>
-				<p class="error"><br />Ha ocurrido un error al intentar editar el grupo
-					<?php echo $error ?>
-				</p>
-			<?php  break; ?>
-		<?php } ?>
-	</div>
+                    </div>
+                </form>
+            <?php  break; ?>
+            <?php case 'exito': ?>
+                <p class="info"><br />La informaci&oacute;n del grupo se edit&oacute; correctamente</p>
+            <?php  break; ?>
+            <?php case 'error':
+                  default:
+            ?>
+                <p class="error"><br />Ha ocurrido un error al intentar editar el grupo
+                    <?php echo $error ?>
+                </p>
+            <?php  break; ?>
+        <?php } ?>
+    </div>
 </div>

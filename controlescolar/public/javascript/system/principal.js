@@ -26,7 +26,7 @@ Element.hide('numberDisplay');
 var o = $('overlay');
 var hOver = $('main').getWidth() + 250;
 if(hOver < arrayPageSize[0]){
-	hOver = arrayPageSize[0];
+    hOver = arrayPageSize[0];
 }
 Element.setWidth(o, hOver);
 Element.setHeight(o, arrayPageSize[1]);
@@ -258,99 +258,99 @@ alert("Fecha invalida.\nFormato para fechas: 01/01/2007 o 01/01/07...");
 }
 
 function validacampoEntero(elemento){
-			if(!esEntero(elemento.value)){
-				try{
-					elemento.activate();
-					Effect.Shake(elemento);
-				}catch(e){
-					alert('Este elemento acepta solo valores enteros.');
-				}
+            if(!esEntero(elemento.value)){
+                try{
+                    elemento.activate();
+                    Effect.Shake(elemento);
+                }catch(e){
+                    alert('Este elemento acepta solo valores enteros.');
+                }
 
-				return false;
+                return false;
 
-				}else{
-				var cal = parseInt(elemento.value);
-				if(!isNaN(cal)){
-					if(cal > 100){
-					try{
-					elemento.activate();
-					Effect.Shake(elemento);
-					}catch(e){
-					alert('Este elemento acepta solo valores enteros.');
-					}
-						return false;
-					}else{
-						if(cal < 0){
-						try{
-						elemento.activate();
-						Effect.Shake(elemento);
-						}catch(e){
-							alert('Este elemento acepta solo valores enteros.');
-						}
-							return false;
-						}
-					}
-				}
-				}
-				return true;
+                }else{
+                var cal = parseInt(elemento.value);
+                if(!isNaN(cal)){
+                    if(cal > 100){
+                    try{
+                    elemento.activate();
+                    Effect.Shake(elemento);
+                    }catch(e){
+                    alert('Este elemento acepta solo valores enteros.');
+                    }
+                        return false;
+                    }else{
+                        if(cal < 0){
+                        try{
+                        elemento.activate();
+                        Effect.Shake(elemento);
+                        }catch(e){
+                            alert('Este elemento acepta solo valores enteros.');
+                        }
+                            return false;
+                        }
+                    }
+                }
+                }
+                return true;
 
 }
 
 function validacampoFloat(elemento){
-			if(!esFloat(elemento.value)){
-				try{
-					elemento.activate();
-					Effect.Shake(elemento);
-				}catch(e){
-					alert('Este elemento acepta solo valores enteros.');
-				}
+            if(!esFloat(elemento.value)){
+                try{
+                    elemento.activate();
+                    Effect.Shake(elemento);
+                }catch(e){
+                    alert('Este elemento acepta solo valores enteros.');
+                }
 
-				return false;
+                return false;
 
-				}else{
-				var cal = parseFloat(elemento.value);
-				if(!isNaN(cal)){
-					if(cal > 100){
-					try{
-					elemento.activate();
-					Effect.Shake(elemento);
-					}catch(e){
-					alert('Este elemento acepta solo valores enteros.');
-					}
-						return false;
-					}else{
-						if(cal < 0){
-						try{
-						elemento.activate();
-						Effect.Shake(elemento);
-						}catch(e){
-							alert('Este elemento acepta solo valores enteros.');
-						}
-							return false;
-						}
-					}
-				}
-				}
-				return true;
+                }else{
+                var cal = parseFloat(elemento.value);
+                if(!isNaN(cal)){
+                    if(cal > 100){
+                    try{
+                    elemento.activate();
+                    Effect.Shake(elemento);
+                    }catch(e){
+                    alert('Este elemento acepta solo valores enteros.');
+                    }
+                        return false;
+                    }else{
+                        if(cal < 0){
+                        try{
+                        elemento.activate();
+                        Effect.Shake(elemento);
+                        }catch(e){
+                            alert('Este elemento acepta solo valores enteros.');
+                        }
+                            return false;
+                        }
+                    }
+                }
+                }
+                return true;
 
 }
 String.prototype.endsWith = function(str) 
 {return (this.match(str+"$")==str)}
 
 function ltrim(str) { 
-	for(var k = 0; k < str.length && isWhitespace(str.charAt(k)); k++);
-	return str.substring(k, str.length);
+    for(var k = 0; k < str.length && isWhitespace(str.charAt(k)); k++);
+    return str.substring(k, str.length);
 }
 function rtrim(str) {
-	for(var j=str.length-1; j>=0 && isWhitespace(str.charAt(j)) ; j--) ;
-	return str.substring(0,j+1);
+    for(var j=str.length-1; j>=0 && isWhitespace(str.charAt(j)) ; j--) ;
+    return str.substring(0,j+1);
 }
 function trim(str) {
-	return ltrim(rtrim(str));
+    return ltrim(rtrim(str));
 }
 
 function isWhitespace(charToCheck) {
-	var whitespaceChars = " \t\n\r\f";
-	return (whitespaceChars.indexOf(charToCheck) != -1);
+    var whitespaceChars = " \t\n\r\f";
+    return (whitespaceChars.indexOf(charToCheck) != -1);
 }
 
