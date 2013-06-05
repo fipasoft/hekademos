@@ -1,0 +1,34 @@
+<?php $path = KUMBIA_PATH; ?>
+<?php if($option == "ficha"){ ?>
+				<table>
+					<tr>
+						<th>Nombre</th>
+						<td><?php echo  $alumno->nombre('reversa')?>
+						</td>
+						<td rowspan="2">
+							<?php if($alumno->foto != ''){ ?>
+								<img src="<?php echo $path . 'public/img/alumnos/' . $alumno->foto . '?d=' . time() ?>" class="ficha"/>
+							<?php }else{ ?>
+								<img src="<?php echo $path ?>public/img/sp5/persona.png" class="ficha"/>
+							<?php }?>
+						</td>
+					</tr>
+					</tr>
+					<tr>
+						<th>Situaci&oacute;n</th>
+						<td><?php echo $alumno->situacion()?></td>
+					</tr>
+					
+					
+				</table>
+<input type="hidden" id="disponible" value="true" />
+<?php }elseif($option == "alert"){ ?>
+<span class="false">No disponible</span>
+<input type="hidden" id="disponible" value="false" />
+<?php }else{ ?>
+<p class="error">
+<br/>
+<?php echo $error; ?>
+<br/>
+</p>
+<?php } ?>

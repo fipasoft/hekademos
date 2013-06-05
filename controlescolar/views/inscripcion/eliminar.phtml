@@ -1,0 +1,97 @@
+<?php
+/*
+ * Created on 11/12/2008
+ *
+ * To change the template for this generated file go to
+ * Window - Preferences - PHPeclipse - PHP - Code Templates
+ */
+
+
+ $path = KUMBIA_PATH;
+?>
+
+<div id="primary">
+	<div class="content">
+		<?php if($option!='error'){ ?>
+		<h1>Eliminar Inscripcion</h1>
+		<h2><?php echo $curso->verMateriaNombre(); ?></h2>
+		<h2>Prof. <?php echo $curso->verProfesor(); ?></h2>
+		<h2><?php echo $grupo->grado .'&deg;' .  $grupo->letra .  ' ' . $grupo->verTurno() . ', ' . $ciclo->numero?></h2>
+		<h2>
+			<?php echo $ciclo->numero ?>
+		</h2>
+					<div id="options-bar">
+					<div id="options">
+						<a href="<?php echo $path . 'cursos/ver/' . $curso->id ?>">Volver al curso
+						<img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+					</div>
+				</div>
+		<?php } ?>
+		<?php switch($option) {
+				case 'captura': ?>
+				<div id="alumnos">
+					<form name="frm_imprimir" id="frm_imprimir" method="post" action="<?php echo $path ?>inscripcion/confirmar">
+						<input type="hidden" name="cursos_id" id="cursos_id" value="<?php echo $curso->id ?>" />
+						<div class="divisor"></div>
+						<fieldset>
+						<legend>Alumnos</legend>
+							<?php $i = 1 ?>
+							<?php $j = 1 ?>
+							<?php $j++ ?>
+							<table id="tbl_<?php echo $j ?>">
+							<tr>
+								<th colspan="2"></th>
+								<th>
+									<a  id="a_<?php echo $j ?>"
+										title="Seleccionar todos los alumnos"
+										class="select_all"
+										href="#">
+										<img src="<?php echo $path?>public/img/sp5/ver.png"/>
+									</a>
+								</th>
+							</tr>
+							<?php foreach($alumnos as $alumno){ ?>
+								<tr id="row_<?php echo $i ?>">
+									<td><?php echo $alumno->codigo ?></td>
+									<td><?php echo $alumno->nombre('reversa') ?></td>
+									<td>
+										<input type="checkbox" name="alumnos[]"
+											   class="chk_alu"
+											   id="chk_<?php echo $i?>"
+											   value="<?php echo $alumno->id ?>"
+										/>
+									</td>
+									<?php $i ++;?>
+								</tr>
+							<?php } ?>
+							</table>
+
+						</fieldset>
+						<input type="hidden" name="grupos_id" value="<?php echo $grupo->id?>" />
+						<div class="botones">
+								<input type="button" id="cancelar" value="Cancelar">
+								<input type="submit" value="Eliminar" />
+						</div>
+					</form>
+				</div>
+				<?php  break; ?>
+
+				<?php case 'error':
+					  default:
+				?>
+				<br/>
+				<p class="error">
+					<br />
+					<?php echo $error ?>
+				</p>
+				<?php  break;
+				 case 'exito':
+				?>
+
+				<p class="info">
+				<?php echo $exito; ?>
+				</p>
+				<?php  break;
+					 } ?>
+	</div>
+</div>

@@ -1,0 +1,173 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+	<h1><?php echo $titulo ?> </h1>
+	<?php if($option=='captura'){ ?>
+	<h2><?php echo $grupo->grado .'&deg;' .  $grupo->letra .  ' ' . $grupo->verTurno() ;  ?></h2>
+	<h2><?php echo  $grupo->verOferta(); ?></h2>
+	<h2><?php echo $ciclo->numero?></h2>
+	<?php } ?>
+		<div id="options-bar">
+			<div id="options">
+				<a href="<?php echo $path . 'cursos' ?>">Volver a cursos
+				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
+				</a>
+			</div>
+		</div>
+		<?php switch($option) {
+				case 'grupo': ?>
+				<?php  if(count($grupos)>0){?>
+				<form action="<?php echo $path ?>cursos/agregar" id="frm_agregar" method="post">
+					<fieldset>
+					<legend>Grupo</legend>
+					Seleccione<br/>
+					<select id="gp_id" name="gp_id">
+					<option></option>
+					<?php foreach($grupos as $grupo){ ?>
+								<option value="<?php echo $grupo->id ?>">
+									<?php echo $grupo->ver('html') ?>
+								</option>
+					<?php } ?>
+					</select>
+					</fieldset>
+					<div class="separador"></div>
+					<div id="botones">
+					<input type="submit"  name="aceptar" value="Seleccionar"/>
+					</div>
+					<?php }else{ ?>
+						<p class="info"><br />No existen grupos para agregar cursos.</p>
+					<?php } ?>
+				 <?php break;
+				case 'captura': ?>
+				<form action="<?php echo $path ?>cursos/agregar" id="frm_agregar" method="post">
+				<input type="hidden" name="KUMBIA_PATH" id="KUMBIA_PATH" value="<?php echo $path; ?>" />
+					<fieldset>
+						<legend>Curso</legend>
+						<input type="hidden" name="kumbia_path" id="kumbia_path" value="<?php echo $path; ?>"/>
+						<input type="hidden" name="id" id="id" value=""/>
+						<input type="hidden" name="ciclos_id" id="ciclos_id" value="<?php echo $ciclo->id ?>"/>
+						<input type="hidden" name="grupos_id" id="grupos_id" value="<?php echo $grupo->id ?>"/>
+						<input type="hidden" id="grupo_oferta" value="<?php echo $grupo->oferta_id; ?>"/>
+						<label for="materias_id">Materia</label><br />
+						<select name="materias_id" id="materias_id">
+							<option></option>
+							<?php foreach($materias as $materia){?>
+							<option value="<?php echo $materia->id?>"><?php echo $materia->nombre?></option>
+							<?php } ?>
+						</select>
+						<br />
+						<label for="profesores_id">Profesor</label><br />
+						<select name="profesores_id" id="profesores_id">
+							<option></option>
+							<?php foreach($profesores as $profesor){?>
+							<option value="<?php echo $profesor->id?>" alt="<?php echo $profesor->codigo?>">
+								<?php echo $profesor->ap . ' ' . $profesor->am . ', ' .$profesor->nombre?>
+							</option>
+							<?php } ?>
+						</select>
+						<br />
+						<?php
+						if($grupo->oferta_id==2){
+
+						?>
+
+						<div id="div_fecha">
+
+						</div>
+
+						<?php
+
+						}
+						?>
+					</fieldset>
+					<div class="separador"></div>
+					<fieldset style="width:600px">
+						<legend>Horario</legend>
+						<table>
+							<tr>
+								<th></th>
+								<th>Inicio</th>
+								<th>Fin</th>
+								<th>Aula</th>
+								<th style="width:200px">Disponible</th>
+							</tr>
+							<?php for($d = 1; $d < 7; $d++){?>
+							<tr>
+								<th>
+									<?php echo $dias[$d-1]->nombre?>
+									<input type="hidden"
+										   name="horarios[<?php echo $d ?>][dia]"
+										   id="dia<?php echo $d ?>"
+										   value="<?php echo $d ?>"
+										   class="status" />
+								</th>
+								<td>
+									<input type="text" size="5" maxlenght="5"
+										   name="horarios[<?php echo $d ?>][entrada]"
+										   id="entrada<?php echo $d ?>"
+										   class="hora"/>
+								</td>
+								<td>
+									<input type="text" size="5" maxlenght="5"
+											name="horarios[<?php echo $d ?>][salida]"
+											id="salida<?php echo $d ?>"
+											class="hora"/>
+								</td>
+
+								<td>
+									<select name="horarios[<?php echo $d ?>][aula]"
+											id="aula<?php echo $d ?>"
+										    class="aula">
+										<option></option>
+										<?php foreach($aulas as $aula){?>
+										<option value="<?php echo $aula->id?>">
+											<?php echo $aula->clave?>
+										</option>
+										<?php } ?>
+									</select>
+								</td>
+								<td>
+									<img id="spinner<?php echo $d?>" src="<?php echo $path ?>/public/img/sp5/spinner.gif" style="display:none"/>
+									<div id="check<?php echo $d?>" class="check">
+										<input type="hidden"
+										   name="horarios[<?php echo $d ?>][valido]"
+										   id="valido<?php echo $d ?>"
+										   value="0"
+										   class="status" />
+									   <span id="status<?php echo $d?>">-</span>
+									</div>
+								</td>
+							</tr>
+							<?php } ?>
+						</table>
+						<br />
+					</fieldset>
+					<div class="separador"></div>
+					<div id="botones">
+
+						<input type="button" id="aceptar" value="Agregar">
+						<input type="button" id="cancelar" value="Cancelar">
+
+
+					</div>
+				</form>
+			<?php  break; ?>
+			<?php case 'exito': ?>
+				<p class="info"><br />La informaci&oacute;n del curso se agreg&oacute; correctamente</p>
+			<?php  break; ?>
+			<?php case 'conflicto':
+			?>
+				<div class="error"><br/>
+					<?php echo $error ?>
+				</div>
+			<?php  break; ?>
+			<?php case 'error':
+				  default:
+			?>
+				<p class="error"><br />Ha ocurrido un error al intentar agregar el curso
+					<?php echo $error ?>
+				</p>
+			<?php  break; ?>
+		<?php } ?>
+	</div>
+</div>

@@ -1,0 +1,71 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>Ligar materias a la Academia</h1>
+		<div id="options-bar">
+			<div id="options">
+				<a href="<?php echo $path ?>materias">Volver
+				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
+				</a>
+			</div>
+		</div>
+		<?php switch($option) {
+				case 'captura': ?>
+				<form action="<?php echo $path ?>materias/academias" id="frm_agregar" method="post">
+					<?php foreach($materias as $s=>$semestre){ ?>
+						<h1><?php echo $s ?> Semestre</h1>
+						<?php foreach($semestre as $o=>$oferta){ ?>
+								<h4>
+								<?php 
+								$ofe = $ofertas[$o];
+								echo $ofe->nombre; ?>
+								</h4>
+								<table>
+								<tr><th>Materia</th><th>Academia</th></tr>
+								<?php foreach($oferta as $materia){ ?>
+								<?php 
+									$amateria = new Academiamateria();
+									$amateria = $amateria->find_first("materias_id='".$materia->id."'");
+								 ?>
+								<tr><td><?php echo $materia->nombre; ?></td>
+								<td>
+								<input type="hidden" name="materias[]" value="<?php echo $materia->id; ?>" />
+								<select id="materia_<?php echo $materia->id; ?>" name="academias[<?php echo $materia->id; ?>]" >
+								<option></option>
+								<?php foreach($academias as $academia){ ?>
+								<option value="<?php echo $academia->id; ?>" 
+								<?php if($amateria->academia_id == $academia->id){ ?>
+									selected="selected"
+								<?php } ?>
+								>
+								<?php echo $academia->nombre; ?>
+								</option>
+								<?php } ?>
+								</select>
+								</td>
+								</tr>
+								<?php } ?>
+								</table>
+						<?php } ?>
+					<?php } ?>
+					<div></div>
+					<div id="botones">
+						<input type="submit" id="aceptar" value="Agregar">
+						<input type="button" id="cancelar" value="Cancelar">
+
+					</div>
+				</form>
+			<?php  break; ?>
+			<?php case 'exito': ?>
+				<p class="info"><br />Las materias se ligaron correctamente</p>
+			<?php  break; ?>
+			<?php case 'error':
+				  default:
+			?>
+				<p class="error"><br />Ha ocurrido un error al intentar ligar las materias
+					<?php echo $error ?>
+				</p>
+			<?php  break; ?>
+		<?php } ?>
+	</div>
+</div>

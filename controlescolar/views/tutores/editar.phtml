@@ -1,0 +1,104 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>Editar tutor</h1>
+		<div id="options-bar">
+			<div id="options">
+				<a href="<?php echo $path ?>tutores">Volver
+				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
+				</a>
+			</div>
+		</div>
+		<?php switch($option) {
+				case 'captura': ?>
+				<form action="<?php echo $path ?>tutores/editar" id="frm_editar" method="post" enctype="multipart/form-data">
+					<fieldset>
+						<legend>Datos del alumno</legend>
+						<?php $t = 1; ?>
+						<?php foreach($tutorias as $tutoria){?>
+							<label>C&oacute;digo
+								<br />
+								<input type="text" name="alumnos_id[]" id="alumnos_id<?php echo $t ?>"
+								       size="20" maxlength="20" class="codigo" value="<?php echo $tutoria->codigo ?>"/>
+							</label>
+							<img id="spinner<?php echo $t ?>"
+							     src="<?php echo $path ?>/public/img/sp5/spinner.gif" style="display:none"/>
+							<br />
+							<div id="check<?php echo $t ?>" class="check">
+								<span class="true">
+									<?php echo $tutoria->ap . ' ' .$tutoria->am . ', ' .$tutoria->nombre ?>
+								</span>
+							</div>
+							<?php $t++ ?>
+						<?php  } ?>
+						<input type="hidden" name="i" id="i" value="<?php echo ($t - 1) ?>" />
+						<div id="codigos<?php echo $t?>" class="codigos"></div>
+						<a href="#" id="bMas"><img src="<?php echo $path . 'img/sp5/mas.png' ?>" /></a>
+						<br />
+					</fieldset>
+					<div class="divisor"></div>
+					<fieldset>
+						<legend>Personal</legend>
+						<input type="hidden" name="id" id="id" value="<?php echo $tutor->id ?>" />
+						<label for="nombre">Nombre</label><br />
+						<input type="text" name="nombre" id="nombre" size="30" maxlength="30" value="<?php echo $tutor->nombre ?>" /><br />
+						<label for="ap">Apellido paterno</label><br />
+						<input type="text" name="ap" id="ap" size="20" maxlength="20" value="<?php echo $tutor->ap ?>" /><br />
+						<label for="am">Apellido materno</label><br />
+						<input type="text" name="am" id="am" size="20" maxlength="20" value="<?php echo $tutor->am ?>" />
+						<label><input type="radio" id="hombre" name="sexo" value="M" <?php if($tutor->sexo == 'M'){ ?>checked="checked"<?php }?>/> Mujer </label>
+						<label><input type="radio" id="mujer" name="sexo" value="H" <?php if($tutor->sexo == 'H'){ ?>checked="checked"<?php }?>/> Hombre </label><br />
+						<label for="fnacimiento">Fecha de nacimiento</label><br />
+						<input type="text" name="fnacimiento" id="fnacimiento" size="10" maxlength="10" value="<?php echo $tutor->fnacimiento() ?>" />
+						<a href="#" id="cal"><img src="<?php echo $path ?>/public/img/sp5/calendario.png" /></a><br />
+						<label for="foto">Foto</label><br />
+						<?php if($tutor->foto != ''){ ?>
+						<input type="hidden" id="cambiar" name="cambiarImagen" value="false" />
+						<div id="imagen" />
+							<br />
+							<img class="ficha"
+								 src="<?php echo KUMBIA_PATH . 'public/img/tutores/' . $tutor->foto . '?d=' .time()?>"/>
+							<br />
+							<input type="button" id="iCambiar" value="Cambiar imagen" />
+						</div>
+						<div id="examinar" style="display:none">
+							<input type="file" id="foto" name="foto" />
+							<input type="button" id="iCancelar" value="Cancelar" />
+						</div>
+						<?php }else{ ?>
+								<input type="hidden" id="cambiar" name="cambiarImagen" value="true" />
+								<input type="file" id="foto" name="foto" />
+						<?php } ?>
+					</fieldset>
+					<div class="divisor"></div>
+					<fieldset>
+						<legend>Contacto</legend>
+						<label for="domicilio">Domicilio</label><br />
+						<input type="text" name="domicilio" id="domicilio" size="30" maxlength="60" value="<?php echo $tutor->domicilio ?>" /><br />
+						<label for="tel">Tel&eacute;fono</label><br />
+						<input type="text" name="tel" id="tel" size="20" maxlength="20" value="<?php echo $tutor->tel ?>" /><br />
+						<label for="tel">Tel&eacute;fono m&oacute;vil</label><br />
+						<input type="text" name="cel" id="cel" size="20" maxlength="20" value="<?php echo $tutor->cel ?>" /><br />
+						<label for="mail">Correo electr&oacute;nico</label><br />
+						<input type="text" name="mail" id="mail" size="30" maxlength="80" value="<?php echo $tutor->mail ?>" /><br />
+					</fieldset>
+					<div id="botones">
+						<input type="button" id="aceptar" value="Editar">
+						<input type="button" id="cancelar" value="Cancelar">
+
+					</div>
+				</form>
+			<?php  break; ?>
+			<?php case 'exito': ?>
+				<p class="info"><br />El tutor se edit&oacute; correctamente</p>
+			<?php  break; ?>
+			<?php case 'error':
+				  default:
+			?>
+				<p class="error"><br />Ha ocurrido un error al intentar editar el tutor
+					<?php echo $error ?>
+				</p>
+			<?php  break; ?>
+		<?php } ?>
+	</div>
+</div>

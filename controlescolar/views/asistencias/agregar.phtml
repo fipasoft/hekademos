@@ -1,0 +1,149 @@
+<?php
+// Hekademos, Creado el 19/10/2008
+/**
+ *
+ *
+ * @package    SP5 Vistas
+ * @author     mimeks <mimex@fipasoft.com.mx>
+ * @copyright  2008 FiPa Software (contacto at fipasoft.com.mx)
+ * @license    http://www.gnu.org/licenses/gpl.html  GNU General Public License (GPL)
+ *
+ */
+
+ $path = KUMBIA_PATH;
+?>
+<div id="primary">
+	<div class="content">
+		<h1>Agregar asistencias</h1>
+		<h2><?php echo 'Prof. ' . $curso->verProfesor() ?></h2>
+		<h2>
+			<?php echo $grupo->grado .'&deg;' .  $grupo->letra .  ' ' .
+				       $grupo->verTurno() . ', ' . $ciclo->numero?>
+		</h2>
+		<h2><?php echo  $grupo->verOferta(); ?></h2>
+		<h2 id="titulo"><?php echo $curso->verMateriaNombre()?></h2>
+		<?php switch($option) {
+				case 'captura':?>
+				<div id="options-bar">
+					<div id="options">
+						<a href="<?php echo $path . 'asistencias/ver/' . $curso->id ?>">Volver a asistencias
+						<img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+					</div>
+				</div>
+				<div id="asistencias" class="contenedor">
+				<form name="frm_agregar" id="frm_agregar"
+					  method="post" action="<?php echo $path . 'asistencias/agregar/' ?>">
+				<input type="hidden" name="cursos_id" id="cursos_id" value="<?php echo $curso->id?>" />
+					<div>
+					<table id="main">
+						<?php $n = 1; foreach($alumnos as $alumno){?>
+							<?php if(($n - 1) % 10 == 0){ ?>
+								<tr>
+									<th rowspan="2">#</th>
+									<th rowspan="2">Alumno</th>
+									<?php foreach($fechasHdr as $mes => $fs){ ?>
+										<th colspan="<?php echo count($fs)?>">
+											<?php echo substr($mes, 0, 3) ?>
+										</th>
+									<?php } ?>
+								</tr>
+								<tr>
+									<?php foreach($fechasHdr as $mes => $fs){
+											foreach($fs as $f){
+									?>
+										<td style="background-color: #EEEEFE; font-weight:bold"><?php echo $f ?></td>
+									<?php 	}
+										  }
+									?>
+								</tr>
+							<?php } ?>
+
+							<tr class="<?php echo ($n%2 != 0 ? '' : 'odd') ?>">
+								<td><?php echo $n ?></td>
+								<td>
+									<?php echo $alumno->nombre()  ?>
+									<br />
+									<span class="sub"><?php echo $alumno->codigo ?><span>
+									<span class="sub" style="color: #777">
+										<?php echo $alumno->grado . '&deg;' . $alumno->letra . ' ' . $alumno->turno?>
+									</span>
+								</td>
+								<?php foreach($fechas as $fecha){?>
+								<?php $f2 = Utils :: fecha_convertir($fecha) ?>
+									<td class="AST click"
+										id="td_<?php echo $alumno->id ?><?php echo str_replace('-', '', $fecha) ?>"
+										alt="<?php echo $alumno->ap . ' '  .  $alumno->am . ' ' . $f2?>"
+										title="<?php echo $alumno->ap . ' '  .  $alumno->am . ' ' . $f2?>"
+									>
+										<input type="hidden"
+											   name="asistencias[<?php echo $alumno->id ?>][<?php echo $fecha ?>]"
+											   id="ast_<?php echo $alumno->id ?><?php echo str_replace('-', '', $fecha) ?>"
+											   value="1"
+										/>
+									</td>
+								<?php }?>
+							</tr>
+						<?php $n++; } ?>
+					</table>
+					</div>
+					<div id="botones">
+						<input type="button" id="cancelar" value="Cancelar" />
+						<input type="submit" value="Guardar" />
+					</div>
+					</form>
+				</div>
+			<?php  break; ?>
+			<?php case 'exito':
+			?>
+				<div id="options-bar">
+					<div id="options">
+						<a href="<?php echo $path . 'asistencias/ver/' . $curso->id ?>">Volver a asistencias
+						<img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+					</div>
+				</div>
+				<p class="info">
+					<br />
+					<?php echo $exito ?>
+
+					<?php if(count($cambios)>0){ ?>
+					<br/>
+					<br/>
+					Se realizaron los siguientes cambios en las calificaciones para que fueran congruentes con los derechos por porcentaje de asistencias:
+					<br/>
+					<br/>
+					<?php foreach($cambios as $cambio){ ?>
+					<?php echo $cambio; ?><br/>
+					<?php } ?>
+					<?php } ?>
+				</p>
+			<?php  break; ?>
+			<?php case 'alert':
+			?>
+				<div id="options-bar">
+					<div id="options">
+						<a href="<?php echo $path . 'cursos/ver/' . $curso->id ?>">Volver al resumen
+						<img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+					</div>
+				</div>
+				<p class="info">
+					<br />
+					<?php echo $alert ?>
+				</p>
+			<?php  break; ?>
+			<?php case 'error':
+				  default:
+			?>
+				<div id="options-bar">
+					<div id="options">
+						<a href="<?php echo $path . 'grupos' ?>">Volver a grupos
+						<img src="<?php echo $path?>public/img/sp5/volver.png"/></a>
+					</div>
+				</div>
+				<p class="error">
+					<br />
+					<?php echo $error ?>
+				</p>
+			<?php  break; ?>
+		<?php } ?>
+	</div>
+</div>

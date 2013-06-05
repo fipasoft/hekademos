@@ -1,0 +1,55 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>Editar reglamento <?php echo $reglamento->nombre?></h1>
+		<div id="options-bar">
+			<div id="options">
+				<a href="<?php echo $path ?>reglamentos">Volver
+				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
+				</a>
+			</div>
+		</div>
+		<?php switch($option) {
+				case 'captura': ?>
+				<form action="<?php echo $path ?>reglamentos/editar" id="frm_editar" method="post">
+					<fieldset>
+						<legend>Reglamento</legend>
+						<label for="nombre">Nombre</label><br />
+						<input type="text" name="nombre" id="nombre" size="30" maxlength="255" value = "<?php echo $reglamento->nombre ?>"/><br />
+						<img id="spinner" src="<?php echo $path ?>/public/img/sp5/spinner.gif" style="display:none"/>
+						<div id="check" class="check"></div><br />
+						<label for="descripcion">Descripci&oacute;n</label>
+						<textarea name="descripcion" id="descripcion" cols=40 rows=6><?php echo $reglamento->descripcion ?></textarea><br />  
+					</fieldset>
+					<div></div>
+					<fieldset>
+						<legend>Vigencia</legend>
+						<label for="inicio">Inicio</label><br />
+						<input type="text" name="inicio" id="inicio" size="10" maxlength="10" value = "<?php echo ($reglamento->inicio != '0000-00-00' && $reglamento->inicio != '' ? Utils :: convierteFecha($reglamento->inicio) : '') ?>" readonly />
+						<a id="calendario"><img src="<?php echo $path ?>/public/img/sp5/calendario.png" /></a><br />
+						<label for="fin">Fin</label><br />
+						<input type="text" name="fin" id="fin" size="10" maxlength="10" value = "<?php echo ($reglamento->fin != '0000-00-00' && $reglamento->fin != '' ? Utils :: convierteFecha($reglamento->fin) : '') ?>" readonly />
+						<a id="calendario2"><img src="<?php echo $path ?>/public/img/sp5/calendario.png" /></a><br />
+						<input type="hidden" name="id" id="id" value="<?php echo $reglamento->id ?>" />
+						<input type="hidden" name="path" id="path" value="<?php echo KUMBIA_PATH ?>" />
+					</fieldset>
+					<div id="botones">
+						<input type="button" id="aceptar" value="Editar">
+						<input type="button" id="cancelar" value="Cancelar">
+
+					</div>
+				</form>
+			<?php  break; ?>
+			<?php case 'exito': ?>
+				<p class="info"><br />El reglamento se edit&oacute; correctamente</p>
+			<?php  break; ?>
+			<?php case 'error':
+				  default:
+			?>
+				<p class="error"><br />Ha ocurrido un error al intentar editar el reglamento
+					<?php echo $error ?>
+				</p>
+			<?php  break; ?>
+		<?php } ?>
+	</div>
+</div>

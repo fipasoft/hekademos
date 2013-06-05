@@ -1,0 +1,24 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="div_derechos" style="display:none" class="opciones">
+<h1>Derechos de evaluación</h1>
+<table id="tblDer">
+<tr>
+	<th>Grupo</th>
+	<th>	<a  id="allDer"
+						title="Seleccionar todos los registros"
+						class="chk_all"
+						href="javascript:;">
+						<img src="<?php echo $path?>public/img/sp5/ver.png"/>
+					</a>
+	</th>
+</tr>
+<?php foreach($grupos as $g){ ?>
+<tr id="trDer<?php echo $g->id ?>">
+<td><?php echo $g->ver(); ?></td>
+<td>
+<input type="checkbox" name="grupos[]" id="chkDer<?php echo $g->id ?>"
+	 value="<?php echo $g->id ?>" class="chk cnv_grupos_der"/>
+  </td></tr>
+<?php } ?>
+</table>
+</div>

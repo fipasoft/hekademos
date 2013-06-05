@@ -1,0 +1,89 @@
+<?php $path = KUMBIA_PATH; ?>
+<?php if($option == 'ajax'){?>
+		Usuario
+		<br />
+		<select name="usuarios[]">
+		<option></option>
+		<?php foreach($usuarios as $usr){ ?>
+			<option value="<?php echo $usr->id ?>"
+					alt="<?php echo $usr->login ?>"
+					title="<?php echo $usr->login ?>" >
+				<?php echo $usr->ap . ' ' . $usr->am . ', ' .$usr->nombre ?>
+			</option>
+		<?php }?>
+		</select>
+		<br />
+<?php }else{ ?>
+		<div id="primary">
+			<div class="content">
+				<h1>Asignar un grupo del ciclo <?php echo $ciclo->numero ?></h1>
+				<div id="options-bar">
+					<div id="options">
+						<a href="<?php echo $path ?>grupos">Volver
+						<img src="<?php echo $path?>public/img/sp5/volver.png"/>
+						</a>
+					</div>
+				</div>
+				<?php switch($option) {
+						case 'captura': ?>
+							<form action="<?php echo $path ?>grupos/asignar" id="frm_asignar" method="post">
+								<fieldset>
+									<legend>Grupo</legend>
+									<input type="hidden" name="grupos_id" id="grupos_id" value="<?php echo $grupo->id ?>" />
+									<?php echo $grupo->grado . '&deg;' . $grupo->letra . ' ' . $grupo->verTurno()?>
+									<br />
+								</fieldset>
+								<div class="separador"></div>
+								<fieldset>
+									<legend>Usuarios</legend>
+									<div id="usuarios">
+										<?php
+												foreach($grupo->encargados() as $encargado){
+										?>
+												Usuario
+												<br />
+												<select name="usuarios[]">
+												<option></option>
+												<?php foreach($usuarios as $usr){ ?>
+													<option value="<?php echo $usr->id ?>"
+															alt="<?php echo $usr->login ?>"
+															title="<?php echo $usr->login ?>"
+															<?php if($usr->id == $encargado->usuarios_id){?> selected="selected"<?php } ?>
+													>
+														<?php echo utf8_decode($usr->ap . ' ' . $usr->am . ', ' .$usr->nombre); ?>
+													</option>
+												<?php }?>
+												</select>
+												<br />
+										<?php
+												$n++;
+										 	}
+										 ?>
+									</div>
+									<img id="spinner" src="<?php echo $path ?>/public/img/sp5/spinner.gif" style="display:none"/>
+									<a href="#" id="agregar"><img src="<?php echo $path . 'img/sp5/mas.png' ?>" /></a>
+									<br />
+								</fieldset>
+								<div></div>
+								<div id="botones">
+
+									<input type="button" id="aceptar" value="Guardar">
+									<input type="button" id="cancelar" value="Cancelar">
+
+								</div>
+							</form>
+						<?php  break; ?>
+					<?php case 'exito': ?>
+						<p class="info"><br />Las asignaciones del grupo se agregaron correctamente</p>
+					<?php  break; ?>
+					<?php case 'error':
+						  default:
+					?>
+						<p class="error"><br />Ha ocurrido un error.
+							<?php echo $error ?>
+						</p>
+					<?php  break; ?>
+				<?php } ?>
+			</div>
+		</div>
+<?php } ?>

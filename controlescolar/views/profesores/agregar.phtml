@@ -1,0 +1,70 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>Agregar profesor</h1>
+		<div id="options-bar">
+			<div id="options">
+				<a href="<?php echo $path ?>profesores">Volver
+				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
+				</a>
+			</div>
+		</div>
+		<?php switch($option) { 
+				case 'captura': ?>
+				<form action="<?php echo $path ?>profesores/agregar" id="frm_agregar" method="post" enctype="multipart/form-data">
+					<fieldset>
+						<legend>Personal</legend>
+						<label for="codigo">Codigo</label><br />
+						<input type="text" name="codigo" id="codigo" maxlength="12" size="12"/>
+						<img id="spinner" src="<?php echo $path ?>/public/img/sp5/spinner.gif" style="display:none"/>
+						<div id="check" class="check"></div>
+						<br />
+						<label for="nombre">Nombre</label><br />
+						<input type="text" name="nombre" id="nombre" size="30" maxlength="30" /><br />
+						<label for="ap">Apellido paterno</label><br />
+						<input type="text" name="ap" id="ap" size="20" maxlength="20" /><br />
+						<label for="am">Apellido materno</label><br />
+						<input type="text" name="am" id="am" size="20" maxlength="20" /><br />
+						<label for="rfc">RFC</label><br />
+						<input type="text" name="rfc" id="rfc" size="20" maxlength="20" /><br />
+						<label for="curp">CURP</label><br />
+						<input type="text" name="curp" id="curp" size="20" maxlength="20" />
+						<label><input type="radio" name="sexo" value="M" /> Mujer </label>
+						<label><input type="radio" name="sexo" value="H" /> Hombre </label><br />
+						<label for="fnacimiento">Fecha de nacimiento</label><br />
+						<input type="text" name="fnacimiento" id="fnacimiento" size="10" maxlength="10" />
+						<a id="calendare"><img src="<?php echo $path ?>/public/img/sp5/calendario.png" /></a><br />
+						<label for="foto">Foto</label><br />
+						<input type="file" id="foto" name="foto" /><br />
+					</fieldset>
+					<div></div>
+					<fieldset>
+						<legend>Contacto</legend>
+						<label for="domicilio">Domicilio</label><br />
+						<input type="text" name="domicilio" id="domicilio" size="30" maxlength="60" /><br />
+						<label for="tel">Tel&eacute;fono</label><br />
+						<input type="text" name="tel" id="tel" size="20" maxlength="20" /><br />
+						<label for="tel">Tel&eacute;fono m&oacute;vil</label><br />
+						<input type="text" name="cel" id="cel" size="20" maxlength="20" /><br />
+						<label for="mail">Correo electr&oacute;nico</label><br />
+						<input type="text" name="mail" id="mail" size="30" maxlength="80" /><br />
+					</fieldset>
+					<div id="botones">
+						<input type="button" id="cancelar" value="Cancelar">
+						<input type="button" id="agregar" value="Agregar">
+					</div>
+				</form>
+			<?php  break; ?>
+			<?php case 'exito': ?>
+				<p class="info"><br />El profesor se agreg&oacute; correctamente</p>
+			<?php  break; ?>
+			<?php case 'error': 
+				  default: 
+			?>
+				<p class="error"><br />Ha ocurrido un error al intentar agregar el profesor
+					<?php echo $error ?>
+				</p>
+			<?php  break; ?>
+		<?php } ?>
+	</div>
+</div>

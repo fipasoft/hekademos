@@ -1,0 +1,188 @@
+<?php $path=KUMBIA_PATH; ?>
+<div id="primary"><?php switch($option) {
+	case 'vista':
+		?>
+<div class="content">
+
+<h1><?php echo $registros;?> Amonestacion<?php echo ($registros == 1 ? '' : 'es') ?> para el alumno <?php echo $alumno->codigo; ?>
+		<?php if($busqueda->condicion() != '') {?>
+<div class="filter-lab">Contenido filtrado</div>
+		<?php }?></h1>
+<h3><?php echo $alumno->nombre(); ?></h3>	
+
+							  <?php
+									$amtotal = $alumno->totalamonestaciones();
+									if($amtotal > 0){ ?>
+								<span class="fin">
+								<?php
+									echo $amtotal. ' amonestaci'.($amtotal==1 ? '&oacute;n' : 'ones en total');
+								?>
+								</span>
+								<?php } ?>	
+<div id="options-bar">
+<div id="options">
+<a href="<?php echo $path ?>alumnos">Volver a alumnos
+				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
+				</a>
+				/
+				<a href="" id="aSearch" title="Buscar" alt="Buscar">
+					Buscar 
+					<img src="<?php echo $path?>public/img/sp5/buscar.png" /> 
+				</a> 
+				/<a href="<?php echo $path . 'alumnos/exportar_amonestaciones/'.$alumno->id ?>" title="Exportar alumnos" alt="Exportar alumnos">
+                    Exportar
+                    <img src="<?php echo $path?>public/img/sp5/excel.png"/>
+                </a>
+                 / <a href="#" id="cicloBtn" title="Cambiar de ciclo escolar" alt="Cambiar de ciclo escolar">
+                    Ciclo:
+                </a>
+                <div id="cicloActual"><?php echo $ciclo->numero?></div>
+                <div id="cicloSel" style="display:none">
+                    <form id="frm_ciclo" method="post" action="<?php echo $path ?>alumnos/amonestaciones/<?php echo $alumno->id ?>">
+                    <fieldset>
+                        <select name="ciclo" id="cicloSelect">
+                            <?php foreach($ciclos as $ccl){?>
+                            <option value="<?php echo $ccl->id?>"
+                                    <?php if($ccl->id == $ciclo->id){ ?>selected="selected"<?php } ?>>
+                                    <?php echo $ccl->numero?>
+                            </option>
+                            <?php } ?>
+                        </select>
+                    </fieldset>
+                    </form>
+                </div>
+</div>
+<div id="search" <?php if($busqueda->condicion() == ''){?>
+	style="display: none" <?php } ?>>
+<form action="<?php echo $path ?>alumnos/amonestaciones/<?php echo $alumno->id ?>" method="post"
+	id="frm_search">
+<fieldset><label for="fecha">Fecha</label> <input type="text"
+	value="<?php echo $busqueda->campo("fecha"); ?>" name="fecha"
+	id="fecha" size="10" maxlength="10" readonly="readonly" /> <label for="descripcion">Descripción</label>
+<input type="text"
+	value="<?php echo $busqueda->campo("descripcion"); ?>"
+	name="descripcion" id="descripcion" size="50" maxlength="255" /> 
+<br />
+	<br />
+<input type="submit" id="btn_submit" value="Filtrar" /> <input
+	type="reset" id="reset" value="Quitar filtros" /></fieldset>
+</form>
+</div>
+
+</div>
+
+		<?php
+
+		if($registros > 0){ ?>
+<table>
+	<tr>
+		<th>Fecha</th>
+		<th>Tipo</th>
+		<th style="width:30%;">Descripción</th>
+		<th>Infracci&oacute;n</th>
+		
+			<?php if($acl['amonestaciones']['ver']){ ?>
+		<th>Ver</th>
+		<?php } ?>
+	</tr>
+	<?php
+	$i = 0;
+	$estado = new Aestado();
+	$estado = $estado->pornombre("No aprobada");
+
+	$cancelada = new Aestado();
+	$cancelada = $cancelada->pornombre("Cancelada");
+
+	$aprobada = new Aestado();
+	$aprobada = $aprobada->pornombre("aprobada");
+	foreach($amonestaciones as $amonestacion){
+		$alumno = new Alumnos();
+		$alumno = $alumno->find($amonestacion->alumno_id);
+		$categorias = $categorias->find($amonestacion->acategoria_id);
+		$infracciones = new Reglamento();
+		$infracciones = $infracciones->find_all_by_sql('SELECT reglamento.* FROM '.
+				'amonestacion INNER JOIN infringe ON amonestacion.id = infringe.amonestacion_id '.
+				'INNER JOIN reglamento on infringe.reglamento_id = reglamento.id '.
+				'WHERE amonestacion.id = '.$amonestacion->id);
+		?>
+	<tr class="<?php echo ($i%2 == 0 ? '' : 'odd') ?>">
+		<td><?php echo Utils::fecha_mix($amonestacion->fecha); ?></td>
+		<td>
+			<?php echo $categorias->nombre ?>
+			<?php if($categorias->nombre == 'Suspensión'){ ?>
+				<br />
+				<?php if($amonestacion->inicio != '0000-00-00' && $amonestacion->inicio != '') {?>
+					<span class = "inicio"><?php echo Utils :: fecha_mix($amonestacion->inicio) ?></span>
+				<?php }else{ ?>
+					<span class = "inicio"><?php echo '-' ?></span>
+				<?php } ?>
+				<br />
+				<?php if($amonestacion->fin != '0000-00-00' && $amonestacion->fin != '') {?>
+					<span class = "fin"><?php echo Utils :: fecha_mix($amonestacion->fin) ?></span>
+				<?php }else{ ?>
+					<span class = "fin"><?php echo '-' ?></span>
+				<?php } ?>
+			<?php } ?>
+		</td>
+		<td><?php echo substr($amonestacion->descripcion,0,100);
+				if(strlen($amonestacion->descripcion)>100){
+				echo "...";
+				}
+		?></td>
+		<td>
+			<?php if(count($infracciones) > 0){ ?>
+				<ul>
+					<?php foreach($infracciones as $infraccion){ ?>
+						<?php $reglamento = $reglamento->find($infraccion->reglamentos_id) ?>
+						<?php $articulo = $articulo->find($infraccion->articulo_id) ?>
+						<li><?php echo 'Articulo '.$articulo->numero.' del reglamento '.$reglamento->nombre ?></li>
+					<?php }?>
+				</ul>
+			<?php }else{ ?>
+				No asignado.
+			<?php } ?>
+		</td>
+			<?php if($acl['amonestaciones']['ver']){ ?>
+		<td>
+			<a href="<?php echo $path . 'amonestaciones/ver/' . $amonestacion->id . '/' . $alumno->id?>"
+			alt="Ver la informacion de la amonestación"
+			title="Ver la informacion de la amonestación"> <img
+			src="<?php echo $path?>public/img/sp5/ver.png" /> </a>
+			
+		</td>
+		<?php } ?>
+
+	</tr>
+	<?php
+	$i++;
+	}
+	?>
+</table>
+	<?php } else { ?>
+<p class="info"><br />
+No hay registros que mostrar</p>
+	<?php } ?>
+<div id="pages"><?php foreach($paginador->botones() as $boton){ ?> <a
+	href="<?php echo $path . $boton->url() ?>"
+	title="Ir a la p&aacute;gina <?php echo $boton->titulo() ?>"
+	class="<?php echo $boton->estilo() ?>"> <?php echo $boton->etiqueta() ?>
+</a> <?php }?></div>
+</div>
+	<?php
+	break;
+
+case 'error':
+	?>
+<div class="content">
+
+<h1>Amonestaciones</h1>
+<div id="options-bar">
+<div id="options"></div>
+</div>
+
+<p class="error"><br />
+	<?php echo $error ?></p>
+	<?php
+	break;
+
+}?></div>

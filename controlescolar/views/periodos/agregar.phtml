@@ -1,0 +1,61 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>Agregar periodo</h1>
+		<div id="options-bar">
+			<div id="options">
+				<a href="<?php echo $path ?>periodos">Volver a periodos
+				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
+				</a>
+			</div>
+		</div>
+		<?php switch($option) {
+				case 'captura': ?>
+				<?php if(count($ciclos)>0){ ?>
+				<form action="<?php echo $path ?>periodos/agregar" id="frm_agregar" method="post">
+					<fieldset>
+						<legend>Datos</legend>
+						<label for="ciclos_id">Ciclo</label><br />
+						<select name="ciclos_id" id="ciclos_id">
+							<option></option>
+							<?php foreach($ciclos as $c){ ?>
+							<option value="<?php echo $c->id; ?>" ><?php echo $c->numero; ?></option>
+							<?php } ?>
+						</select>
+						<br />
+						<label for="inicio">Inicio</label><br />
+						<input type="text" name="inicio" id="inicio" size="16" maxlength="16" />
+						<img id="calendario" src="<?php echo $path ?>public/img/sp5/calendario.png" />
+						<br />
+						<label for="fin">Fin</label><br />
+						<input type="text" name="fin" id="fin" size="16" maxlength="16" />
+						<img id="calendario2" src="<?php echo $path ?>public/img/sp5/calendario.png" />
+						<br />
+						<label for="activo">Activo</label><br />
+						<input type="checkbox" name="activo" value="1" />
+					</fieldset>
+					<div></div>
+					<div id="botones">
+						<input type="button" id="aceptar" value="Agregar">
+						<input type="button" id="cancelar" value="Cancelar">
+
+					</div>
+				</form>
+				<?php }else{ ?>
+					<p class="info"><br />Todos los ciclos ya cuentan con el periodo de inscripcion.</p>
+				<?php } ?>
+			<?php  break; ?>
+			<?php case 'exito':
+			?>
+				<p class="info"><br />El periodo se guardo con exito.</p>
+			<?php  break; ?>
+			<?php case 'error':
+				  default:
+			?>
+				<p class="error"><br />Ha ocurrido al intentar agregar el periodo.<br />
+				<?php echo $error ?>
+				</p>
+			<?php  break; ?>
+		<?php } ?>
+	</div>
+</div>

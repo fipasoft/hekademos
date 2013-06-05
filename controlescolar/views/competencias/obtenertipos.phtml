@@ -1,0 +1,9 @@
+<?php if($datos!=null){ ?>
+<label for="tipo_competencia"><?php echo $titulo; ?></label><br />
+<select id="tipo_competencia" name="tipo_competencia">
+<option></option>
+<?php foreach($datos as $dato){ ?>
+<option value="<?php echo $dato->id; ?>"><?php echo $dato->nombre; ?></option>
+<?php } ?>
+</select>
+<?php } ?>

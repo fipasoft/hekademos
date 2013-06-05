@@ -1,0 +1,67 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>Accesos</h1>
+		<?php if($acl['accesos']['generar']){ ?>
+		<p class="msj">
+			<br />
+			Generaci&oacute;n de accesos al sistema para los siguientes grupos.
+		</p>
+
+		<ul class="opciones">
+			<li>
+				<a href="<?php echo $path . 'accesos/generar/alumnos/' ?>">
+					Alumnos
+				</a>
+			</li>
+			<li>
+				<a href="<?php echo $path . 'accesos/generar/padres/' ?>">
+					Tutores (Padres de Familia)
+				</a>
+			</li>
+			<li>
+				<a href="<?php echo $path . 'accesos/generar/profesores/' ?>">
+					Profesores
+				</a>
+			</li>
+		</ul>
+		<?php } ?>
+	<?php if($acl['accesos']['exportar']){ ?>
+	<p class="msj">
+			<br />
+			Exportaci&oacute;n de accesos del sistema para los siguientes grupos.
+		</p>
+
+		<ul class="opciones">
+			<li>
+			Alumnos Ordenado por
+				<a alt="Solo aquellos alumnos inscritos al ciclo." title="Solo aquellos alumnos inscritos al ciclo." href="<?php echo $path . 'accesos/exportar/a/g' ?>">
+					[grupo]
+				</a>
+
+				<a alt="Todos los alumnos ordenados por nombre." title="Todos los alumnos ordenados por nombre." href="<?php echo $path . 'accesos/exportar/a/n' ?>">
+					[nombre]
+				</a>
+			</li>
+			<li>
+			Tutores (Padres de Familia)
+				<a alt="Solo aquellos tutores con alumnos inscritos al ciclo." title="Solo aquellos tutores con alumnos inscritos al ciclo." href="<?php echo $path . 'accesos/exportar/p/g' ?>">
+					[grupo]
+				</a>
+
+				<a alt="Todos los tutores ordenados por nombre." title="Todos los tutores ordenados por nombre." href="<?php echo $path . 'accesos/exportar/p/n' ?>">
+					[nombre]
+				</a>
+			</li>
+			<li>
+			Profesores
+				<a alt="Todos los profesores ordenados por nombre." title="Todos los profesores ordenados por nombre." href="<?php echo $path . 'accesos/exportar/f/n' ?>">
+					[nombre]
+				</a>
+			</li>
+
+
+		</ul>
+		<?php } ?>
+	</div>
+</div>

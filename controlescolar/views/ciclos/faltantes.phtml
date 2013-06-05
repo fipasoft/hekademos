@@ -1,0 +1,24 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>Simula avance del ciclo <?php echo $ciclo->numero?></h1>
+		<div id="options-bar">
+			<div id="options">
+				<a href="<?php echo $path ?>ciclos">Volver
+				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
+				</a>
+			</div>
+		</div>
+		<?php if($option!="error"){?>
+		<p class="tip">
+			<br />
+			El reporte indica los detalles de las calificaciones que faltan <br/> capturar para realizar el avance de ciclo.
+			Para descargar el reporte presione<br/> con el boton derecho en el link y presione en guardar enlace.
+			<br/>
+			<a href="<?php echo $path; ?><?php echo $archivo; ?>">Obtener reporte.</a>
+		</p>
+		<?php }else{ ?>	
+		<p class = "error"><br/> <?php echo $error; ?></p>
+		<?php } ?>
+	</div>
+</div>

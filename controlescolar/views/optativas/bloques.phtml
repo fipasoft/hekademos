@@ -1,0 +1,218 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>Creación de bloques del periodo <?php if($option!="error"){ ?><?php echo $ciclo->numero; ?><?php } ?></h1>
+		<?php if($option!="error"){ ?>
+		<h2>Inicia el <?php echo Utils::fecha_espanol(substr($periodo->inicio,0,10)); ?> a las <?php echo substr($periodo->inicio,10,6); ?></h2>
+		<h2>Finaliza el <?php echo Utils::fecha_espanol(substr($periodo->fin,0,10)); ?> a las <?php echo substr($periodo->fin,10,6); ?></h2>
+		<h2><?php echo ($periodo->activo==1? "Activo" : "Inactivo"); ?></h2>
+
+		<div id="options-bar">
+			<div id="options">
+				<a href="<?php echo $path ?>optativas/index/<?php echo $periodo->id; ?>">Volver a configuración
+				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
+				</a>
+				<?php if($option=='vista'){ ?>
+				<?php if($acl['optativas']['avanzadas']){  ?>
+				/
+				<a <?php if($existenbloques || $totalAlumnos<=0){?> style="display:none;" <?php } ?> class="creacion" href="javascript:;" id="btn_avanzadas">Avanzadas
+				<img src="<?php echo $path?>public/img/sp5/config.png"/>
+				</a>
+				<?php } ?>
+				<?php } ?>
+			</div>
+		</div>
+		<?php } ?>
+		<?php switch($option) {
+				case 'vista': ?>
+				<?php if($existenbloques ){?>
+					<div class="alertabloque">
+					<a id="btn_muestra" href="javascript:;" title="Crear bloques" alt="Crear bloques">
+					Crear bloques
+					<img src="<?php echo $path?>public/img/sp5/config.png"/>
+					</a>
+					</div>
+					<br/>
+					<br/>
+					<p class="tip" id="alerta">Los bloques ya han sido creados.<br/>
+					 Si desea volver a crearlos presione el botón Crear bloques
+					<img src="<?php echo $path?>public/img/sp5/config.png"/>.
+					<br/>
+					Considere que al crear los bloques se perderán los cambios que se hayan realizado de manera manual.
+					</p>
+
+				<?php }elseif($totalAlumnos<=0){ ?>
+					<br/>
+					<p class="tip" id="alerta">
+					 <br/>
+					 No se pueden crear los bloques por que no se han seleccionado los alumnos.<br/>
+					  Primero realice la selección de alumnos.
+					</p>
+					<?php } ?>
+				<div <?php if($existenbloques || $totalAlumnos<=0){?> style="display:none;"<?php } ?> class="creacion">
+				<?php if($option=='vista' && $acl['optativas']['avanzadas']){ ?>
+						<div id="avanzadas" style="display:none;">
+						<form id="frm_avanzadas" method="post" action="<?php echo $path ?>optativas/avanzadas">
+						<fieldset>
+						<legend>Opciones avanzadas</legend>
+						<input type="hidden" name="periodo_id" id="periodo_id" value="<?php echo $periodo->id ?>" />
+						<?php $i = 1 ?>
+							<?php $j = 1 ?>
+							<?php $j++ ?>
+						<table style="width:70%;" id="tbl_<?php echo $j ?>">
+						<tr><th>Dia</th>
+						<th>
+						<a  id="a_<?php echo $j ?>"
+										title="Seleccionar todos los dias"
+										class="select_all"
+										href="javascript:;">
+										<img src="<?php echo $path?>public/img/sp5/ver.png"/>
+									</a>
+						</th></tr>
+						<?php foreach($dias as $d){ ?>
+						<tr id="row_<?php echo $i ?>">
+						<?php
+						$clase="";
+						if(in_array($d->id,$dh)){
+							$clase="selected";
+						}
+						?>
+						<td class="<?php echo $clase; ?>" ><?php echo $d->nombre; ?></td>
+						<td class="<?php echo $clase; ?>" >
+						<input class="chk_dia"
+								type="checkbox"
+								id="chk_<?php echo $i?>"
+								name="dias[]"
+								value="<?php echo $d->id; ?>"
+								<?php if(in_array($d->id,$dh)){ ?>
+								checked="checked"
+								<?php } ?>
+								/></td>
+						</tr>
+						<?php
+							$i++;
+						 } ?>
+						</table>
+						<br/>
+						<div id="div_tiempo">
+						<p style="text-align:right;">
+						<label for="hora_inicio" >Inicio</label>
+						<select id="hora_inicio" name="hora_inicio">
+						<option></option>
+						<?php for($h=0;$h<24;$h++){ ?>
+						<option value="<?php if($h<10)$h="0".$h; echo $h ?>" <?php if($hora_inicio==$h){ ?>selected="selected" <?php } ?>>
+						<?php
+
+						echo $h ?>
+
+						</option>
+						<?php } ?>
+						</select>
+						:
+						<select id="minutos_inicio" name="minutos_inicio">
+						<option></option>
+						<?php for($h=0;$h<60;$h++){ ?>
+						<option value="<?php if($h<10)$h="0".$h;  echo $h ?>" <?php if($minutos_inicio==$h){ ?>selected="selected" <?php } ?>>
+						<?php
+
+						 echo $h ?>
+						 </option>
+						<?php } ?>
+						</select>
+						</p>
+						<p style="text-align:right;">
+						<label for="hora_fin" >Fin</label>
+						<select id="hora_fin" name="hora_fin">
+						<option></option>
+						<?php for($h=0;$h<24;$h++){ ?>
+						<option value="<?php if($h<10)$h="0".$h; echo $h ?>" <?php if($hora_fin==$h){ ?>selected="selected" <?php } ?>>
+						<?php
+
+						echo $h ?></option>
+						<?php } ?>
+						</select>
+						:
+						<select id="minutos_fin" name="minutos_fin">
+						<option></option>
+						<?php for($h=0;$h<60;$h++){ ?>
+						<option value="<?php if($h<10)$h="0".$h; echo $h ?>" <?php if($minutos_fin==$h){ ?>selected="selected" <?php } ?>>
+						<?php
+
+						 echo $h ?></option>
+						<?php } ?>
+						</select>
+						</p>
+						</div>
+							<div class="botones">
+							<input type="submit" id="guardar" value="Guardar">
+						</div>
+						</fieldset>
+						</form>
+						</div>
+						<?php } ?>
+				<form name="frm_crear" id="frm_crear" method="post" action="<?php echo $path ?>optativas/bloques">
+						<input type="hidden" name="periodo_id" id="periodo_id" value="<?php echo $periodo->id ?>" />
+						<input type="hidden" name="KUMBIA_PATH" id="KUMBIA_PATH" value="<?php echo $path; ?>" />
+						<div class="divisor"></div>
+						<fieldset>
+						<legend>Bloques</legend>
+						<p style="text-align:right">
+						<label for="orden">Ordenar por</label>
+						<select id="orden" name="orden">
+						<option></option>
+						<option value="p">Promedio</option>
+						<option value="a">Alfabetico</option>
+						</select>
+						</p>
+
+						<p style="text-align:right">
+						<label for="bloques">Bloques</label>
+						<input class="text" id="bloques" name="bloques" type="text" size="3" maxlength="4" />
+						</p>
+
+						<p style="text-align:right">
+						 <span class="sub">Alumnos</span> <span class="sub" style="color: rgb(119, 119, 119);"><?php echo $totalAlumnos; ?></span> <input id="Totalalumnos" type="hidden" size="3" maxlength="4" value="<?php echo $totalAlumnos; ?>" />
+						</p>
+
+						<p style="text-align:right;display:none;" id="pporbloque">
+						 <span class="sub">Alumnos por bloque </span> <span class="sub" style="color: rgb(119, 119, 119);" id="porbloque"></span> <input type="hidden" size="3" maxlength="4" value="<?php echo $totalAlumnos; ?>" />
+						</p>
+
+						<p id="msj" style="text-align:right;display:none;">
+						</p>
+
+						<p style="text-align:right">
+						<label for="intervalo">Duración del bloque en minutos</label>
+						<input class="text" id="intervalo" name="intervalo" type="text" size="4" maxlength="4" />
+						</p>
+
+						</fieldset>
+						<br/>
+						<div class="botones">
+							<input type="submit" id="crear" value="Crear">
+						</div>
+						</form>
+						</div>
+						<br/>
+
+
+			<?php  break; ?>
+			<?php case 'exito':
+			?>
+				<p class="info"><br />Los bloques fueron creados con exito.<br />
+				</p>
+			<?php  break; ?>
+			<?php case 'warning': ?>
+			<p class="tip"><br/><?php echo $warning; ?></p>
+			<?php break; ?>
+			<?php case 'error':
+				  default:
+			?>
+				<br/>
+				<p class="error"><br />Ha ocurrido un error al crear los bloques.<br />
+				<?php echo $error ?>
+				</p>
+			<?php  break; ?>
+		<?php } ?>
+	</div>
+</div>

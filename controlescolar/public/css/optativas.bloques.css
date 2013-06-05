@@ -1,0 +1,10 @@
+.botones{margin-left:70%;}
+div.content tr.selected, div.content td.selected {background-color:#CCFF99;}
+div.content td.TRUE a{
+color: green;
+font-weight:bold;
+}
+div.content td.FALSE a{
+color: #CC0000;
+font-weight:bold;
+}

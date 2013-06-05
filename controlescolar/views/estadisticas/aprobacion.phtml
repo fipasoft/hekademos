@@ -1,0 +1,315 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<h1>Estadística de aprobación</h1>
+			<h2><?php echo $countGps ?> Grupos</h2>
+			<h2><?php echo $countCrs ?> Cursos</h2>
+			<h2>Ciclo <?php echo $ciclo->numero; ?></h2>
+			<br/>
+
+<?php
+	if($countGps>0){ ?>
+
+		<div id="tabs">
+    <ul>
+    <li style="margin-left: 1px" id="tabHeader1" class="currenttab"><a href="javascript:void(0)" onClick="toggleTab(1,<?php echo $tabs; ?>)"><span>Resumen</span></a></li>
+
+    			<?php
+    			$c=2;
+    			$cursos=$datos['cursos'];
+				foreach($cursos as $s => $semestre){
+			 ?>
+       <li style="margin-left: 1px" id="tabHeader<?php echo $c; ?>" class="currenttab"><a href="javascript:void(0)" onClick="toggleTab(<?php echo $c; ?>,<?php echo $tabs; ?>)">
+       <span><?php echo $s; ?> SEMESTRE</span>
+       </a></li>
+       <?php
+       		$c++;
+
+       } ?>
+
+        <!--<li style="margin-left: 1px" id="tabHeader1" class="currenttab"><a href="javascript:void(0)" onClick="toggleTab(1,6)"><span>Tab 1</span></a></li>
+        <li id="tabHeader2"><a href="javascript:void(0)" onClick="toggleTab(2,6)" ><span>Tab 2</span></a></li>
+        <li id="tabHeader3"><a href="javascript:void(0)" onclick="toggleTab(3,6)"><span>Tab 3</span></a></li>
+        <li id="tabHeader4"><a href="javascript:void(0)" onClick="toggleTab(4,6)"><span>Tab 4</span></a></li>
+        <li id="tabHeader5"><a href="javascript:void(0)" onclick="toggleTab(5,6);"><span>Tab 5</span></a></li>
+        <li id="tabHeader6"><a href="javascript:void(0)" onclick="toggleTab(6,6);"><span>Tab 6</span></a></li>-->
+    </ul>
+    </div>
+    <div id="tabscontent">
+            <div id="tabContent1" class="tabContent" style="display:none;">
+                   </div>
+			<?php
+    			$c=2;
+    			foreach($datos['cursos'] as $s=>$semestre){
+			 ?>
+        <div id="tabContent<?php echo $c; ?>" class="tabContent" style="display:none;" >
+            <br />
+            <div>
+            <h3>Materias de <?php echo $s ?> semestre</h3>
+            <br/>
+			<?php
+            foreach($semestre as $m => $turnos){
+            	$materia=new Materias();
+            	$materia=$materia->find($m);
+           ?>
+            <div class="scrollable">
+				<h4><?php echo $materia->nombre ?></h4>
+				<table>
+				<tr>
+				<th colspan="8" >General</th>
+				</tr>
+				<tr>
+				<th></th>
+				<th>Aprobados<br/>(Ordinario)</th>
+				<th>Reprobados<br/>(Ordinario)</th>
+				<th>Aprobados<br/>(Extraordinario)</th>
+				<th>Reprobados<br/>(Extraordinario)</th>
+				<th>Aprobados</th>
+				<th>Reprobados</th>
+				<th>Promedio</th>
+				<?php
+				$total=$totales[$materia->id];
+				$mtot=$materiaTotales[$materia->id];
+				 ?>
+				<tr>
+				<th>Total</th>
+				<td><?php echo $mtot[1]['a']." [".$mtot[1]['pa']."%]";  ?></td>
+				<td><?php echo $mtot[1]['r']." [".$mtot[1]['pr']."%]";  ?></td>
+				<td><?php echo $mtot[2]['a']." [".$mtot[2]['pa']."%]";  ?></td>
+				<td><?php echo $mtot[2]['r']." [".$mtot[2]['pr']."%]";  ?></td>
+				<td><?php echo $total['pa']."%"; ?></td>
+				<td><?php echo $total['pr']."%"; ?></td>
+				<td><?php
+						if($total['pm']=='' || $total['pm']=='0'){
+							echo "No aplica.";
+						}else{
+							echo $total['pm']/*. " ".$total['pmt']."/".$total['total']*/;
+						}
+						?></td>
+				</tr>
+            <?
+            	foreach($turnos as $t=> $cursos){
+             ?>
+             <tr>
+				<th colspan="8" ><?php
+				switch($t){
+				case "M":echo "Matutino"; break;
+				case "V":echo "Vespertino"; break;
+				case "N":echo "Nocturno"; break;
+       			}?></th>
+				</tr>
+				<tr>
+				<th>Grupo</th>
+				<th>Aprobados<br/>(Ordinario)</th>
+				<th>Reprobados<br/>(Ordinario)</th>
+				<th>Aprobados<br/>(Extraordinario)</th>
+				<th>Reprobados<br/>(Extraordinario)</th>
+				<th>Aprobados</th>
+				<th>Reprobados</th>
+				<th>Promedio</th>
+				</tr>
+
+
+            	<?php
+            	foreach($cursos as $curso){
+            	$grupo=$curso->grupo();
+            	$es=$estadistica[$curso->id];
+            		?>
+            	<tr>
+				<th><?php echo $grupo->grado.$grupo->letra; ?></th>
+				<td><?php echo $es[1]['a']; ?></td>
+				<td><?php echo $es[1]['r']; ?></td>
+				<td><?php echo $es[2]['a']; ?></td>
+				<td><?php echo $es[2]['r']; ?></td>
+				<td><?php echo $es['ap']."%"; ?></td>
+				<td><?php echo $es['rp']."%"; ?></td>
+				<td><?php
+						if($es['pm']=='' || $es['pm']=='0'){
+							echo "No aplica.";
+						}else{
+				 			echo $es['pm']/*. " ".$es['pmt']."/".($es[1]['a']+$es[1]['r'])*/;
+						}
+				  ?></td>
+				</tr>
+            	<?php
+            	}
+
+            	$matturno=$materiaTurno[$t][$materia->id];
+            	?>
+
+            	<tr>
+				<th>Total</th>
+				<td><?php echo $matturno[1]['a']." [".$matturno[1]['pa']."%]";  ?></td>
+				<td><?php echo $matturno[1]['r']." [".$matturno[1]['pr']."%]";  ?></td>
+				<td><?php echo $matturno[2]['a']." [".$matturno[2]['pa']."%]";  ?></td>
+				<td><?php echo $matturno[2]['r']." [".$matturno[2]['pr']."%]";  ?></td>
+				<td><?php echo $matturno['ap']."%";  ?></td>
+				<td><?php echo $matturno['rp']."%";  ?></td>
+				<td><?php
+							if($matturno['pm']=='' || $matturno['pm']=='0'){
+								echo "No aplica.";
+							}else{
+				 				echo $matturno['pm'] /*. " ".$matturno['pmt']."/".($matturno[1]['a']+$matturno[1]['r'])*/ ;
+							}
+
+				 ?></td>
+				</tr>
+            	<?php
+            	}
+
+
+            	?>
+
+          	</table>
+				<br/>
+			</div>
+			<?php
+            }
+			 ?>
+			<br/>
+
+            </div>
+        </div>
+       <?php
+		$c++;
+       } ?>
+
+      <!--  <div id="tabContent1" class="tabContent" $gttstyle="display:none;">
+            <br /><div>First Tab Content goes here</div>
+        </div>
+
+        <div id="tabContent2" class="tabContent" style="display:none;">
+            <br /><div>Second Tab Content goes here</div>
+        </div>
+
+        <div id="tabContent3" class="tabContent" style="display:none;">
+            <br /><div>Third Tab Content goes here</div>
+        </div>
+
+        <div id="tabContent4" class="tabContent" style="display:none;">
+            <br /><div>Fourth Tab Content goes here</div>
+        </div>
+
+        <div id="tabContent5" class="tabContent" style="display:none;">
+            <br /><div>Fifth Tab Content goes here</div>
+        </div>
+
+        <div id="tabContent6" class="tabContent" style="display:none;">
+            <br /><div>Sixth Tab Content goes here</div>
+        </div>
+        -->
+    </div><!--End of tabscontent-->
+</div><!--End of tabs-->
+
+ <br />
+            <div id="temporal" style="display:none;">
+            <h3>Resumen </h3>
+            <table>
+				<tr><th colspan="3">Alumnos inscritos.</th></tr>
+				<tr><th>Matutino</th><td style="text-align:center" ><?php echo $inscritosM;  ?></td></tr>
+				<tr><th>Vespertino</th><td style="text-align:center" ><?php echo $inscritosV;  ?></td></tr>
+				<tr><th>Total</th><td style="text-align:center" ><?php echo $inscritosM+$inscritosV;  ?></td></tr>
+			</table>
+            <br/>
+
+            <br/>
+
+			<?php
+            $ttotalap=0;
+            $ttotalrep=0;
+            $ttotaltotal=0;
+            foreach($informacion as $t=>$turno){
+             ?>
+			<h4><?php
+			switch($t){
+				case "M":echo "Matutino"; break;
+				case "V":echo "Vespertino"; break;
+				case "N":echo "Nocturno"; break;
+       			}
+			 ?></h4>
+            <table>
+            <tr><th>Grado</th><th>Aprobados</th><th>Reprobados</th></tr>
+            <?php
+            $totalap=0;
+            $totalrep=0;
+            $totaltotal=0;
+            foreach($turno as $g=>$grado){
+				$ap=$grado['a'];
+				$rep=$grado['r'];
+				$total=$grado['t'];
+
+				$totalap+=$ap;
+				$totalrep+=$rep;
+				$totaltotal+=$total;
+
+				if($total>0){
+				$pa=round(($ap/$total)*100,2);
+				$pr=round(($rep/$total)*100,2);
+				}else{
+				$pa=0;
+				$pr=0;
+				}
+
+				?>
+            <tr><th><?php echo $g; ?></th><td><?php echo $ap." [".$pa."%]"; ?></td><td><?php echo $rep." [".$pr."%]";  ?></td></tr>
+            <?php
+            }
+            $ttotalap+=$totalap;
+            $ttotalrep+=$totalrep;
+            $ttotaltotal+=$totaltotal;
+
+			if($totaltotal>0){
+            $ta=round(($totalap/$totaltotal)*100,2);
+            $tr=100-$ta;
+			}else{
+			$ta=0;
+            $tr=0;
+			}
+            ?>
+          	<tr><th>Total</th><td><?php echo $totalap." [".$ta."%]"; ?></td><td><?php echo $totalrep." [".$tr."%]";  ?></td></tr>
+            </table>
+            <?php
+            }
+            ?>
+            <br/>
+             <h4>General </h4>
+		     <table>
+				<tr>
+				<th>Aprobados</th><th>Reprobados</th>
+				</tr>
+				<tr>
+				<?php
+				if($ttotaltotal>0){
+				$tta=round(($ttotalap/$ttotaltotal)*100,2);
+            	$ttr=100-$tta;
+				}else{
+				$tta=0;
+            	$ttr=0;
+				}
+
+				 ?>
+				<td><?php echo $ttotalap." [".$tta."%]"; ?></td><td><?php  echo $ttotalrep." [".$ttr."%]";  ?></td>
+				</tr>
+            </table>
+            <br/>
+
+
+            </div>
+
+<?php }else{ ?>
+<br/>
+<br/>
+<p class="info">
+<br/>
+No existe ningun grupo.
+</p>
+<?php } ?>
+	</div>
+</div>
+<script language="JavaScript" type="text/javascript">
+function init(){
+toggleTab(1,<?php echo $tabs; ?>);
+}
+
+addDOMLoadEvent(init);
+</script>

@@ -1,0 +1,33 @@
+div.content ul.opciones {
+margin:0 auto 30px;
+text-align:center;
+width:400px;
+}
+div.content ul.opciones a {
+text-decoration:none;
+}
+div.content h2 {
+color:#777777;
+font-size:0.9em;
+margin-top:0;
+}
+
+div.content td.total-texto {
+background-color:#E5E5E5;
+text-align:right;
+font-weight:bolder;
+}
+
+div.content td.total-monto {
+background-color:#E4F4A5;
+border:1px solid #BBBBBB;
+font-weight:bold;
+}
+
+div.content table.main td, div.content table.main th {
+border:1px solid #BBBBBB;
+}
+
+div.content fieldset table.main td.alert {
+background-color:#FF9595;
+}

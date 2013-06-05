@@ -1,0 +1,75 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+	<div class="content">
+		<?php if($option!="error"){ ?>
+		<h1>Agregar alumno al bloque<?php echo $bloque->id; ?></h1>
+		<h2><?php echo $ciclo->numero; ?></h2>
+		<h2>Bloque <?php echo $bloque->id; ?></h2>
+		<h2>Inicia el <?php echo Utils::fecha_espanol(substr($bloque->inicio,0,10)); ?> a las <?php echo substr($bloque->inicio,10,6); ?></h2>
+		<h2>Finaliza el <?php echo Utils::fecha_espanol(substr($bloque->fin,0,10)); ?> a las <?php echo substr($bloque->fin,10,6); ?></h2>
+
+		<div id="options-bar">
+			<div id="options">
+				<a href="<?php echo $path ?>bloquesalumnos/index/<?php echo $bloque->id; ?>">Volver a bloque<?php echo $bloque->id ?>
+				<img src="<?php echo $path?>public/img/sp5/volver.png"/>
+				</a>
+			</div>
+		</div>
+		<?php } ?>
+		<?php switch($option) {
+				case 'captura': ?>
+				<h3><?php  echo $registros; ?> alumno<?php echo ($registros == 1 ? '' : 's') ?> sin bloque</h3>
+				<?php if(count($sinbloque)>0){ ?>
+				<form action="<?php echo $path ?>bloquesalumnos/agregar" id="frm_agregar" method="post">
+						<input type="hidden" name="bloque_id" id="bloque_id" value="<?php echo $bloque->id; ?>" />
+						<input type="hidden" name="KUMBIA_PATH" id="KUMBIA_PATH" value="<?php echo $path; ?>" />
+						<table>
+						<tr><th>Alumno</th><th></th></tr>
+						<?php
+						$i=0;
+						foreach($sinbloque as $alumno){
+							$grupo=$alumno->obtenerGrupoPorCiclo($periodo->ciclos_id);
+							 ?>
+						<tr class="<?php echo ($i%2 == 0 ? '' : 'odd'); ?>">
+							<td>
+								<span class="sub" style="color: rgb(119, 119, 119);"><?php echo $alumno->codigo; ?></span><br/>
+								<span class="sub"><?php echo $alumno->nombre(); ?></span><br/>
+								<span class="sub" ><?php echo $grupo->ver(); ?></span>
+							</td>
+							<td>
+								<input type="checkbox" name="alumnos[]"
+											   class="chk_alu"
+											   id="chk_<?php echo $i;?>"
+											   value="<?php echo $alumno->periodosalumnos_id; ?>"
+										/>
+							</td>
+						</tr>
+						<?php
+							$i++;
+						 } ?>
+						</table>
+					<div id="botones">
+						<input type="submit" id="aceptar" value="Agregar">
+						<input type="button" id="cancelar" value="Cancelar">
+
+					</div>
+				</form>
+				<?php }else{ ?>
+				<p class="info"><br />Todos los alumnos estan ligados a un bloque.</p>
+				<?php } ?>
+			<?php  break; ?>
+			<?php case 'exito':
+			?>
+				<p class="info"><br />Los alumnos se agregaron al bloque correctamente.</p>
+			<?php  break; ?>
+			<?php case 'error':
+				  default:
+			?>
+				<br/>
+				<p class="error"><br />Ha ocurrido al intentar agregar el bloque.<br />
+				<?php echo $error ?>
+				</p>
+			<?php  break; ?>
+		<?php } ?>
+	</div>
+</div>
