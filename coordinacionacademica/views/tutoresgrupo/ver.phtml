@@ -1,0 +1,84 @@
+<?php $path = KUMBIA_PATH; ?>
+<div id="primary">
+    <div class="content">
+        <h1>Datos del tutor <?php echo $profesor->ap . ' ' .
+                                $profesor->am. ', '.
+                                $profesor->nombre; ?></h1>
+        <div id="options-bar">
+            <div id="options">
+                <a href="<?php echo $path ?>tutoresgrupo">Volver
+                <img src="<?php echo $path?>public/img/sp5/volver.png"/>
+                </a>
+                <?php if($profesor->id != ''){?>
+                    <?php if($acl['horario']){ ?>
+                     / <a href="<?php echo $path . 'tutoresgrupo/horario/' . $profesor->id?>"
+                       alt="Horario del tutor" title="Horario del tutor">
+                       Horario
+                       <img src="<?php echo $path?>public/img/sp5/reloj.png" />
+                    </a>
+                    <?php } ?>
+                <?php }?>
+            </div>
+        </div>
+        <?php if($profesor->id != '') {?>
+        <table>
+            <tr>
+                <th>Nombre</th>
+                <td><?php echo  $profesor->ap . ' ' .
+                                $profesor->am. ', '.
+                                $profesor->nombre  ?>
+                </td>
+                <td rowspan="5">
+                    <?php if($profesor->foto != ''){ ?>
+                        <img src="<?php echo '/prepa5/sp5/public/img/profesores/' . $profesor->foto . '?d=' . time() ?>" class="ficha"/>
+                    <?php }else{ ?>
+                        <img src="<?php echo $path ?>public/img/sp5/persona.png" class="ficha"/>
+                    <?php }?>
+                </td>
+            </tr>
+            </tr>
+            <tr>
+                <th>RFC</th>
+                <td><?php echo $profesor->mail?></td>
+            </tr>
+            <tr>
+                <th>CURP</th>
+                <td><?php echo $profesor->curp?></td>
+            </tr>
+            <tr>
+                <th>Sexo</th>
+                <td><?php echo $profesor->sexo?></td>
+            </tr>
+            <tr>
+                <th>Fecha de nacimiento</th>
+                <td><?php echo $profesor->fnacimiento?></td>
+            </tr>
+            <tr>
+                <th>Domicilio</th>
+                <td colspan="2"><?php echo $profesor->domicilio?></td>
+            </tr>
+            <tr>
+                <th>Tel&eacute;fono</th>
+                <td colspan="2"><?php echo $profesor->tel?></td>
+            </tr>
+            <tr>
+                <th>Tel&eacute;fono m&oacute;vil</th>
+                <td colspan="2"><?php echo $profesor->cel?></td>
+            </tr>
+            <tr>
+                <th>Correo Electr&oacute;nico</th>
+                <td colspan="2">
+                    <a href="mailto:<?php echo $profesor->mail?>" />
+                    <?php echo $profesor->mail?>
+                    </a>
+                </td>
+            </tr>
+        </table>
+        <?php } else {?>
+            <p class="error">
+                <br />
+                 No existe informaci&oacute;n del profesor seleccionado.
+            </p>
+        <?php } ?>
+    </div>
+</div>

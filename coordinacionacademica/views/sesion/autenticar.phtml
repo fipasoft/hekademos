@@ -1,0 +1,31 @@
+<div id="primary">
+    <div class="content">
+        
+        <?php if($evento == sha1('err_login')){ ?>
+        <p class="error"><br />Nombre de usuario o contrase&ntilde;a incorrecta</p>
+        <?php } ?>
+        
+        <div style="float: left;margin-left: 20%;">
+        <form action="<?php echo KUMBIA_PATH ?>sesion/abrir" method="post" id="frm_auth">
+            <fieldset>
+                <legend>Iniciar sesi&oacute;n</legend>
+                <div>
+                    <label for="login">Usuario</label>
+                    <input name="login" id="login" type="text" size="15" maxlength="25"  >
+                </div>
+                <div>
+                    <label for="pass">Contrase&ntilde;a</label>
+                    <input name="pass" type="password" id="pass" size="15" maxlength="25" >
+                </div>
+                <input type="submit" class="btn_aceptar" id="aceptar" value=".: Entrar" />
+            </fieldset>
+        </form>
+        </div>
+        <div id="informacion_usuarios">
+            <p>
+                <p>Puede ingresar con la cuenta de usuario <span style="font-weight: bold">administrador</span> con la contraseña <span style="font-weight: bold">hekademos</span>.</p>
+        </div>
+    </div>
+</div>
+<div id="secondary"><div class="content"></div></div>
+<div id="tertiary"><div class="content"></div></div>
