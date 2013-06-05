@@ -35,7 +35,7 @@ if( $stmt === false )
      echo "Error in statement execution.</br>";
      die( print_r( sqlsrv_errors(), true));
 }else{
-	echo "Exito 206556124";
+    echo "Exito 206556124";
 }
 return; 
 echo "<table> "; 
@@ -74,7 +74,7 @@ else
      die( print_r( sqlsrv_errors(), true));
 }
 
-		 
+         
 }catch(Exception $e){
 echo $e;
 }
