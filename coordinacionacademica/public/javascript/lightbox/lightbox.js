@@ -62,8 +62,8 @@
 //
 //    Configuration
 //
-var fileLoadingImage = "/sp5/img/lightbox/loading.gif";
-var fileBottomNavCloseImage = "/sp5/img/lightbox/closelabel.gif";
+var fileLoadingImage = "/hekademos/coordinacionacademica/img/lightbox/loading.gif";
+var fileBottomNavCloseImage = "/hekademos/coordinacionacademica/img/lightbox/closelabel.gif";
 
 var overlayOpacity = 0.8;    // controls transparency of shadow overlay
 
