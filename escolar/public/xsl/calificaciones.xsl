@@ -3,6 +3,7 @@
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:variable name="empty_string"/>
 <xsl:template match="/">
+<html>
   <xsl:choose>
   <xsl:when test="normalize-space(.) = $empty_string">
                   <br/>
@@ -187,6 +188,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
     </xsl:otherwise>
     </xsl:choose>
+    </html>
 </xsl:template>
 
 </xsl:stylesheet>

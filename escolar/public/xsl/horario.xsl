@@ -3,6 +3,7 @@
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:variable name="empty_string"/>
 <xsl:template match="/">
+<html>
 <table>
 <tr>
 <xsl:for-each select="horario/dias/dia">
@@ -16,5 +17,6 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 </tr>
 </xsl:for-each>
 </table>
+</html>
 </xsl:template>
 </xsl:stylesheet>
