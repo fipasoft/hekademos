@@ -813,9 +813,9 @@ class PDFReportes {
         $code .= '</thead>';
         $code .= '<tbody>';
 
-        $img_path = "http://localhost" . KUMBIA_PATH . "public/img/sp5/persona.jpg";
-        if (strlen(trim($alumno["foto"])) > 0 && file_exists("C:\\xampp\\htdocs\\sp5\\public\\img\\alumnos\\".$alumno["foto"]))
-            $img_path = "http://localhost/sp5/img/alumnos/".$alumno["foto"];
+        $img_path = "http://demos.fipasoft.mx/hekademos/escolar/public/img/sp5/persona.jpg";
+        if (strlen(trim($alumno["foto"])) > 0 && file_exists("/www/demos/hekademos/controlescolar/public/img/alumnos/".$alumno["foto"]))
+            $img_path = "http://demos.fipasoft.mx/hekademos/controlescolar/public/img/alumnos/".$alumno["foto"];
 
         $code .= '<tr><th>Nombre</th><td>' . $alumno["nombre"] . " " . $alumno["ap"] . " " . $alumno["am"] . '</td><td rowspan="3"><img height="100" src="' . $img_path . '" alt="Foto del alumno ' . $alumno["nombre"] . " " . $alumno["ap"] . " " . $alumno["am"] . '" /></td></tr>
                 <tr ><th>Domicilio</th><td>' . $alumno["domicilio"] . '</td></tr>
@@ -858,9 +858,9 @@ class PDFReportes {
                 $code .= '<tr><th colspan="3" scope="col">Personal.</th></tr>';
                 $code .= '</thead>';
                 $code .= '<tbody>';
-                $img_path = "http://localhost" . KUMBIA_PATH . "public/img/sp5/persona.jpg";
-                if (strlen(trim($tutor["foto"])) > 0 && file_exists("C:\\xampp\\htdocs\\sp5\\public\\img\\tutores\\".$tutor["foto"]))
-                    $img_path="http://localhost/sp5/img/tutores/".$tutor["foto"];
+                $img_path = "http://demos.fipasoft.mx/hekademos/escolar/public/img/sp5/persona.jpg";
+                if (strlen(trim($tutor["foto"])) > 0 && file_exists("/www/demos/hekademos/controlescolar/public/img/tutores/".$tutor["foto"]))
+                   $img_path="http://demos.fipasoft.mx/hekademos/controlescolar/public/img/tutores/".$tutor["foto"];
 
                 $code .= '<tr class="odd"><th>Nombre</th><td>' . $tutor["nombre"] . " " . $tutor["ap"] . " " . $tutor["am"] . '</td><td rowspan="3"><img height="100" src="' . $img_path . '" alt="Foto del tutor ' . $tutor["nombre"] . " " . $tutor["ap"] . " " . $tutor["am"] . '" /></td></tr>
                         <tr class="no_odd"><th>Domicilio</th><td>' . $tutor["domicilio"] . '</td></tr>
