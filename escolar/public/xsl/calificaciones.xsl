@@ -19,8 +19,6 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
         Para Cualquier aclaración, favor de acudir a la Dirección
         <br/>
         o a la Oficialía Mayor de esta Escuela.
-        <br/>
-        Teléfono 3832332333.
         </p>
         <br/>
         <div>
