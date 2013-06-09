@@ -59,7 +59,7 @@ foreach($ciclos as $ciclo){
     <h3>Ciclo <?php echo $cic["numero"];?></h3>
     <table summary="Calificaciones del Alumno." border="0" cellspacing="2" cellpadding="2">
     <thead>
-    <tr><th>Ciclo</th><th>Clave</th><th>Materia</th><th>Calificación</th><th>Profesor</th><th>Tipo</th></tr>
+        <tr><th>Ciclo</th><th>Clave</th><th>Materia</th><th>Calificación</th><th>Profesor</th><th>Tipo</th></tr>
     </thead>
     <tbody>
     <?php
@@ -78,11 +78,15 @@ foreach($ciclos as $ciclo){
     <td><span class="sub" style="color: rgb(119, 119, 119);"><?php echo $ele["numero"]; ?>&nbsp;</span></td>
     <td><span class="sub" style="color: rgb(119, 119, 119);"><?php echo $ele["clave"]; ?>&nbsp;</span></td>
     <td><span class="sub"><?php echo $ele["nombre_materia"]; ?></span>&nbsp;</td>
-    <td><?php if($ele["valor"]<60){
+    <td><?php if ( (is_numeric($ele["valor"]) && $ele["valor"]<60 ) || (!is_numeric($ele["valor"]) && $ele["valor"]!='A')) {
             echo '<span class="alerta">'.$ele["valor"]."</span>";
         }else
          echo $ele["valor"]; ?>&nbsp;</td>
-    <td><span class="sub" style="color: rgb(119, 119, 119);"><?php echo $ele["nombre_profesor"]." ".$ele["ap_profesor"]." ".$ele["am_profesor"]; ?>&nbsp;</span></td>
+    <td>
+        <span class="sub" style="color: rgb(119, 119, 119);">
+            <?php echo $ele["nombre_profesor"]." ".$ele["ap_profesor"]." ".$ele["am_profesor"]; ?>&nbsp;
+            </span>
+    </td>
     <td>
     <?php
     if($ele["oportunidades_id"]==1)
